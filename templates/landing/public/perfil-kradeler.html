@@ -1,0 +1,257 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+
+{% block title %}Mi Perfil{% endblock %}
+
+{% block main %}
+
+    <form enctype="multipart/form-data" novalidate="novalidate" method="post" name="public">
+
+        {% csrf_token %}
+
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div id="NetworkKradlecoMarket" class="carousel slide portrait" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% if galeria.count > 0 %}
+                            {% for imagen in galeria %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+
+                                    <!-- Card with a top image -->
+                                    <div class="card">
+                                        {% if imagen.imagen %}
+                                            <img src="{{ imagen.imagen.url }}" class="card-img-top mt-1"
+                                                 alt=""/>
+                                        {% else %}
+                                            <img src="{% static 'main/images/KC_nopic.png' %}" class="card-img-top mt-1"
+                                                 alt=""/>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+
+                            <div class="carousel-item active">
+                                <div class="card">
+                                    <img src="{% static 'main/images/KC_nopic.png' %}" class="card-img-top mt-1"
+                                         alt=""/>
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+                    <a class="carousel-control-prev d-none d-md-flex" href="#NetworkKradlecoMarket" role="button"
+                       data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next d-none d-md-flex" href="#NetworkKradlecoMarket" role="button"
+                       data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Carousel -->
+
+            <div class="hide">{{ form.username }}</div>
+            <div class="row mt-5">
+                <h5 class="card-title col-6 mx-auto">
+                    {{ user.username }}
+                </h5>
+            </div>
+            <div class="row">
+                <div class="float-left col-4">
+                    {% if user.foto_perfil %}
+                        <img src="{{ user.foto_perfil.url }}" class="card-img-title img-logo"
+                             alt=""/>
+                    {% else %}
+                        <img src="{% static 'main/images/joe_gardner.jpg' %}" class="card-img-title"
+                             alt=""/>
+                    {% endif %}
+                </div>
+                <p class="card-job col-8 col-sm-6">{{ form.titular }}</p>
+                <div class="logo float-right text-right col-1 ml-3 ml-sm-0 col-sm-2"><img
+                        src="{% static 'landing/images/marca/espacio_icon.svg' %}"
+                        alt="Espacio"/></div>
+            </div>
+
+            <div class="row aln-center mt-5">
+                <div class="col-12 text-center">
+                    <p><b>Perfiles en redes sociales</b></p>
+                </div>
+
+                <div class="row col-9">
+                    {% include 'landing/rrss.html' %}
+                </div>
+
+                <div class="col-12 text-center mt-5">
+                    <p><b>RATINGS</b></p>
+                </div>
+
+                <div class="col-12 text-center">
+                    {% for i in i|rjust:5 %}
+                        {% if puntuacion %}
+                            {% if puntuacion >= forloop.counter %}
+                                <i class="fa fa-star checked"></i>
+                            {% elif puntuacion < forloop.counter and puntuacion > forloop.counter0 %}
+                                <i class="fa fa-star-half-full"></i>
+
+                            {% else %}
+                                <i class="fa fa-star-o"></i>
+                            {% endif %}
+                        {% else %}
+                            <i class="fa fa-star-o"></i>
+                        {% endif %}
+                    {% endfor %}
+                    <p>{% if puntuacion %}{{ puntuacion }}{% else %}Sin puntuación{% endif %}</p>
+                </div>
+
+                <div class="col-9 text-center mt-5">
+                    <p class="float-left"><b>Sobre mi negocio</b></p>
+                    <div class="col-12">{{ form.sobre_mi_negocio }}</div>
+                </div>
+
+                <div class="col-9 mt-5">
+                    <p class="float-left"><b>Verificaciones</b></p>
+
+                </div>
+
+                <section class="col-9">
+                    <div class="row gtr-uniform aln-center">
+                        <div class="col-12">{{ form.telefono }}</div>
+                        <div class="col-12">{{ form.email }}</div>
+                        <div class="col-12">{{ form_empresa.razon_social }}</div>
+                    </div>
+                </section>
+
+                <div class="col-9 mt-5">
+                    <p class="float-left"><b>Ubicación</b></p>
+                    <!-- TODO añadir el mapa con la ubicacion al lado de los campos-->
+
+                </div>
+
+
+                <div class="col-12 col-md-5 text-left">
+                    Dirección:
+                    <div class="row">
+                        <div class="col-12"><p> {{ form_perfil.direccion }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><p>Código postal: {{ form_perfil.cp }}</p></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><p>Localidad/Ciudad: {{ form_perfil.ciudad }}</p></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12"><p>País: {{ form_perfil.pais }}</p></div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-md-7  float-right">
+                    <!-- Mapa cuando tengamos la api de produccion -->
+                    <div id="map" class="h-100"></div>
+
+                    <script>
+                        var map;
+                        function initMap() {
+                            map = new google.maps.Map(document.getElementById('map'), {
+                                center: {
+                                    lat: {% if form_perfil.lat.value != None %}{{ form_perfil.lat.value }}{% else %}-34.397{% endif %},
+                                    lng: {% if form_perfil.lng.value != None %}{{ form_perfil.lng.value }}{% else %}150.644{% endif %}
+                                },
+                                zoom: 8
+                            });
+                        }
+                    </script>
+                    <!-- Maps con iframe
+                    <div style="width: 100%">
+                        <iframe width="100%" height="100%"
+
+                                {% if form_perfil.lat.value != None %}
+
+                                src="https://maps.google.com/maps?width=100%&height=500&hl=es&coord=
+                        {{ form_perfil.lat.value }},{{ form_perfil.lng.value }}&q=Les%20Rambles%2C%201%20Barcelona%2C%20Spain+(Mi%20nombre%20de%20egocios)&ie=UTF8&t=&z=14&iwloc=B&output=embed"
+                                {% else %}
+                                src="https://maps.google.com/maps?width=100%&height=500&hl=es&coord=31.89103282648846,-3.3178710937500004&q=Les%20Ramblos%2C%201%20Barcelona%2C%20Spain+(Mi%20nombre%20de%20egocios)&ie=UTF8&t=&z=14&iwloc=B&output=embed"
+
+                                {% endif %}
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a
+                                href="https://www.mapsdirections.info/calcular-ruta.html">Planificador de Ruta</a>
+                        </iframe>
+                        -->
+                    <br/>
+                </div>
+
+
+                <!-- dependiendo de si es una marca o un espacio carga una sección distinta -->
+                <!-- de momento no se puede cambiar a discreccion si una empresa es marca o espacio-->
+
+                <p class="hide">{{ form_perfil.is_espacio }}</p>
+                <p class="hide">{{ form_perfil.is_marca }}</p>
+
+                {% include 'landing/public/marca_espacio.html' %}
+
+
+                <div class="row col-12">
+                    <div class="col-6"><p><b>% Ventas</b></p></div>
+                    <div class="col-6"><p><b>negociable</b></p></div>
+
+                    <div class="col-6"><p class="ml-4">{{ form_perfil.ventas }}%</p></div>
+                    <div class="col-6"><p>{{ form_perfil.negociable }}</p></div>
+                </div>
+
+
+                <div class="row justify-content-center col-12">
+                    <div class="col-12 text-center mt-5">
+                        <button type="submit" value="Guardar"><i class="fa fa-check"></i> Guardar perfil</button>
+                    </div>
+                </div>
+
+
+                <div class="col-9 mt-5">
+                    <p class="float-left"><b>Comentarios:</b></p>
+                </div>
+
+            </div>
+
+            <div class="card">
+                {% if comentarios.count > 0 %}
+                    {% for comentario in comentarios %}
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {% if comentario.autor.foto_perfil %}
+                                    <img src="{{ comentario.autor.foto_perfil.url }}" class="card-img-title"
+                                         alt=""/>
+                                {% else %}
+                                    <img src="{% static 'main/images/KC_nopic.png' %}" class="card-img-title"
+                                         alt=""/>
+
+                                {% endif %}
+                                {{ comentario.autor.username }}</h5>
+                            <p class="card-job">{{ comentario.contenido }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Aún no tienes comentarios, ¡contacta con otros usuarios para entablar relaciones!</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </form>
+
+    <!-- Google maps api -->
+    {# TODO cambiar la api key #}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRA3LoCgpvYtqwZwOISRnQXGtMQniZ48E&callback=initMap"
+            async defer>
+    </script>
+
+{% endblock %}
+

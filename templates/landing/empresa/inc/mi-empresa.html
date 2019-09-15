@@ -1,0 +1,57 @@
+{% block main %}
+
+<div class="inner">
+    <form novalidate="novalidate" method="post" name="mi-cuenta" class="row justify-content-center">
+
+        {% csrf_token %}
+
+        <div class="text-center"><h2 class="h2Empresa">¿Qué tipo de negocio eres?</h2></div>
+
+        <div class="w-100 mt-5"></div>
+
+        <div class="col-8 text-left"><h3 class="h3Display">Soy una marca</h3></div>
+
+        <div class="col-4 text-right">
+            {{ form_negocio.is_marca }}
+        </div>
+
+        <div id="id_is_marca-show" class="container {% if not form_negocio.is_marca.value %}hide{% endif %}">
+            <div class="inner">
+                {% include "landing/empresa/inc/soy-una-marca.html" %}
+            </div>
+        </div>
+
+        <div class="w-100 mt-3"></div>
+
+        <div class="col-8 text-left"><h3 class="h3Display">Soy un espacio</h3></div>
+
+        <div class="col-4 text-right">
+             {{ form_negocio.is_espacio }}
+        </div>
+
+        <div id="id_is_espacio-show" class="container {% if not form_negocio.is_espacio.value %}hide{% endif %}">
+            <div class="inner">
+                {% include "landing/empresa/inc/soy-un-espacio.html" %}
+            </div>
+        </div>
+
+        <div class="w-100 mt-5"></div>
+
+        <div class="card-body">
+            {% include "landing/empresa/catalogo/maestros.html" %}
+        </div>
+
+        <div class="w-100 mt-3"></div>
+
+        <div class="text-center">
+            <a href="" id="guarda_marca"><button type="submit" value="Guardar" name="guarda_marca" ><i class="fa fa-check"></i> Guardar</button></a>
+            <a href="" id="guarda_espacio"><button type="submit" value="Guardar" name="guarda_espacio" ><i class="fa fa-check"></i> Guardar</button></a>
+        </div>
+
+    </form>
+</div>
+
+<!-- Premium Part -->
+{% include "landing/inc/premium.html" %}
+
+{% endblock %}

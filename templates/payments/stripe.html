@@ -1,0 +1,72 @@
+{% extends "landing/base-hf.html" %}
+
+{% load socialaccount %}
+{% load static %}
+
+{% block main %}
+    <div class="container text-center">
+
+        <div class="w-100 mt-2"></div>
+
+        {% get_social_accounts user as accounts %}
+
+        {% if accounts %}
+            <div class="alert alert-success" role="alert">
+                Stripe is connected!
+            </div>
+            <p>Hola <strong>{{ user.username }}</strong>!</p>
+            <p>{{ accounts.stripe }}</p>
+            <p>{{ accounts.stripe.0 }}</p>
+        {% else %}
+            <p>Haz click aquí para conectar tu cuenta con Kradleco</p>
+            <a href="{% provider_login_url 'stripe' process='connect' %}" class="button is-info">Connect Stripe Account</a>
+        {% endif %}
+
+        <div class="w-100 mb-5"><hr class="hr" /></div>
+
+
+        <!-- Transferencia SEPA - IBAN -->
+        {% include "payments/iban.html" %}
+
+
+        <div class="w-100 mb-5"><hr class="hr" /></div>
+
+
+        <h1>Hacer un pago de una cuenta a otra cuenta</h1>
+        <h2 class="mt-5">Pagar 100.00€</h2>
+        <p>Kradleco cobra 3€ de comisión</p>
+        <form action="{% url 'charge-account' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" class="button" value="Pay" />
+        </form>
+
+
+        <div class="w-100 mb-5"><hr class="hr" /></div>
+
+
+        <h1>Hacer una transferencia entre cuentas</h1>
+        <p>Solo es posible hacer <strong>transfer</strong> de Kradleco a una cuenta conectada</p>
+        <h2 class="mt-5">Transferir 100.00€</h2>
+        <form action="{% url 'transfer' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" class="button" value="Transfer" />
+        </form>
+
+
+        <div class="w-100 mb-5"><hr class="hr" /></div>
+
+
+        <h1>Hacer un pago a Kradleco con Stripe sin una cuenta vinculada</h1>
+        <h2 class="mt-5">Buy for 500.00€</h2>
+        <form action="{% url 'charge' %}" method="post">
+            {% csrf_token %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ key }}"
+                data-description="A Django Charge"
+                data-amount="50000"
+                data-locale="auto">
+            </script>
+        </form>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+
+{% block banner %}
+	<!-- Banner -->
+	{% include "home/inc/banner.html" %}
+{% endblock %}
+
+{% block wrapper %}
+	<section id="wrapper">
+		<!-- Marca, espacio o servicio -->
+		{% include "home/inc/marca.html" %}
+
+		<!-- Ventajas -->
+		{% include "home/inc/ventajas.html" %}
+
+		<!-- Pruebalo Gratis -->
+		{% include "home/inc/pruebalo.html" %}
+
+		<!-- Descubre -->
+		{% include "home/inc/descubre.html" %}
+
+		<!-- Blog -->
+		{% include "home/inc/blog.html" %}
+	</section>
+{% endblock %}
+
+{% block contacto %}
+
+	<!-- Contacto -->
+	{% include "home/inc/footer.html" %}
+
+{% endblock %}

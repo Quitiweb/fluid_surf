@@ -1,0 +1,16 @@
+/* Arrow */
+    .arrow {
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(214,156,83, 0.75);
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+        border-radius: 3px;
+     }
+
+  /* <!-- #212A34; rgba(95, 19, 239, 0.75); -->-*/

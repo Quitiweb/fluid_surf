@@ -1,0 +1,25 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Mis relaciones comerciales{% endblock %}
+
+{% block main %}
+    {{ view_from }}
+	<div class="container text-center">
+		<ul>
+			<li id="tab1-btn" class="tabs marked">Mis propuestas</li>
+			<li id="tab2-btn" class="tabs {% if view_from == 'show_pdv' %}loaded{% endif %}">Puntos de venta</li>
+		</ul>
+	</div>
+
+	<!-- Mi propuestas -->
+	{% include "landing/market/rc/relac-comer-1.html" %}
+
+	<!-- Puntos de venta -->
+	{% include "landing/market/rc/puntos-de-venta-1.html" %}
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'main/assets/js/colecciones.js' %}"></script>
+{% endblock %}

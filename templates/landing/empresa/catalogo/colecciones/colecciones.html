@@ -1,0 +1,30 @@
+{% extends 'landing/base-hf.html' %}
+{% load static %}
+{% block main %}
+
+    {% for coleccion in colecciones %}
+
+        <form method="post" action="{% url 'coleccion' coleccion.id %}">
+            {% csrf_token %}
+            <div id="{{ coleccion.id }}" class="box-gray shadow row mt-2 coleccion">
+                <p class="col float-left">
+                    {{ coleccion.nombre }}
+                </p>
+
+                <div class="col-6 text-right">
+                    <p>Visible</p><input id="coleccion-visible-{{ coleccion.id }}" type="checkbox"
+                                         class="toggle-chk {% if coleccion.visible %}loaded{% endif %}"/>
+                    <label for="coleccion-visible-{{ coleccion.id }}"><span></span></label>
+                </div>
+                <button id="ver-coleccion-{{ coleccion.id }}" class="col-12 button naranja">VER
+                </button>
+            </div>
+        </form>
+
+
+    {% endfor %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'main/assets/js/colecciones.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'landing/base-hf.html' %}
+{% load static %}
+{% load qr_code %}
+
+{% block main %}
+    {% if articulos|length > 0 %}
+        <div class="card-columns" id="qr-list">
+            {% for articulo in articulos %}
+                {% if articulo.variante %}
+                    <div class="rounded card shadow-lg p-3 mb-5 bg-white rounded">
+
+                        <img class="card-img-top text-center"
+                             src="{% qr_url_from_text "ADF" size=8 version=10 image_format='png' %}"
+                             alt="Hello World!">
+                        <div class="card-body row justify-content-center">
+                            <h1 class="card-title">{{ articulo.articulo.nombre }}</h1>
+                            <div class="col-12 row card-text">
+                                <div class="col">REF:{{ articulo.variante.ref }}
+                                    {% if articulo.variante %}
+                                        {% if articulo.variante.opcion_1 %}
+                                            <p>{{ articulo.variante.opcion_1 }}:{{ articulo.variante.opcion_1_value }}</p>
+                                        {% endif %}
+                                        {% if articulo.variante.opcion_2 %}
+                                            <p>{{ articulo.variante.opcion_2 }}:{{ articulo.variante.opcion_2_value }}</p>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </div>
+                                <div class="col"><img class="mini-thumbnail"
+                                                      src="{{ articulo.variante.imagen_principal.url }}"/></div>
+                            </div>
+                            <div class="mt-3 row col-12 {% if articulo.variante.precio_comparacion != 0.0 %}jusfity-content-around{% else %}jusfity-content-center{% endif %} cart-text">
+                                {% if articulo.variante.precio_comparacion != 0.0 %}
+                                    <del class="col-4">{{ articulo.variante.precio_comparacion }}€</del>
+                                {% endif %}
+                                <span class="text-center col-4">{{ articulo.variante.pvp }}€</span>
+                                {% if articulo.articulo.requeridos.all|length > 0 %}
+                                    <p class="col-4 text-primary">
+                                        -{{ articulo.articulo.requeridos.all.first.recompensa_value }}%</p>
+                                {% endif %}
+                                {#                                {% if articulo.variante.precio_comparacion != 0.0 %}#}
+                                {#                                    <p class="col-4 text-primary">-{{ articulo.variante.descuento }}%</p>#}
+                                {#                                {% endif %}#}
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            {% if articulo.pdv.propuesta.emisor.is_espacio %}
+                                {{ articulo.pdv.propuesta.emisor.username }}{% else %}
+                                {{ articulo.pdv.propuesta.receptor.username }}{% endif %}
+                        </div>
+
+                    </div>
+
+                {% else %}
+                    <div class="rounded card shadow-lg p-3 mb-5 bg-white rounded">
+
+                        <img class="card-img-top text-center"
+                             src="{% qr_url_from_text "ADF" size=8 version=10 image_format='png' %}" alt="Hello World!">
+                        <div class="card-body row justify-content-center">
+                            <h1 class="card-title">{{ articulo.articulo.nombre }}</h1>
+                            <div class="col-12 row card-text">
+                                <div class="col">REF:{{ articulo.articulo.ref }}
+
+
+                                </div>
+                                <div class="col"><img class="mini-thumbnail"
+                                                      src="{{ articulo.articulo.imagen_principal.url }}"/></div>
+
+
+                            </div>
+                            <div class="mt-3 row col-12 {% if articulo.articulo.precio_comparacion != 0.0 %}jusfity-content-around{% else %}jusfity-content-center{% endif %} cart-text">
+                                {% if articulo.articulo.precio_comparacion != 0.0 %}
+                                    <del class="col-4">{{ articulo.articulo.precio_comparacion }}</del>
+                                {% endif %}
+                                <p class="col-4">{{ articulo.articulo.pvp }}€</p>
+                                {% if articulo.articulo.requeridos.all|length > 0 %}
+                                    <p class="col-4 text-primary">
+                                        -{{ articulo.articulo.requeridos.all.first.recompensa_value }}%</p>
+                                {% endif %}
+                                {#                                {% if articulo.articulo.precio_comparacion != 0.0 %}#}
+                                {#                                    <p class="col-4 text-primary">-{{ articulo.articulo.descuento }}%</p>#}
+                                {#                                {% endif %}#}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            {% if articulo.pdv.propuesta.emisor.is_espacio %}
+                                {{ articulo.pdv.propuesta.emisor.username }}
+                            {% else %}
+                                {{ articulo.pdv.propuesta.receptor.username }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+        <div class="fixed-bottom mb-5 row justify-content-center">
+            <div class="btn-group" role="group" aria-label="Opciones para imprimir">
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        IMPRIMIR
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" id="print-to-pdf" href="#">Imprimir en pdf</a>
+                        <a class="dropdown-item" href="#">Imprimir a archivos png</a>
+                        <a class="dropdown-item" href="#">Imprimir con promociones</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">Error al cargar los QR</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+            integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+            crossorigin="anonymous"></script>
+    <script src="{% static 'main/assets/js/imprimir-qr/html2canvas.js' %}"></script>
+    <script src="{% static 'main/assets/js/imprimir-qr/imprimir-qr.js' %}"></script>
+{% endblock %}

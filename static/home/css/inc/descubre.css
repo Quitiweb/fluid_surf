@@ -1,0 +1,45 @@
+/* Descubre */
+
+	.descubre {
+		background-color: #FFFFFF;
+		position: relative;
+		padding: 3em;
+	}
+
+		.descubre .inner {
+			padding: 3em 0 1em 0 ;
+			margin: 0 auto;
+			width: var(--inner-width);
+		}
+
+		@media screen and (max-width: 980px) {
+
+            .descubre .inner {
+                padding: 3em 3em 1em 3em ;
+                width: 100%;
+            }
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.descubre {
+				margin: 2em 0;
+			}
+
+				.descubre .inner {
+					padding: 2em 2em 0.1em 2em ;
+				}
+
+		}
+
+		@media screen and (max-width: 480px) {
+		}
+
+		@media screen and (max-width: 360px) {
+
+			.descubre .inner {
+				padding: 2em 1.5em 0.1em 1.5em ;
+			}
+
+		}

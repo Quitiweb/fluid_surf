@@ -1,0 +1,104 @@
+/* Ventajas */
+
+	.ventajas {
+		background-color: #FFFFFF;
+		padding: 3em;
+	}
+
+		.ventajas .inner {
+			padding: 3em 0 1em 0 ;
+			margin: 0 auto;
+			width: var(--inner-width);
+		}
+
+		.ventajas .oval-border {
+		    height: 122px;
+		    width: 122px;
+		    margin: -1.25em 0 0 0;
+		    position: absolute;
+		}
+
+		.ventajas p {
+		    padding-left: 7.25em;
+		}
+
+	.ventajas ul {
+		list-style: none;
+		padding: 0;
+	}
+
+		.ventajas ul li {
+		    padding: 1.25em 0 0 0;
+		    margin-bottom: 2em;
+		    height: 122px;
+		}
+
+		@media screen and (max-width: 1680px) {
+
+            .ventajas p {
+                padding-left: 9em;
+            }
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+            .ventajas .inner {
+                padding: 3em 3em 1em 3em ;
+                width: 100%;
+            }
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.ventajas {
+				margin: 0;
+				padding: 1.5em;
+			}
+
+				.ventajas .inner {
+					padding: 2em 2em 0.1em 2em ;
+				}
+
+				.ventajas ul li {
+				    padding: 1.5em 0 0 0;
+				    margin-bottom: 1em;
+				    height: 102px;
+				}
+
+				.ventajas .oval-border {
+				    height: 102px;
+				    width: 102px;
+				    margin: -1.5em 0 0 0;
+				}
+
+				.ventajas p {
+				    padding-left: 8em;
+				}
+
+		}
+
+		@media screen and (max-width: 360px) {
+
+			.ventajas .inner {
+				padding: 0.1em 1em ;
+			}
+
+				.ventajas ul li {
+				    padding: 0.5em 0 0 0;
+				    margin-bottom: 1em;
+				    height: 82px;
+				}
+
+				.ventajas .oval-border {
+				    height: 82px;
+				    width: 82px;
+				    margin: -0.5em 0 0 0;
+				}
+
+				.ventajas p {
+				    padding-left: 6.5em;
+				}
+
+		}

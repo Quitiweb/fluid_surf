@@ -1,0 +1,72 @@
+
+<div id="v1" class="{% if not articulo.variantes.all.0 %}hide{% endif %} mt-5 input_row">
+    <div class="row align-items-bottom">
+        <a href="#v1"
+           data-toggle="tooltip"
+           title="Esta será la variante principal de este articulo (pe: TALLA)">
+            <i class="fa fa-info-circle"></i>
+        </a>
+
+        <input id="i1" onchange="checkContent()" name="var1" class="col-2" type="text"
+               value="{% if articulo.variantes.all.0 %}{{ articulo.variantes.all.0 }}{% endif %}"
+               placeholder="Ej: Talla,Color,Material...">
+        <div class="col-7">
+            <input type="text" class="input-tags border-morado" data-role="tagsinput"
+                   value="{% for value in articulo.variantearticulo.all %}{% if value.opcion_1_value %}{{ value.opcion_1_value }},{% endif %}{% endfor %}">
+        </div>
+    <span class="col styled-label bg-morado font-weight-bold">Principal</span>
+    </div>
+    <button type="button" onclick="showNextTag(2)" id="kradle-button2" class="mt-5 col-1 btn-circle btn-lg"
+            {% if articulo.variantes.all.1 %}style="display:none;"{% endif %}>
+        <i class="fa fa-plus"></i>
+    </button>
+</div>
+
+<div id="v2" class="{% if not articulo.variantes.all.1 %}hide{% endif %} input_row">
+    <div class="row align-items-bottom">
+        <a href="#v2"
+           data-toggle="tooltip"
+           title="Esta será la variante secundaria de este articulo (pe: COLOR)">
+            <i class="fa fa-info-circle"></i>
+        </a>
+        <input id="i2" onchange="checkContent()" class="col-2" type="text"
+               value="{% if articulo.variantes.all.1 %}{{ articulo.variantes.all.1 }}{% endif %}"
+               placeholder="Ej: Talla,Color,Material...">
+
+        <div class="col-7">
+            <input type="text" class="input-tags" data-role="tagsinput"
+                   value="{% for value in articulo.variantearticulo.all %}{% if value.opcion_2_value %}{{ value.opcion_2_value }},{% endif %}{% endfor %}">
+        </div>
+            <span class="col styled-label secondary-color font-weight-bold">Secundaria</span>
+
+    </div>
+    {#    <button type="button" onclick="showNextTag(3)" id="kradle-button3" class="mt-5 col-1 btn-circle btn-lg"#}
+    {#            {% if articulo.variantes.all.2 %}style="display:none;"{% endif %}>#}
+    {#        <i class="fa fa-plus"></i>#}
+    {#    </button>#}
+</div>
+
+<div id="v3" class="{% if not articulo.variantes.all.2 %}hide{% endif %} input_row">
+    <div class="row align-items-bottom">
+        <input id="i3" onchange="checkContent()" class="col-2" type="text"
+               value="{% if articulo.variantes.all.2 %}{{ articulo.variantes.all.2 }}{% endif %}"
+               placeholder="Ej: Talla,Color,Material...">
+        <div class="col-8">
+            <input type="text" class="input-tags" data-role="tagsinput"
+                   value="{% for value in articulo.variantearticulo.all %}{% if value.opcion_3_value %}{{ value.opcion_3_value }},{% endif %}{% endfor %}">
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-center scrollable-div">
+    <table class="table table-hover table-striped table-sm w-50 " id="myTable">
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+{% if articulo.variantes.all|length > 0 %}
+    <input type="hidden" onclick="checkContent()" class="loaded"/>
+{% endif %}

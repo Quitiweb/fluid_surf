@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    {% include "main/head.html" %}
+    {% block styles %}{% endblock %}
+</head>
+
+<body class="is-preload">
+
+<div id="page-wrapper">
+
+    {% if user.is_authenticated %}
+
+        <header id="header">
+            <nav class="main">
+                <ul>
+                    <li class="menu">
+                        <a class="fa-bars" href="#menu">Menu</a>
+                    </li>
+                    <li><a href="/" class="image original"><img src="{% static 'main/images/KC_icon.png' %}"
+                                                                alt="kradleco.es"/></a>
+                    </li>
+                    <li class="search">
+
+                        {% block buscador_url %}<a class="fa-search" href="/buscar">Buscar</a>{% endblock %}
+                    </li>
+                    {% block top_icons %}
+
+                    {% endblock %}
+
+                    <!--<li class="search">
+                        <a class="fa-search" href="#search">Search</a>
+                        <form id="search" method="get" action="#">
+                            <input type="text" name="query" placeholder="Search" />
+                        </form>
+                    </li> -->
+                </ul>
+            </nav>
+        </header>
+
+        {% include "landing/member/menu.html" %}
+        {% include "landing/market/carrito/carrito.html" %}
+
+        <section id="member" class="member mt-5">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}primary{% endif %} alert-dismissible fade show"
+                         role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block main %}
+            {% endblock %}
+        </section>
+
+    {% else %}
+
+        <div class="bg-morado text-center">
+            <a id="logo-kradleco" href="/" class="image original"><img
+                    src="{% static 'main/images/Logo_Kradleco_Blanco.png' %}" alt="kradleco.es"/></a>
+        </div>
+
+        <section id="footer">
+            <div id="contact" class="inner">
+                <p style="margin-top: -1.5em;">¿No tienes cuenta?<br/>Regístrate aquí: <a
+                        href="/signup"><b>SignUp</b></a></p>
+                <form method="get" action="/login">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </section>
+
+    {% endif %}
+
+    {% block up %}
+    {% endblock %}
+
+</div>
+
+{% include "main/script.html" %}
+{% block script %}{% endblock %}
+
+</body>
+
+</html>

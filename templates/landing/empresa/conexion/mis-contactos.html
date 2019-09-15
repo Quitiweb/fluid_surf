@@ -1,0 +1,57 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Mis contactos{% endblock %}
+
+{% block main %}
+
+<div class="container">
+
+    <h1>Mis Contactos</h1>
+
+    <input type="text" placeholder="Filtrar por nombre...">
+
+    <div class="card mt-5">
+      <ul class="list-group list-group-flush">
+        {% for c in conexiones %}
+            {% if c.emisor == user %}
+                <li class="list-group-item pt-3" style="cursor: pointer;" onclick="location.href='perfil-kradeler/{{c.receptor}}';">
+                    <div class="col-12">
+                        {% if c.receptor.foto_perfil %}
+                            <img src="{{ c.receptor.foto_perfil.url }}" class="card-img-title mr-0" style="width: 50px;">
+                        {% else %}
+                            <img src="{% static 'main/images/joe_gardner.jpg' %}" class="card-img-title mr-0" style="width: 50px;" />
+                        {% endif %}
+                        <a href="perfil-kradeler/{{c.receptor}}" class="col-5 mb">{{c.receptor.first_name}} {{ c.receptor.last_name }}</a>
+                    </div>
+                </li>
+            {% else %}
+               <li class="list-group-item pt-3" style="cursor: pointer;" onclick="location.href='perfil-kradeler/{{c.emisor}}';">
+                    <div class="col-12">
+                        {% if c.emisor.foto_perfil %}
+                            <img src="{{ c.emisor.foto_perfil.url }}" class="card-img-title mr-0" style="width: 50px;">
+                        {% else %}
+                            <img src="{% static 'main/images/joe_gardner.jpg' %}" class="card-img-title mr-0" style="width: 50px;" />
+                        {% endif %}
+                        <a href="perfil-kradeler/{{c.emisor}}" class="col-5">{{c.emisor.first_name}} {{ c.emisor.last_name }}</a>
+                    </div>
+               </li>
+            {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="container mt-5 text-center">
+        <p>¿Te gustaría mejorar tus relaciones comerciales? Amplía tu red de contactos en
+            <a href="market" style="color: var(--morado);">Kradleco Market</a>
+        </p>
+    </div>
+
+    <!-- Premium -->
+    {% include "landing/inc/premium.html" %}
+
+</div>
+
+
+{% endblock %}

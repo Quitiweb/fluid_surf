@@ -1,0 +1,288 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Ver promoción{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'landing/css/datepicker.css' %}"/>
+{% endblock %}
+
+
+{% block main %}
+
+    {% if promocion %}
+        <div class="container ">
+            <form action="/guardar-promo" id="promo-form" novalidate="novalidate" method="post">
+                {% csrf_token %}
+                <div class="row justify-content-around">
+                    <h2 class="col">{{ promocion.texto }}</h2>
+                    <div class="col-4 text-right">
+                        <a href="#" id="edit-button">
+                            <i style="font-size: 2em;" class="fa fa-edit"></i>
+                        </a>
+                        <input id="promo_visible" type="checkbox" class="toggle-chk
+                                {% if promocion %}{% if promocion.visible %}loaded{% endif %}{% else %}loaded{% endif %}"/>
+                        <label for="promo_visible"><span></span></label>
+                        <p class="text-right">Visible</p>
+                    </div>
+                </div>
+
+
+                <div id="editable-content">
+                    <!--Selectores de tipo de promo -->
+                    <div class="row justify-content-center ">
+                        <div class="col-11 hide" id="codigo-container">
+                            <a href="#add-promo-container" class="float-left "
+                               data-toggle="tooltip"
+                               title="Código generado automáticamente, puede personalizarlo por uno mas descriptivo, por ejemplo: REBAJAS2020, VERANO2X1...(15 caracteres como máximo, sin carácteres especiales)">
+                                <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/> Código:
+                            </a>
+                            <input type="text"
+                                   value="
+                                           {% if promocion.codigo_value %}{{ promocion.codigo_value }}{% endif %}"
+                                   maxlength="
+                                           {% if promocion %}{{ promocion.code_max_length }}{% else %}15{% endif %}"
+                                   name="codigo_value"/>
+                        </div>
+                        <div id="auto-selector"
+                             class="row justify-content-center align-items-center col col-md-3 p-3 m-3 text-center rounded border border-dark promo-type {% if promocion.automatica %}loaded{% endif %}">
+                            <a href="#add-promo-container" class="float-left "
+                               data-toggle="tooltip"
+                               title="Se aplica automáticamente al añadir productos al carrito">
+                                <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/>
+                            </a>
+                            <h5>Automática</h5>
+                        </div>
+
+                        <div id="codigo-selector"
+                             class="row justify-content-center align-items-center col col-md-3 p-3 m-3 text-center rounded border border-dark promo-type {% if promocion.codigo %}loaded{% endif %}">
+                            <a href="#add-promo-container" class="float-left "
+                               data-toggle="tooltip"
+                               title="El cliente ha de insertar un código para que se aplique el descuento">
+                                <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/>
+                            </a>
+                            <h5>Código</h5>
+                        </div>
+                        <div class="mt-2 w-100"></div>
+
+                        <div id="rebaja-selector"
+                             class="row justify-content-center align-items-center col col-md-3 m-3 p-3 col text-center rounded border border-dark promo-type {% if promocion.tipo == 'RBJ' %}loaded{% endif %}">
+                            <a href="#add-promo-container" class="float-left "
+                               data-toggle="tooltip"
+                               title="Aplica un % concreto de descuento a un grupo de productos, o a todos">
+                                <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/>
+                            </a>
+                            <h5>Rebaja</h5>
+                        </div>
+
+                        <div id="personalizada-selector"
+                             class="row justify-content-center align-items-center col col-md-3 m-3 p-3 text-center rounded border border-dark promo-type {% if promocion.tipo == 'PER' %}loaded{% endif %}">
+                            <a href="#add-promo-container" class="float-left"
+                               data-toggle="tooltip"
+                               title="Personaliza tus promociones, Pej : 2ª unidad al 50%, 2x1 ,...etc">
+
+                                <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/>
+                            </a>
+                            <h5>Personalizada</h5>
+                        </div>
+                    </div>
+
+                    {# promo rebaja porcentaje #}
+                    <div id="promo-1" class="col-12 mt-4 hide">
+                        <div class="box-gray">
+                            <div class="row height-limit">
+                                <div class="col-5"><h5>El cliente obtiene</h5></div>
+                                <div class="col-4">
+
+                                    <input class="white-bg force-align-input marked-input {% if promocion.recompensa_value %}input-marked{% endif %}"
+                                           name="obtiene_rebaja_value"
+                                           type="number" min="1"
+                                           max="99"
+                                           id="promo-descuento" maxlength="2" placeholder="XX%"
+                                           {% if promocion.recompensa_value %}value="{{ promocion.recompensa_value }}"{% endif %}/>
+
+                                </div>
+                                <label class="col-3" for="promo-descuento">%</label>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p>¿De qué artículos?</p></div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="button naranja fit enabledcontent"
+                                            name="items_r_obtiene" id="items_r_obtiene"
+                                            value="true">VER
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# promo personalizada unidades #}
+                    <div id="promo-2a" class="col-12 mt-4 hide">
+                        <div class="box-gray">
+                            <div class="row height-limit">
+                                <div class="col-5"><h5>El cliente compra</h5></div>
+                                <div class="col-3">
+                                    <input class="white-bg force-align-input marked-input " type="number"
+                                           placeholder="XX" name="requisito_value"
+                                           {% if promocion.requisito_value %}value="{{ promocion.requisito_value }}"{% endif %}>
+                                </div>
+                                <div class="col-4"><p id="promo-2a-euros" class="marked">Euros</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><p id="promo-2a-euros">¿De qué artículos?</p></div>
+
+                                <div class="col-4 float-right ">
+                                    <p id="promo-2a-unidades"
+                                       class="{% if promocion.requisito == 'UD' %}loaded{% endif %}">Unidades</p>
+                                </div>
+
+                                <div class="col-12 mt-2">
+                                    <button type="submit" class="button naranja fit enabledcontent"
+                                            name="items_p_requiere" id="items_p_requiere"
+                                            value="true">VER
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {# promo 3 #}
+                    <div id="promo-2b" class="col-12 mt-4 hide">
+                        <div class="box-gray">
+                            <div class="row">
+                                <div class="col"><h5>El cliente obtiene</h5></div>
+                                <div class="col"><input id="promo-2b-unidades-input"
+                                                        class="white-bg marked-input {% if promocion.recompensa_unidades != -1 %}input-marked{% endif %}"
+                                                        type="number" name="obtiene_personalizada_ud"
+                                                        {% if promocion.recompensa_unidades != -1 %}value="{{ promocion.recompensa_unidades }}"{% endif %}
+                                                        placeholder="XX"/></div>
+                                <div class="col tabs "><p
+                                        id="promo-2b-unidades"
+                                        class="{% if promocion.recompensa == 'UD' or promocion.recompensa_unidades != -1 %}loaded{% endif %}">
+                                    Unidades</p></div>
+                                <div class="col tabs">
+                                    <p id="promo-2b-gratis"
+                                       class="{% if promocion.recompensa_value == -1 %}loaded{% endif %}">
+                                        Gratis</p>
+                                    <input class="marked-input {% if promocion.recompensa == 'EUR' %}input-marked{% endif %}"
+                                           type="hidden" name="obtiene_personalizada_euros"
+                                           id="promo-2b-euros" placeholder="ZZ€"
+                                           {% if promocion.recompensa == 'EUR' %}value="{{ promocion.recompensa_value }}"{% endif %}/>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col"><h4>¿De qué artículos?</h4></div>
+                                <div class="col tabs ">
+                                    <p id="promo-2b-descuento"
+                                       class="{% if promocion.recompensa != 'UD' %}loaded{% endif %}">
+                                        Descuento</p></div>
+                                <div class="col tabs"><input
+                                        class="marked-input {% if promocion.recompensa == 'PCT' %}input-marked{% endif %}"
+                                        type="number" id="promo-2b-porcentaje"
+                                        name="obtiene_personalizada_porcentaje"
+                                        placeholder="ZZ% de rebaja"
+                                        {% if promocion.recompensa == 'PCT' %}value="{{ promocion.recompensa_value }}"{% endif %}/>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="button naranja fit enabledcontent"
+                                            name="items_p_obtiene" id="items_p_obtiene"
+                                            value="true">VER
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# fechas #}
+                    <div class="box mt-5">
+                        <div>
+                            <h5>Indica fecha de inicio y fecha de fin (si la sabes)</h5>
+                            <p class="mt-5"><strong>Desde*</strong></p>
+                            <div class="dateBox">
+                                <input class="js--datePicker" name="fecha_desde" type="text" id="datepicker-desde"
+                                       value="{% if promocion.fecha_desde %}{{ promocion.get_fecha_desde }}{% else %}Desde{% endif %}"
+                                       readonly="readonly">
+                            </div>
+                            <img class="float-right" src="{% static 'landing/img/promociones/calendar.png' %}"
+                                 alt="Kradleco"/>
+                            <p class="mt-5"><strong>Hasta</strong></p>
+                            <div class="dateBox">
+                                <input class="js--datePicker" name="fecha_hasta"
+                                       type="text"
+                                       id="datepicker-hasta"
+                                       value="{% if promocion.fecha_hasta %}{{ promocion.get_fecha_hasta }}{% else %}Hasta{% endif %}"
+                                       readonly="readonly">
+                            </div>
+                            <img class="float-right" src="{% static 'landing/img/promociones/calendar.png' %}"
+                                 alt="Kradleco"/>
+                        </div>
+
+
+                        <section>
+                            <p class="mt-5"><strong>Indica si existe un límite de compras para esta
+                                promoción</strong>
+                            </p>
+                            <div class="container text-center">
+                                <ul>
+                                    <li id="tab1-clientes"
+                                        class="tabs {% if promocion.limite == 'CLI' %}loaded{% endif %}">
+                                        <a href="#add-promo-container"
+                                           data-toggle="tooltip"
+                                           title=" Si se inserta un número de clientes y se consume el stock antes,
+                                       prevalecerá este">
+                                            <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/>
+                                        </a>
+
+                                        <label for="id-promo-clientes">Nº Clientes</label>
+                                    </li>
+                                    <li id="tab2-existencias" class="tabs marked">Fin de existencias</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <input type="hidden" id="id-promo-clientes" name="promo-clientes" class="hide"
+                               {% if promocion.limite_value %}value="{{ promocion.limite_value }}"{% endif %}/>
+                        <input type="hidden" id="tipo-promo" name="tipo-promo" class="hide"/>
+                        <input type="hidden" id="limite" name="limite" class="hide" value="ex"/>
+                        <input type="hidden" id="auto" name="auto" class="hide" value="false"/>
+                        <input type="hidden" id="codigo" name="codigo" class="hide" value="false"/>
+                        <input type="hidden" id="req" name="req" value="EUR" class="hide"/>
+                        <input type="hidden" id="obt" name="obt" class="hide"/>
+                        <input type="hidden" id="visible" name="visible" class="hide" value="false"/>
+
+
+                        <div class="row justify-content-center">
+                            <div class="col-12 text-center mt-5 hide">
+                                <button id="guardar_button" type="submit" name="save_edit" value="Guardar"><i
+                                        class="fa fa-check"></i> Guardar
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <p class="col-5 align-self-center text-center border border-morado border-ouline">Imprimir
+                            códigos
+                            QR</p>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div>
+            <p>Ha ocurrido un error, no se ha podido cargar la promoción</p>
+        </div>
+    {% endif %}
+
+
+
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'main/assets/js/catalogo.js' %}"></script>
+{% endblock %}

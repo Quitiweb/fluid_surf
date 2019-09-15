@@ -1,0 +1,49 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Kradleco Premium{% endblock %}
+
+{% block main %}
+
+    <div class="container text-center">
+		<span class="rounded mx-auto d-block"><img src="{% static 'landing/images/Image_Landing_1P.png' %}" alt="Kradleco" /></span>
+
+		<div class="w-100 mt-5"></div>
+
+        <p>Para poder conectar con otros usuarios, <br> enviar solicitudes y hacer negocio necesitas ser un Kradeler Premium, <br> ¿te apuntas?</p>
+		<div class="row justify-content-center">
+
+			<div class="col-2">
+				<form class="url" action="{% url 'mi-cuenta' 1 %}" method="get">
+					<div class="fields">
+						<div class="field">
+							<ul>
+								<li><input type="submit" class="cancelar" value="Cancelar" /></li>
+							</ul>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-2">
+				<form class="url" action="{% url 'premium' %}" method="get">
+					<div class="fields">
+						<div class="field">
+							<ul>
+								<li><input type="submit" value="Upgrade" /></li>
+							</ul>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+		<div class="w-100 mt-5"></div>
+
+		<p>*Se habilitará la opción de elegir tipos de relación comercial en tu perfil.<br>
+		Se habilitará la opción de cargar catálogo (Marca) o cargar más fotos del espacio.</p>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,235 @@
+{% extends 'landing/base-hf.html' %}
+{% load static %}
+{% load variante-tags %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'landing/css/input-style.css' %}"/>
+{% endblock %}
+{% block main %}
+
+    {% for coleccion in colecciones %}
+    <div class="row justify-content-center mb-5">
+        <!--En este template mostramos todos los articulos de la colección, generamos una linea por cada variación, ordenadas por el la variante secundaria del articulo, y cada variante tiene asignado un input que permite elegir la cantidad de ese articulo que se quiere añadir al PDF-->
+        <h1>{{ coleccion.nombre }}</h1>
+        <div class="row col-12">
+
+            <table class="table mt-5" id="stock-table">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    {% if articulo.variantearticulo.all|length > 0 %}
+                        <th scope="col"></th>
+                    {% endif %}
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--Para cada articulo de la coleccion añadida al punto de venta -->
+                {% for articulo in coleccion.articulos.all %}
+                    {% get_distinct_variantes_secundarias articulo as lista %}
+                    <!-- Obtenemos la lista de valores distintos de variante secundaria, p.e: si la variante secundaria es COLOR: y los valores son rojo, rojo,verde, azul ->El método devuelve rojo,verde,azul -->
+                    {% if lista != False %}
+                        {% for tag in lista %}<!--
+                             para cada valor de la variante secundaria filtramos las variantes que tengan esa variante secundaria
+                            -->
+                            <tr>
+                                <th scope="row"><img class="mini-thumbnail" src="{{ articulo.imagen_principal.url }}"/>
+                                </th>
+                                <td>{{ articulo.nombre }}</td>
+                                <td>{{ articulo.ref }}</td>
+                                <td>
+                                    {{ articulo.variantes.last.tag }}: {{ tag }}
+                                </td>
+                                <td>
+                                    <button class="btn-circle btn-lg show-variantes-button"
+                                            id="show-variantes-{{ articulo.id }}-{{ tag }}">
+                                        <a href="#show-variantes-{{ articulo.id }}-{{ tag }}"><i class="fa fa-plus"></i></a>
+                                    </button>
+
+                                    <button class="btn-circle btn-lg show-variantes-button"
+                                            id="check-{{ articulo.id }}-{{ tag }}">
+                                        <a href="#show-variantes-{{ articulo.id }}-{{ tag }}"><i class="fa fa-plus"></i></a>
+                                    </button>
+                                </td>
+                                <td>{% if articulo.variantearticulo.all|length > 0 %}
+                                    <i class="fa fa-check"></i>{% endif %}
+                                </td>
+                            </tr>
+                            {% get_variaciones_principales articulo tag as variacion_principal %}<!-- aqui hacemos el filtro -->
+                            {% if variacion_principal != False %}
+
+                                <tr colspan="6" class="hide" id="variantes-{{ articulo.id }}-{{ tag }}">
+                                    <td colspan="6">
+
+                                        <div class="row col-12 justify-content-center">
+                                            <h1 class="col-12">{{ variacion_principal.first.opcion_1 }}: </h1>
+                                            {% for v in variacion_principal %}
+                                                <div class="col-3 col-md-1">
+
+                                                    <div class="row">
+                                                        <div class="col-xs-3 col-xs-offset-3 variante-stock-cantidad">
+                                                            <p><strong>{{ v.opcion_1_value }}</strong></p>
+                                                            <div class="input-group number-spinner">
+
+
+                                                                <span class="input-group-btn data-up">
+					                                                <button class="btn btn-transparent" data-dir="up">
+                                                                        <span><i class="fa fa-angle-up"></i></span>
+                                                                    </button>
+                                                                </span>
+                                                                <input type="text" class="form-control text-center rounded-input"
+                                                                       value="0" min="0" max="{{ v.stock }}"
+                                                                       id="{{ articulo.id }}{{ tag }}-variante-stock-{{ v.id }}">
+                                                                <span class="input-group-btn data-dwn">
+                                                                    <button class="btn btn-transparent" data-dir="dwn">
+                                                                        <span><i class="fa fa-angle-down"></i></span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="col-3 col-md-1">
+                                                <p><strong>Total</strong></p>
+                                                <div class="numberCircle mt-4" id="input-total-{{ articulo.id }}{{ tag }}">
+                                                    0
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                    {% else %}
+                        <!-- Si el articulo no tiene variantes secundarias, solo tiene principal o no tiene ninguna variante -->
+                        <tr>
+                            <th scope="row"><img class="mini-thumbnail" src="{{ articulo.imagen_principal.url }}"/></th>
+                            <td>{{ articulo.nombre }}</td>
+                            <td>{{ articulo.ref }}</td>
+                            <td></td>
+                            <td>
+                                <button class="btn-circle btn-lg show-variantes-button"
+                                        id="show-variantes-{{ articulo.id }}">
+                                    <a href="#show-variantes-{{ articulo.id }}"><i class="fa fa-plus"></i></a>
+                                </button>
+
+                                <button class="btn-circle btn-lg show-variantes-button ml-3" style="background-color: white;"
+                                            id="check-{{ articulo.id }}">
+                                        <a href="#show-variantes-{{ articulo.id }}-{{ tag }}"><i class="fa fa-check"></i></a>
+                                    </button>
+                            </td>
+                            <td>{% if articulo.variantearticulo.all|length > 0 %}<i class="fa fa-check"></i>{% endif %}
+                            </td>
+
+                        </tr>
+
+                        {% if articulo.variantearticulo.all|length > 0 %}
+                            <!-- Si el articulo tiene variante principal-->
+
+                            <tr colspan="6" class="hide" id="variantes-{{ articulo.id }}">
+                                <td colspan="6">
+                                    <div class="row col-12 justify-content-center">
+                                        {% for variante in articulo.variantearticulo.all %}
+                                            <div class="col-3 col-md-1">
+
+                                                <div class="row">
+                                                    <div class="col-xs-3 col-xs-offset-3 variante-stock-cantidad">
+                                                        <p><strong>{{ v.opcion_1_value }}</strong></p>
+                                                        <div class="input-group number-spinner">
+
+                                                            <span class="input-group-btn data-up">
+					                                            <button class="btn btn-transparent" data-dir="up"><span><i
+                                                                        class="fa fa-angle-up"></i></span></button>
+				                                            </span>
+                                                            <input type="text" class="form-control text-center rounded-input"
+                                                                   value="0" min="0" max="{{ v.stock }}"
+                                                                   id="{{ articulo.id }}-variante-stock-{{ variante.id }}">
+                                                            <span class="input-group-btn data-dwn">
+					                                            <button class="btn btn-transparent" data-dir="dwn"><span><i
+                                                                        class="fa fa-angle-down"></i></span></button>
+				                                            </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        <div class="col-3 col-md-2">
+                                            <p><strong>Total</strong></p>
+                                            <div class="numberCircle mt-4" id="input-total-{{ articulo.id }}">0</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {% else %}<!-- el articulo es unico y no tiene variantes -->
+                            <tr colspan="6" class="hide" id="variantes-{{ articulo.id }}">
+                                <td colspan="6">
+                                    <div class="row col-12 justify-content-center">
+
+                                        <p class="col-12"><strong>{{ articulo.nombre }}</strong></p>
+                                        <div class="col-3 col-md-1">
+                                            <div class="row">
+                                                <div class="col-xs-3 col-xs-offset-3 variante-stock-cantidad">
+                                                    <p><strong>{{ v.opcion_1_value }}</strong></p>
+                                                    <div class="input-group number-spinner">
+
+
+                                                       <span class="input-group-btn data-up">
+                                                        <button class="btn btn-transparent" data-dir="up"><span><i
+                                                                class="fa fa-angle-up"></i></span></button>
+                                                        </span>
+                                                        <input type="text" class="form-control text-center rounded-input"
+                                                               value="0" min="0" max="{{ articulo.stock }}"
+                                                               id="{{ articulo.id }}-variante-stock--1">
+                                                        <span class="input-group-btn data-dwn">
+                                                                <button class="btn btn-transparent" data-dir="dwn"><span><i
+                                                                        class="fa fa-angle-down"></i></span></button>
+                                                            </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-md-1">
+                                            <p><strong>Total</strong></p>
+                                            <div class="numberCircle mt-4" id="input-total-{{ articulo.id }}">0</div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <form method="post" name="validar-pedido">
+            {% csrf_token %}
+            <div id="hidden-vals">
+
+            </div>
+            <div class="row justify-content-center fixed-bottom mb-5">
+                <button type="submit" class="btn naranja" id="validar-pedido" name="validar-pedido">Enviar validación (<span
+                        id="cantidad_total">0</span>)
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+{% endfor %}
+{% endblock %}
+
+
+{% block script %}
+    <script src="{% static 'main/assets/js/colecciones.js' %}"></script>
+    <script src="{% static 'main/assets/js/input-editar-stock.js' %}"></script>
+{% endblock %}

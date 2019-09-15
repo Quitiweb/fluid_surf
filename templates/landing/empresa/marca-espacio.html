@@ -1,0 +1,48 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Mi marca/espacio{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'landing/css/datepicker.css' %}"/>
+{% endblock %}
+
+{% block main %}
+<!--QUITAR-->
+    {% with user.miperfil_set.all|first as miperfil %}
+        <div id="mydiv" class="container text-center">
+            <ul>
+                <li id="tab1-empresa-btn" class="tabs marked">Mi empresa</li>
+
+                {% if miperfil.is_marca %}
+                    <li id="tab2-marca-btn" class="tabs">Mi catálogo</li>
+                {% elif miperfil.is_espacio %}
+                    <li id="tab2-espacio-btn" class="tabs">Mi espacio</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <input type="checkbox" id="show_items" {% if view_from == 'show_items' %}checked{% endif %} />
+
+        {% if miperfil.is_marca %}
+            <!-- Mi catalogo -->
+            <span>{% include "landing/empresa/inc/mi-catalogo.html" %}</span>
+        {% elif miperfil.is_espacio %}
+            <!--  Mi espacio-->
+            <span>{% include "landing/empresa/inc/mi-espacio.html" %}</span>
+        {% endif %}
+
+
+        <input type="checkbox" id="show_promo" {% if view_from == 'show_promo' %}checked{% endif %} />
+        <input type="checkbox" id="show_col" {% if view_from == 'show_col' %}checked{% endif %} />
+
+        <!-- Mi empresa -->
+        {% include "landing/empresa/inc/mi-empresa.html" %}
+
+    {% endwith %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'main/assets/js/catalogo.js' %}"></script>
+{% endblock %}

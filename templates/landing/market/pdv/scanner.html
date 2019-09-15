@@ -1,0 +1,36 @@
+{% extends 'landing/base-hf.html' %}
+{% load static %}
+
+{% block main %}
+    <script type="text/javascript" src="{% static 'main/assets/js/scanner/qrscan.js' %}"></script>
+
+    <div class="row justify-content-center">
+        <h1 class="col-12 text-center">KRADLECO SCANNER</h1>
+        <div class="col-12">
+            <p class="text-center" style="color: #A5ADBB;">
+                <i class="fas fa-info-circle"></i>
+                Apunte la cámara hacia el código QR. (Asegúrese de que la zona esta bien iluminada)
+            </p>
+        </div>
+        <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
+        <canvas id="canvas" hidden></canvas>
+        <div id="output" class="col-12" hidden>
+            <div id="outputMessage">No QR code detected.</div>
+
+        </div>
+
+        <div>
+            <form method="post" action="/" id="autoform">
+                {% csrf_token %}
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'main/assets/js/scanner/qr-detection.js' %}"></script>
+{% endblock %}
+
+

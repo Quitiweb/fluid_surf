@@ -1,0 +1,40 @@
+<form action="{% url 'charge-iban' %}" method="post" id="payment-form">
+    <div class="row text-left">
+        <div class="col">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Jenny Rosen" required>
+        </div>
+        <div class="col">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="jenny.rosen@example.com" required>
+        </div>
+
+        <div class="w-100 mt-5"></div>
+
+        <div class="col-12">
+            <label for="iban-element">IBAN</label>
+            <div id="iban-element">
+                <!-- A Stripe Element will be inserted here -->
+            </div>
+        </div>
+        <div id="bank-name" class="col"></div>
+
+        <!-- Used to display form errors -->
+        <div id="error-message" role="alert" class="col-12 mt-3 mb-3"></div>
+
+        <div class="col-12 text-center"><button>Submit Payment</button></div>
+
+        <div class="w-100 mt-4"></div>
+
+        <!-- Display mandate acceptance text -->
+        <div id="mandate-acceptance" class="col-12 text-justify">
+            By providing your IBAN and confirming this payment, you are
+            authorizing kradleco.es and Stripe, our payment service
+            provider, to send instructions to your bank to debit your account and
+            your bank to debit your account in accordance with those instructions.
+            You are entitled to a refund from your bank under the terms and
+            conditions of your agreement with your bank. A refund must be claimed
+            within 8 weeks starting from the date on which your account was debited.
+        </div>
+    </div>
+</form>

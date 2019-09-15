@@ -1,0 +1,116 @@
+{% extends 'noticias/base.html' %}
+
+{% load staticfiles %}
+
+{% block main %}
+
+<!-- Post -->
+{% for p in post_list %}
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a href="/noticias/{{ p.get_url }}">{{ p.titulo }}</a></h2>
+                <p>{{ p.subtitulo }}</p>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="{{ p.fecha_de_publicacion }}">{{ p.fecha_de_publicacion }}</time>
+                <!--<a href="https://www.linkedin.com/in/diegogeamena/" class="author"><span class="name">Diego Gea</span><img src="{% static 'noticias/images/Diego_Gea.jpg' %}" alt="" /></a> -->
+            </div>
+        </header>
+        <a href="/noticias/{{ p.get_url }}" class="image featured"><img src="{{ p.imagen_principal.url }}" alt="" /></a>
+
+        {% autoescape off %}
+        {{ p.introduccion }}
+        {% endautoescape %}
+
+        <footer>
+            <ul class="actions">
+                <li><a href="/noticias/{{ p.get_url }}" class="button large">Continuar leyendo</a></li>
+            </ul>
+            <ul class="stats">
+                <li><a href="#">General</a></li>
+                <li><a href="#" class="icon fa-heart">28</a></li>
+                <li><a href="#" class="icon fa-comment">128</a></li>
+            </ul>
+        </footer>
+    </article>
+    {% endfor %}
+
+    {% endblock %}
+
+    {% block sidebar %}
+    <!-- Sidebar -->
+    <section id="sidebar">
+
+        <!-- Intro -->
+        <section id="intro">
+            <!-- <a href="#" class="logo"><img src="{% static 'noticias/images/logo.jpg' %}" alt="" /></a> -->
+            <header>
+                <h2>Kradleco Noticias</h2>
+                <p>Noticias de la comunidad Kradeler</p>
+            </header>
+        </section>
+
+        <!-- Mini Posts -->
+        <section>
+            <div class="mini-posts">
+
+                <!-- Mini Post -->
+                {% for p in random_mini_list %}
+                <article class="mini-post">
+                    <header>
+                        <h3><a href="/noticias/{{ p.get_url }}">{{ p.titulo }}</a></h3>
+                        <time class="published" datetime="{{ p.fecha_de_publicacion }}">{{ p.fecha_de_publicacion }}</time>
+                        <!--<a href="https://www.linkedin.com/in/diegogeamena/" class="author"><img src="{% static 'noticias/images/Diego_Gea.jpg' %}" alt="" /></a> -->
+                    </header>
+                    <a href="/noticias/{{ p.get_url }}" class="image"><img src="{{ p.imagen_principal.url }}" alt="" /></a>
+                </article>
+                {% endfor %}
+
+            </div>
+        </section>
+
+        <!-- Posts List -->
+        <section>
+            <ul class="posts">
+                {% for p in random_list %}
+                <li>
+                    <article>
+                        <header>
+                            <h3><a href="/noticias/{{ p.get_url }}">{{ p.titulo }}</a></h3>
+                            <time class="published" datetime="{{ p.fecha_de_publicacion }}">{{ p.fecha_de_publicacion }}</time>
+                        </header>
+                        <a href="/noticias/{{ p.get_url }}" class="image"><img src="{{ p.imagen_principal.url }}" alt="" /></a>
+                    </article>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- About -->
+        <!--<section class="blurb">
+            <h2>Acerca de Kradleco</h2>
+            <p>KRADLECO, es una plataforma Online donde nuestra prioridad es dar al pequeño retailer todos los
+                recursos que la tecnología y la tendencias nos ofrecen.<br/><br/>
+                En KRADLECO Podrás encontrar espacios físicos acordes a tu posicionamiento para poner tu producto,
+                o marcas que poder acoger en tu espacio, sin perder tiempo, necesidad de sobrestock, sólo haciendo
+                uso de tus medios actuales, de nuestro HUB, y poniendo un poco de imaginación.</p>
+            <ul class="actions">
+                <li><a href="/" class="button">Conocer más</a></li>
+            </ul>
+        </section> -->
+
+        <!-- Footer -->
+        <section id="footer">
+            <ul class="icons">
+                <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+                <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <p class="copyright">&copy; <a href="https://quitiweb.com">Qweb</a></p>
+        </section>
+
+    </section>
+{% endblock %}

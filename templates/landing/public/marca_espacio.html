@@ -1,0 +1,75 @@
+{% load static %}
+
+
+{% if form_perfil.is_espacio.value %}
+    <div class="container col-9">
+        <div class="col-9 mt-5">
+            <p class="float-left"><b>Alquiler</b></p>
+            <i class="fas fa-pencil-alt col-2 float-left"></i>
+        </div>
+
+        <div class="col-12 justify-content-center row">
+            <div class="col-12 col-md-6 col-lg-12  float-left"><p>{{ form_alquiler.descripcion }}</p></div>
+            <div class="col float-left"><p>{{ form_alquiler.euros_dia }} €/día</p></div>
+            <div class="col float-left"><p>{{ form_alquiler.euros_semana }} €/semana</p></div>
+            <div class="col float-right"><p>{{ form_alquiler.euros_mes }} €/mes</p></div>
+        </div>
+    </div>
+{% elif form_perfil.is_marca.value %}
+
+    <div class="col-9 mt-5">
+        <p class="float-left"><b>Colecciones</b></p>
+        <a href="{% url 'marca-espacio' %}"><i class="fas fa-pencil-alt col-2 float-left"></i></a>
+    </div>
+
+    {% if colecciones.count > 0 %}
+        <div class="row col-12">
+            <div id="carousel-example-multi" class="container-fluid carousel slide carousel-multi-item"
+                 data-ride="carousel">
+                <div class="col-12 carousel-inner v-2" role="listbox">
+                    {% for coleccion in colecciones %}
+                        <div class="carousel-item  {% if forloop.first %} active {% endif %} ">
+
+                            <div class="col-12 col-md-4 ">
+                                <div class="card mb-2">
+                                    <div class="card-img-top" style="height: 10px; background-color: #DC9B74;"></div>
+                                    <div class="card-body">
+                                        <h4 class="card-title font-weight-bold">{{ coleccion.nombre }}</h4>
+                                        <a class="text-primery">Ver aquí</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+                <!--Controls-->
+                <a class="carousel-control-prev d-flex" href="#carousel-example-multi" role="button"
+                   data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next d-flex" href="#carousel-example-multi" role="button"
+                   data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+            </div>
+        </div>
+    {% else %}
+
+        <p>Aún no has añadido ninguna <strong>colección</strong>.</p>
+
+    {% endif %}
+
+    </div>
+
+{% else %}
+    <p>No te has registrado como marca o como espacio. Contactanos para cualquier duda.</p>
+{% endif %}
+
+
+
+

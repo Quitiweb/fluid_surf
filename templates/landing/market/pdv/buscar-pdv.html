@@ -1,0 +1,60 @@
+{% extends 'landing/base-hf.html' %}
+{% load static %}
+
+{% block main %}
+
+    <script>
+        var url = "{% url 'articulo-detail' 1 0 %}";
+    </script>
+
+    <h1>Marcas</h1>
+    <div class="row justify-content-start" id="marcas-selectors">
+        {% if marcas|length > 0 %}
+            {% for marca in marcas %}
+                <div class="border border-primary ml-3 mr-3 mt-2 col col-md-2" id="marca-{{ marca.id }}">
+                    <p class="text-center mt-3 mb-3">{{ marca.user.username }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="border border-primary ml-3 mr-3 mt-2 co-12">
+                <p class="text-center mt-3 mb-3">No hay marcas disponibles</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="row mt-5 ml-3 mr-3">
+        <input type="text" class="form-control" name="q" type="text" id="input-buscador"
+               value=""
+               placeholder="Introduzca el código del artículo o pedido que quieres buscar" aria-label="Buscador"
+               aria-describedby="basic-addon1">
+    </div>
+    <form method="post" action="{% url 'articulo-detail' 1 0 %}" id="detail-form">
+        {% csrf_token %}
+
+        <div id="buscador-pdv-result" class="mt-5">
+
+
+        </div>
+    </form>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">QR</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'main/assets/js/buscador.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/assets/js/jquery.qrcode.min.js' %}"></script>
+{% endblock %}

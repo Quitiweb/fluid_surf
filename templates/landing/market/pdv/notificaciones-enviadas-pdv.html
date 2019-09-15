@@ -1,0 +1,86 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Notificaciones recibidas{% endblock %}
+
+{% block main %}
+    <div class="container">
+
+        <div class="col-md-12 mt-5 text-center">
+           <ul>
+                <li id="tab1-btn" class="tabs marked"><p>Precios</p></li>
+                <li id="tab2-btn" class="tabs">Envíos</li>
+           </ul>
+        </div>
+
+        <div id="buscar" class="col-xl-12 mt-4 text-center">
+             <a href="#" class="button gris text-center w-75"><i class="fas fa-search"></i> Buscar</a>
+        </div>
+
+        <div id="tab1" class="mt-5">
+            {% for p in precios %}
+            <div class="card mt-2" style="cursor: pointer;">
+              <div class="card-body toggle-chk">
+                <div class="row">
+                    <div class="col-6">
+                        <h3>{{ p.titulo }}</h3>
+                        <p>Fecha pedido: {{ p.fecha }}</p>
+                    </div>
+                    <div class="col-2">
+                        <img src="/static/landing/img/promociones/notification.png">
+                    </div>
+                    <div class="col-2">
+                        <a href=""><i class="far fa-envelope fa-2x"></i></a>
+                    </div>
+                    <div class="col-2 float-right">
+                        <a href="#" class="flipable" id="{{p.id}}"><i class="fas fa-chevron-right fa-2x"></i></a>
+                    </div>
+                </div>
+              </div>
+            <div id="{{p.id}}-show" class="hide">
+                <div class="card-body">
+                    <h4>Mensaje para {{ p.receptor }}:</h4>
+                    {{ p.contenido|linebreaks }}
+                </div>
+            </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        <div id="tab2" class="hide mt-5">
+        {% for e in envios %}
+            <div class="card mt-2" style="cursor: pointer;">
+              <div class="card-body toggle-chk">
+                <div class="row">
+                    <div class="col-6">
+                        <h3>{{ e.titulo }}</h3>
+                        <p>Fecha pedido: {{ e.fecha }}</p>
+                    </div>
+                    <div class="col-2">
+                        <img src="/static/landing/img/promociones/notification.png">
+                    </div>
+                    <div class="col-2">
+                        <a href=""><i class="far fa-envelope fa-2x"></i></a>
+                    </div>
+                    <div class="col-2 float-right">
+                        <a href="#" class="flipable" id="{{e.id}}"><i class="fas fa-chevron-right fa-2x"></i></a>
+                    </div>
+                </div>
+              </div>
+            <div id="{{e.id}}-show" class="hide">
+                <div class="card-body">
+                    <h4>Mensaje para {{ e.receptor }}:</h4>
+                    {{ e.contenido|linebreaks }}
+                </div>
+            </div>
+            </div>
+
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+{% endblock %}

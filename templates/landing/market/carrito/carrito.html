@@ -1,0 +1,169 @@
+{% load static %}
+
+
+<section id="carrito">
+
+    <section id="member" class="banner">
+        <div class="inner">
+            <div class="w-100"></div>
+            <h3>Este es tu carrito, {{ user.username }}</h3>
+        </div>
+    </section>
+
+    <!-- Mi perfil -->
+    <section>
+        <div class="inner scrollable-div" {% if carrito.items.all|length > 0 %}style="height: 400px;"{% endif %}>
+            <ul class="articulos">
+            {% if carrito.items.all|length == 0 %}
+                <li><strong>No has añadido todavía nada a tu carrito</strong> </li>
+                <li class="text-center"><i class="fa fa-frown-o fa-5x "></i></li>
+            {% else %}
+
+                {% for articulo in carrito.items.all %}
+                    <li>
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    {% if articulo.articulo %}
+                                        {% if articulo.articulo.imagen_principal %}
+                                            <img src="{{ articulo.articulo.imagen_principal.url }}" class="card-img"
+                                                 alt="...">
+                                        {% else %}
+                                            <img src="{% static 'main/images/KC_nopic.png' %}" class="card-img"
+                                                 alt="...">
+                                        {% endif %}
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <p class="card-title"><span
+                                                        class="display-4">{{ articulo.precio_final }}€</span><span
+                                                        class="display-5"> {{ articulo.articulo.pvp }}€</span></p>
+                                                <p class="card-text">{{ articulo.articulo.nombre }}</p>
+                                                <p class="card-text d-inline">
+                                                    <small class="text-muted">{{ articulo.articulo.ref }}</small>
+                                                    <i class="fa fa-plus float-right"
+                                                       id="cesta_count_up_{{ articulo.id }}"></i>
+                                                <p class="d-inline float-right ml-2 mr-2"
+                                                   id="stock_cesta_{{ articulo.id }}">{{ articulo.cantidad }}</p>
+                                                <i class="fa fa-minus float-right"
+                                                   id="cesta_count_down_{{ articulo.id }}"></i>
+                                                </p>
+
+                                            </div>
+                                            {% elif articulo.variante %}
+                                            {% if articulo.variante.imagen_principal %}
+                                                <img src="{{ articulo.variante.imagen_principal.url }}" class="card-img"
+                                                     alt="...">
+                                            {% else %}
+                                                <img src="{% static 'main/images/KC_nopic.png' %}" class="card-img"
+                                                     alt="...">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-8">
+                                        <div class="card-body">
+                                            <p class="card-title"><span
+                                                    class="display-4">{{ articulo.precio_final }}€</span><span
+                                                    class="display-5"> {{ articulo.variante.pvp }}€</span></p>
+                                            <p class="card-text">{{ articulo.variante.articulo.nombre }}</p>
+                                            <p class="card-text d-inline">
+                                                <small class="text-muted">{{ articulo.variante.ref }}</small>
+                                                <i class="fa fa-plus float-right"
+                                                   id="cesta_count_up_{{ articulo.id }}"></i>
+                                            <p class="d-inline float-right ml-2 mr-2"
+                                               id="stock_cesta_{{ articulo.id }}">{{ articulo.cantidad }}</p>
+                                            <i class="fa fa-minus float-right"
+                                               id="cesta_count_down_{{ articulo.id }}"></i>
+                                            </p>
+
+                                        </div>
+                                    {% endif %}
+
+                                    </div>
+                            </div>
+                        </div>
+
+
+                    </li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+        </div>
+    </section>
+
+    <section id="promo-activa-carrito" class="border {% if carrito.promocion_asociada %} border-morado{% endif %}">
+        <!-- Promo activa -->
+
+        {% if carrito.promocion_asociada %}
+            <div class="row">
+
+                <h4 class="black">Tienes una promoción activa!</h4>
+                {% if carrito.promocion_asociada.codigo %}
+                    <h6>Código de la promocion: {{ carrito.promocion_asociada.codigo_value }}</h6>
+                {% else %}
+                    <h6>Promoción automática</h6>
+                {% endif %}
+
+                {% if carrito.items_promo.all|length > 0 %}
+                    <table class="no-valign">
+                        <tbody>
+                        {% for item in carrito.items_promo.all %}
+
+                            <tr>
+                                <th scope="row">
+                                    {{ item.promo_reference.nombre }}
+                                </th>
+                                <td class="table-fit bg-light">
+                                    {% if item.promo_reference.imagen_principal %}
+                                        <img class="ml-2 mini-thumbnail"
+                                             src="{{ item.promo_reference.imagen_principal.url }}">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <del>{{ item.promo_reference.precio_activo }}</del>
+                                </td>
+                                <td>{% if item.precio_final == 0.0 %}GRATIS{% else %}
+                                    {{ item.precio_final }}{% endif %}</td>
+                                <td>{{ item.cantidad }} Ud.</td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h4> Descuento total
+                        de {{ carrito.promocion_asociada.recompensa_value }} {{ carrito.promocion_asociada.recompensa_verbose }}</h4>
+
+                {% endif %}
+            </div>
+
+        {% else %}
+            <h4>No tienes ninguna promoción activa actualmente</h4>
+        {% endif %}
+
+    </section>
+
+
+    <!-- Links -->
+    <section id="carrito_codigo">
+        <div class="row">
+            <input class="col form-control ml-3" type="text" size="15" id="codigo_aplicado"/>
+            <button id="carrito-apply-codigo" class="btn naranja btn-sm col">APLICAR CÓDIGO</button>
+        </div>
+
+    </section>
+
+    <!-- Mi Kradleco market -->
+    <section id="carrito_total">
+        <p class="text-right">Sub total<span class="display-4" id="carrito_total_value">{{ carrito.total }}</span>€</p>
+        <p class="text-right">IVA (21% incluido)<span class="display-5">{{ carrito.total_iva }}</span>€</p>
+        <form method="POST" action="/pagar">
+            {% csrf_token %}
+            <button class="btn btn-sm col">PAGAR</button>
+
+        </form>
+
+    </section>
+
+</section>

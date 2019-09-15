@@ -1,0 +1,99 @@
+{% extends "landing/base.html" %}
+
+{% load static %}
+
+{% block header %}
+    {% if user.is_authenticated %}
+        {% include "landing/member/header.html" %}
+    {% else %}
+        <div class="bg-morado text-center">
+            <a id="logo-kradleco" href="/" class="image original"><img
+                    src="{% static 'main/images/Logo_Kradleco_Blanco.png' %}" alt="kradleco.es"/></a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block menu %}
+    {% if user.is_authenticated %}
+        {% include "landing/member/menu.html" %}
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {% if user.is_authenticated %}
+        <section id="new-search" class="member mt-5">
+            <div class="row justify-content-center">
+                <div class="col-2"><i class="fas fa-search gly-rotate-90"></i></div>
+                <div class="col-6">
+                    <form method="get" action="#">
+                        <input type="text" name="query" placeholder="Buscar"/>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="member">
+            {% if usuarios|length > 0 %}
+                <div class="row justfify-content-left">
+                    {% for u in usuarios %}
+                        <div class="col-6 col-md-4" onclick="location.href='/perfil-kradeler/{{ u.username }}'">
+                            <!-- Card with a top carousel image -->
+                            <div class="card bootstrap">
+                                <div class="card-bootstrap-header">
+                                    {% if u.galeria.all.count > 0 %}
+                                        <!-- Bootstrap Carousel -->
+                                        <div id="KradlecoMarket" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+
+                                                {% for img in u.galeria.all %}
+                                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                        <img src="{{ img.imagen.url }}"/>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="carousel-item active">
+                                            <img src="{% static 'main/images/KC_nopic.png' %}"
+                                                 alt="Usuario sin imágenes en su galería"/>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <div class="card-div-img-title">
+                                            {% if u.foto_perfil %}
+                                                <img src="{{ u.foto_perfil.url }}" class="card-img-title" alt=""/>
+                                            {% else %}
+                                                <img src="{% static 'main/images/no_user.png' %}" class="card-img-title"
+                                                     alt=""/>{% endif %}
+                                        </div>
+                                        {{ u.username }}
+                                    </h5>
+                                    <p class="card-job">{% firstof u.titular 'Titular' %}</p>
+                                    <p class="card-text">Textil Tags<br> Adultos +2</p>
+                                    <a href="#">Contactar</a>
+                                    <img class="icon float-right" src="{% static 'main/images/espacio_icon.svg' %}"/>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    {% if not user.is_authenticated %}
+        <section id="footer">
+            <div id="contact" class="inner">
+                <p style="margin-top: -1.5em;">¿No tienes cuenta?<br/>Regístrate aquí: <a
+                        href="/signup"><b>SignUp</b></a></p>
+                <form method="get" action="/login">
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

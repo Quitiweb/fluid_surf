@@ -1,0 +1,37 @@
+{% load static %}
+
+<section id="blog" class="wrapper alt style1">
+    <div class="inner">
+        <h2 class="major"><b>Disfruta</b> de nuestro blog</h2>
+        <div class="row">
+            <div class="col-8 col-12-small">
+                <p>Bienvenido a nuestro <b>blog de formación e información sectorial</b>,
+                cuando relancemos la plataforma podrás subir tus propias entradas
+                y leer las de otros usuarios e influencers del sector.</p>
+            </div>
+            <div class="col-4 col-12-small">
+                <ul class="actions">
+                    <li><a href="{% url 'noticias' %}" class="button">Llévame</a></li>
+                </ul>
+            </div>
+        </div>
+        <section class="features">
+            {% for p in post_list %}
+                <article>
+                    <a href="/noticias/{{ p.get_url }}" class="image">
+                        <form class="url" action="/noticias/{{ p.get_url }}" method="get">
+                            <input type="submit" value="Leer entrada" />
+                        </form>
+                        <div class="text-box">
+                            <h4 class="major">{{ p.titulo }}</h4>
+                            {% autoescape off %}
+                                {{ p.introduccion }}
+                            {% endautoescape %}
+                        </div>
+                        <img src="{{ p.imagen_principal.url }}" alt="" />
+                    </a>
+                </article>
+            {% endfor %}
+        </section>
+    </div>
+</section>

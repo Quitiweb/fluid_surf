@@ -1,0 +1,21 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+
+{% block banner %}
+	<section id="banner">
+		<div class="inner">
+			<h2>¡Enhorabuena!</h2>
+			<div class="row">
+				<div class="col-6 col-12-medium">
+					<p>Tu mensaje se ha enviado correctamente. Muchas gracias en nombre del equipo <b>Kradleco</b></p>
+					<p><a href='/'>Volver a Kradleco</a></p>
+				</div>
+				<div class="col-6 col-12-medium">
+					<div class="col-12"><span class="image fit"><img src="{% static 'home/images/Image_Landing_1.png' %}" alt="Kradleco" /></span></div>
+				</div>
+			</div>
+			<input type="text" name="buscar" id="npt-buscar" placeholder="Busca una marca, un espacio o un servicio" />
+		</div>
+	</section>
+{% endblock %}

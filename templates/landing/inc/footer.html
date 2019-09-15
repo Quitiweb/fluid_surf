@@ -1,0 +1,26 @@
+{% load static %}
+
+<section id="footer">
+    <div id="contact" class="inner">
+        <h2 class="major">¿Tienes alguna <b>duda</b>?</h2>
+        <p>Si tienes alguna duda o sugerencia, contacta con nosotros, estamos en pleno relanzamiento de la plataforma y nos vendría bien tu feedback!</p>
+        <div class="contact-form">
+            <form novalidate="novalidate" method="post" name="contact">
+                {% csrf_token %}
+                <div class="fields">
+                    <div class="field">
+                        <label for="email">Dirección de email</label>
+                        {{ form.from_email }}
+                    </div>
+                    <div class="field">
+                        <label for="message">Duda o comentario</label>
+                        {{ form.message }}
+                    </div>
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Contactar" /></li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</section>

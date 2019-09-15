@@ -1,0 +1,46 @@
+{% load static %}
+
+<section class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-12">
+            <hr class="hr"/>
+        </div>
+        <div class="col-5"><a href="{% url 'descuentos-anteriores' %}" class="mb-0">Promos y rebajas anteriores</a></div>
+        <div class="col-4"><a href="{% url 'descuentos-anteriores' %}" class="mb-0">Ver todas -></a></div>
+
+        <div class="col-12">
+            <hr class="hr"/>
+        </div>
+
+        <div class="col-5">
+            <a href="{% url 'proximos-descuentos' %}">
+                <p class="float-left mb-0">Proximos descuentos</p>
+                <img class="float-left" src="{% static 'landing/img/promociones/notification.png' %}" alt="Kradleco"/>
+            </a>
+        </div>
+        <div class="col-4"><a href="{% url 'proximos-descuentos' %}" class="mb-0">Ver todas -></a></div>
+
+        <div class="col-12">
+            <hr class="hr"/>
+        </div>
+
+        <a href="promo-form" class="col-5 float-left" data-toggle="collapse"
+           data-target="#add-promo-view"
+           aria-expanded="true" aria-controls="add-promo-view">
+            <i class="fas fa-plus-circle"></i>
+            Añadir promoción o rebajas
+        </a>
+        <a href="#promo-form" class="float-left col-1"
+           data-toggle="tooltip"
+           title="Las promociones y rebajas aplicarán sobre todos tus puntos de venta.
+                    Si quieres rebajar 1 o varios artículos sin necesidad de crear una promoción, puedes insertar el
+                    nuevo precio en la pantalla de edición artículo, en la celda: “PVP Rebajado">
+            <img src="{% static 'landing/img/catalogo/categoria/info.png' %}"/>
+        </a>
+
+
+        {% include 'landing/empresa/catalogo/promociones/add-promo.html' %}
+
+    </div>
+</section>

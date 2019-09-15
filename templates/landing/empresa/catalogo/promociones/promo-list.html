@@ -1,0 +1,55 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Ver productos{% endblock %}
+
+
+{% block main %}
+
+
+    <div class="container">
+
+        <div class="row">
+            <h3>{{ promo.texto }}</h3>
+
+
+            {# Seccion con la tabla #}
+        {% if articulos|length > 0 %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Referencia</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">PVP</th>
+                    <th scope="col">Precio Comparacion</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for articulo in articulos %}
+                    <tr>
+                        <th scope="row">{{ articulo.nombre }}</th>
+                        <td>{{ articulo.ref }}</td>
+                        <td>{{ articulo.descripcion }}</td>
+                        <td>{{ articulo.pvp }}</td>
+                        <td>{{ articulo.precio_comparacion }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% else %}
+            <p>Esta promoción aún no tiene articulos, vuelve al editor para añadir algunos</p>
+        {% endif %}
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'main/assets/js/catalogo.js' %}"></script>
+{% endblock %}
+
+

@@ -1,0 +1,171 @@
+{% load static %}
+<section id="tab2" class="container mt-3 hide">
+    <div class="container mt-5">
+        <div class="inner">
+            <div class="row justify-content-center">
+                <div id="puntosventa-btn" class="col-xl-6">
+                    <a href="#" class="button gris fit"><i class="fas fa-search"></i> Filtrar</a>
+                </div>
+                <!-- Se abre puntosventa1-btn-btn -->
+                <div id="puntosventa1-btn" class="col-12 hide">
+                    <div class="row justify-content-center">
+                        <div class="col-12 mt-5">
+                            <h5>Estado</h5>
+                        </div>
+                        <div class="col-6">
+                            Preaceptados
+                        </div>
+                        <div class="col-6 text-right">
+                            <input id="puntosventa-1" type="checkbox" class="toggle-chk"/>
+                            <label for="puntosventa-1"><span></span></label>
+                        </div>
+                        <div class="col-6">
+                            Activos
+                        </div>
+                        <div class="col-6 text-right">
+                            <input id="puntosventa-2" type="checkbox" class="toggle-chk"/>
+                            <label for="puntosventa-2"><span></span></label>
+                        </div>
+                        <div class="col-6">
+                            Pausa/Cancelados
+                        </div>
+                        <div class="col-6 text-right">
+                            <input id="puntosventa-3" type="checkbox" class="toggle-chk"/>
+                            <label for="puntosventa-3"><span></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-100 mt-5"></div>
+            <div class="row justify-content-center mt-5">
+
+                {% for punto in puntos %}
+                {% if punto %}
+                    <div id="btn-{{ punto.id }}" class="col-7 col-md-7 puntosventa-btn" style="cursor: pointer;">
+                        <a href="#" class=""><h3>{{ punto.nombre }}</h3></a>
+                        <p>Estado:
+                            {% if punto.activo == True %}
+                            Activo
+                            {% else %}
+                                {% if punto.validado_marca %}
+                                    Esperando al espacio
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                        <p>Fecha de inicio {{ punto.propuesta.fecha_desde|date:'d/m/Y' }}</p>
+                    </div>
+                    <div class="col-5 col-md-5">
+                        <i class="far fa-envelope fa-2x fa-lg text-right"></i>
+                        <i class="fas fa-chevron-right float-right"></i>
+                    </div>
+
+                    <!-- Se abre puntosventa2-btn -->
+                    <div id="puntosventa2-{{ punto.id }}" class="col-12 hide card">
+                        <div class="col-8">
+                            <h3 class="mt-3">{{ punto.propuesta.nombre }} <a href=""><i class="far fa-bell"
+                                                                                        style="color:#7629EF;"></i></a>
+                            </h3>
+                            <p>Estado: {{ punto.propuesta.estado }}</p>
+                        </div>
+
+                        <div class="container text-center mt-5">
+                            {% if request.user.is_marca %}
+                                <h1>Colecciones</h1>
+                                <div class="row">
+
+                                    {% for coleccion in punto.colecciones.all %}
+                                        <div class="card col-12 mt-3 col-md-3 border-warning mr-2">
+                                            <div class="col text-center">
+                                                <p>{{ coleccion.nombre }}</p>
+
+                                                <form method="post"
+                                                      action="{% url 'editar-stock' coleccion.id punto.id %}"
+                                                      id="ver-stock-form-{{ coleccion.id }}">
+                                                    {% csrf_token %}
+                                                    <p><a href="#"
+                                                          onclick="document.getElementById('ver-stock-form-{{ coleccion.id }}').submit()">{{ coleccion.coleccion_en_pdv.all|length }}
+                                                        Editar</a></p>
+                                                </form>
+
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+
+                                    <div class="row align-items-center">
+
+                                        <form method="post" action="{% url 'colecciones-visibles' punto.id %}">
+                                            {% csrf_token %}
+
+                                            <div class="col-12 col-md-3 row align-items-center">
+                                                <button type="submit" id="add-col-pdv"
+                                                        class="btn-circle btn-lg align-center">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+
+
+
+                    <!--TODO Terminar de hacer la estructura correcta para esto y poder terminar el diseño-->
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row col-12 mt-5">
+                        <div class="col-sm text-center">
+                            <input type="submit" id="botonModificarPunto" class="btn-transparent" name="modificar_pdv" value="{{ punto.id }}">
+                            <h3 class="mt-3">Modificar</h3>
+                        </div>
+                        <div class="col-sm text-center">
+                            <input type="submit" id="botonCancelarPunto" class="btn-transparent" name="cancelar_pdv" value="{{ punto.id }}">
+                            <h3 class="mt-3">Cancelar</h3>
+                        </div>
+                        <div class="col-sm text-center">
+                            {% if punto.activo == True %}
+                            <button type="submit" class="btn-transparent"  disabled name="aceptar" value="{{ punto.id }}"><i class="fas fa-check fa-2x fa-lg"></i></button>
+                            <h3 class="mt-3" style="color: #C5C5C5;">Validar</h3>
+                            {% else %}
+                                {% if request.user.is_marca %}
+                                    {% if not punto.validado_marca %}
+                                        {% if punto.colecciones.count > 0 %}
+                                            <input type="submit" id="botonAceptarPropuesta" class="btn-transparent" name="aceptar_pdv" value="{{ punto.id }}">
+                                            <h3 class="mt-3">Validar</h3>
+                                        {% else %}
+                                            <button type="submit" class="btn-transparent"  disabled name="aceptar" value="{{ punto.id }}"><i class="fas fa-check fa-2x fa-lg"></i></button>
+                                            <h3 class="mt-3" style="color: #C5C5C5;">Validar</h3>
+                                        {% endif %}
+                                    {% else %}
+                                        <button type="submit" class="btn-transparent"  disabled name="aceptar" value="{{ punto.id }}"><i class="fas fa-check fa-2x fa-lg"></i></button>
+                                        <h3 class="mt-3" style="color: #C5C5C5;">Validar</h3>
+                                    {% endif %}
+                                {% else %}
+                                    {% if punto.validado_marca %}
+                                        <button type="submit" class="btn-transparent" name="aceptar_pdv" value="{{ punto.id }}"><i class="fas fa-check fa-2x fa-lg"></i></button>
+                                        <h3 class="mt-3">Validar</h3>
+                                    {% else %}
+                                        <button type="submit" class="btn-transparent"  disabled name="aceptar" value="{{ punto.id }}"><i class="fas fa-check fa-2x fa-lg"></i></button>
+                                        <h3 class="mt-3" style="color: #C5C5C5;">Validar</h3>
+                                    {% endif %}
+                                {% endif %}
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+            </div>
+
+        </div> <!-- Cierra el segundo class="row justify-content-center"-->
+
+
+    </div> <!-- Cierra inner -->
+
+</section>

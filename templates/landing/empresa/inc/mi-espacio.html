@@ -1,0 +1,89 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Mi espacio{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <form method="post" class="row justify-content-center">
+            {% csrf_token %}
+
+                <div class="col-12 mt-5">
+                     <i class="fas fa-plus-circle"></i><strong class="ml-2">Añadir nueva ubicación</strong>
+                </div>
+
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">Ubicación, Calle, CP...</div>
+                            <div class="col-12">
+                                {{form.direccion}}
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">Etiquetas de tu espacio</div>
+                            <div class="col-12">
+                                {{form.tags}}
+                            </div>
+
+                        </div>
+                        <div class="row mt-4">
+                            <strong class="mt-4">Precios</strong>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <div class="col-12">Día</div>
+                                <div class="col-12">
+                                    {{form.precio_dia}}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-12">Semana</div>
+                                <div class="col-12">
+                                    {{form.precio_semana}}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-12">Mes</div>
+                                <div class="col-12">
+                                    {{form.precio_mes}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-4">
+                                <div class="row"><strong>Tiempo mínimo*</strong></div>
+                                    <div class="row">
+                                        {{form.tiempo_minimo}}
+                                    </div>
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-5 mt-2">
+                                <div class="row"><strong style="font-size: 0.85em;">Metros disponibles por marca*</strong></div>
+                                <div class="row">
+                                    {{form.metros_disponibles}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12"><strong>% Sobre las ventas que pides en tu espacio*</strong></div>
+                                {{form.ventas}}
+                        </div>
+                        <div class="row mt-4 mb-5">
+                            <div class="col-6"><strong>¿Precio negociable?</strong></div>
+                            <div class="col-2">
+                                {{form.negociable}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center mt-5"><button type="submit" value="Guardar" name="guardar_edit_espacio"><i class="fa fa-check"></i> Guardar</button></div>
+
+        </form>
+
+        {% include "landing/inc/premium.html" %}
+
+    </div>
+{% endblock %}

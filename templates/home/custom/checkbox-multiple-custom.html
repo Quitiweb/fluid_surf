@@ -1,0 +1,13 @@
+{% if widget.wrap_label %}<label{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>{% endif %}
+
+    {% include "django/forms/widgets/input.html" %}
+
+    {% include "home/custom/servicios.html" %}
+
+    {% include "home/custom/mercado.html" %}
+
+    {% include "home/custom/target.html" %}
+
+    <h6 class="etiqueta">{{ widget.label }}</h6>
+
+{% if widget.wrap_label %} </label>{% endif %}

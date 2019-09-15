@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>{% block head_title %}{% endblock %}</title>
+
+        {% load static %}
+
+        {% include "main/head.html" %}
+
+        {% block extra_head %}
+        {% endblock %}
+    </head>
+
+    <body class="is-preload">
+        {% block body %}
+            <div id="page-wrapper">
+
+                {% if not user.is_authenticated %}
+                    <div class="bg-morado text-center">
+                        <a id="logo-kradleco" href="/" class="image original"><img src="{% static 'main/images/Logo_Kradleco_Blanco.png' %}" alt="kradleco.es" /></a>
+                    </div>
+                {% endif %}
+
+                <section class="member mt-5">
+                    <div class="container text-center">
+                        {% if messages %}
+                            <div>
+                                <strong>Messages:</strong>
+                                <ul>
+                                    {% for message in messages %}
+                                        <li>{{message}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <div>
+                            <strong>Menu:</strong>
+                            <ul>
+                                {% if user.is_authenticated %}
+                                    <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+                                    <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'account_login' %}">Sign In</a></li>
+                                    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </section>
+            </div>
+        {% endblock %}
+
+        {% block extra_body %}
+        {% endblock %}
+
+        {% include "main/script.html" %}
+
+    </body>
+
+</html>

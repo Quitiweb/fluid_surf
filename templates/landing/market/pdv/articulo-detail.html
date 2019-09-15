@@ -1,0 +1,153 @@
+{% extends 'landing/base-hf.html' %}
+{% load static %}
+
+{% block main %}
+    <div class="row justify-content-center">
+        {% if articulo.articulo %}
+            <img class="col-12 mid-thumbnail img-fluid" style="max-height: 100em;"
+                    {% if articulo.articulo.imagen_principal %}
+                 src="{{ articulo.articulo.imagen_principal.url }}"
+                    {% else %}
+                 src="{% static 'main/images/KC_nopic.png' %}"
+                    {% endif %}>
+            <p class="col-12"></p>
+            <div id="carousel-example" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner row w-100 mx-auto" role="listbox" id="multi-img-articulo">
+                    {% if articulo.articulo.galeria.all|length > 0 %}
+                        {% for image in articulo.articulo.galeria.all %}
+                            <div class="carousel-item portrait {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.imagen.url }}" class="img-fluid mx-auto d-block"
+                                     alt="{{ image.imagen }}">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <a class="carousel-control-prev" href="#carousel-example" role="button"
+                   data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            <!-- Datos del articulo -->
+            <form method="post" action="/add-carrito" id="form-add-carrito">
+                <div class="row col-12 mt-5">
+                    <div class="col"><h3>{{ articulo.articulo.nombre }}</h3><span>{{ articulo.articulo.ref }}</span>
+                    </div>
+                    <div class="col"><span class="display-4">{{ articulo.articulo.precio_activo }}€</span></div>
+                    <div class="row justify-content-center col-12 mt-3">
+
+                        {% if articulo.variante %}
+                            <h1 class="mt-3">Información sobre la variante</h1>
+                            <div class="row col-12 justify-content-center">
+                                <!--seccion dinamica para las variantes -->
+                                {% if articulo.variante.opcion_1 %}
+
+                                    <div class="col-4">
+                                        <label>Variante 1</label>
+                                        <select>
+                                            <option value="{{ articulo.variante.opcion_1_value }}">{{ articulo.variante.opcion_1_value }}</option>
+                                        </select>
+                                    </div>
+                                {% endif %}
+                                {% if articulo.variante.opcion_2 %}
+
+                                    <div class="col-4">
+                                        <label>Variante 2</label>
+
+                                        <select>
+                                            <option value="{{ articulo.variante.opcion_2_value }}">{{ articulo.variante.opcion_2_value }}</option>
+                                        </select>
+                                    </div>
+                                {% endif %}
+                                {% if articulo.variante.opcion_3 %}
+
+                                    <div class="col-4">
+                                        <label>Variante 3</label>
+
+                                        <select>
+                                            <option value="{{ articulo.variante.opcion_3_value }}">{{ articulo.variante.opcion_3_value }}</option>
+                                        </select>
+                                    </div>
+                                {% endif %}
+                                <!--Stock y tienda online-->
+
+                            </div>
+
+                        {% endif %}
+                    <div class="row col-12 mt-5">
+                                    <div class="col-4">
+                                        <b>Stock</b>
+                                        <h1 class="disabledcontent">{{ articulo.cantidad }}</h1>
+                                    </div>
+                                    <div class="col-4">
+                                        <b>Unidades</b><input type="number" name="unidades-articulo-pdv"
+                                                              id="unidades-articulo-pdv" max="{{ articulo.cantidad }}"
+                                                              value="0"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="button gris"><a
+                                                href="{% url 'tienda-online' articulo.articulo.id %}">COMPRAR ONLINE</a>
+                                        </button>
+                                    </div>
+                                </div>
+
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mt-3">
+
+                    {% csrf_token %}
+                    <button class="col-4 mt-3" id="add-to-cart">Añadir al carrito</button>
+                    <input type="hidden" id="pdv" name="pdv" value="{{ pdv }}">
+                    <input type="hidden" id="articulo_id" name="articulo_id" value="{{ articulo.id }}">
+
+
+                </div>
+            </form>
+        {% else %}
+            <p>Ha ocurrido un error al cargar la información, inténtalo de nuevo.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'main/assets/js/carrito.js' %}"></script>
+{% endblock %}
+{##}
+{#<div class="col row text-center">#}
+{#                        <div class="col-12">#}
+{#                            <strong>Variante:</strong>#}
+{#                        </div>#}
+{#                        <div class="col-12">#}
+{#                            <strong>Stock:</strong>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    #}
+{##}
+{#                    {% if variantes.all|length > 0 %}#}
+{#                        {% for variante in variantes.all %}#}
+{#                            <div class="col-2 text-center variante-stock" id="variante-{{ variante.variante.id }}">#}
+{#                                <div class="col-12">#}
+{#                                    {{ variante.variante.get_variantes_values }}#}
+{#                                </div>#}
+{#                                <div class="col-12">#}
+{#                                    <span id="variante-stock-{{ variante.variante.id }}">{{ variante.cantidad }}</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    {% else %}#}
+{#                        <div class="col text-center variante-stock">#}
+{#                            <div class="col-12">#}
+{#                                Este artículo#}
+{#                            </div>#}
+{#                            <div class="col-12">#}
+{#                                <span>no tiene variantes</span>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% endif %}#}

@@ -1,0 +1,205 @@
+/* Acordeones */
+
+    .accordion .card {
+        border: none;
+    }
+
+    .accordion .card-header {
+        background-color: white;
+        border-bottom: none;
+    }
+
+    .accordion .btn {
+        width: 100%;
+        padding-left: 30px;
+        background-color: var(--gris);
+        font-weight: 600;
+        color: var(--dark) !important;
+    }
+
+    .accordion button.collapsed {
+        background-color: var(--morado);
+        color: white !important;
+    }
+
+
+/* Tabs */
+
+    li.tabs {
+        display: inline-flex;
+        cursor: pointer;
+        text-transform: uppercase;
+        padding: 0 1em;
+    }
+
+
+    .hide {
+        display: none;
+    }
+
+    .marked {
+        border-bottom: 2px solid var(--morado);
+        font-weight: 600;
+    }
+
+
+/* Carousel */
+
+    .carousel-control-next-icon,
+    .carousel-control-prev-icon {
+        filter: invert(80%);
+    }
+
+
+/* Cards */
+
+    .card.bootstrap {
+        border-radius: 5%;
+        border: 2px solid #F4F5F7;
+        box-shadow: 2px 4px #DFE1E5;
+        margin: 1em 1em 1em 0;
+        padding-top: 1em;
+        text-align: center;
+    }
+
+    .card.bootstrap .card-body {
+        text-align: left;
+    }
+
+    .card-bootstrap-header .carousel-item,
+    .card-bootstrap-header .carousel-item.active {
+        height: 19em;
+    }
+
+    .card-bootstrap-header img {
+        width: 100%;
+    }
+
+    .card {
+        border-radius: 8px;
+        border: 1px solid #F4F5F7;
+    }
+
+        .card-title {
+            margin-bottom: .2rem;
+        }
+
+        .card-div-img-title {
+            margin-right: 20px;
+            margin-bottom: 15px;
+            width: 6rem;
+            height: 6rem;
+            text-align: center;
+            float: left;
+        }
+
+        .card-img-title {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .card-header {
+            color: white;
+            font-weight: bold;
+            background-color: var(--morado);
+        }
+
+            .card-header > * {
+                margin: .1rem 1rem .1rem 0;
+            }
+
+            .card-header .card-img-title {
+                width: 15%;
+            }
+
+            .card-header-subtitle {
+                font-weight: 300;
+                font-size: 85%;
+            }
+
+            .card-header.orange {
+                background-color: var(--naranja);
+            }
+
+		@media screen and (max-width: 1680px) {
+
+		}
+
+		@media screen and (max-width: 1280px) {
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+            .card-div-img-title {
+                margin-right: 15px;
+                margin-bottom: 10px;
+                width: 4rem;
+                height: 4rem;
+            }
+
+            .card-bootstrap-header .carousel-item,
+            .card-bootstrap-header .carousel-item.active {
+                height: 12em;
+            }
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+		}
+
+		@media screen and (max-width: 480px) {
+
+		}
+
+
+/* Tricks */
+
+    .height-limit > div {
+        vertical-align: middle;
+        height: 60px !important;
+        display: table-cell;
+    }
+
+        .height-limit div > * {
+            min-height: 60px !important;
+            height: 60px !important;
+        }
+
+    .force-align-input {
+        position: absolute;
+        top: -17px;
+        width: 50% !important;
+        line-height: 0;
+    }
+
+
+/* The On and Off button format */
+
+input[type="checkbox"].toggle-chk {
+    display: none;
+}
+
+input[type="checkbox"].toggle-chk:checked + label:before {
+    opacity: 0;
+}
+
+input[type="checkbox"].toggle-chk + label span {
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    display: inline-block;
+    vertical-align: middle;
+    width: 60px;
+    height: 60px;
+    margin-top: -13px;
+    background: url(../../images/toggle_off.svg) no-repeat center center;
+}
+
+input[type="checkbox"].toggle-chk:checked + label span {
+    background: url(../../images/toggle_on.svg) 0px center no-repeat;
+}

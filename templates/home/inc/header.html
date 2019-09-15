@@ -1,0 +1,16 @@
+{% load static %}
+
+<header id="header" class="alt">
+    <a href="/" class="image original"><img src="{% static 'main/images/Logo_Kradleco.png' %}" alt="kradleco.es" /></a>
+    <a href="/" class="image white"><img src="{% static 'main/images/Logo_Kradleco_Blanco.png' %}" alt="kradleco.es" /></a>
+    <nav class="links">
+        <a href="/">Inicio</a>
+        <a href="{% url 'noticias' %}">Noticias</a>
+        <a href="/#descubre">Descubre Kradleco</a>
+        <a href="/#contact">Contacto</a>
+        <a href="{% url 'login' %}">Inicio Sesión</a>
+    </nav>
+    <nav class="menu">
+        <a href="#menu">Menu</a>
+    </nav>
+</header>

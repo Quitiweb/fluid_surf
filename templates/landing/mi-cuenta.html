@@ -1,0 +1,131 @@
+{% extends "landing/base-hf.html" %}
+
+{% load static %}
+
+{% block title %}Mi cuenta{% endblock %}
+
+{% block main %}
+	<div class="container text-center mb-5">
+		<ul>
+			<li id="tab1-btn" class="tabs {{ tabs.tab1_marked }}">Mi cuenta</li>
+			<li id="tab2-btn" class="tabs {{ tabs.tab2_marked }}">Mi negocio</li>
+		</ul>
+	</div>
+
+	<section id="tab1" class="{{ tabs.tab1_hide }}">
+		<form novalidate="novalidate" method="post" name="mi-cuenta">
+
+			{% csrf_token %}
+
+			<div class="row justify-content-center">
+
+				<div class="col-xl-6 text-center">
+					<p>Primero debes terminar de rellenar tu informarción para poder ser un perfil público</p>
+				</div>
+
+				<div class="col-12"><h2>Mis datos</h2></div>
+
+				<div class="w-100 mt-2"></div>
+
+				<div class="col-6"><h4>Nombre</h4></div>
+				<div class="col-6"><h4>Apellidos</h4></div>
+
+				<div class="col-6">{{ form.first_name }}</div>
+				<div class="col-6">{{ form.last_name }}</div>
+
+
+				<div class="w-100 mt-5"></div>
+
+
+				<div class="col-6"><h4>Teléfono*</h4></div>
+				<div class="col-6"><h4>Email principal*</h4></div>
+
+				<div class="col-6">{{ form.telefono }}</div>
+				<div class="col-6">{{ form.email }}</div>
+
+				<div class="w-100 mt-5"></div>
+
+			</div>
+
+
+			<div class="w-100 mt-5"></div>
+
+
+			<div class="row justify-content-center">
+
+				<div class="col-12 mb-5"><h2>Mi cuenta</h2></div>
+
+				<div class="col-6">
+					<h4>Empresa</h4>
+				</div>
+
+				<div class="col-2 text-right">
+					{{ form.is_empresa }}
+				</div>
+
+				<div id="id_is_empresa-show" class="col-12{% if not form.is_empresa.value %} hide{% endif %}">
+					{% include "landing/inc/mi-cuenta-empresa.html" %}
+				</div>
+
+				<div class="col-12 mb-5"><hr class="hr" /></div>
+
+				<div class="col-6">
+					<h4>Soy autónomo</h4>
+				</div>
+				<div class="col-2 text-right">
+					{{ form.is_autonomo }}
+				</div>
+
+				<div id="id_is_autonomo-show" class="col-12{% if not form.is_autonomo.value %} hide{% endif %}">
+					{% include "landing/inc/soy-autonomo.html" %}
+				</div>
+
+			</div>
+
+			<div class="w-100 mt-5"></div>
+
+			<div class="row justify-content-center">
+				<div class="col-12 text-center">
+					 <button type="submit" value="Guardar" name="Empresa-Autonomo"><i class="fa fa-check"></i> Guardar</button>
+				</div>
+			</div>
+
+		</form>
+	</section>
+
+	<section id="tab2" class="{{ tabs.tab2_hide }}">
+		{% with user.miperfil_set.all|first as miperfil %}
+			<div id="mydiv" class="container text-center">
+	<!--            <ul>-->
+	<!--                <li id="tab1-empresa-btn" class="tabs marked">Mi empresa</li>-->
+
+	<!--                {% if miperfil.is_marca %}-->
+	<!--                    <li id="tab2-marca-btn" class="tabs">Mi catálogo</li>-->
+	<!--                {% elif miperfil.is_espacio %}-->
+	<!--                    <li id="tab2-espacio-btn" class="tabs">Mi espacio</li>-->
+	<!--                {% endif %}-->
+	<!--            </ul>-->
+			</div>
+
+			<input type="checkbox" id="show_items" {% if view_from_negocio == 'show_items' %}checked{% endif %} />
+			<input type="checkbox" id="show_promo" {% if view_from_negocio == 'show_promo' %}checked{% endif %} />
+			<input type="checkbox" id="show_col" {% if view_from_negocio == 'show_col' %}checked{% endif %} />
+
+			<!-- Mi empresa -->
+			{% include "landing/empresa/inc/mi-empresa.html" %}
+
+		{% endwith %}
+	</section>
+
+{% endblock %}
+
+
+{% block script %}
+
+	<script src="{% static 'main/assets/js/catalogo.js' %}"></script>
+
+	<script>
+		$(":button[name='guardar_maestros']").hide();
+	</script>
+
+{% endblock %}

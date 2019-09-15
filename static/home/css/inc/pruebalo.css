@@ -1,0 +1,97 @@
+/* Pruebalo Gratis */
+    #pruebalo-gratis .pruebalo-gratis {
+        padding: 5em;
+    }
+
+    #pruebalo-gratis .logo {
+        -moz-transition: opacity 2s ease, -moz-transform 1s ease;
+        -webkit-transition: opacity 2s ease, -webkit-transform 1s ease;
+        -ms-transition: opacity 2s ease, -ms-transform 1s ease;
+        transition: opacity 2s ease, transform 1s ease;
+        -moz-transform: translateY(0);
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+        text-align: center;
+    }
+
+        #pruebalo-gratis .logo .icon {
+            border-radius: 100%;
+            border: solid 2px rgba(255, 255, 255, 0.125);
+            cursor: default;
+            display: inline-block;
+            font-size: 2em;
+            height: 2.25em;
+            line-height: 2.25em;
+            text-align: center;
+            width: 2.25em;
+        }
+
+    #pruebalo-gratis p {
+        -moz-transition: opacity 0.5s ease, -moz-transform 0.5s ease, -moz-filter 0.25s ease;
+        -webkit-transition: opacity 0.5s ease, -webkit-transform 0.5s ease, -webkit-filter 0.25s ease;
+        -ms-transition: opacity 0.5s ease, -ms-transform 0.5s ease, -ms-filter 0.25s ease;
+        transition: opacity 0.5s ease, transform 0.5s ease, filter 0.25s ease;
+        -moz-transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        -moz-transition-delay: 0.8s;
+        -webkit-transition-delay: 0.8s;
+        -ms-transition-delay: 0.8s;
+        transition-delay: 0.8s;
+        -moz-filter: blur(0);
+        -webkit-filter: blur(0);
+        -ms-filter: blur(0);
+        filter: blur(0);
+        opacity: 1;
+        font-family: Raleway, Helvetica, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        line-height: 28px;
+        text-align: center;
+    }
+
+    #pruebalo-gratis input {
+        margin-bottom: 1.3em;
+    }
+
+    @media screen and (max-width: 1280px) {
+
+        #pruebalo-gratis p {
+            font-size: 14px;
+        }
+    }
+
+	@media screen and (max-width: 980px) {
+
+        #pruebalo-gratis p {
+            font-size: 11px;
+        }
+
+		#pruebalo-gratis input {
+            margin-bottom: 1em;
+            font-size: 11px;
+		}
+
+	}
+
+	@media screen and (max-width: 736px) {
+
+        #pruebalo-gratis .pruebalo-gratis {
+            padding: 2em;
+        }
+
+        #pruebalo-gratis p {
+            font-size: 9.5px;
+        }
+
+	}
+
+    @media screen and (max-width: 480px) {
+        #pruebalo-gratis p {
+            font-size: 8px;
+        }
+    }

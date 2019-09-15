@@ -1,0 +1,73 @@
+{% extends 'home/base-sin-head.html' %}
+
+{% load static %}
+
+<!-- Header -->
+{% block header %}
+    {% include "home/inc/header.html" %}
+{% endblock %}
+
+<!-- Menu -->
+{% block menu %}
+    {% include "home/inc/menu.html" %}
+{% endblock %}
+
+{% block contacto %}
+
+    <section id="footer" class="formulario">
+        <div id="contact" class="inner">
+            <h2 class="major">Formulario de búsqueda</h2>
+            <div class="contact-form">
+                <form novalidate="novalidate" method="post" name="contact">
+                    {% csrf_token %}
+                    <div class="fields">
+
+                        <div class="field">
+                            <label for="quien_eres">¿Quién eres?</label>
+                            {{ form.quien_eres }}
+                        </div>
+
+                        <div class="field servicios">
+                            <label for="servicio">¿Cuál?</label>
+                            {{ form.servicios }}
+                        </div>
+
+                        <div class="field">
+                            <label for="mercado">Mercado especializado</label>
+                            {{ form.mercado }}
+                        </div>
+
+                        <div class="field">
+                            <label for="estilo">Estilo de vida</label>
+                            {{ form.estilo }}
+                        </div>
+
+                        <div class="field">
+                            <label for="target">Target</label>
+                            {{ form.target }}
+                        </div>
+
+                        <div class="field">
+                            <label for="que_buscas">¿Qué buscas?</label>
+                            {{ form.que_buscas }}
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Dirección de email</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="field">
+                            <label for="nombre">Nombre o empresa</label>
+                            {{ form.nombre }}
+                        </div>
+                        <!-- <img src="{% static 'landing/images/form/form_pic.png' %}" alt="Formulario" /> -->
+                    </div>
+                    <ul class="actions">
+                        <li><input type="submit" value="Enviar solicitud" /></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
