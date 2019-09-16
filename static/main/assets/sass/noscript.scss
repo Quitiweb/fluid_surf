@@ -1,3 +1,9 @@
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/vendor';
+@import 'libs/breakpoints';
+
 /*
 	Parallelism by HTML5 UP
 	html5up.net | @ajlkn
@@ -9,8 +15,12 @@
 	#main {
 		opacity: 1 !important;
 		overflow-x: auto !important;
-	}
 
-		#main .item.thumb img {
-			opacity: 1 !important;
+		.item {
+			&.thumb {
+				img {
+					opacity: 1 !important;
+				}
+			}
 		}
+	}

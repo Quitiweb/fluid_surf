@@ -19,8 +19,11 @@
 
         {% load static %}
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="icon" type="image/gif" href="{% static 'main/images/KC_icon.png' %}">
+        <link rel="icon" type="image/gif" href="{% static 'main/images/favicon.ico' %}">
         <link rel="stylesheet" href="{% static 'home/css/home.css' %}" />
+        <link rel="stylesheet" href="{% static 'main/assets/css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'main/assets/css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}">
         <noscript><link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}" /></noscript>
         <meta property="og:description" content="La economía colaborativa ha llegado al retail.">
     </head>
@@ -29,32 +32,15 @@
         <!-- Page Wrapper -->
         <div id="page-wrapper">
 
-            <!-- Header -->
-            {% include "home/inc/header.html" %}
-
-            <!-- Menu -->
-            {% include "home/inc/menu.html" %}
-
-            <!-- Banner -->
-            {% block banner %}
-            {% endblock %}
-
             <!-- Wrapper -->
             {% block wrapper %}
-            {% endblock %}
-
-            <!-- Subir -->
-            {% include "home/inc/subir.html" %}
-
-            <!-- Footer -->
-            {% block contacto %}
             {% endblock %}
 
         </div>
 
         <!-- Scripts -->
         <script src="{% static 'main/assets/js/jquery.min.js' %}"></script>
-        <script src="{% static 'main/assets/js/jquery.scrollex.min.js' %}"></script>
+        <script src="{% static 'main/assets/js/jquery.poptrox.min.js' %}"></script>
         <script src="{% static 'main/assets/js/browser.min.js' %}"></script>
         <script src="{% static 'main/assets/js/breakpoints.min.js' %}"></script>
         <script src="{% static 'main/assets/js/util.js' %}"></script>
