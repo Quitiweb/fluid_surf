@@ -1,16 +1,20 @@
+{% extends 'home/base.html' %}
 {% load static %}
 
 {% block main %}
-	<div class="bg-morado text-center">
-		<a id="logo-kradleco" href="/" class="image original"><img src="{% static 'main/images/Logo_FS_azul.png' %}" alt="kradleco.es" /></a>
+	<div class="container text-center">
+		<a id="" href="/" class="row text-center" style="margin-top:50px;">
+            <span class="col-5"></span>
+            <img class="image-responsive w-25 col-2" src="{% static 'main/images/Logo_FS_azul.png' %}" alt="kradleco.es" />
+            <span class="col-5"></span>
+        </a>
 	</div>
-{% endblock %}
 
-{% block footer %}
+
     <section id="footer">
         <div id="contact" class="inner">
             <h2 class="major">Signup</h2>
-			<p style="margin-top: -1.5em;">¿No tienes cuenta?<br/>Regístrate aquí: <a href="/signup"><b>SignUp</b></a></p>
+			<p style="margin-top: -1.5em;">¿No tienes cuenta?<br/>Regístrate aquí: <a href="/signup"><b style="color:black !important;">SignUp</b></a></p>
             <div class="contact-form">
                 <form method="post">
                     {% csrf_token %}

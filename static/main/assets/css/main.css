@@ -93,7 +93,6 @@ input, select, textarea {
 		background-attachment: fixed;
 		background-repeat: repeat, no-repeat, auto;
 		position: relative;
-		background-color: #150C07;
 		line-height: 1.75em;
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -134,7 +133,6 @@ input, select, textarea {
 		font-weight: 400;
 		padding: 0;
 		font-size: 13pt;
-		color: rgba(255, 255, 255, 0.6);
 	}
 
 		@media screen and (max-width: 1680px) {
