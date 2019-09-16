@@ -1,6 +1,5 @@
 from django import forms
 
-# TODO Por alguna razón, ESIdentityCardNumberField falla al importarlo
 # from localflavor.es.forms import ESIdentityCardNumberField
 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm

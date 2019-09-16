@@ -24,20 +24,20 @@ def upload_to_perfil(instance, filename):
 
 
 class CustomUser(AbstractUser):
-    KRADELER = 'KRADELER'
-    SUPPORT = 'SUPPORTER'
+    SURFERO = 'SURFERO'
+    FOTOGRAFO = 'FOTOGRAFO'
     ADMIN = 'ADMIN'
 
     USER = (
-        (KRADELER, 'Kradeler'),
-        (SUPPORT, 'Supporter'),
+        (SURFERO, 'Surfero'),
+        (FOTOGRAFO, 'Fotografo'),
         (ADMIN, 'Admin'),
     )
 
     tipo_de_usuario = models.CharField(
         max_length=15,
         choices=USER,
-        default=KRADELER,
+        default=SURFERO,
     )
 
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Formato: '+999999999'. Max 15 dígitos.")

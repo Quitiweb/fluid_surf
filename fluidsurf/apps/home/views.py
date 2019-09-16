@@ -19,12 +19,10 @@ def index(request):
         #
         # noticias_gr = grouped(noticias, 3)
 
-        # TODO en Suggest se mostrarán aquellos usuarios según los criterios que nos comente Diego
         usuarios = CustomUser.objects.exclude(
             username=request.user.username
         )[:users_to_get(CustomUser.objects.count() - 1)]
 
-        # TODO en My Network se mostrarán los usuarios conectados
         usuarios_conectados = CustomUser.objects.exclude(
             username=request.user.username
         ).filter(Q(is_marca=True) | Q(is_espacio=True), Q(validado=True))[:users_to_get(CustomUser.objects.count() - 1)]

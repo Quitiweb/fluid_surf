@@ -8,7 +8,7 @@ from .models import CustomUser, Empresa, GaleriaUsuario, Comentario, Autonomo, M
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    list_display = ['username', 'email', 'tipo_de_usuario', 'is_marca', 'is_espacio', ]
+    list_display = ['username', 'email', 'tipo_de_usuario']
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': (
             'validado', 'tipo_de_usuario', 'telefono', 'is_marca', 'is_espacio', 'is_empresa', 'is_autonomo', 'logo',
