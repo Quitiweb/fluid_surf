@@ -8,7 +8,7 @@ from .forms import CustomUserCreationForm
 
 
 def sign_up(request):
-    template = loader.get_template('landing/signup.html')
+    template = loader.get_template('registration/signup.html')
 
     if request.method == 'GET':
         form = CustomUserCreationForm()
