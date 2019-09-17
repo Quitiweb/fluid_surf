@@ -1187,7 +1187,7 @@ input, select, textarea {
 		input[type="button"]:active,
 		button:active,
 		.button:active {
-			background-color: rgba(95, 19, 239, 0.75);
+			background-color: rgba(0, 119, 190, 0.5);
 		}
 
 		input[type="submit"].icon:before,

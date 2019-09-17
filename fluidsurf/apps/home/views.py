@@ -103,3 +103,7 @@ def formulario(request):
 
 def solicitud_recibida(request):
     return render(request, 'home/solicitud-recibida.html')
+
+
+def mi_cuenta(request):
+    return render(request, 'home/mi-cuenta.html')
