@@ -1170,12 +1170,16 @@ input, select, textarea {
 		white-space: nowrap;
 	}
 
+	.navbar {
+	background: rgba(244, 244, 244, 0.15)!important
+	}
+
 		input[type="submit"]:hover,
 		input[type="reset"]:hover,
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: rgba(95, 19, 239, 0.5);
+			background-color: rgba(0, 119, 190, 0.5);
 		}
 
 		input[type="submit"]:active,
