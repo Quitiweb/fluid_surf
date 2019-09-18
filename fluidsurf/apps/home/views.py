@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
@@ -5,7 +6,7 @@ from django.utils import timezone
 from django.db.models import Q
 
 from fluidsurf.apps.users.models import CustomUser, MiPerfil
-from .forms import ContactForm
+from .forms import ContactForm, ChangeUserForm
 from ..helpers.helper import enviar_email, grouped, news_to_get, users_to_get
 
 
@@ -106,4 +107,20 @@ def solicitud_recibida(request):
 
 
 def mi_cuenta(request):
-    return render(request, 'home/mi-cuenta.html')
+    template = loader.get_template('home/mi-cuenta.html')
+    context = {}
+
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            form = ChangeUserForm(instance=request.user)
+        else:
+            form = ChangeUserForm(request.POST, instance=request.user)
+            print(form.errors)
+            if form.is_valid():
+                messages.add_message(request, messages.SUCCESS, 'Perfil guardado con exito')
+                form.save()
+
+        context = {
+            'form': form
+        }
+    return HttpResponse(template.render(context, request))

@@ -50,7 +50,7 @@
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/">Inicio<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href=" {% url 'index' %}">Inicio<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/signup">Registro</a>
@@ -68,6 +68,19 @@
 <!--/.Navbar-->
         <!-- Page Wrapper -->
         <div id="page-wrapper">
+
+            {% if messages %}
+              {% for message in messages %}
+                        <div class="row text-center m-auto notificacion" style="height:75px;">
+                            <div class="col-3"></div>
+                          <div class="alert alert-{{ message.tags }} alert-dismissible text-center col-6 pt-3" role="alert">
+                                {{ message }}
+                              <button type="button" class="btn close p-0 pl-1" data-dismiss="alert" aria-label="Close" style="height:25px;"><span aria-hidden="true">&times;</span></button>
+                          </div>
+                            <div class="col-3"></div>
+                        </div>
+              {% endfor %}
+            {% endif %}
 
             <!-- Wrapper -->
             {% block main %}

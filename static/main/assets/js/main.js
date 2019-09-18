@@ -6,6 +6,15 @@
 
 (function($) {
 
+    //Messages
+    $(document).ready(function(){
+    window.setTimeout(function() {
+      $(".notificacion").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove();
+      });
+    }, 5000);
+
+
     // Función para todos los elementos tipo toggle-chk
     $(".toggle-chk").click(function (event) {
         var show = '#'+ event.target.id  +'-show';
