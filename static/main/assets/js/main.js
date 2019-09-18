@@ -5,6 +5,14 @@
 */
 
 (function($) {
+
+    // Función para todos los elementos tipo toggle-chk
+    $(".toggle-chk").click(function (event) {
+        var show = '#' + event.target.id + '-show';
+        $(show).slideToggle('slow');
+    });
+
+
 	var	$window = $(window),
 		$body = $('body'),
 		$wrapper = $('#wrapper'),
