@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600");
 @import url("fontawesome-all.min.css");
 
+/*Clase hide para esconder elementos de una manera mas sencilla*/
+
+.hide {
+    display: none;
+}
+
 /*CUSTOM SWITCH*/
 .switch {
   position: relative;
