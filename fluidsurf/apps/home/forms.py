@@ -14,14 +14,16 @@ class ChangeUserForm(forms.ModelForm):
     first_name = forms.CharField(max_length=25)
     last_name = forms.CharField(max_length=50)
     telefono = forms.CharField(max_length=15)
-    direccion = forms.CharField(max_length=50)
+    pais = forms.CharField(max_length=50)
+    zona = forms.CharField(max_length=50)
 
     first_name.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu nombre...'})
     last_name.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tus apellidos...'})
     email.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu email...'})
     telefono.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu telefono...'})
-    direccion.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu direccion...'})
+    pais.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu pais...'})
+    zona.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu zona...'})
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'telefono', 'direccion')
+        fields = ('email', 'first_name', 'last_name', 'telefono', 'pais', 'zona')

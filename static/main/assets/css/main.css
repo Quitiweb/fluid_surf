@@ -227,7 +227,7 @@ input, select, textarea {
 		}
 
 	a {
-		color: #fff;
+		color: #000;
 		color: rgba(255, 255, 255, 0.85);
 		text-decoration: none;
 		-moz-transition: color 0.25s ease-in-out;
@@ -242,7 +242,7 @@ input, select, textarea {
 
 	h1, h2, h3, h4, h5, h6 {
 		font-weight: 400;
-		color: #fff;
+		color: #000;
 		letter-spacing: -0.05em;
 	}
 
