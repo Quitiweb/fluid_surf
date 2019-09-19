@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-19 17:03+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\fluidsurf\settings\base.py:156
+msgid "English"
+msgstr ""
+
+#: .\fluidsurf\settings\base.py:157
+msgid "Spanish"
+msgstr ""
+
+#: .\templates\admin\base_site.html:6
+msgid "Kradleco site admin"
+msgstr ""
+
+#: .\templates\admin\base_site.html:12 .\templates\admin\login.html:7
+msgid "Django administration"
+msgstr ""
+
+#: .\templates\home\base.html:54
+msgid "Home"
+msgstr "Inicio"
+
+#: .\templates\home\base.html:57 .\templates\home\mi-cuenta.html:11
+msgid "My account"
+msgstr "Mi cuenta"
+
+#: .\templates\home\base.html:60
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: .\templates\home\index.html:22
+msgid "Connecting photographers and surfers"
+msgstr "Conectando fotógrafos y surferos"
+
+#: .\templates\home\mi-cuenta.html:15
+msgid "Name"
+msgstr "Nombre"
+
+#: .\templates\home\mi-cuenta.html:19
+msgid "Surname"
+msgstr "Apellido(s)"
+
+#: .\templates\home\mi-cuenta.html:30
+msgid "Phone"
+msgstr "Teléfono"
+
+#: .\templates\home\mi-cuenta.html:37
+msgid "Country"
+msgstr "Pais"
+
+#: .\templates\home\mi-cuenta.html:41
+msgid "Area"
+msgstr "Zona"
+
+#: .\templates\home\mi-cuenta.html:49
+msgid "Press here to open Advanced Options"
+msgstr "Pulsa aqui para abrir las opciones avanzadas"
+
+#: .\templates\home\mi-cuenta.html:67
+msgid "Save"
+msgstr "Guardar"
+
+#~ msgid "Address"
+#~ msgstr "Dirección"
