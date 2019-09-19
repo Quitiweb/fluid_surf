@@ -117,10 +117,11 @@ def mi_cuenta(request):
             form = ChangeUserForm(request.POST, instance=request.user)
             print(form.errors)
             if form.is_valid():
-                messages.add_message(request, messages.SUCCESS, 'Perfil guardado con exito')
+                messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
 
         context = {
             'form': form
         }
-    return HttpResponse(template.render(context, request))
+        return HttpResponse(template.render(context, request))
+    else: return redirect("/login")
