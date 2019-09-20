@@ -62,7 +62,7 @@ class CustomUser(AbstractUser):
 
     validado = models.BooleanField(default=False)
 
-    alias = models.BooleanField(default='', null=True)
+    alias = models.TextField(default='', null=True)
     CV = models.TextField(max_length=200, null=True)
     profile_pic = models.ImageField(upload_to="img/photographer/", blank=True)
     main_pic = models.ImageField(upload_to="img/photographer/", blank=True)

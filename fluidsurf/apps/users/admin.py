@@ -11,7 +11,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['username', 'email', 'tipo_de_usuario']
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': (
-            'validado', 'tipo_de_usuario', 'telefono', 'is_marca', 'is_espacio', 'is_empresa', 'is_autonomo', 'logo',
+            'validado', 'tipo_de_usuario', 'alias', 'CV', 'profile_pic', 'main_pic', 'telefono', 'is_marca', 'is_espacio', 'is_empresa', 'is_autonomo', 'logo',
             'foto_perfil', 'facebook', 'youtube', 'linkedin', 'twitter', )}),
     )
 

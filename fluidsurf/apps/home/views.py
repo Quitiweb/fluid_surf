@@ -118,7 +118,9 @@ def mi_cuenta(request):
         else:
             form = ChangeUserForm(request.POST, instance=request.user)
             if request.user.tipo_de_usuario == "FOTOGRAFO":
-                photo_form = PhotographerForm(request.POST, instance=request.user)
+                photo_form = PhotographerForm(request.POST,  request.FILES, instance=request.user)
+                if photo_form.is_valid():
+                    photo_form.save()
             if form.is_valid():
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
