@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-19 17:03+0200\n"
+"POT-Creation-Date: 2019-09-20 15:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,11 +70,51 @@ msgstr "Pais"
 msgid "Area"
 msgstr "Zona"
 
-#: .\templates\home\mi-cuenta.html:49
+#: .\templates\home\mi-cuenta.html:51
+msgid "My Photographer Profile"
+msgstr "Mi perfil de Fotografo"
+
+#: .\templates\home\mi-cuenta.html:57
+msgid "Write your photographer alias"
+msgstr "Escribe tu alias de fotografo"
+
+#: .\templates\home\mi-cuenta.html:63
+msgid "Profile picture"
+msgstr "Foto de perfil"
+
+#: .\templates\home\mi-cuenta.html:67
+msgid "Main picture"
+msgstr "Foto destacada"
+
+#: .\templates\home\mi-cuenta.html:84
 msgid "Press here to open Advanced Options"
 msgstr "Pulsa aqui para abrir las opciones avanzadas"
 
-#: .\templates\home\mi-cuenta.html:67
+#: .\templates\home\mi-cuenta.html:90
+msgid "Change Password"
+msgstr "Cambiar contraseña"
+
+#: .\templates\home\mi-cuenta.html:95
+msgid "Old Password"
+msgstr "Anterior contraseña"
+
+#: .\templates\home\mi-cuenta.html:102
+msgid "New Password"
+msgstr "Nueva contraseña"
+
+#: .\templates\home\mi-cuenta.html:107
+msgid "Repeat your Password"
+msgstr "Repite tu contraseña"
+
+#: .\templates\home\mi-cuenta.html:113
+msgid "Change Wishlist"
+msgstr "Cambiar lista de deseos"
+
+#: .\templates\home\mi-cuenta.html:117
+msgid "View purchase history"
+msgstr "Ver historial de compras"
+
+#: .\templates\home\mi-cuenta.html:131
 msgid "Save"
 msgstr "Guardar"
 

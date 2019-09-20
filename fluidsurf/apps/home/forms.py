@@ -27,3 +27,14 @@ class ChangeUserForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('email', 'first_name', 'last_name', 'telefono', 'pais', 'zona')
+
+
+class PhotographerForm(forms.ModelForm):
+    alias = forms.CharField(max_length=25)
+    CV = forms.Textarea()
+    profile_pic = forms.ImageField()
+    main_pic = forms.ImageField()
+
+    class Meta:
+        model = CustomUser
+        fields = ('alias', 'CV', 'profile_pic', 'main_pic')

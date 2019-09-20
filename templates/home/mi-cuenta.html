@@ -45,6 +45,41 @@
 
         <!-- TODO Si el usuario es fotografo, hay que anadir un form con cv, alias, foto, foto destacada... -->
 
+        {% if user.tipo_de_usuario ==  'FOTOGRAFO' %}
+
+        <h1 class="display-4 mt-5" style="color:black;">
+            {% trans 'My Photographer Profile' %}
+        </h1>
+
+        <div class="row mt-5">
+            <div class="col-6">
+                <label>Alias</label>
+<!--                <input type="text" placeholder="{% trans 'Write your photographer alias' %}">-->
+                {{ photo_form.alias }}
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-6">
+                <label>{% trans 'Profile picture' %}</label>
+                <input type="file">
+            </div>
+            <div class="col-6">
+                <label>{% trans 'Main picture' %}</label>
+                <input type="file">
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <label>Curriculum Vitae</label>
+            <textarea name="" id="" cols="20" rows="10" maxlength="200"></textarea>
+        </div>
+
+        {% endif %}
+
+
+
+
         <span class="row toggle-chk mt-5" id="advanced" style="cursor: pointer;">
             <i class="fas fa-cog mr-1 mt-1"></i>
             {% trans 'Press here to open Advanced Options' %}

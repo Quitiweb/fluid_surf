@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.db.models import Q
 
 from fluidsurf.apps.users.models import CustomUser, MiPerfil
-from .forms import ContactForm, ChangeUserForm
+from .forms import ContactForm, ChangeUserForm, PhotographerForm
 from ..helpers.helper import enviar_email, grouped, news_to_get, users_to_get
 
 
@@ -113,15 +113,24 @@ def mi_cuenta(request):
     if request.user.is_authenticated:
         if request.method == 'GET':
             form = ChangeUserForm(instance=request.user)
+            if request.user.tipo_de_usuario == "FOTOGRAFO":
+                photo_form = PhotographerForm(instance=request.user)
         else:
             form = ChangeUserForm(request.POST, instance=request.user)
-            print(form.errors)
+            if request.user.tipo_de_usuario == "FOTOGRAFO":
+                photo_form = PhotographerForm(request.POST, instance=request.user)
             if form.is_valid():
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
 
-        context = {
-            'form': form
-        }
+        if request.user.tipo_de_usuario == "FOTOGRAFO":
+            context = {
+                'form': form,
+                'photo_form': photo_form
+            }
+        else:
+            context = {
+                'form': form
+            }
         return HttpResponse(template.render(context, request))
     else: return redirect("/login")
