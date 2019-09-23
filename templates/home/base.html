@@ -32,43 +32,131 @@
         <meta property="og:description" content="Ya no se me olvida quitar esto">
     </head>
     <body class="is-preload">
-<!--Navbar-->
-<nav class="navbar navbar-light light-blue lighten-4">
+<div id="page-wrapper">
+    <header id="header">
 
-  <!-- Navbar brand -->
-  <a class="navbar-brand justify-content-center" href="/">
-      <img class="image-responsive w-50" src="{% static 'main/images/Logo_FS_azul.png' %}" alt="fluid-surf.es" />
-  </a>
+            <nav class="main" style="z-index: 100000000;">
+                <ul>
+                    <li class="menu">
+                        <a class="fa fa-bars" href="#menu">Menu</a>
+                    </li>
 
-  <!-- Collapse button -->
-  <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
-    aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
-        class="fas fa-bars fa-1x" style="color: black;"></i></span></button>
+                    <li><a href="#menu"></a></li>
 
-  <!-- Collapsible content -->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+
+                    <!--<li class="search">
+                        <a class="fa-search" href="#search">Search</a>
+                        <form id="search" method="get" action="#">
+                            <input type="text" name="query" placeholder="Search" />
+                        </form>
+                    </li> -->
+                </ul>
+            </nav>
+
+</header>
+
+
+
+<section id="menu">
+
+    <!-- Search
+        <section>
+            <form class="search" method="get" action="#">
+                <input type="text" name="query" placeholder="Search" />
+            </form>
+        </section> -->
+
+        <section id="member" class="banner">
+            <div class="inner">
+                <div class="img-logo">
+                    <img src="/static/main/images/no_user.png"/>
+                </div>
+                <div class="w-100"></div>
+                <h3>jlramos97</h3>
+                <p>ajlkjdas@fkasdlj.com</p>
+            </div>
+        </section>
+
+    <!-- Mi perfil -->
+        <section>
+            <div  class="inner">
+                <ul class="links">
+                    <li>
+                        <a href="/mi-perfil">Mi perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
     <!-- Links -->
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href=" {% url 'index' %}">{% trans 'Home' %}<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/mi-cuenta">{% trans 'My account' %}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/login">{% trans 'Login' %}</a>
-      </li>
-    </ul>
-    <!-- Links -->
+        <section>
+            <span><h4>Mi empresa</h4></span>
+            <ul class="links">
+                <li>
+                    <a href="/mi-cuenta/tab1">Mi cuenta</a>
+                </li>
+                <li>
 
-  </div>
-  <!-- Collapsible content -->
+                        <a href="/mi-espacio">Mi espacio</a>
 
-</nav>
+                </li>
+                <li>
+                    <a href="/conexion">Mis conexiones</a>
+                </li>
+<!--
+                <li>
+                    <a href="#">
+                        <h3>Etiam sed consequat</h3>
+                        <p>Porta lectus amet ultricies</p>
+                    </a>
+                </li>
+-->
+            </ul>
+        </section>
+
+    <!-- Mi Kradleco market -->
+         <section>
+                <span><h4>Mi Kradleco market</h4></span>
+                <ul class="links">
+                    <li>
+                        <a href="/market">Market</a>
+                    </li>
+                    <li>
+                        <a href="/">Mis intereses</a>
+                    </li>
+                    <li>
+                        <a href="/relaciones-comerciales">Mis relaciones comerciales</a>
+                    </li>
+                    <li>
+                        <a href="/punto%20s-de-venta">Puntos de venta activos</a>
+                    </li>
+                </ul>
+         </section>
+
+    <!-- Otros -->
+         <section>
+                <ul class="links">
+                    <li>
+                        <a href="/">Ayuda y faqs</a>
+                    </li>
+                    <li>
+                        <a href="/">Condiciones de uso y privacidad</a>
+                    </li>
+                </ul>
+         </section>
+
+    <!-- Actions -->
+        <section>
+            <ul class="actions stacked">
+
+                    <li><a href="/logout/" class="button large fit">Cerrar sesión</a></li>
+
+            </ul>
+        </section>
+
+</section>
 <!--/.Navbar-->
-        <!-- Page Wrapper -->
-        <div id="page-wrapper">
 
             {% if messages %}
               {% for message in messages %}
@@ -87,7 +175,7 @@
             {% block main %}
             {% endblock %}
 
-        </div>
+
 
         <!-- Scripts -->
         <script src="{% static 'main/assets/js/jquery.min.js' %}"></script>
@@ -105,6 +193,6 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+</div>
     </body>
 </html>

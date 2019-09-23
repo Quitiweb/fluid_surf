@@ -143,7 +143,8 @@ def mi_cuenta(request):
             }
         else:
             context = {
-                'form': form
+                'form': form,
+                'passform': passform,
             }
         return HttpResponse(template.render(context, request))
     else: return redirect("/login")
