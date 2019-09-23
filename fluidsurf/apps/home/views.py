@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
 from django.db.models import Q
+from django.contrib.auth import update_session_auth_hash
 
 from fluidsurf.apps.users.models import CustomUser, MiPerfil
-from .forms import ContactForm, ChangeUserForm, PhotographerForm
+from .forms import ContactForm, ChangeUserForm, PhotographerForm, PasswordChangeCustomForm
 from ..helpers.helper import enviar_email, grouped, news_to_get, users_to_get
 
 
@@ -112,10 +113,12 @@ def mi_cuenta(request):
 
     if request.user.is_authenticated:
         if request.method == 'GET':
+            passform = PasswordChangeCustomForm(request.user)
             form = ChangeUserForm(instance=request.user)
             if request.user.tipo_de_usuario == "FOTOGRAFO":
                 photo_form = PhotographerForm(instance=request.user)
         else:
+            passform = PasswordChangeCustomForm(request.user, request.POST)
             form = ChangeUserForm(request.POST, instance=request.user)
             if request.user.tipo_de_usuario == "FOTOGRAFO":
                 photo_form = PhotographerForm(request.POST,  request.FILES, instance=request.user)
@@ -125,9 +128,17 @@ def mi_cuenta(request):
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
 
+                if passform.is_valid():
+                    pwd = passform.save()
+                    update_session_auth_hash(request, pwd)  # Important!
+                    messages.success(request, 'Contraseña cambiada con éxito')
+                elif passform.data['old_password'] or passform.data['new_password1'] or passform.data['new_password2']:
+                    messages.warning(request, passform.errors)
+
         if request.user.tipo_de_usuario == "FOTOGRAFO":
             context = {
                 'form': form,
+                'passform': passform,
                 'photo_form': photo_form
             }
         else:

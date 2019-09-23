@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import PasswordChangeForm
+from django.forms import PasswordInput
 
 from fluidsurf.apps.users.models import CustomUser
 
@@ -28,6 +30,27 @@ class ChangeUserForm(forms.ModelForm):
         model = CustomUser
         fields = ('email', 'first_name', 'last_name', 'telefono', 'pais', 'zona')
 
+
+class PasswordChangeCustomForm(PasswordChangeForm):
+    error_css_class = 'has-error'
+    error_messages = {'password_incorrect':
+                          "La contraseña es incorrecta. Por favor intentalo de nuevo."}
+    old_password = forms.CharField(required=True, label='Anterior Contraseña',
+                                   widget=PasswordInput(attrs={
+                                       'class': 'form-control mb-5'}),
+                                   error_messages={
+                                       'required': 'La contraseña no puede estar en blanco.'})
+
+    new_password1 = forms.CharField(required=True, label='Nueva Contraseña',
+                                    widget=PasswordInput(attrs={
+                                        'class': 'form-control mb-5'}),
+                                    error_messages={
+                                        'required': 'La contraseña no puede estar en blanco.'})
+    new_password2 = forms.CharField(required=True, label='Repite tu Nueva Contraseña',
+                                    widget=PasswordInput(attrs={
+                                        'class': 'form-control'}),
+                                    error_messages={
+                                        'required': 'La contraseña no puede estar en blanco.'})
 
 class PhotographerForm(forms.ModelForm):
     alias = forms.CharField(max_length=25)
