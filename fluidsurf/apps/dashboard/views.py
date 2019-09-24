@@ -1,17 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
 def dashboard(request):
 
-    if request.user.is_staff:
-        print('eres staff')
-    else:
-        print('no eres staff')
-
-    if request.user.is_superuser:
-        print('eres admin')
-    else:
-        print('no eres admin')
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
 
     return render(request, 'dashboard/main.html')
