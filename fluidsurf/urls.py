@@ -11,6 +11,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('', include('fluidsurf.apps.users.urls')),
     path('', include('django.contrib.auth.urls')),
+    path('dashboard/', include('fluidsurf.apps.dashboard.urls')),
     path('payments/', include('fluidsurf.apps.payments.urls')),
     path('accounts/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
