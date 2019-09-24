@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'home/css/home.css' %}" />
         <link rel="stylesheet" href="{% static 'main/assets/css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{% static 'main/assets/css/main.css' %}">
         <link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -38,14 +39,12 @@
             <nav class="main" style="z-index: 100000000;">
                 <ul>
                     <li class="menu">
-                        <a class="fa fa-bars" href="#menu">Menu</a>
+                        <a class="fa fa-bars" href="#menu"></a>
                     </li>
 
-                    <li><a href="#menu"></a></li>
 
 
-
-                    <!--<li class="search">
+                        <!--<li class="search">
                         <a class="fa-search" href="#search">Search</a>
                         <form id="search" method="get" action="#">
                             <input type="text" name="query" placeholder="Search" />
@@ -60,13 +59,6 @@
 
 <section id="menu">
 
-    <!-- Search
-        <section>
-            <form class="search" method="get" action="#">
-                <input type="text" name="query" placeholder="Search" />
-            </form>
-        </section> -->
-
         <section id="member" class="banner">
             <div class="inner">
                 <div class="img-logo">
@@ -76,84 +68,25 @@
                 <h3>jlramos97</h3>
                 <p>ajlkjdas@fkasdlj.com</p>
             </div>
+
+           <div>
+
+               <ul>
+                   <li class="text-left mt-3">
+                        <a href="/">Inicio</a>
+                   </li>
+               </ul>
+
+               <ul>
+                   <li class="text-left mt-3">
+                       <a href="mi-cuenta">Mi Cuenta</a>
+                   </li>
+               </ul>
+           </div>
+
         </section>
 
-    <!-- Mi perfil -->
-        <section>
-            <div  class="inner">
-                <ul class="links">
-                    <li>
-                        <a href="/mi-perfil">Mi perfil</a>
-                    </li>
-                </ul>
-            </div>
-        </section>
 
-    <!-- Links -->
-        <section>
-            <span><h4>Mi empresa</h4></span>
-            <ul class="links">
-                <li>
-                    <a href="/mi-cuenta/tab1">Mi cuenta</a>
-                </li>
-                <li>
-
-                        <a href="/mi-espacio">Mi espacio</a>
-
-                </li>
-                <li>
-                    <a href="/conexion">Mis conexiones</a>
-                </li>
-<!--
-                <li>
-                    <a href="#">
-                        <h3>Etiam sed consequat</h3>
-                        <p>Porta lectus amet ultricies</p>
-                    </a>
-                </li>
--->
-            </ul>
-        </section>
-
-    <!-- Mi Kradleco market -->
-         <section>
-                <span><h4>Mi Kradleco market</h4></span>
-                <ul class="links">
-                    <li>
-                        <a href="/market">Market</a>
-                    </li>
-                    <li>
-                        <a href="/">Mis intereses</a>
-                    </li>
-                    <li>
-                        <a href="/relaciones-comerciales">Mis relaciones comerciales</a>
-                    </li>
-                    <li>
-                        <a href="/punto%20s-de-venta">Puntos de venta activos</a>
-                    </li>
-                </ul>
-         </section>
-
-    <!-- Otros -->
-         <section>
-                <ul class="links">
-                    <li>
-                        <a href="/">Ayuda y faqs</a>
-                    </li>
-                    <li>
-                        <a href="/">Condiciones de uso y privacidad</a>
-                    </li>
-                </ul>
-         </section>
-
-    <!-- Actions -->
-        <section>
-            <ul class="actions stacked">
-
-                    <li><a href="/logout/" class="button large fit">Cerrar sesión</a></li>
-
-            </ul>
-        </section>
 
 </section>
 <!--/.Navbar-->

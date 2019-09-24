@@ -62,7 +62,7 @@
 		}
 
 			#header .menu {
-			    display: none;
+			    display: block;
 			}
 
 			#header .carrito {
