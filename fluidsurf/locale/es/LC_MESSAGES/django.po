@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-20 15:02+0200\n"
+"POT-Creation-Date: 2019-09-24 17:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,17 +34,22 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: .\templates\home\base.html:54
+#: .\templates\dashboard\base.html:32 .\templates\dashboard\base.html:176
+#: .\templates\dashboard\main.html:16 .\templates\home\base.html:77
 msgid "Home"
 msgstr "Inicio"
 
-#: .\templates\home\base.html:57 .\templates\home\mi-cuenta.html:11
+#: .\templates\dashboard\base.html:163
+msgid "Administrator"
+msgstr "Administrador"
+
+#: .\templates\dashboard\main.html:12 .\templates\dashboard\main.html:17
+msgid "Dashboard"
+msgstr "Panel de Control"
+
+#: .\templates\home\base.html:83 .\templates\home\mi-cuenta.html:11
 msgid "My account"
 msgstr "Mi cuenta"
-
-#: .\templates\home\base.html:60
-msgid "Login"
-msgstr "Iniciar sesión"
 
 #: .\templates\home\index.html:22
 msgid "Connecting photographers and surfers"
@@ -78,45 +83,48 @@ msgstr "Mi perfil de Fotografo"
 msgid "Write your photographer alias"
 msgstr "Escribe tu alias de fotografo"
 
-#: .\templates\home\mi-cuenta.html:63
+#: .\templates\home\mi-cuenta.html:64
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
-#: .\templates\home\mi-cuenta.html:67
+#: .\templates\home\mi-cuenta.html:69
 msgid "Main picture"
 msgstr "Foto destacada"
 
-#: .\templates\home\mi-cuenta.html:84
+#: .\templates\home\mi-cuenta.html:88
 msgid "Press here to open Advanced Options"
 msgstr "Pulsa aqui para abrir las opciones avanzadas"
 
-#: .\templates\home\mi-cuenta.html:90
+#: .\templates\home\mi-cuenta.html:94
 msgid "Change Password"
 msgstr "Cambiar contraseña"
 
-#: .\templates\home\mi-cuenta.html:95
+#: .\templates\home\mi-cuenta.html:99
 msgid "Old Password"
 msgstr "Anterior contraseña"
 
-#: .\templates\home\mi-cuenta.html:102
+#: .\templates\home\mi-cuenta.html:106
 msgid "New Password"
 msgstr "Nueva contraseña"
 
-#: .\templates\home\mi-cuenta.html:107
+#: .\templates\home\mi-cuenta.html:111
 msgid "Repeat your Password"
 msgstr "Repite tu contraseña"
 
-#: .\templates\home\mi-cuenta.html:113
+#: .\templates\home\mi-cuenta.html:118
 msgid "Change Wishlist"
 msgstr "Cambiar lista de deseos"
 
-#: .\templates\home\mi-cuenta.html:117
+#: .\templates\home\mi-cuenta.html:122
 msgid "View purchase history"
 msgstr "Ver historial de compras"
 
-#: .\templates\home\mi-cuenta.html:131
+#: .\templates\home\mi-cuenta.html:136
 msgid "Save"
 msgstr "Guardar"
+
+#~ msgid "Login"
+#~ msgstr "Iniciar sesión"
 
 #~ msgid "Address"
 #~ msgstr "Dirección"
