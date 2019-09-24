@@ -37,7 +37,7 @@ def index(request):
         }
 
     else:
-        template = loader.get_template('home/index.html')
+        template = loader.get_template('home/base.html')
 
         if request.method == 'GET':
             form = ContactForm()
