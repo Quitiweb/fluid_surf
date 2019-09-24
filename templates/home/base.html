@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'home/css/home.css' %}" />
         <link rel="stylesheet" href="{% static 'main/assets/css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{% static 'main/assets/css/main.css' %}">
         <link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -35,35 +36,58 @@
 <!--Navbar-->
 <nav class="navbar navbar-light light-blue lighten-4">
 
-  <!-- Navbar brand -->
-  <a class="navbar-brand justify-content-center" href="/">
-      <img class="image-responsive w-50" src="{% static 'main/images/Logo_FS_azul.png' %}" alt="fluid-surf.es" />
-  </a>
+<header>
+            <nav class="main" style="z-index: 100000000;">
+                <ul>
+                    <li class="menu">
+                        <a class="fa fa-bars" href="#menu"></a>
+                    </li>
 
-  <!-- Collapse button -->
-  <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
-    aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
-        class="fas fa-bars fa-1x" style="color: black;"></i></span></button>
 
-  <!-- Collapsible content -->
-  <div class="collapse navbar-collapse" id="navbarSupportedContent1">
 
-    <!-- Links -->
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href=" {% url 'index' %}">{% trans 'Home' %}<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/mi-cuenta">{% trans 'My account' %}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/login">{% trans 'Login' %}</a>
-      </li>
-    </ul>
-    <!-- Links -->
+                        <!--<li class="search">
+                        <a class="fa-search" href="#search">Search</a>
+                        <form id="search" method="get" action="#">
+                            <input type="text" name="query" placeholder="Search" />
+                        </form>
+                    </li> -->
+                </ul>
+            </nav>
 
-  </div>
-  <!-- Collapsible content -->
+</header>
+
+
+
+<section id="menu">
+
+        <section id="member" class="banner">
+            <div class="inner">
+                <div class="img-logo">
+                    <img src="/static/main/images/no_user.png"/>
+                </div>
+                <div class="w-100"></div>
+                <h3>jlramos97</h3>
+                <p>ajlkjdas@fkasdlj.com</p>
+            </div>
+
+           <div>
+
+               <ul>
+                   <li class="text-left mt-3">
+                        <a href="/">Inicio</a>
+                   </li>
+               </ul>
+
+               <ul>
+                   <li class="text-left mt-3">
+                       <a href="mi-cuenta">Mi Cuenta</a>
+                   </li>
+               </ul>
+           </div>
+
+        </section>
+</section>
+
 
 </nav>
 <!--/.Navbar-->
@@ -96,6 +120,7 @@
         <script src="{% static 'main/assets/js/breakpoints.min.js' %}"></script>
         <script src="{% static 'main/assets/js/util.js' %}"></script>
         <script src="{% static 'main/assets/js/main.js' %}"></script>
+        <script src="{% static 'main/assets/js/menu.js' %}"></script>
         <script
             src="https://code.jquery.com/jquery-1.12.4.js"
             integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="

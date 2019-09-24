@@ -13,7 +13,7 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: 10000;
+		z-index: 11000;
 	}
 
         #header a img {
@@ -62,7 +62,7 @@
 		}
 
 			#header .menu {
-			    display: none;
+			    display: block;
 			}
 
 			#header .carrito {
