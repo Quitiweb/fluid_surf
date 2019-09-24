@@ -34,7 +34,10 @@ class ChangeUserForm(forms.ModelForm):
 class PasswordChangeCustomForm(PasswordChangeForm):
     error_css_class = 'has-error'
     error_messages = {'password_incorrect':
-                          "La contraseña es incorrecta. Por favor intentalo de nuevo."}
+                          "La contraseña es incorrecta. Por favor intentalo de nuevo.",
+                      'password_mismatch':
+                          "Las contraseñas no coinciden",
+                      }
     old_password = forms.CharField(required=True, label='Anterior Contraseña',
                                    widget=PasswordInput(attrs={
                                        'class': 'form-control mb-5'}),
@@ -51,6 +54,7 @@ class PasswordChangeCustomForm(PasswordChangeForm):
                                         'class': 'form-control'}),
                                     error_messages={
                                         'required': 'La contraseña no puede estar en blanco.'})
+
 
 class PhotographerForm(forms.ModelForm):
     alias = forms.CharField(max_length=25)
