@@ -1,0 +1,49 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row text-center mt-5">
+        <div class="col-12">
+            <h2 class="display-4">{% trans 'Add product' %}</h2>
+        </div>
+    </div>
+
+    <form action="" method="post" enctype='multipart/form-data'>
+        <!-- date & spot -->
+        <div class="row mt-5">
+            <div class="col-6">
+                <label>{% trans 'Date' %}</label>
+                <input type="text" placeholder="Fecha">
+            </div>
+            <div class="col-6">
+                <label>{% trans 'Spot' %}</label>
+                <input type="text" placeholder="Spot">
+            </div>
+        </div>
+
+        <!-- file upload -->
+        <div class="row mt-5 text-center">
+            <div class="col-12 text-center">
+                <div class="span" style="color: #C2C2C2">
+                    Puedes anadir hasta 10 fotos para tu Producto. Recuerda que cada foto puede pesar como mucho 5MB y
+                el total de todas 25MB.
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <input type="file">
+            </div>
+        </div>
+
+        <div class="row text-center mt-5">
+            <div class="col-12">
+                <input type="submit" value="Guardar" class="pr-5 pl-5">
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

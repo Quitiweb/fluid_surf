@@ -37,32 +37,7 @@ def index(request):
         }
 
     else:
-        template = loader.get_template('home/base.html')
-
-        if request.method == 'GET':
-            form = ContactForm()
-        else:
-            form = ContactForm(request.POST)
-            if form.is_valid():
-                subject = 'Kradleco formulario de contacto'
-                from_email = form.cleaned_data['from_email']
-                message = 'Email recibido de: ' + from_email + '\n\n' + form.cleaned_data['message']
-
-                enviar_email(subject, message)
-
-                form = ContactForm()
-                return redirect('mensaje-enviado')
-            else:
-                print('Error en el formulario')
-
-        # post_list = Post.objects.filter(
-        #     fecha_de_publicacion__lte=timezone.now()
-        # ).order_by('-fecha_de_publicacion')[:6]
-
-        context = {
-            'form': form,
-            # 'post_list': post_list,
-        }
+        return redirect('login')
 
     return HttpResponse(template.render(context, request))
 
@@ -148,3 +123,11 @@ def mi_cuenta(request):
             }
         return HttpResponse(template.render(context, request))
     else: return redirect("/login")
+
+
+def subir_producto(request):
+    template = loader.get_template('home/subir-producto.html')
+    context = {}
+
+
+    return HttpResponse(template.render(context, request))
