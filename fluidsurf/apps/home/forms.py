@@ -69,12 +69,18 @@ class PhotographerForm(forms.ModelForm):
 
 
 class AddProductForm(forms.ModelForm):
+    nombre = forms.CharField(required=True)
+    precio = forms.CharField(required=True)
+
     fecha = forms.DateField(required=True)
     spot = forms.CharField(required=True)
     imagen0 = forms.ImageField(required=False)
 
     fecha.widget = forms.TextInput(attrs={'placeholder': 'Introduce la fecha para vender tu producto...'})
     spot.widget = forms.TextInput(attrs={'placeholder': 'Escribe donde vas a estar...'})
+    nombre.widget = forms.TextInput(attrs={'placeholder': 'Introduce el nombre de tu producto...'})
+    precio.widget = forms.TextInput(attrs={'placeholder': '€'})
+
 
     class Meta:
         model = Producto

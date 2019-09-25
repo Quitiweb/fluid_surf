@@ -16,6 +16,18 @@
 
         {% csrf_token %}
 
+        <div class="row mt-5">
+            <div class="col-9">
+                <label>{% trans 'Name' %}</label>
+                {{ form.nombre }}
+            </div>
+
+            <div class="col-3">
+                <label>{% trans 'Price' %}</label>
+                {{ form.precio }}
+            </div>
+        </div>
+
         <!-- date & spot -->
         <div class="row mt-5">
             <div class="col-6">
