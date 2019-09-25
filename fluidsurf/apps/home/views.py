@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 
 from fluidsurf.apps.users.models import CustomUser, MiPerfil
-from .forms import ContactForm, ChangeUserForm, PhotographerForm, PasswordChangeCustomForm
+from .forms import ContactForm, ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
 from ..helpers.helper import enviar_email, grouped, news_to_get, users_to_get
 
 
@@ -122,12 +122,32 @@ def mi_cuenta(request):
                 'passform': passform,
             }
         return HttpResponse(template.render(context, request))
-    else: return redirect("/login")
+    else:
+        return redirect("/login")
 
 
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
-    context = {}
 
+    if request.method == "GET":
+        form = AddProductForm()
+    else:
+        form = AddProductForm(request.POST, request.FILES)
+
+        for afile in request.FILES:
+            # File(file=afile, files=test).save()
+            print('archivo')
+
+        if form.is_valid():
+            producto = form.save(commit=False)
+            producto.user = request.user
+            producto.save()
+            messages.success(request, 'OK')
+        else:
+            messages.warning(request, form.errors)
+
+    context = {
+        'form': form,
+    }
 
     return HttpResponse(template.render(context, request))

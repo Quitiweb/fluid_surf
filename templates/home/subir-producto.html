@@ -13,15 +13,18 @@
     </div>
 
     <form action="" method="post" enctype='multipart/form-data'>
+
+        {% csrf_token %}
+
         <!-- date & spot -->
         <div class="row mt-5">
             <div class="col-6">
                 <label>{% trans 'Date' %}</label>
-                <input type="text" placeholder="Fecha">
+                {{ form.fecha }}
             </div>
             <div class="col-6">
                 <label>{% trans 'Spot' %}</label>
-                <input type="text" placeholder="Spot">
+                {{ form.spot }}
             </div>
         </div>
 
@@ -34,7 +37,7 @@
                 </div>
             </div>
             <div class="col-12 mt-5">
-                <input type="file">
+                {{ form.imagen0 }}
             </div>
         </div>
 

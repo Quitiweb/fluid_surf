@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.forms import PasswordInput
 
+from fluidsurf.apps.home.models import Producto
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -65,3 +66,19 @@ class PhotographerForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('alias', 'CV', 'profile_pic', 'main_pic')
+
+
+class AddProductForm(forms.ModelForm):
+    fecha = forms.DateField(required=True)
+    spot = forms.CharField(required=True)
+    imagen0 = forms.ImageField(required=False)
+
+    fecha.widget = forms.TextInput(attrs={'placeholder': 'Introduce la fecha para vender tu producto...'})
+    spot.widget = forms.TextInput(attrs={'placeholder': 'Escribe donde vas a estar...'})
+
+    class Meta:
+        model = Producto
+        fields = ('fecha', 'spot', 'imagen0')
+
+#         , 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
+#                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9'
