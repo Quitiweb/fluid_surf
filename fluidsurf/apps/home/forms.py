@@ -81,10 +81,9 @@ class AddProductForm(forms.ModelForm):
     nombre.widget = forms.TextInput(attrs={'placeholder': 'Introduce el nombre de tu producto...'})
     precio.widget = forms.TextInput(attrs={'placeholder': '€'})
 
-
     class Meta:
         model = Producto
-        fields = ('fecha', 'spot', 'imagen0')
+        fields = ('nombre', 'precio', 'fecha', 'spot', 'imagen0')
 
 #         , 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
 #                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9'
