@@ -38,18 +38,18 @@ class PasswordChangeCustomForm(PasswordChangeForm):
                       'password_mismatch':
                           "Las contraseñas no coinciden",
                       }
-    old_password = forms.CharField(required=True, label='Anterior Contraseña',
+    old_password = forms.CharField(required=False, label='Anterior Contraseña',
                                    widget=PasswordInput(attrs={
                                        'class': 'form-control mb-5'}),
                                    error_messages={
                                        'required': 'La contraseña no puede estar en blanco.'})
 
-    new_password1 = forms.CharField(required=True, label='Nueva Contraseña',
+    new_password1 = forms.CharField(required=False, label='Nueva Contraseña',
                                     widget=PasswordInput(attrs={
                                         'class': 'form-control mb-5'}),
                                     error_messages={
                                         'required': 'La contraseña no puede estar en blanco.'})
-    new_password2 = forms.CharField(required=True, label='Repite tu Nueva Contraseña',
+    new_password2 = forms.CharField(required=False, label='Repite tu Nueva Contraseña',
                                     widget=PasswordInput(attrs={
                                         'class': 'form-control'}),
                                     error_messages={
