@@ -4,6 +4,8 @@ from fluidsurf.apps.users.models import CustomUser
 
 
 class Producto(models.Model):
+    id = models.AutoField(primary_key=True)
+
     nombre = models.CharField(max_length=25)
     precio = models.IntegerField()
 

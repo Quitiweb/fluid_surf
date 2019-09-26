@@ -153,3 +153,18 @@ def subir_producto(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def producto(request, id='0'):
+    template = loader.get_template('home/producto.html')
+
+    producto = Producto.objects.filter(id=id).first()
+
+    if producto is None:
+        return redirect('/')
+
+    context = {
+        'producto': producto
+    }
+
+    return HttpResponse(template.render(context, request))
