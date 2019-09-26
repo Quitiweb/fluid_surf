@@ -153,7 +153,7 @@ def subir_producto(request):
     }
 
     return HttpResponse(template.render(context, request))
-2
+
 
 def producto(request, id='0'):
     template = loader.get_template('home/producto.html')
@@ -165,26 +165,11 @@ def producto(request, id='0'):
 
     imagenes = [producto.imagen0]
 
-    if producto.imagen1:
-        imagenes.append(producto.imagen1)
-        if producto.imagen2:
-            imagenes.append(producto.imagen2)
-            if producto.imagen3:
-                imagenes.append(producto.imagen3)
-                if producto.imagen4:
-                    imagenes.append(producto.imagen4)
-                    if producto.imagen5:
-                        imagenes.append(producto.imagen5)
-                        if producto.imagen6:
-                            imagenes.append(producto.imagen6)
-                            if producto.imagen7:
-                                imagenes.append(producto.imagen7)
-                                if producto.imagen8:
-                                    imagenes.append(producto.imagen8)
-                                    if producto.imagen9:
-                                        imagenes.append(producto.imagen9)
-
-    print(imagenes)
+    for i in range(10):
+        if getattr(producto, 'imagen' + str(i)):
+            imagenes.append(getattr(producto, 'imagen' + str(i)))
+        else:
+            break
 
     context = {
         'producto': producto,
