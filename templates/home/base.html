@@ -74,26 +74,28 @@
 
                <ul>
                    <li class="text-left mt-3">
-                        <a href="/">{% trans 'Home' %}</a>
+                        <a href="{% url 'index' %}">{% trans 'Home' %}</a>
                    </li>
                </ul>
 
                <ul>
                    <li class="text-left mt-3">
-                       <a href="/mi-cuenta">{% trans 'My account' %}</a>
+                       <a href="{% url 'mi-cuenta' %}">{% trans 'My account' %}</a>
                    </li>
                </ul>
 
+               {% if user.tipo_de_usuario ==  'FOTOGRAFO' or user.is_staff %}
                 <ul>
                    <li class="text-left mt-3">
-                       <a href="/subir-producto">{% trans 'Add product' %}</a>
+                       <a href="{% url 'subir-producto' %}">{% trans 'Add product' %}</a>
                    </li>
                </ul>
+               {% endif %}
 
                {% if user.is_staff %}
                 <ul>
                    <li class="text-left mt-3">
-                       <a href="/dashboard">{% trans 'Dashboard' %}</a>
+                       <a href="{% url 'dashboard' %}">{% trans 'Dashboard' %}</a>
                    </li>
                </ul>
                {% endif %}
