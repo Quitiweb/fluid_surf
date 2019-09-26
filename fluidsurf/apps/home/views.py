@@ -144,7 +144,7 @@ def subir_producto(request):
             producto = form.save(commit=False)
             producto.user = request.user
             producto.save()
-            messages.success(request, 'OK')
+            messages.success(request, 'Tu producto se ha subido correctamente')
         else:
             messages.warning(request, form.errors)
 
