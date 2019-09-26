@@ -22,10 +22,12 @@
 					<p>{% trans 'Connecting photographers and surfers' %}</p>
 				</div>
 
+				{% for producto in productos %}
 				<article class="item thumb span-1">
-					<h2>You really got me</h2>
-					<a href="{% static 'main/images/fulls/01.jpg' %}" class=""><img src="{% static 'main/images/thumbs/01.jpg' %}" alt=""></a>
+					<h2 class="white">{{ producto.nombre }}</h2>
+					<a href="{% static 'main/images/fulls/01.jpg' %}" class=""><img src="media/{{ producto.imagen0 }}" alt=""></a>
 				</article>
+				{% endfor %}
 
 				<article class="item thumb span-2">
 					<h2>Ad Infinitum</h2>

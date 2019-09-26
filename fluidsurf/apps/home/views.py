@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 
+from fluidsurf.apps.home.models import Producto
 from fluidsurf.apps.users.models import CustomUser, MiPerfil
 from .forms import ContactForm, ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
 from ..helpers.helper import enviar_email, grouped, news_to_get, users_to_get
@@ -21,6 +22,8 @@ def index(request):
         #
         # noticias_gr = grouped(noticias, 3)
 
+        productos = Producto.objects.filter().all()
+
         usuarios = CustomUser.objects.exclude(
             username=request.user.username
         )[:users_to_get(CustomUser.objects.count() - 1)]
@@ -30,8 +33,7 @@ def index(request):
         ).filter(Q(is_marca=True) | Q(is_espacio=True), Q(validado=True))[:users_to_get(CustomUser.objects.count() - 1)]
 
         context = {
-            # 'noticias': noticias,
-            # 'noticias_gr': noticias_gr,
+            'productos': productos,
             'usuarios': usuarios,
             'usuarios_conectados': usuarios_conectados,
         }
