@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'localflavor',
     'qr_code',
     'django_social_share',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -196,3 +197,5 @@ SOCIALACCOUNT_PROVIDERS = {
 # Login/logout redirects to homepage
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+WATERMARK_IMAGE = os.path.join(BASE_DIR, '..\\static\\home\\img\\logo.png')
