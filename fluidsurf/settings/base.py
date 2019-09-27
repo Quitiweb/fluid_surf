@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.stripe',
     'localflavor',
     'qr_code',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [
