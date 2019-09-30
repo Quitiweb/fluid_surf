@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.validators import validate_image_file_extension
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
@@ -143,8 +144,20 @@ def subir_producto(request):
         if form.is_valid():
             producto = form.save(commit=False)
             producto.user = request.user
-            producto.save()
-            messages.success(request, 'Tu producto se ha subido correctamente')
+
+            files = request.FILES.getlist('imagenes')
+
+            if len(files) > 0:  # Si nos llegan fotos nuevas las guardamos
+                counter = 0
+                for afile in files:
+
+                    producto.__setattr__('imagen' + str(counter), afile)
+                    counter += 1
+                producto.save()
+                messages.success(request, 'Tu producto se ha subido correctamente')
+
+            else:
+                messages.warning(request, 'Tienes que subir una foto para tu producto.')
         else:
             messages.warning(request, form.errors)
 

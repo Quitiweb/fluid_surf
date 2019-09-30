@@ -50,20 +50,15 @@
             </div>
 
             <div class="col-12 mt-5">
-                <h1 class="display-1" style="font-size: 32px;">Sube la <span id="textoFoto">primera</span> foto</h1>
+                <h1 class="display-1" style="font-size: 32px;">Sube las fotos de tu producto</h1>
             </div>
 
             <div class="col-12 mt-3">
-                {{ form.imagen0 }}
-                {{ form.imagen1 }}
-                {{ form.imagen2 }}
-                {{ form.imagen3 }}
-                {{ form.imagen4 }}
-                {{ form.imagen5 }}
-                {{ form.imagen6 }}
-                {{ form.imagen7 }}
-                {{ form.imagen8 }}
-                {{ form.imagen9 }}
+                <label for="id_imagenes" class="customInputArea p-5">
+                    <span id="textFiles">{% trans 'Click or drag over here to upload your images' %}</span>
+                    {{ form.imagenes }}
+                </label>
+
             </div>
         </div>
 
@@ -74,7 +69,6 @@
         </div>
     </form>
 </div>
-
 
 <script src="{% static 'main/assets/js/subir-producto.js' %}" defer></script>
 

@@ -2039,3 +2039,22 @@ input, select, textarea {
         }
 
     }
+
+/* Subir Producto */
+
+.customInputArea {
+    border: 3px dashed #DC9B74;
+    text-transform: none !important;
+    cursor: pointer;
+}
+
+#id_imagenes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: pointer;
+}

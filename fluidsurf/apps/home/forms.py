@@ -74,26 +74,28 @@ class AddProductForm(forms.ModelForm):
 
     fecha = forms.DateField(required=True)
     spot = forms.CharField(required=True)
-    imagen0 = forms.ImageField(required=False)
-    imagen1 = forms.ImageField(required=False)
-    imagen2 = forms.ImageField(required=False)
-    imagen3 = forms.ImageField(required=False)
-    imagen4 = forms.ImageField(required=False)
-    imagen5 = forms.ImageField(required=False)
-    imagen6 = forms.ImageField(required=False)
-    imagen7 = forms.ImageField(required=False)
-    imagen8 = forms.ImageField(required=False)
-    imagen9 = forms.ImageField(required=False)
+    imagenes = forms.ImageField(required=False)
+    # imagen1 = forms.ImageField(required=False)
+    # imagen2 = forms.ImageField(required=False)
+    # imagen3 = forms.ImageField(required=False)
+    # imagen4 = forms.ImageField(required=False)
+    # imagen5 = forms.ImageField(required=False)
+    # imagen6 = forms.ImageField(required=False)
+    # imagen7 = forms.ImageField(required=False)
+    # imagen8 = forms.ImageField(required=False)
+    # imagen9 = forms.ImageField(required=False)
+    #
+    # imagen1.widget.attrs['class'] = 'hide'
+    # imagen2.widget.attrs['class'] = 'hide'
+    # imagen3.widget.attrs['class'] = 'hide'
+    # imagen4.widget.attrs['class'] = 'hide'
+    # imagen5.widget.attrs['class'] = 'hide'
+    # imagen6.widget.attrs['class'] = 'hide'
+    # imagen7.widget.attrs['class'] = 'hide'
+    # imagen8.widget.attrs['class'] = 'hide'
+    # imagen9.widget.attrs['class'] = 'hide'
 
-    imagen1.widget.attrs['class'] = 'hide'
-    imagen2.widget.attrs['class'] = 'hide'
-    imagen3.widget.attrs['class'] = 'hide'
-    imagen4.widget.attrs['class'] = 'hide'
-    imagen5.widget.attrs['class'] = 'hide'
-    imagen6.widget.attrs['class'] = 'hide'
-    imagen7.widget.attrs['class'] = 'hide'
-    imagen8.widget.attrs['class'] = 'hide'
-    imagen9.widget.attrs['class'] = 'hide'
+    imagenes.widget = forms.ClearableFileInput(attrs={'multiple': True})
 
     fecha.widget = forms.TextInput(attrs={'placeholder': 'Introduce la fecha para vender tu producto...'})
     spot.widget = forms.TextInput(attrs={'placeholder': 'Escribe donde vas a estar...'})
@@ -102,6 +104,8 @@ class AddProductForm(forms.ModelForm):
 
     class Meta:
         model = Producto
-        fields = ('nombre', 'precio', 'fecha', 'spot', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
-                  , 'imagen6', 'imagen7', 'imagen8', 'imagen9')
+        fields = ('nombre', 'precio', 'fecha', 'spot')
+
+#         , 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
+#                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9'
 
