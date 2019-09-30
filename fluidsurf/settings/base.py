@@ -198,4 +198,4 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-WATERMARK_IMAGE = os.path.join(BASE_DIR, '..\\static\\home\\img\\logo.png')
+WATERMARK_IMAGE = os.path.join(PROJECT_ROOT, 'static/home/img/logo.png')
