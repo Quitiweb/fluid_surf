@@ -163,7 +163,7 @@ def producto(request, id='0'):
     if producto is None:
         return redirect('/')
 
-    imagenes = [producto.imagen0]
+    imagenes = []
 
     for i in range(10):
         if getattr(producto, 'imagen' + str(i)):
