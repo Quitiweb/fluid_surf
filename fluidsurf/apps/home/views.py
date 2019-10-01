@@ -1,16 +1,20 @@
 from django.contrib import messages
-from django.core.validators import validate_image_file_extension
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.template import loader
-from django.utils import timezone
-from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.template import loader
 
 from fluidsurf.apps.home.models import Producto
-from fluidsurf.apps.users.models import CustomUser, MiPerfil
-from .forms import ContactForm, ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
-from ..helpers.helper import enviar_email, grouped, news_to_get, users_to_get
+from fluidsurf.apps.users.models import CustomUser
+from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
+from ..helpers.helper import users_to_get
+
+from django.conf import settings
+
+from PIL import Image
+from imagekit.registry import register
+from imagekit.specs import ImageSpec
 
 
 def index(request):
@@ -210,18 +214,6 @@ def producto(request, id='0'):
     }
 
     return HttpResponse(template.render(context, request))
-
-
-import numpy as np
-
-from io import BytesIO
-from pickle import dump, load, UnpicklingError
-
-from django.conf import settings
-
-from PIL import Image, ImageDraw, ImageFont, ImageMath
-from imagekit.registry import register
-from imagekit.specs import ImageSpec
 
 
 def add_watermark(image, watermark):
