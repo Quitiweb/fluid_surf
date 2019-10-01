@@ -53,26 +53,26 @@ def formulario(request):
     template = loader.get_template('home/formulario.html')
 
     # if request.method == 'GET':
-        # form = FormularioForm()
+    # form = FormularioForm()
     # else:
-        # # form = FormularioForm(request.POST)
-        # if form.is_valid():
-        #     form.save()
-        #
-        #     subject = 'Kradleco nueva solicitud recibida'
-        #     from_email = form.cleaned_data['email']
-        #     nombre = form.cleaned_data['nombre']
-        #     enlace = 'https://www.kradleco.es/admin/landing/solicitud/'
-        #     message = 'Solicitud recibida de: ' + nombre + '\nCon email: ' + from_email + \
-        #               '\n\nPara ver dicha solicitud, visita: ' + enlace
-        #
-        #     enviar_email(subject, message)
-        #
-        #     form = FormularioForm()
-        #
-        #     return redirect('solicitud-recibida')
-        # else:
-        #     print('Error en el formulario')
+    # # form = FormularioForm(request.POST)
+    # if form.is_valid():
+    #     form.save()
+    #
+    #     subject = 'Kradleco nueva solicitud recibida'
+    #     from_email = form.cleaned_data['email']
+    #     nombre = form.cleaned_data['nombre']
+    #     enlace = 'https://www.kradleco.es/admin/landing/solicitud/'
+    #     message = 'Solicitud recibida de: ' + nombre + '\nCon email: ' + from_email + \
+    #               '\n\nPara ver dicha solicitud, visita: ' + enlace
+    #
+    #     enviar_email(subject, message)
+    #
+    #     form = FormularioForm()
+    #
+    #     return redirect('solicitud-recibida')
+    # else:
+    #     print('Error en el formulario')
 
     context = {
         # 'form': form,
@@ -99,7 +99,7 @@ def mi_cuenta(request):
             passform = PasswordChangeCustomForm(request.user, request.POST)
             form = ChangeUserForm(request.POST, instance=request.user)
             if request.user.tipo_de_usuario == "FOTOGRAFO":
-                photo_form = PhotographerForm(request.POST,  request.FILES, instance=request.user)
+                photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
                 if photo_form.is_valid():
                     photo_form.save()
             if form.is_valid():
@@ -137,29 +137,44 @@ def subir_producto(request):
     else:
         form = AddProductForm(request.POST, request.FILES)
 
-        for afile in request.FILES:
-            # File(file=afile, files=test).save()
-            print('archivo')
-
         if form.is_valid():
             producto = form.save(commit=False)
             producto.user = request.user
 
-            files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist('imagen2') + \
-                    request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist('imagen5') + \
-                    request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist('imagen8') + \
+            files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
+                'imagen2') + \
+                    request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist(
+                'imagen5') + \
+                    request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist(
+                'imagen8') + \
                     request.FILES.getlist('imagen9')
 
-            if len(files) > 0:  # Si nos llegan fotos nuevas las guardamos
+            if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
                 counter = 0
+                total_size = 0
+                upload = True
                 for afile in files:
-                    producto.__setattr__('imagen' + str(counter), afile)
-                    counter += 1
-                producto.save()
-                messages.success(request, 'Tu producto se ha subido correctamente')
+                    if afile.size > 5242880:
+                        messages.warning(request, 'Al menos una de tus fotos tiene un peso superior a 5MB. '
+                                                  'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
+                        upload = False
+                    else:
+                        total_size += afile.size
+                        producto.__setattr__('imagen' + str(counter), afile)
+                        counter += 1
 
+                if total_size < 26214400 and upload:
+                    producto.save()
+                    messages.success(request, 'Tu producto se ha subido correctamente')
+                else:
+                    if not upload:
+                        pass
+                    else:
+                        messages.warning(request, 'Has subido fotos con un peso superior a 25MB. '
+                                                  'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
             else:
-                messages.warning(request, 'Tienes que subir una foto para tu producto.')
+                messages.warning(request, 'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
+                                          'superar las 10 fotos.')
         else:
             messages.warning(request, form.errors)
 
@@ -192,6 +207,7 @@ def producto(request, id='0'):
     }
 
     return HttpResponse(template.render(context, request))
+
 
 import numpy as np
 
