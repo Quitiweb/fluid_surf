@@ -23,7 +23,9 @@ def index(request):
         #
         # noticias_gr = grouped(noticias, 3)
 
-        productos = Producto.objects.filter().all()
+        productos = Producto.objects.filter()[:10]
+
+        productos2 = Producto.objects.filter()[11:20]
 
         usuarios = CustomUser.objects.exclude(
             username=request.user.username
@@ -35,6 +37,7 @@ def index(request):
 
         context = {
             'productos': productos,
+            'producto2': productos2,
             'usuarios': usuarios,
             'usuarios_conectados': usuarios_conectados,
         }
