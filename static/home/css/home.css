@@ -2048,7 +2048,10 @@ input, select, textarea {
     cursor: pointer;
 }
 
-#id_imagenes {
+#id_imagen0, #id_imagen1, #id_imagen2,
+ #id_imagen3, #id_imagen4, #id_imagen5,
+ #id_imagen6, #id_imagen7, #id_imagen8,
+  #id_imagen9 {
     position: absolute;
     top: 0;
     left: 0;

@@ -145,12 +145,14 @@ def subir_producto(request):
             producto = form.save(commit=False)
             producto.user = request.user
 
-            files = request.FILES.getlist('imagenes')
+            files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist('imagen2') + \
+                    request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist('imagen5') + \
+                    request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist('imagen8') + \
+                    request.FILES.getlist('imagen9')
 
             if len(files) > 0:  # Si nos llegan fotos nuevas las guardamos
                 counter = 0
                 for afile in files:
-
                     producto.__setattr__('imagen' + str(counter), afile)
                     counter += 1
                 producto.save()
