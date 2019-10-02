@@ -686,6 +686,7 @@ input, select, textarea {
 /* Header */
 
 	#footer {
+	    background: #040404;
 		width: 100%;
 		padding: 1.5em;
 		display: -moz-flex;
