@@ -14,4 +14,5 @@ urlpatterns = [
     path('dashboard/', include('fluidsurf.apps.dashboard.urls')),
     path('payments/', include('fluidsurf.apps.payments.urls')),
     path('accounts/', include('allauth.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

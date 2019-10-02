@@ -45,7 +45,7 @@
 
         <!-- TODO Si el usuario es fotografo, hay que anadir un form con cv, alias, foto, foto destacada... -->
 
-        {% if user.tipo_de_usuario ==  'FOTOGRAFO' %}
+        {% if user.tipo_de_usuario ==  'FOTOGRAFO' or user.tipo_de_usuario == "ADMIN"%}
 
         <h1 class="display-4 mt-5" style="color:black;">
             {% trans 'My Photographer Profile' %}

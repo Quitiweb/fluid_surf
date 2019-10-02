@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-02 13:24+0200\n"
+"POT-Creation-Date: 2019-10-02 15:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgid "Django administration"
 msgstr ""
 
 #: .\templates\dashboard\base.html:32 .\templates\dashboard\base.html:176
-#: .\templates\dashboard\main.html:16 .\templates\home\base.html:90
+#: .\templates\dashboard\main.html:16 .\templates\home\base.html:87
 msgid "Home"
 msgstr "Inicio"
 
@@ -121,18 +121,26 @@ msgid "Administrator"
 msgstr "Administrador"
 
 #: .\templates\dashboard\main.html:12 .\templates\dashboard\main.html:17
-#: .\templates\home\base.html:111
+#: .\templates\home\base.html:108
 msgid "Dashboard"
 msgstr "Panel de Control"
 
-#: .\templates\home\base.html:96 .\templates\home\index.html:138
+#: .\templates\home\base.html:93 .\templates\home\index.html:137
 #: .\templates\home\mi-cuenta.html:11
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: .\templates\home\base.html:103 .\templates\home\subir-producto.html:11
+#: .\templates\home\base.html:100 .\templates\home\subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
+
+#: .\templates\home\base.html:115
+msgid "Logout"
+msgstr ""
+
+#: .\templates\home\base.html:134
+msgid "Change language"
+msgstr "Cambiar idioma"
 
 #: .\templates\home\index.html:14
 msgid "Connecting photographers and surfers"
@@ -154,63 +162,63 @@ msgstr "Recomendado para ti"
 msgid "Subscribe"
 msgstr "Suscríbete"
 
-#: .\templates\home\index.html:113
-msgid "Information"
-msgstr "Información"
+#: .\templates\home\index.html:112
+msgid "INFORMATION"
+msgstr "INFORMACIÓN"
 
-#: .\templates\home\index.html:115
+#: .\templates\home\index.html:114
 msgid "How does Fluid House work?"
 msgstr "¿Cómo funciona Fluid House?"
 
-#: .\templates\home\index.html:116
+#: .\templates\home\index.html:115
 msgid "Security  in payments"
 msgstr "Seguridad en los pagos"
 
-#: .\templates\home\index.html:117
+#: .\templates\home\index.html:116
 msgid "Free subscription"
 msgstr "Suscripción gratuita"
 
-#: .\templates\home\index.html:118
+#: .\templates\home\index.html:117
 msgid "Sell photographs"
 msgstr "Vender fotografías"
 
-#: .\templates\home\index.html:119
+#: .\templates\home\index.html:118
 msgid "Copyright, licenses and sizes"
 msgstr "Copyright, licencias y tamaños"
 
-#: .\templates\home\index.html:120
+#: .\templates\home\index.html:119
 msgid "Terms & Conditions"
 msgstr "Términos y Condiciones"
 
-#: .\templates\home\index.html:121
+#: .\templates\home\index.html:120
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
-#: .\templates\home\index.html:122
+#: .\templates\home\index.html:121
 msgid "Taxes & Facturation"
 msgstr "Impuestos  y facturación"
 
-#: .\templates\home\index.html:128
+#: .\templates\home\index.html:127
 msgid "CUSTOMER SERVICE"
 msgstr "ATENCIÓN AL CLIENTE"
 
-#: .\templates\home\index.html:130
+#: .\templates\home\index.html:129
 msgid "Contact"
 msgstr "Contacto"
 
-#: .\templates\home\index.html:131
+#: .\templates\home\index.html:130
 msgid "Refunds"
 msgstr "Devoluciones"
 
-#: .\templates\home\index.html:136
+#: .\templates\home\index.html:135
 msgid "MANAGEMENT AREA"
 msgstr "ÁREA DE GESTIÓN"
 
-#: .\templates\home\index.html:139 .\templates\home\index.html:140
+#: .\templates\home\index.html:138 .\templates\home\index.html:139
 msgid "Order record"
 msgstr "Historial de compras"
 
-#: .\templates\home\index.html:141
+#: .\templates\home\index.html:140
 #, fuzzy
 #| msgid "Wishlist"
 msgid "Wishlist"
@@ -284,15 +292,15 @@ msgstr "Guardar"
 msgid "Uploaded by"
 msgstr "Subido por"
 
-#: .\templates\home\producto.html:52 .\templates\home\subir-producto.html:26
+#: .\templates\home\producto.html:58 .\templates\home\subir-producto.html:26
 msgid "Price"
 msgstr "Precio"
 
-#: .\templates\home\producto.html:59
+#: .\templates\home\producto.html:65
 msgid "I want it!"
 msgstr "Lo quiero!"
 
-#: .\templates\home\producto.html:65
+#: .\templates\home\producto.html:71
 msgid "Share on Social Media"
 msgstr "Compartir en redes sociales"
 
@@ -333,7 +341,7 @@ msgstr "Añade las fotos de tu producto"
 msgid "Click or drag over here to upload your images"
 msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
 
-#: .\templates\registration\login.html:11
+#: .\templates\registration\login.html:9
 msgid "User or password invalid"
 msgstr "Usuario o contraseña incorrectos"
 

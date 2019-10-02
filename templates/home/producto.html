@@ -14,7 +14,13 @@
             <h1 class="display-1" style="font-size: 60px;">
                 {{ producto.nombre }}
             </h1>
-            <p class="float-right mr-5">{% trans 'Uploaded by' %} {{ producto.user.alias }}</p>
+            <p class="float-right mr-5">{% trans 'Uploaded by' %}
+                {% if producto.user.alias %}
+                {{ producto.user.alias }}
+                {% else %}
+                {{ producto.user.first_name }} {{ producto.user.last_name }}
+                {% endif %}
+            </p>
         </div>
     </div>
 
