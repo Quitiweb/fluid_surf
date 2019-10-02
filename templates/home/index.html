@@ -19,16 +19,15 @@
 </header>
 
 <section>
-	<div class="row mt-5 pb-5">
-
-		<div class="col-2"></div>
-		<div class="col-3 text-center mt-5">
-			<h1 class="display-3"> Selecciona tu zona en el mapa</h1>
+	<div class="row mt-5 text-center">
+		<div class="col-xl-1 col-2"></div>
+		<div class="col-12 col-xl-3 text-center mt-5 mr-3 pl-3">
+			<h1 class="display-3 surf"> Selecciona tu zona en el mapa</h1>
 		</div>
 		<div class="col-1"></div>
 
-		<div class="col-6 mt-5">
-			<img class="img-fluid" src="https://i.imgur.com/ccVYPQt.png" alt="">
+		<div class="col-10 col-xl-6 mt-5">
+			<img class="img-fluid" src="https://media.wired.com/photos/59269cd37034dc5f91bec0f1/191:100/pass/GoogleMapTA.jpg" alt="">
 		</div>
 	</div>
 </section>
@@ -36,16 +35,17 @@
 <!-- Wrapper -->
 <div id="wrapper">
 	<!-- Main -->
-	<section id="main">
-		<div class="row mt-5">
-			<div class="col-12" style="background-color: #1C8CC4;">
-			<h1 class="display-4 white ml-5">
+			<div class="row mt-5 w-100">
+			<div class="col-12" style="background-color: #1C8CC4; margin-top:350px">
+			<h1 class="display-4 surf white ml-5">
 				Tu zona
 			</h1>
 			</div>
 		</div>
+	<section id="main">
+
 		<!-- Items -->
-			<div class="items mt-5">
+			<div class="items">
 				{% for producto in productos %}
 				<article class="item thumb span-1">
 					<h2 class="white">{{ producto.nombre }}</h2>
@@ -81,15 +81,31 @@
 <!--				</article>-->
 <!--				{% endfor %}-->
 			</div>
-	</section></div>
+	</section>
+</div>
 
 		<div class="row mt-5">
 			<div class="col-12" style="background-color: #1C8CC4;">
-			<h1 class="display-4 white ml-5">
+			<h1 class="display-4 surf white ml-5">
 				Recomendado para ti
 			</h1>
 			</div>
 		</div>
+
+		<div class="row mt-5 ml-1 mr-2 text-center">
+			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-3" style="object-fit:cover;" height="350">
+			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-3" style="object-fit:cover;" height="350">
+			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-3" style="object-fit:cover;" height="350">
+			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-3" style="object-fit:cover;" height="350">
+		</div>
+
+		<div class="row mt-5 text-center">
+			<div class="col-12">
+				<button>Suscribete</button>
+			</div>
+		</div>
+
+
 	<!-- Footer -->
 		<section id="footer">
 			<section>

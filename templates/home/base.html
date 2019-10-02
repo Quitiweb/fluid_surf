@@ -29,6 +29,18 @@
         <link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link type="text/x-scss" href="{% static 'home/css/custom.scss' %}" rel="stylesheet" media="screen">
+
+        <style>
+        @font-face {
+            font-family: 'Edo';
+            src: local: ('Edo'),
+                 url("{% static 'main/assets/webfonts/edo.ttf' %}") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        </style>
+
         <!-- Imports para bootstrap -->
         <noscript><link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}" /></noscript>
         <meta property="og:description" content="Ya no se me olvida quitar esto">
