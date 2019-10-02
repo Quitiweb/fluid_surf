@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-02 10:41+0200\n"
+"POT-Creation-Date: 2019-10-02 13:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgid "Django administration"
 msgstr ""
 
 #: .\templates\dashboard\base.html:32 .\templates\dashboard\base.html:176
-#: .\templates\dashboard\main.html:16 .\templates\home\base.html:78
+#: .\templates\dashboard\main.html:16 .\templates\home\base.html:90
 msgid "Home"
 msgstr "Inicio"
 
@@ -121,21 +121,100 @@ msgid "Administrator"
 msgstr "Administrador"
 
 #: .\templates\dashboard\main.html:12 .\templates\dashboard\main.html:17
-#: .\templates\home\base.html:99
+#: .\templates\home\base.html:111
 msgid "Dashboard"
 msgstr "Panel de Control"
 
-#: .\templates\home\base.html:84 .\templates\home\mi-cuenta.html:11
+#: .\templates\home\base.html:96 .\templates\home\index.html:138
+#: .\templates\home\mi-cuenta.html:11
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: .\templates\home\base.html:91 .\templates\home\subir-producto.html:11
+#: .\templates\home\base.html:103 .\templates\home\subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
 #: .\templates\home\index.html:14
 msgid "Connecting photographers and surfers"
 msgstr "Conectando fotógrafos y surferos"
+
+#: .\templates\home\index.html:25
+msgid "Choose your area in the map"
+msgstr "Escoge una zona en el mapa"
+
+#: .\templates\home\index.html:41
+msgid "Your area"
+msgstr "Tu zona"
+
+#: .\templates\home\index.html:90
+msgid "Recommended for you"
+msgstr "Recomendado para ti"
+
+#: .\templates\home\index.html:104
+msgid "Subscribe"
+msgstr "Suscríbete"
+
+#: .\templates\home\index.html:113
+msgid "Information"
+msgstr "Información"
+
+#: .\templates\home\index.html:115
+msgid "How does Fluid House work?"
+msgstr "¿Cómo funciona Fluid House?"
+
+#: .\templates\home\index.html:116
+msgid "Security  in payments"
+msgstr "Seguridad en los pagos"
+
+#: .\templates\home\index.html:117
+msgid "Free subscription"
+msgstr "Suscripción gratuita"
+
+#: .\templates\home\index.html:118
+msgid "Sell photographs"
+msgstr "Vender fotografías"
+
+#: .\templates\home\index.html:119
+msgid "Copyright, licenses and sizes"
+msgstr "Copyright, licencias y tamaños"
+
+#: .\templates\home\index.html:120
+msgid "Terms & Conditions"
+msgstr "Términos y Condiciones"
+
+#: .\templates\home\index.html:121
+msgid "Privacy Policy"
+msgstr "Política de Privacidad"
+
+#: .\templates\home\index.html:122
+msgid "Taxes & Facturation"
+msgstr "Impuestos  y facturación"
+
+#: .\templates\home\index.html:128
+msgid "CUSTOMER SERVICE"
+msgstr "ATENCIÓN AL CLIENTE"
+
+#: .\templates\home\index.html:130
+msgid "Contact"
+msgstr "Contacto"
+
+#: .\templates\home\index.html:131
+msgid "Refunds"
+msgstr "Devoluciones"
+
+#: .\templates\home\index.html:136
+msgid "MANAGEMENT AREA"
+msgstr "ÁREA DE GESTIÓN"
+
+#: .\templates\home\index.html:139 .\templates\home\index.html:140
+msgid "Order record"
+msgstr "Historial de compras"
+
+#: .\templates\home\index.html:141
+#, fuzzy
+#| msgid "Wishlist"
+msgid "Wishlist"
+msgstr "Lista de deseos"
 
 #: .\templates\home\mi-cuenta.html:15 .\templates\home\subir-producto.html:21
 msgid "Name"

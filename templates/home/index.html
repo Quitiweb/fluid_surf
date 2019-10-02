@@ -22,7 +22,7 @@
 	<div class="row mt-5 text-center">
 		<div class="col-xl-1 col-2"></div>
 		<div class="col-12 col-xl-3 text-center mt-5 mr-3 pl-3">
-			<h1 class="display-3 surf"> Selecciona tu zona en el mapa</h1>
+			<h1 class="display-3 surf"> {% trans 'Choose your area in the map' %}</h1>
 		</div>
 		<div class="col-1"></div>
 
@@ -38,7 +38,7 @@
 			<div class="row mt-5 w-100">
 			<div class="col-12" style="background-color: #1C8CC4; margin-top:350px">
 			<h1 class="display-4 surf white ml-5">
-				Tu zona
+				{% trans 'Your area' %}
 			</h1>
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 		<div class="row mt-5">
 			<div class="col-12" style="background-color: #1C8CC4;">
 			<h1 class="display-4 surf white ml-5">
-				Recomendado para ti
+				{% trans 'Recommended for you' %}
 			</h1>
 			</div>
 		</div>
@@ -101,43 +101,43 @@
 
 		<div class="row mt-5 text-center">
 			<div class="col-12">
-				<button>Suscribete</button>
+				<button>{% trans 'Subscribe' %}</button>
 			</div>
 		</div>
-
-
+<!--	TODO poner enlaces en los li-->
 	<!-- Footer -->
 		<section id="footer" class="mt-5">
 			<div class="row col-12">
 				<div class="col-12 col-md-3">
-					<strong class="naranja">INFORMACIÓN</strong>
+					<strong class="naranja">{% trans 'Information'%}</strong>
 					<ul style="color:#F5F5F5;">
-						<li>Como funciona Fluid House</li>
-						<li>Seguridad en pagos</li>
-						<li>Suscripcion gratuita</li>
-						<li>Instrucciones: vender fotos</li>
-						<li>Copyright, Licencias y tamaños</li>
-						<li>Términos y condiciones</li>
-						<li>Política de privacidad</li>
-						<li>Impuestos y faturación</li>
+						<li>{% trans 'How does Fluid House work?' %}</li>
+						<li>{% trans 'Security  in payments'%}</li>
+						<li>{% trans 'Free subscription' %}</li>
+						<li>{% trans 'Sell photographs' %}</li>
+						<li>{% trans 'Copyright, licenses and sizes' %}</li>
+						<li>{% trans 'Terms & Conditions' %}</li>
+						<li>{% trans 'Privacy Policy' %}</li>
+						<li>{% trans 'Taxes & Facturation' %}</li>
 					</ul>
 				</div>
 
 			<div class="col-12 col-md-3 mt-3">
 				<div class="col-12">
-					<strong class="naranja">ATENCIÓN AL CLIENTE</strong>
+					<strong class="naranja">{% trans 'CUSTOMER SERVICE' %}</strong>
 					<ul style="color:#F5F5F5;">
-						<li>Contacta</li>
-						<li>Devoluciones</li>
+						<li>{% trans 'Contact' %}</li>
+						<li>{% trans 'Refunds' %}</li>
 					</ul>
 				</div>
 		</div>
 				<div class="col-md-6 col-12 mt-3">
-					<strong class="naranja">ÁREA DE GESTIÓN</strong>
+					<strong class="naranja">{% trans 'MANAGEMENT AREA' %}</strong>
 					<ul style="color:#F5F5F5;">
-						<li>Mi cuenta</li>
-						<li>Historial pedidos</li>
-						<li>Lista deseos</li>
+						<li>{% trans 'My account' %}</li>
+						<li>{% trans 'Order record' %}</li>
+						<li>{% trans 'Order record' %}</li>
+						<li>{% trans 'Wishlist' %}</li>
 						<li>Newsletter</li>
 					</ul>
 				</div>
