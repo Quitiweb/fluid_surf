@@ -40,17 +40,18 @@
             </div>
         </div>
 
-        <!-- file upload -->
+        <!-- file upload
+        Puedes añadir hasta 10 fotos para tu Producto. Recuerda que cada foto puede pesar como mucho 5MB y
+                el total de todas 25MB.-->
         <div class="row mt-5 text-center">
             <div class="col-12 text-center">
                 <div class="span" style="color: #C2C2C2">
-                    Puedes añadir hasta 10 fotos para tu Producto. Recuerda que cada foto puede pesar como mucho 5MB y
-                el total de todas 25MB.
+                    {% trans 'You can upload until 10 pictures for your product. Remember that each picture cannot be larger than 5MB and all together cannot be over 25MB' %}
                 </div>
             </div>
-
+<!--Sube las fotos de tu producto-->
             <div class="col-12 mt-5">
-                <h1 class="display-1" style="font-size: 32px;">Sube las fotos de tu producto</h1>
+                <h1 class="display-1" style="font-size: 32px;">{% trans "Upload your product's pictures" %}</h1>
             </div>
 
             <div class="col-12 mt-3">
@@ -109,7 +110,7 @@
 
         <div class="row text-center mt-5">
             <div class="col-12">
-                <input type="submit" value="Guardar" class="pr-5 pl-5">
+                <input type="submit" value="{% trans 'Save' %}" class="pr-5 pl-5">
             </div>
         </div>
     </form>

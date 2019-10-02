@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-25 16:28+0200\n"
+"POT-Creation-Date: 2019-10-02 10:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\fluidsurf\settings\base.py:156
-msgid "English"
-msgstr ""
+#: .\fluidsurf\apps\home\forms.py:24
+#, fuzzy
+#| msgid "Write your product's name..."
+msgid "Write your name here..."
+msgstr "Escribe tu nombre aquí..."
 
-#: .\fluidsurf\settings\base.py:157
+#: .\fluidsurf\apps\home\forms.py:25
+#, fuzzy
+#| msgid "Write your product's name..."
+msgid "Write your surname here..."
+msgstr "Escribe tus apellidos aqui..."
+
+#: .\fluidsurf\apps\home\forms.py:26
+#, fuzzy
+#| msgid "Write your product's name..."
+msgid "Write your email here..."
+msgstr "Escribe tu email aquí..."
+
+#: .\fluidsurf\apps\home\forms.py:27
+#, fuzzy
+#| msgid "Write your product's name..."
+msgid "Write your phone here..."
+msgstr "Escribe tu teléfono aquí..."
+
+#: .\fluidsurf\apps\home\forms.py:28
+#, fuzzy
+#| msgid "Write your product's name..."
+msgid "Write your country here..."
+msgstr "Escribe tu país aquí..."
+
+#: .\fluidsurf\apps\home\forms.py:29
+#, fuzzy
+#| msgid "Write your product's name..."
+msgid "Write your area here..."
+msgstr "Escribe el nombre de tu zona aquí..."
+
+#: .\fluidsurf\apps\home\forms.py:39
+msgid "Wrong password. Please, try again."
+msgstr "Contraseña incorrecta. Por favor, inténtalo de nuevo."
+
+#: .\fluidsurf\apps\home\forms.py:41
+msgid "Your passwords don't match"
+msgstr "Tus contraseñas no coinciden"
+
+#: .\fluidsurf\apps\home\forms.py:43 .\templates\home\mi-cuenta.html:99
+msgid "Old Password"
+msgstr "Anterior contraseña"
+
+#: .\fluidsurf\apps\home\forms.py:47 .\fluidsurf\apps\home\forms.py:53
+#: .\fluidsurf\apps\home\forms.py:58
+msgid "Your password cannot be empty"
+msgstr "Tu contraseña no puede estar vacía."
+
+#: .\fluidsurf\apps\home\forms.py:49
+#, fuzzy
+#| msgid "New Password"
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#: .\fluidsurf\apps\home\forms.py:54
+#, fuzzy
+#| msgid "Repeat your Password"
+msgid "Repeat your new password"
+msgstr "Repite tu contraseña"
+
+#: .\fluidsurf\apps\home\forms.py:121
+msgid "Write when are you selling your product..."
+msgstr "Escribe cuándo vas a vender tu producto..."
+
+#: .\fluidsurf\apps\home\forms.py:122
+msgid "Where are you going to be?"
+msgstr "¿Dónde vas a estar?"
+
+#: .\fluidsurf\apps\home\forms.py:123
+msgid "Write your product's name..."
+msgstr "Escribe el nombre de tu producto"
+
+#: .\fluidsurf\settings\base.py:158
+msgid "English"
+msgstr "Inglés"
+
+#: .\fluidsurf\settings\base.py:159
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
 #: .\templates\admin\base_site.html:6
 msgid "Kradleco site admin"
@@ -35,7 +112,7 @@ msgid "Django administration"
 msgstr ""
 
 #: .\templates\dashboard\base.html:32 .\templates\dashboard\base.html:176
-#: .\templates\dashboard\main.html:16 .\templates\home\base.html:77
+#: .\templates\dashboard\main.html:16 .\templates\home\base.html:78
 msgid "Home"
 msgstr "Inicio"
 
@@ -44,19 +121,19 @@ msgid "Administrator"
 msgstr "Administrador"
 
 #: .\templates\dashboard\main.html:12 .\templates\dashboard\main.html:17
-#: .\templates\home\base.html:96
+#: .\templates\home\base.html:99
 msgid "Dashboard"
 msgstr "Panel de Control"
 
-#: .\templates\home\base.html:83 .\templates\home\mi-cuenta.html:11
+#: .\templates\home\base.html:84 .\templates\home\mi-cuenta.html:11
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: .\templates\home\base.html:89 .\templates\home\subir-producto.html:11
+#: .\templates\home\base.html:91 .\templates\home\subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: .\templates\home\index.html:22
+#: .\templates\home\index.html:14
 msgid "Connecting photographers and surfers"
 msgstr "Conectando fotógrafos y surferos"
 
@@ -104,10 +181,6 @@ msgstr "Pulsa aqui para abrir las opciones avanzadas"
 msgid "Change Password"
 msgstr "Cambiar contraseña"
 
-#: .\templates\home\mi-cuenta.html:99
-msgid "Old Password"
-msgstr "Anterior contraseña"
-
 #: .\templates\home\mi-cuenta.html:106
 msgid "New Password"
 msgstr "Nueva contraseña"
@@ -124,13 +197,25 @@ msgstr "Cambiar lista de deseos"
 msgid "View purchase history"
 msgstr "Ver historial de compras"
 
-#: .\templates\home\mi-cuenta.html:136
+#: .\templates\home\mi-cuenta.html:136 .\templates\home\subir-producto.html:113
 msgid "Save"
 msgstr "Guardar"
 
-#: .\templates\home\subir-producto.html:26
+#: .\templates\home\producto.html:17
+msgid "Uploaded by"
+msgstr "Subido por"
+
+#: .\templates\home\producto.html:52 .\templates\home\subir-producto.html:26
 msgid "Price"
 msgstr "Precio"
+
+#: .\templates\home\producto.html:59
+msgid "I want it!"
+msgstr "Lo quiero!"
+
+#: .\templates\home\producto.html:65
+msgid "Share on Social Media"
+msgstr "Compartir en redes sociales"
 
 #: .\templates\home\subir-producto.html:34
 msgid "Date"
@@ -139,6 +224,39 @@ msgstr "Fecha"
 #: .\templates\home\subir-producto.html:38
 msgid "Spot"
 msgstr "Zona"
+
+#: .\templates\home\subir-producto.html:49
+#, fuzzy
+#| msgid ""
+#| " 'You can upload until 10 pictures for your product. Remember that each "
+#| "picture cannot be larger than 5MB and all together cannot be over 25MB' "
+msgid ""
+"You can upload until 10 pictures for your product. Remember that each "
+"picture cannot be larger than 5MB and all together cannot be over 25MB"
+msgstr ""
+"Puedes añadir hasta 10 fotos para tu Producto. Recuerda que cada foto puede "
+"pesar como mucho 5MB y el total de todas 25MB"
+
+#: .\templates\home\subir-producto.html:54
+msgid "Upload your product's pictures"
+msgstr "Añade las fotos de tu producto"
+
+#: .\templates\home\subir-producto.html:59
+#: .\templates\home\subir-producto.html:64
+#: .\templates\home\subir-producto.html:69
+#: .\templates\home\subir-producto.html:74
+#: .\templates\home\subir-producto.html:79
+#: .\templates\home\subir-producto.html:84
+#: .\templates\home\subir-producto.html:89
+#: .\templates\home\subir-producto.html:94
+#: .\templates\home\subir-producto.html:99
+#: .\templates\home\subir-producto.html:104
+msgid "Click or drag over here to upload your images"
+msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
+
+#: .\templates\registration\login.html:11
+msgid "User or password invalid"
+msgstr "Usuario o contraseña incorrectos"
 
 #~ msgid "Login"
 #~ msgstr "Iniciar sesión"

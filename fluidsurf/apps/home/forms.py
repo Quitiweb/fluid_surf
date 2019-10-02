@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.forms import PasswordInput
+from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.home.models import Producto
 from fluidsurf.apps.users.models import CustomUser
@@ -20,12 +21,12 @@ class ChangeUserForm(forms.ModelForm):
     pais = forms.CharField(max_length=50)
     zona = forms.CharField(max_length=50)
 
-    first_name.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu nombre...'})
-    last_name.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tus apellidos...'})
-    email.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu email...'})
-    telefono.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu telefono...'})
-    pais.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu pais...'})
-    zona.widget = forms.TextInput(attrs={'placeholder': 'Escribe aquí tu zona...'})
+    first_name.widget = forms.TextInput(attrs={'placeholder': _('Write your name here...')})
+    last_name.widget = forms.TextInput(attrs={'placeholder': _('Write your surname here...')})
+    email.widget = forms.TextInput(attrs={'placeholder': _('Write your email here...')})
+    telefono.widget = forms.TextInput(attrs={'placeholder': _('Write your phone here...')})
+    pais.widget = forms.TextInput(attrs={'placeholder': _('Write your country here...')})
+    zona.widget = forms.TextInput(attrs={'placeholder': _('Write your area here...')})
 
     class Meta:
         model = CustomUser
@@ -35,26 +36,26 @@ class ChangeUserForm(forms.ModelForm):
 class PasswordChangeCustomForm(PasswordChangeForm):
     error_css_class = 'has-error'
     error_messages = {'password_incorrect':
-                          "La contraseña es incorrecta. Por favor intentalo de nuevo.",
+                          _("Wrong password. Please, try again."),
                       'password_mismatch':
-                          "Las contraseñas no coinciden",
+                          _("Your passwords don't match"),
                       }
-    old_password = forms.CharField(required=False, label='Anterior Contraseña',
+    old_password = forms.CharField(required=False, label=_('Old Password'),
                                    widget=PasswordInput(attrs={
                                        'class': 'form-control mb-5'}),
                                    error_messages={
-                                       'required': 'La contraseña no puede estar en blanco.'})
+                                       'required': _('Your password cannot be empty')})
 
-    new_password1 = forms.CharField(required=False, label='Nueva Contraseña',
+    new_password1 = forms.CharField(required=False, label=_('New password'),
                                     widget=PasswordInput(attrs={
                                         'class': 'form-control mb-5'}),
                                     error_messages={
-                                        'required': 'La contraseña no puede estar en blanco.'})
-    new_password2 = forms.CharField(required=False, label='Repite tu Nueva Contraseña',
+                                        'required': _('Your password cannot be empty')})
+    new_password2 = forms.CharField(required=False, label=_('Repeat your new password'),
                                     widget=PasswordInput(attrs={
                                         'class': 'form-control'}),
                                     error_messages={
-                                        'required': 'La contraseña no puede estar en blanco.'})
+                                        'required': _('Your password cannot be empty')})
 
 
 class PhotographerForm(forms.ModelForm):
@@ -117,9 +118,9 @@ class AddProductForm(forms.ModelForm):
     imagen8.widget = forms.ClearableFileInput(attrs={'multiple': True})
     imagen9.widget = forms.ClearableFileInput(attrs={'multiple': True})
 
-    fecha.widget = forms.TextInput(attrs={'placeholder': 'Introduce la fecha para vender tu producto...'})
-    spot.widget = forms.TextInput(attrs={'placeholder': 'Escribe donde vas a estar...'})
-    nombre.widget = forms.TextInput(attrs={'placeholder': 'Introduce el nombre de tu producto...'})
+    fecha.widget = forms.TextInput(attrs={'placeholder': _('Write when are you selling your product...')})
+    spot.widget = forms.TextInput(attrs={'placeholder': _('Where are you going to be?')})
+    nombre.widget = forms.TextInput(attrs={'placeholder': _("Write your product's name...")})
     precio.widget = forms.TextInput(attrs={'placeholder': '€'})
 
     class Meta:

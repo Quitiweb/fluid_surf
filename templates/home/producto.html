@@ -14,7 +14,7 @@
             <h1 class="display-1" style="font-size: 60px;">
                 {{ producto.nombre }}
             </h1>
-            <p class="float-right mr-5">Subido por {{ producto.user.alias }}</p>
+            <p class="float-right mr-5">{% trans 'Uploaded by' %} {{ producto.user.alias }}</p>
         </div>
     </div>
 
@@ -49,20 +49,20 @@
     <div class="row mt-3">
         <div class="col-12">
             <h1 class="display-1 text-right mr-3" style="font-size: 40px;">
-                Precio: {{ producto.precio }}€
+                {% trans 'Price' %}: {{ producto.precio }}€
             </h1>
         </div>
     </div>
 
     <div class="row text-center mt-5 pb-5">
         <div class="col-12">
-            <button class="pr-5 pl-5">Lo quiero!</button>
+            <button class="pr-5 pl-5">{% trans 'I want it!' %}</button>
         </div>
     </div>
 
     <div class="row pb-5">
         <div class="col-12 mb-2">
-            <h1>Comparte en redes sociales</h1>
+            <h1>{% trans 'Share on Social Media' %}</h1>
         </div>
             {% post_to_twitter "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path  %}
 
