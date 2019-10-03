@@ -13,3 +13,4 @@ django-filter==2.1.0
 django-mysql==3.2.0
 django-qr-code
 openpyxl
+django_social_share
