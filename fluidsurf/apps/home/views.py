@@ -34,15 +34,10 @@ def index(request):
         username=request.user.username
     )[:users_to_get(CustomUser.objects.count() - 1)]
 
-    usuarios_conectados = CustomUser.objects.exclude(
-        username=request.user.username
-    ).filter(Q(is_marca=True) | Q(is_espacio=True), Q(validado=True))[:users_to_get(CustomUser.objects.count() - 1)]
-
     context = {
         'productos': productos,
         'producto2': productos2,
         'usuarios': usuarios,
-        'usuarios_conectados': usuarios_conectados,
     }
 
     return HttpResponse(template.render(context, request))
