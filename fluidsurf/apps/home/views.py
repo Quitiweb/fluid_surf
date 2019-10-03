@@ -18,36 +18,32 @@ from imagekit.specs import ImageSpec
 
 
 def index(request):
-    if request.user.is_authenticated:
-        template = loader.get_template('home/index.html')
+    template = loader.get_template('home/index.html')
 
-        # noticias = Post.objects.filter(
-        #     fecha_de_publicacion__lte=timezone.now()
-        # ).order_by('-fecha_de_publicacion')[:news_to_get(Post.objects.count())]
-        #
-        # noticias_gr = grouped(noticias, 3)
+    # noticias = Post.objects.filter(
+    #     fecha_de_publicacion__lte=timezone.now()
+    # ).order_by('-fecha_de_publicacion')[:news_to_get(Post.objects.count())]
+    #
+    # noticias_gr = grouped(noticias, 3)
 
-        productos = Producto.objects.filter()[:10]
+    productos = Producto.objects.filter()[:10]
 
-        productos2 = Producto.objects.filter()[11:20]
+    productos2 = Producto.objects.filter()[11:20]
 
-        usuarios = CustomUser.objects.exclude(
-            username=request.user.username
-        )[:users_to_get(CustomUser.objects.count() - 1)]
+    usuarios = CustomUser.objects.exclude(
+        username=request.user.username
+    )[:users_to_get(CustomUser.objects.count() - 1)]
 
-        usuarios_conectados = CustomUser.objects.exclude(
-            username=request.user.username
-        ).filter(Q(is_marca=True) | Q(is_espacio=True), Q(validado=True))[:users_to_get(CustomUser.objects.count() - 1)]
+    usuarios_conectados = CustomUser.objects.exclude(
+        username=request.user.username
+    ).filter(Q(is_marca=True) | Q(is_espacio=True), Q(validado=True))[:users_to_get(CustomUser.objects.count() - 1)]
 
-        context = {
-            'productos': productos,
-            'producto2': productos2,
-            'usuarios': usuarios,
-            'usuarios_conectados': usuarios_conectados,
-        }
-
-    else:
-        return redirect('login')
+    context = {
+        'productos': productos,
+        'producto2': productos2,
+        'usuarios': usuarios,
+        'usuarios_conectados': usuarios_conectados,
+    }
 
     return HttpResponse(template.render(context, request))
 

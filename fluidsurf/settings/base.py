@@ -196,6 +196,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Login/logout redirects to homepage
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login'
 
 WATERMARK_IMAGE = os.path.join(PROJECT_ROOT, 'static/home/img/logo.png')
