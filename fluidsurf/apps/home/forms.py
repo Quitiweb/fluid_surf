@@ -3,7 +3,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
-from fluidsurf.apps.home.models import Producto
+
+from fluidsurf.apps.home.models import Producto, Ubicacion
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -127,6 +128,3 @@ class AddProductForm(forms.ModelForm):
         model = Producto
         fields = ('nombre', 'precio', 'fecha', 'spot', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9')
-
-
-

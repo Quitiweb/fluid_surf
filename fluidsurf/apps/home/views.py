@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 
-from fluidsurf.apps.home.models import Producto
+from fluidsurf.apps.home.models import Producto, Ubicacion
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
 from ..helpers.helper import users_to_get
@@ -34,10 +34,16 @@ def index(request):
         username=request.user.username
     )[:users_to_get(CustomUser.objects.count() - 1)]
 
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+
+    ubicaciones = Ubicacion.objects.filter().all()
+
     context = {
         'productos': productos,
         'producto2': productos2,
         'usuarios': usuarios,
+        'API_KEY': API_KEY,
+        'ubicaciones': ubicaciones
     }
 
     return HttpResponse(template.render(context, request))
@@ -50,30 +56,14 @@ def mensaje_enviado(request):
 def formulario(request):
     template = loader.get_template('home/formulario.html')
 
-    # if request.method == 'GET':
-    # form = FormularioForm()
-    # else:
-    # # form = FormularioForm(request.POST)
-    # if form.is_valid():
-    #     form.save()
-    #
-    #     subject = 'Kradleco nueva solicitud recibida'
-    #     from_email = form.cleaned_data['email']
-    #     nombre = form.cleaned_data['nombre']
-    #     enlace = 'https://www.kradleco.es/admin/landing/solicitud/'
-    #     message = 'Solicitud recibida de: ' + nombre + '\nCon email: ' + from_email + \
-    #               '\n\nPara ver dicha solicitud, visita: ' + enlace
-    #
-    #     enviar_email(subject, message)
-    #
-    #     form = FormularioForm()
-    #
-    #     return redirect('solicitud-recibida')
-    # else:
-    #     print('Error en el formulario')
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+
+    ubicaciones = Ubicacion.objects.filter().all()
+
 
     context = {
-        # 'form': form,
+        'API_KEY': API_KEY,
+        'ubicaciones': ubicaciones
     }
 
     return HttpResponse(template.render(context, request))

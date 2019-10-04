@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'qr_code',
     'django_social_share',
     'imagekit',
+    'django_google_maps',
 ]
 
 MIDDLEWARE = [
@@ -198,4 +199,8 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login'
 
+# Imagen que se pone como marca de agua
 WATERMARK_IMAGE = os.path.join(PROJECT_ROOT, 'static/home/img/logo.png')
+
+# API Key para la aplicacion django-google-maps
+BING_MAPS_API_KEY = 'Ah53ETOrZ7Pe60kRwxCxtXIItc7a2uTpuR6iWxpW3nFOl96LqDr0-ZVwi_XR5tTu'
