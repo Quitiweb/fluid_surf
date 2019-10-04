@@ -55,15 +55,8 @@ def mensaje_enviado(request):
 
 def formulario(request):
     template = loader.get_template('home/formulario.html')
-
-    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
-
-    ubicaciones = Ubicacion.objects.filter().all()
-
-
     context = {
-        'API_KEY': API_KEY,
-        'ubicaciones': ubicaciones
+
     }
 
     return HttpResponse(template.render(context, request))

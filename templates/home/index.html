@@ -29,7 +29,9 @@
         //Add the pushpin to the map
         map.entities.push(pin);
 
-         Microsoft.Maps.Events.addHandler(pin, 'click', function () { highlight('pushpinClick'); });
+         Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+         	window.location.href = "http://www.w3schools.com";
+         });
 
         {% endfor %}
         }

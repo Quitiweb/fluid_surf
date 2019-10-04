@@ -7,43 +7,5 @@
 {% endblock %}
 
 {% block main %}
-  <script type='text/javascript'>
-        var map;
-        function loadMapScenario() {
-            var map = new Microsoft.Maps.Map('#myMap', {
-
-        });
-
-        var center = map.getCenter();
-        {% for ubicacion in ubicaciones %}
-
-        var punto = new Microsoft.Maps.Location({{ubicacion.geoloc}});
-
-        //Create custom Pushpin
-        var pin = new Microsoft.Maps.Pushpin(punto, {
-            title: 'Producto',
-            subTitle: 'producto',
-            text: '1'
-        });
-
-
-        //Add the pushpin to the map
-        map.entities.push(pin);
-
-         Microsoft.Maps.Events.addHandler(pin, 'click', function () { highlight('pushpinClick'); });
-
-        {% endfor %}
-        }
-        </script>
-    </head>
-    <body onload='loadMapScenario();'>
-        <div id='printoutPanel'></div>
-
-        <div id='myMap' style="position:relative;width:600px;height:400px;"></div>
-    </body>
-
-
-     c
-
 
 {% endblock %}
