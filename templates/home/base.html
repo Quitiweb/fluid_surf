@@ -74,7 +74,7 @@
             <div class="inner">
 
                 <div class="img-logo">
-                     {% if user.is_authenticated %}
+                     {% if user.profile_pic %}
                         <img src="/media/{{ user.profile_pic }}"/>
                      {% endif %}
                 </div>
