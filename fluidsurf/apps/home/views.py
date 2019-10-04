@@ -190,6 +190,27 @@ def producto(request, id='0'):
 
     return HttpResponse(template.render(context, request))
 
+def zona(request, nombre=''):
+    template = loader.get_template('home/zona.html')
+
+    zona = Ubicacion.objects.filter(direccion=nombre).first()
+
+    if zona is None:
+        return redirect('/')
+
+    productos = []
+
+    for i in Producto.objects.filter().all():
+        if i.spot == nombre:
+            productos.append(i)
+
+    context = {
+        'zona' : zona,
+        'productos': productos
+    }
+
+    return HttpResponse(template.render(context, request))
+
 
 def add_watermark(image, watermark):
     rgba_image = image.convert('RGBA')
