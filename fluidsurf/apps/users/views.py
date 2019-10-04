@@ -20,6 +20,7 @@ def sign_up(request):
             new_user = authenticate(username=form.cleaned_data['username'],
                                     password=form.cleaned_data['password1'],)
             login(request, new_user)
+            return redirect('mi-cuenta')
     context = {
         'form': form,
     }

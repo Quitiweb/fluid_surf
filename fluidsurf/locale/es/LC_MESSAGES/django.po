@@ -347,7 +347,7 @@ msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
 
 #: templates/home/zona.html:13
 msgid "Products in "
-msgstr "Productos en"
+msgstr "Productos en "
 
 #: templates/home/zona.html:32
 #, fuzzy
