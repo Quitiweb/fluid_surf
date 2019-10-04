@@ -72,12 +72,17 @@
 
         <section id="member" class="banner">
             <div class="inner">
+
                 <div class="img-logo">
-                    <img src="/media/{{ user.profile_pic }}"/>
+                     {% if user.is_authenticated %}
+                        <img src="/media/{{ user.profile_pic }}"/>
+                     {% endif %}
                 </div>
+
                 <div class="w-100"></div>
                 <h3>{{ user.username }}</h3>
                 <p>{{ user.email }}</p>
+
             </div>
 
            <div>

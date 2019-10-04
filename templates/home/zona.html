@@ -10,7 +10,7 @@
 <div class="container text-center">
     <div class="row text-center pb-5 mt-3">
         <div class="col-12 text-center">
-            <h1 class="display-4">Productos en {{ zona.direccion }}</h1>
+            <h1 class="display-4">{% trans 'Products in ' %}{{ zona.direccion }}</h1>
         </div>
     </div>
 
@@ -20,16 +20,16 @@
         {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top' style='object-fit:cover; margin-left: -10px;' height='200'%}
       <div class="card-body">
         <h5 class="card-title text-left">{{ producto.nombre }}</h5>
-        <p class="card-text text-left">Fecha: {{ producto.fecha }} <br>
-                             Precio: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
-                             Autor:
+        <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
+                             {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
+                             {% trans 'Uploaded by' %}:
                                 {% if producto.user.alias %}
                                 {{ producto.user.alias }}
                                 {% else %}
                                 {{ producto.user.first_name }} {{ producto.user.last_name }}
                             {% endif %}
         </p>
-        <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">Ir al producto</a>
+        <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
       </div>
     </div>
 {% endfor %}

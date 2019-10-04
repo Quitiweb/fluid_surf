@@ -10,7 +10,7 @@
         var map;
         function loadMapScenario() {
             var map = new Microsoft.Maps.Map('#myMap', {
-
+				 zoom: 0
         });
 
         var center = map.getCenter();
@@ -52,14 +52,14 @@
 </header>
 
 <section>
-	<div class="row mt-5 text-center">
+	<div class="row mt-5 text-center align-middle">
 		<div class="col-xl-1 col-2"></div>
-		<div class="col-12 col-xl-3 text-center mt-5 mr-3 pl-3">
+		<div class="col-12 col-xl-3 text-center mr-3 pl-3" style="margin-top: 250px;">
 			<h1 class="display-3 surf"> {% trans 'Choose your area in the map' %}</h1>
 		</div>
 		<div class="col-1"></div>
 
-		<body class="col-10 col-xl-6 mt- text-center" onload='loadMapScenario();'>
+		<body class="col-10 col-xl-6 text-center" onload='loadMapScenario();'>
 		  <div id='printoutPanel'></div>
 
         <div id='myMap' class="col-12 col-xl-6 mt-5" style="position:relative;width:600px;height:600px;"></div>
