@@ -71,11 +71,22 @@ class PhotographerForm(forms.ModelForm):
 
 
 class AddProductForm(forms.ModelForm):
+
+    AREA_CHOICES = (
+        ('Europa', _("Europe")),
+        ('Africa', _("Africa")),
+        ('Asia', _("Asia")),
+        ('Oceania', _("Oceania")),
+        ('America del Norte', _("North America")),
+        ('America del Sur', _("South America"))
+    )
+
+
     nombre = forms.CharField(required=True)
     precio = forms.CharField(required=True)
 
     fecha = forms.DateField(required=True)
-    spot = forms.CharField(required=True)
+    spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
     imagen0 = forms.ImageField(required=False)
     imagen1 = forms.ImageField(required=False)
     imagen2 = forms.ImageField(required=False)
@@ -120,7 +131,6 @@ class AddProductForm(forms.ModelForm):
     imagen9.widget = forms.ClearableFileInput(attrs={'multiple': True})
 
     fecha.widget = forms.TextInput(attrs={'placeholder': _('Write when are you selling your product...')})
-    spot.widget = forms.TextInput(attrs={'placeholder': _('Where are you going to be?')})
     nombre.widget = forms.TextInput(attrs={'placeholder': _("Write your product's name...")})
     precio.widget = forms.TextInput(attrs={'placeholder': '€'})
 

@@ -22,7 +22,19 @@
         var pin = new Microsoft.Maps.Pushpin(punto, {
 			title: '{{ ubicacion.direccion }}',
             subTitle: '',
-            text: '1'
+            {% if ubicacion.direccion == 'Europa' %}
+            	text: '{{ p_eu }}'
+            {% elif ubicacion.direccion == 'Asia' %}
+            	text: '{{ p_as }}'
+			{% elif ubicacion.direccion == 'Africa' %}
+            	text: '{{ p_af }}'
+			{% elif ubicacion.direccion == 'Oceania' %}
+            	text: '{{ p_oc }}'
+			{% elif ubicacion.direccion == 'America del Norte' %}
+            	text: '{{ p_na }}'
+			{% elif ubicacion.direccion == 'America del Sur' %}
+            	text: '{{ p_sa }}'
+            {% endif %}
         });
 
 
