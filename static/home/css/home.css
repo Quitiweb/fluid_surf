@@ -1151,6 +1151,13 @@ input, select, textarea {
 
 /* Button */
 
+
+/* Botones de cambio de idioma */
+    .transButton {
+        width:40px; /* or whatever */
+        height:40px; /* or whatever */
+    }
+
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
