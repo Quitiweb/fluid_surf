@@ -16,9 +16,9 @@
             </h1>
             <p class="float-right mr-5">{% trans 'Uploaded by' %}
                 {% if producto.user.alias %}
-                {{ producto.user.alias }}
+                <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
                 {% else %}
-                {{ producto.user.first_name }} {{ producto.user.last_name }}
+                    {{ producto.user.first_name }} {{ producto.user.last_name }}
                 {% endif %}
             </p>
         </div>
