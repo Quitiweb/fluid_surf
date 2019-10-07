@@ -1,4 +1,6 @@
-console.log('hola buenas')
+  $(function() {
+    $( "#id_fecha" ).datepicker();
+  } );
 
 var numFiles = 0;
 //TODO Comprobar que se controle que no se puedan mas de 10 imagenes
