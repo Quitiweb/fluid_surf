@@ -1,5 +1,5 @@
   $(function() {
-    $( "#id_fecha" ).datepicker();
+    $( "#id_fecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
   } );
 
 var numFiles = 0;
