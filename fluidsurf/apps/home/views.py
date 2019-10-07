@@ -240,6 +240,29 @@ def zona(request, nombre=''):
     return HttpResponse(template.render(context, request))
 
 
+def perfil(request, nombre=''):
+    template = loader.get_template('home/perfil.html')
+
+    user = CustomUser.objects.filter(username=nombre).first()
+
+    if not user:
+        return redirect("/")
+
+    productos = []
+
+    for i in Producto.objects.filter().all():
+        if i.user == user:
+            productos.append(i)
+
+    context = {
+        'user': user,
+        'productos': productos
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+# MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
     rgba_image = image.convert('RGBA')
     rgba_watermark = watermark.convert('RGBA')

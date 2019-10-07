@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 12:14+0200\n"
+"POT-Creation-Date: 2019-10-07 14:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,35 +83,35 @@ msgstr "Nueva contraseña"
 msgid "Repeat your new password"
 msgstr "Repite tu contraseña"
 
-#: fluidsurf/apps/home/forms.py:76
+#: fluidsurf/apps/home/forms.py:78
 msgid "Europe"
 msgstr "Europa"
 
-#: fluidsurf/apps/home/forms.py:77
+#: fluidsurf/apps/home/forms.py:79
 msgid "Africa"
 msgstr "África"
 
-#: fluidsurf/apps/home/forms.py:78
+#: fluidsurf/apps/home/forms.py:80
 msgid "Asia"
 msgstr "Asia"
 
-#: fluidsurf/apps/home/forms.py:79
+#: fluidsurf/apps/home/forms.py:81
 msgid "Oceania"
 msgstr "Oceanía"
 
-#: fluidsurf/apps/home/forms.py:80
+#: fluidsurf/apps/home/forms.py:82
 msgid "North America"
 msgstr "América del Norte"
 
-#: fluidsurf/apps/home/forms.py:81
+#: fluidsurf/apps/home/forms.py:83
 msgid "South America"
 msgstr "América del Sur"
 
-#: fluidsurf/apps/home/forms.py:133
+#: fluidsurf/apps/home/forms.py:134
 msgid "Write when are you selling your product..."
 msgstr "Escribe cuándo vas a vender tu producto..."
 
-#: fluidsurf/apps/home/forms.py:134
+#: fluidsurf/apps/home/forms.py:135
 msgid "Write your product's name..."
 msgstr "Escribe el nombre de tu producto"
 
@@ -149,7 +149,7 @@ msgstr "Panel de Control"
 msgid "Change language"
 msgstr "Cambiar idioma"
 
-#: templates/home/base.html:112 templates/home/index.html:172
+#: templates/home/base.html:112 templates/home/index.html:184
 #: templates/home/mi-cuenta.html:11
 msgid "My account"
 msgstr "Mi cuenta"
@@ -170,83 +170,83 @@ msgstr "Registro"
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: templates/home/index.html:47
+#: templates/home/index.html:59
 msgid "Connecting photographers and surfers"
 msgstr "Conectando fotógrafos y surferos"
 
-#: templates/home/index.html:58
+#: templates/home/index.html:70
 msgid "Choose your area in the map"
 msgstr "Escoge una zona en el mapa"
 
-#: templates/home/index.html:76
+#: templates/home/index.html:88
 msgid "Your area"
 msgstr "Tu zona"
 
-#: templates/home/index.html:125
+#: templates/home/index.html:137
 msgid "Recommended for you"
 msgstr "Recomendado para ti"
 
-#: templates/home/index.html:139
+#: templates/home/index.html:151
 msgid "Subscribe"
 msgstr "Suscríbete"
 
-#: templates/home/index.html:147
+#: templates/home/index.html:159
 msgid "INFORMATION"
 msgstr "INFORMACIÓN"
 
-#: templates/home/index.html:149
+#: templates/home/index.html:161
 msgid "How does Fluid House work?"
 msgstr "¿Cómo funciona Fluid House?"
 
-#: templates/home/index.html:150
+#: templates/home/index.html:162
 msgid "Security  in payments"
 msgstr "Seguridad en los pagos"
 
-#: templates/home/index.html:151
+#: templates/home/index.html:163
 msgid "Free subscription"
 msgstr "Suscripción gratuita"
 
-#: templates/home/index.html:152
+#: templates/home/index.html:164
 msgid "Sell photographs"
 msgstr "Vender fotografías"
 
-#: templates/home/index.html:153
+#: templates/home/index.html:165
 msgid "Copyright, licenses and sizes"
 msgstr "Copyright, licencias y tamaños"
 
-#: templates/home/index.html:154
+#: templates/home/index.html:166
 msgid "Terms & Conditions"
 msgstr "Términos y Condiciones"
 
-#: templates/home/index.html:155
+#: templates/home/index.html:167
 msgid "Privacy Policy"
 msgstr "Política de Privacidad"
 
-#: templates/home/index.html:156
+#: templates/home/index.html:168
 msgid "Taxes & Facturation"
 msgstr "Impuestos  y facturación"
 
-#: templates/home/index.html:162
+#: templates/home/index.html:174
 msgid "CUSTOMER SERVICE"
 msgstr "ATENCIÓN AL CLIENTE"
 
-#: templates/home/index.html:164
+#: templates/home/index.html:176
 msgid "Contact"
 msgstr "Contacto"
 
-#: templates/home/index.html:165
+#: templates/home/index.html:177
 msgid "Refunds"
 msgstr "Devoluciones"
 
-#: templates/home/index.html:170
+#: templates/home/index.html:182
 msgid "MANAGEMENT AREA"
 msgstr "ÁREA DE GESTIÓN"
 
-#: templates/home/index.html:173 templates/home/index.html:174
+#: templates/home/index.html:185 templates/home/index.html:186
 msgid "Order record"
 msgstr "Historial de compras"
 
-#: templates/home/index.html:175
+#: templates/home/index.html:187
 #, fuzzy
 #| msgid "Wishlist"
 msgid "Wishlist"
@@ -316,14 +316,34 @@ msgstr "Ver historial de compras"
 msgid "Save"
 msgstr "Guardar"
 
-#: templates/home/producto.html:17 templates/home/zona.html:25
+#: templates/home/perfil.html:19
+msgid "PHOTOGRAPHER"
+msgstr "FOTÓGRAFO"
+
+#: templates/home/perfil.html:29
+msgid "Products uploaded by"
+msgstr "Productos subidos por"
+
+#: templates/home/perfil.html:39 templates/home/subir-producto.html:34
+#: templates/home/zona.html:23
+msgid "Date"
+msgstr "Fecha"
+
+#: templates/home/perfil.html:40 templates/home/producto.html:58
+#: templates/home/subir-producto.html:26 templates/home/zona.html:24
+msgid "Price"
+msgstr "Precio"
+
+#: templates/home/perfil.html:41 templates/home/producto.html:17
+#: templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
 
-#: templates/home/producto.html:58 templates/home/subir-producto.html:26
-#: templates/home/zona.html:24
-msgid "Price"
-msgstr "Precio"
+#: templates/home/perfil.html:48 templates/home/zona.html:32
+#, fuzzy
+#| msgid "Add product"
+msgid "Go to product"
+msgstr "Ir al producto"
 
 #: templates/home/producto.html:65
 msgid "I want it!"
@@ -332,10 +352,6 @@ msgstr "Lo quiero!"
 #: templates/home/producto.html:71
 msgid "Share on Social Media"
 msgstr "Compartir en redes sociales"
-
-#: templates/home/subir-producto.html:34 templates/home/zona.html:23
-msgid "Date"
-msgstr "Fecha"
 
 #: templates/home/subir-producto.html:38
 msgid "Spot"
@@ -368,12 +384,6 @@ msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
 #: templates/home/zona.html:13
 msgid "Products in "
 msgstr "Productos en "
-
-#: templates/home/zona.html:32
-#, fuzzy
-#| msgid "Add product"
-msgid "Go to product"
-msgstr "Ir al producto"
 
 #: templates/registration/login.html:11
 msgid "User or password invalid"
