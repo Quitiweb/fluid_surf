@@ -72,6 +72,8 @@ class PhotographerForm(forms.ModelForm):
 
 class AddProductForm(forms.ModelForm):
 
+    DATE_INPUT_FORMATS = ['%d/%m/%Y']
+
     AREA_CHOICES = (
         ('Europa', _("Europe")),
         ('Africa', _("Africa")),
@@ -81,11 +83,10 @@ class AddProductForm(forms.ModelForm):
         ('America del Sur', _("South America"))
     )
 
-
     nombre = forms.CharField(required=True)
     precio = forms.CharField(required=True)
 
-    fecha = forms.DateField(required=True)
+    fecha = forms.DateField(required=True,input_formats=DATE_INPUT_FORMATS)
     spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
     imagen0 = forms.ImageField(required=False)
     imagen1 = forms.ImageField(required=False)
