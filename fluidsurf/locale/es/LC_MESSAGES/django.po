@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 17:19+0200\n"
+"POT-Creation-Date: 2019-10-08 17:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,8 +112,8 @@ msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
 #: fluidsurf/apps/home/views.py:299
-msgid "Success"
-msgstr "Exito"
+msgid "Wishlist emptied succesfully"
+msgstr "Lista de deseos vaciada con éxito"
 
 #: fluidsurf/settings/base.py:159
 msgid "English"
@@ -155,6 +155,7 @@ msgid "My account"
 msgstr "Mi cuenta"
 
 #: templates/home/base.html:116 templates/home/index.html:187
+#: templates/home/wishlist.html:49
 msgid "Wishlist"
 msgstr "Lista de deseos"
 
@@ -323,24 +324,24 @@ msgid "Products uploaded by"
 msgstr "Productos subidos por"
 
 #: templates/home/perfil.html:39 templates/home/producto.html:52
-#: templates/home/subir-producto.html:34 templates/home/wishlist.html:31
+#: templates/home/subir-producto.html:34 templates/home/wishlist.html:28
 #: templates/home/zona.html:23
 msgid "Date"
 msgstr "Fecha"
 
 #: templates/home/perfil.html:40 templates/home/producto.html:61
 #: templates/home/producto.html:90 templates/home/subir-producto.html:26
-#: templates/home/wishlist.html:32 templates/home/zona.html:24
+#: templates/home/wishlist.html:29 templates/home/zona.html:24
 msgid "Price"
 msgstr "Precio"
 
 #: templates/home/perfil.html:41 templates/home/producto.html:17
-#: templates/home/producto.html:53 templates/home/wishlist.html:33
+#: templates/home/producto.html:53 templates/home/wishlist.html:30
 #: templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
 
-#: templates/home/perfil.html:48 templates/home/wishlist.html:40
+#: templates/home/perfil.html:48 templates/home/wishlist.html:37
 #: templates/home/zona.html:32
 #, fuzzy
 #| msgid "Add product"
@@ -391,9 +392,21 @@ msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
 msgid "Your Wishlist"
 msgstr "Tu Lista de Deseos"
 
-#: templates/home/wishlist.html:21
+#: templates/home/wishlist.html:19
 msgid "Empty wishlist"
 msgstr "Vaciar Lista de deseos"
+
+#: templates/home/wishlist.html:52
+msgid "Are you sure you want to empty your wishlist?"
+msgstr "¿Estás seguro de que quieres borrar tu lista de deseos?"
+
+#: templates/home/wishlist.html:57
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/home/wishlist.html:58
+msgid "Confirm"
+msgstr "Confirmar"
 
 #: templates/home/zona.html:13
 msgid "Products in "
@@ -408,6 +421,9 @@ msgstr "Usuario o contraseña incorrectos"
 #| msgid "Old Password"
 msgid "Password"
 msgstr "Anterior contraseña"
+
+#~ msgid "Success"
+#~ msgstr "Exito"
 
 #~ msgid "Where are you going to be?"
 #~ msgstr "¿Dónde vas a estar?"

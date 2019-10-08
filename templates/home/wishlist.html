@@ -13,37 +13,53 @@
         <h1 class="display-4 pb-5">{% trans 'Your Wishlist' %}</h1>
     </div>
         <div class="col-4 text-right mt-3">
-            <form action="" method="POST">
-                {% csrf_token %}
-                 <button type="submit" class="btn-transparent">
+                 <button type="button" class="btn-transparent" data-toggle="modal" data-target="#exampleModal">
                     <i class="fa fa-trash fa-3x black" aria-hidden="true"></i>
                 </button>
                 <h1 class="mt-1">{% trans 'Empty wishlist' %}</h1>
-            </form>
 
         </div>
      {% for producto in productos %}
         <div class="col-lg-3 col-12 pb-3 mt-3">
             <div class="card col-12">
             {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top' style='object-fit:cover;' height='200'%}
-          <div class="card-body">
-            <h5 class="card-title text-left">{{ producto.nombre }}</h5>
-            <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
-                                 {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
-                                 {% trans 'Uploaded by' %}:
-                                    {% if producto.user.alias %}
-                                    <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
-                                    {% else %}
-                                    {{ producto.user.first_name }} {{ producto.user.last_name }}
-                                {% endif %}
-            </p>
-            <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
-          </div>
+              <div class="card-body">
+                <h5 class="card-title text-left">{{ producto.nombre }}</h5>
+                <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
+                                     {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
+                                     {% trans 'Uploaded by' %}:
+                                        {% if producto.user.alias %}
+                                        <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
+                                        {% else %}
+                                        {{ producto.user.first_name }} {{ producto.user.last_name }}
+                                    {% endif %}
+                </p>
+                <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
+              </div>
+            </div>
         </div>
-</div>
-{% endfor %}
-
+    {% endfor %}
     </div>
+</div>
+
+<div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header h-25">
+        <h5 class="modal-title" id="exampleModalLabel">{% trans 'Wishlist' %}</h5>
+      </div>
+      <div class="modal-body">
+        {% trans 'Are you sure you want to empty your wishlist?' %}
+      </div>
+      <div class="modal-footer">
+          <form action="" method="POST">
+              {% csrf_token %}
+            <button type="button" class="btn btn-secondary h-50" data-dismiss="modal">{% trans 'Cancel' %}</button>
+            <button type="submit" class="btn btn-primary h-50 ml-2">{% trans 'Confirm' %}</button>
+          </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

@@ -296,7 +296,7 @@ def wishlist(request):
         if request.method == "POST":
             request.user.wishlist = ''
             request.user.save()
-            messages.success(request, _('Success'))
+            messages.success(request, _('Wishlist emptied succesfully'))
             return redirect('wishlist')
 
     context = {
