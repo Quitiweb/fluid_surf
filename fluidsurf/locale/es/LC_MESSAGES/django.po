@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 14:27+0200\n"
+"POT-Creation-Date: 2019-10-08 10:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,38 +19,26 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: fluidsurf/apps/home/forms.py:25
-#, fuzzy
-#| msgid "Write your product's name..."
 msgid "Write your name here..."
 msgstr "Escribe tu nombre aquí..."
 
 #: fluidsurf/apps/home/forms.py:26
-#, fuzzy
-#| msgid "Write your product's name..."
 msgid "Write your surname here..."
 msgstr "Escribe tus apellidos aqui..."
 
 #: fluidsurf/apps/home/forms.py:27
-#, fuzzy
-#| msgid "Write your product's name..."
 msgid "Write your email here..."
 msgstr "Escribe tu email aquí..."
 
 #: fluidsurf/apps/home/forms.py:28
-#, fuzzy
-#| msgid "Write your product's name..."
 msgid "Write your phone here..."
 msgstr "Escribe tu teléfono aquí..."
 
 #: fluidsurf/apps/home/forms.py:29
-#, fuzzy
-#| msgid "Write your product's name..."
 msgid "Write your country here..."
 msgstr "Escribe tu país aquí..."
 
 #: fluidsurf/apps/home/forms.py:30
-#, fuzzy
-#| msgid "Write your product's name..."
 msgid "Write your area here..."
 msgstr "Escribe el nombre de tu zona aquí..."
 
@@ -358,10 +346,6 @@ msgid "Spot"
 msgstr "Zona"
 
 #: templates/home/subir-producto.html:49
-#, fuzzy
-#| msgid ""
-#| " 'You can upload until 10 pictures for your product. Remember that each "
-#| "picture cannot be larger than 5MB and all together cannot be over 25MB' "
 msgid ""
 "You can upload until 10 pictures for your product. Remember that each "
 "picture cannot be larger than 5MB and all together cannot be over 25MB"
@@ -394,6 +378,12 @@ msgstr "Usuario o contraseña incorrectos"
 #| msgid "Old Password"
 msgid "Password"
 msgstr "Anterior contraseña"
+
+#~ msgid "archivos"
+#~ msgstr "files"
+
+#~ msgid "Has subido"
+#~ msgstr "asdlkjh"
 
 #~ msgid "Where are you going to be?"
 #~ msgstr "¿Dónde vas a estar?"
