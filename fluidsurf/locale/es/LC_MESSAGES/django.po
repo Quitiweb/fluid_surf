@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 14:13+0200\n"
+"POT-Creation-Date: 2019-10-08 17:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,10 @@ msgstr "Producto añadido a tu lista de deseos"
 msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
+#: fluidsurf/apps/home/views.py:299
+msgid "Success"
+msgstr "Exito"
+
 #: fluidsurf/settings/base.py:159
 msgid "English"
 msgstr "Inglés"
@@ -137,7 +141,7 @@ msgid "Administrator"
 msgstr "Administrador"
 
 #: templates/dashboard/main.html:12 templates/dashboard/main.html:17
-#: templates/home/base.html:124
+#: templates/home/base.html:132
 msgid "Dashboard"
 msgstr "Panel de Control"
 
@@ -150,19 +154,23 @@ msgstr "Cambiar idioma"
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: templates/home/base.html:116 templates/home/subir-producto.html:11
+#: templates/home/base.html:116 templates/home/index.html:187
+msgid "Wishlist"
+msgstr "Lista de deseos"
+
+#: templates/home/base.html:124 templates/home/subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: templates/home/base.html:132
+#: templates/home/base.html:140
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/home/base.html:138
+#: templates/home/base.html:146
 msgid "Signup"
 msgstr "Registro"
 
-#: templates/home/base.html:144
+#: templates/home/base.html:152
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -242,12 +250,6 @@ msgstr "ÁREA DE GESTIÓN"
 msgid "Order record"
 msgstr "Historial de compras"
 
-#: templates/home/index.html:187
-#, fuzzy
-#| msgid "Wishlist"
-msgid "Wishlist"
-msgstr "Lista de deseos"
-
 #: templates/home/mi-cuenta.html:15 templates/home/subir-producto.html:21
 msgid "Name"
 msgstr "Nombre"
@@ -321,22 +323,25 @@ msgid "Products uploaded by"
 msgstr "Productos subidos por"
 
 #: templates/home/perfil.html:39 templates/home/producto.html:52
-#: templates/home/subir-producto.html:34 templates/home/zona.html:23
+#: templates/home/subir-producto.html:34 templates/home/wishlist.html:31
+#: templates/home/zona.html:23
 msgid "Date"
 msgstr "Fecha"
 
 #: templates/home/perfil.html:40 templates/home/producto.html:61
 #: templates/home/producto.html:90 templates/home/subir-producto.html:26
-#: templates/home/zona.html:24
+#: templates/home/wishlist.html:32 templates/home/zona.html:24
 msgid "Price"
 msgstr "Precio"
 
 #: templates/home/perfil.html:41 templates/home/producto.html:17
-#: templates/home/producto.html:53 templates/home/zona.html:25
+#: templates/home/producto.html:53 templates/home/wishlist.html:33
+#: templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
 
-#: templates/home/perfil.html:48 templates/home/zona.html:32
+#: templates/home/perfil.html:48 templates/home/wishlist.html:40
+#: templates/home/zona.html:32
 #, fuzzy
 #| msgid "Add product"
 msgid "Go to product"
@@ -381,6 +386,14 @@ msgstr "Añade las fotos de tu producto"
 #: templates/home/subir-producto.html:99 templates/home/subir-producto.html:104
 msgid "Click or drag over here to upload your images"
 msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
+
+#: templates/home/wishlist.html:13
+msgid "Your Wishlist"
+msgstr "Tu Lista de Deseos"
+
+#: templates/home/wishlist.html:21
+msgid "Empty wishlist"
+msgstr "Vaciar Lista de deseos"
 
 #: templates/home/zona.html:13
 msgid "Products in "

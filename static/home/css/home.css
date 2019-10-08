@@ -1312,6 +1312,24 @@ input, select, textarea {
 			opacity: 0.25;
 		}
 
+		.btn-transparent {
+		    background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+		}
+
+        .btn-transparent:hover {
+        		    background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+		}
+
 		@media screen and (max-width: 480px) {
 
 			input[type="submit"],

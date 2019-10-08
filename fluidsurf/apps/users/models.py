@@ -36,7 +36,7 @@ class CustomUser(AbstractUser):
     profile_pic = models.ImageField(upload_to="img/photographer/", blank=True)
     main_pic = models.ImageField(upload_to="img/photographer/", blank=True)
 
-    wishlist = models.CharField(validators=[validate_comma_separated_integer_list], max_length=500, default=0)
+    wishlist = models.CharField(validators=[validate_comma_separated_integer_list], max_length=500, default='', blank=True)
 
     objects = UserManager()
 

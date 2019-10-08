@@ -212,7 +212,7 @@ def producto(request, id='0'):
                 status = False
 
         if status:
-            request.user.wishlist += "," + str(id)
+            request.user.wishlist += str(id) + ","
             request.user.save()
             messages.success(request, _('Product added to your wishlist'))
         else:
@@ -279,7 +279,29 @@ def perfil(request, nombre=''):
 
 def wishlist(request):
     template = loader.get_template('home/wishlist.html')
-    context = {}
+
+    productos = []
+    if len(request.user.wishlist) > 0:
+
+        lista = request.user.wishlist.split(',')
+
+        for item in lista:
+            if item == lista[-1]:
+                pass
+            else:
+                producto = Producto.objects.filter(id=item).first()
+                if producto:
+                        productos.append(producto)
+
+        if request.method == "POST":
+            request.user.wishlist = ''
+            request.user.save()
+            messages.success(request, _('Success'))
+            return redirect('wishlist')
+
+    context = {
+        'productos': productos
+    }
 
     return HttpResponse(template.render(context, request))
 

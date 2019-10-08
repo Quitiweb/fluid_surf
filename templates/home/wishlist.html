@@ -7,6 +7,43 @@
 
 {% block main %}
 
+<div class="container mt-5 pt-5">
+    <div class="row pl-1">
+    <div class="col-8">
+        <h1 class="display-4 pb-5">{% trans 'Your Wishlist' %}</h1>
+    </div>
+        <div class="col-4 text-right mt-3">
+            <form action="" method="POST">
+                {% csrf_token %}
+                 <button type="submit" class="btn-transparent">
+                    <i class="fa fa-trash fa-3x black" aria-hidden="true"></i>
+                </button>
+                <h1 class="mt-1">{% trans 'Empty wishlist' %}</h1>
+            </form>
 
+        </div>
+     {% for producto in productos %}
+        <div class="col-lg-3 col-12 pb-3 mt-3">
+            <div class="card col-12">
+            {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top' style='object-fit:cover;' height='200'%}
+          <div class="card-body">
+            <h5 class="card-title text-left">{{ producto.nombre }}</h5>
+            <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
+                                 {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
+                                 {% trans 'Uploaded by' %}:
+                                    {% if producto.user.alias %}
+                                    <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
+                                    {% else %}
+                                    {{ producto.user.first_name }} {{ producto.user.last_name }}
+                                {% endif %}
+            </p>
+            <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
+          </div>
+        </div>
+</div>
+{% endfor %}
+
+    </div>
+</div>
 
 {% endblock %}
