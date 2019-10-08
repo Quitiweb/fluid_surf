@@ -47,7 +47,7 @@
                           </div>
                           <div class="modal-footer">
                               <div class="col-6 text-left row">
-                                  <div class="col-6">
+                                  <div class="col-lg-6">
                                       <strong class="black">{% trans 'Area' %}:</strong> {{ producto.spot }} <br>
                                       <strong class="black">{% trans 'Date' %}:</strong> {{ producto.fecha }} <br>
                                       <strong class="black">{% trans 'Uploaded by' %}: </strong>
@@ -57,13 +57,13 @@
                                                 {{ producto.user.first_name }} {{ producto.user.last_name }}
                                           {% endif %}
                                   </div>
-                                  <div class="col-6">
+                                  <div class="col-lg-6">
                                       <strong class="black">{% trans 'Price' %}:</strong> {{ producto.precio }} €<br>
                                   </div>
                               </div>
                               <div class="col-6 text-right">
-                                  <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">{% trans 'Close' %}</button>
-                                  <button type="button" class="btn btn-primary ml-2">{% trans 'I want it!' %}</button>
+                                  <button type="button" class="btn btn-secondary mr-2 mt-1" data-dismiss="modal">{% trans 'Close' %}</button>
+                                  <button type="button" class="btn btn-primary ml-2 mt-1">{% trans 'I want it!' %}</button>
                               </div>
                           </div>
                         </div>
