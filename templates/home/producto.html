@@ -101,7 +101,15 @@
         </div>
 
         <div class="col-lg-6 col-12 mt-3">
-            <button class="pr-5 pl-5 btn btn-primary">{% trans 'Buy now' %}</button>
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ key }}"
+                data-name="Comprar producto"
+                data-description=""
+                data-amount="{{producto.precio}}00"
+                data-currency="eur"
+                data-label="{% trans 'Buy now' %}">
+              </script>
         </div>
     </div>
 

@@ -228,7 +228,8 @@ def producto(request, id='0'):
 
     context = {
         'producto': producto,
-        'imagenes': imagenes
+        'imagenes': imagenes,
+        'key': 'pk_test_SIJFz5EtDD1yhqkzhunPbv7I00TUkM7IFA'
     }
 
     return HttpResponse(template.render(context, request))
@@ -300,7 +301,7 @@ def wishlist(request):
             return redirect('wishlist')
 
     context = {
-        'productos': productos
+        'productos': productos,
     }
 
     return HttpResponse(template.render(context, request))
