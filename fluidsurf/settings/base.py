@@ -204,3 +204,6 @@ WATERMARK_IMAGE = os.path.join(PROJECT_ROOT, 'static/home/img/logo.png')
 
 # API Key para la aplicacion django-google-maps
 BING_MAPS_API_KEY = 'Ah53ETOrZ7Pe60kRwxCxtXIItc7a2uTpuR6iWxpW3nFOl96LqDr0-ZVwi_XR5tTu'
+
+STRIPE_SECRET_KEY = 'sk_test_iJctGZJJ8YRkZgzDGvqjmRRg002IHuQdnq'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_SIJFz5EtDD1yhqkzhunPbv7I00TUkM7IFA'

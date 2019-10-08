@@ -1,3 +1,4 @@
+import stripe
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
@@ -16,6 +17,8 @@ from django.conf import settings
 from PIL import Image
 from imagekit.registry import register
 from imagekit.specs import ImageSpec
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def index(request):
@@ -205,18 +208,34 @@ def producto(request, id='0'):
         return redirect('/')
 
     if request.method == "POST":
-        listaDeseos = request.user.wishlist.split(',')
-        status = True
-        for item in listaDeseos:
-            if item == str(id):
-                status = False
 
-        if status:
-            request.user.wishlist += str(id) + ","
-            request.user.save()
-            messages.success(request, _('Product added to your wishlist'))
+        if 'wishlist' in request.POST:
+            listaDeseos = request.user.wishlist.split(',')
+            status = True
+            for item in listaDeseos:
+                if item == str(id):
+                    status = False
+
+            if status:
+                request.user.wishlist += str(id) + ","
+                request.user.save()
+                messages.success(request, _('Product added to your wishlist'))
+            else:
+                messages.warning(request, _('You already have that product in your wishlist'))
         else:
-            messages.warning(request, _('You already have that product in your wishlist'))
+            charge = stripe.Charge.create(
+                amount=producto.precio,
+                currency='eur',
+                description='PAGO DJANGO',
+                source=request.POST['stripeToken']
+            )
+
+            if charge:
+                print('ole')
+            else:
+                print('error')
+            return render(request, 'payments/charge.html')
+
 
     imagenes = []
 
@@ -229,7 +248,7 @@ def producto(request, id='0'):
     context = {
         'producto': producto,
         'imagenes': imagenes,
-        'key': 'pk_test_SIJFz5EtDD1yhqkzhunPbv7I00TUkM7IFA'
+        'key': settings.STRIPE_PUBLISHABLE_KEY
     }
 
     return HttpResponse(template.render(context, request))
