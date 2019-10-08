@@ -9,6 +9,24 @@
 
 /* Kradleco Project */
 
+.modal {
+    position: fixed;
+    left: 10%;
+}
+
+.modal-dialog {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  min-height: 80vh;
+  min-width: 80vw;
+  border-radius: 0;
+}
 .masthead {
   height: 100vh;
   min-height: 500px;
