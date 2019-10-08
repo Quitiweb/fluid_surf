@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.files.storage import FileSystemStorage
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, validate_comma_separated_integer_list
 
 from ..payments.managers import UserManager
 from ..helpers.helper import ANTG1, ANTIGUEDAD, FACT1, FACTURACION
@@ -35,6 +35,8 @@ class CustomUser(AbstractUser):
     CV = models.TextField(max_length=200, null=True)
     profile_pic = models.ImageField(upload_to="img/photographer/", blank=True)
     main_pic = models.ImageField(upload_to="img/photographer/", blank=True)
+
+    wishlist = models.CharField(validators=[validate_comma_separated_integer_list], max_length=500, default=0)
 
     objects = UserManager()
 

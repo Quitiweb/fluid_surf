@@ -39,15 +39,15 @@
                     </div>
 
                     <!--  Modal que muestra la vista detalle de la imagen  -->
-                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-1" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-lg modal-dialogFull " role="document">
                         <div class="modal-content modal-contentFull ">
                           <div class="modal-body">
                             {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="100%"%}
                           </div>
                           <div class="modal-footer">
-                              <div class="col-6 text-left row">
-                                  <div class="col-lg-6">
+                              <div class="col-6 text-left row mb-5">
+                                  <div class="col-lg-6 mb-5">
                                       <strong class="black">{% trans 'Area' %}:</strong> {{ producto.spot }} <br>
                                       <strong class="black">{% trans 'Date' %}:</strong> {{ producto.fecha }} <br>
                                       <strong class="black">{% trans 'Uploaded by' %}: </strong>
@@ -93,8 +93,15 @@
     </div>
 
     <div class="row text-center mt-5 pb-5">
-        <div class="col-12">
-            <button class="pr-5 pl-5">{% trans 'I want it!' %}</button>
+        <div class="col-lg-6 col-12 mt-3">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="pr-5 pl-5 btn btn-secondary">{% trans 'I want it!' %}</button>
+            </form>
+        </div>
+
+        <div class="col-lg-6 col-12 mt-3">
+            <button class="pr-5 pl-5 btn btn-primary">{% trans 'Buy now' %}</button>
         </div>
     </div>
 

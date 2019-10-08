@@ -203,6 +203,12 @@ def producto(request, id='0'):
     if producto is None:
         return redirect('/')
 
+    if request.method == "POST":
+
+        request.user.wishlist += "," + str(id)
+        request.user.save()
+        messages.success(request, 'DPM')
+
     imagenes = []
 
     for i in range(10):
