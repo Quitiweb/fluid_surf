@@ -62,12 +62,16 @@
         <div class="row mt-5">
             <div class="col-6">
                 <label>{% trans 'Profile picture' %}</label>
-<!--                <input type="file">-->
+                {% if user.profile_pic %}
+                <img src="/media/{{ user.profile_pic }}" alt="" height="120px" class="mt-2 pb-2"> <br>
+                {% endif %}
                 {{ photo_form.profile_pic }}
             </div>
             <div class="col-6">
                 <label>{% trans 'Main picture' %}</label>
-<!--                <input type="file">-->
+                {% if user.main_pic %}
+                    <img src="/media/{{ user.main_pic }}" alt="" height="120px" class="mt-2 pb-2"> <br>
+                {% endif %}
                 {{ photo_form.main_pic }}
             </div>
         </div>
