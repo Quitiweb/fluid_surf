@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
+from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.home.models import Producto, Ubicacion
 from fluidsurf.apps.users.models import CustomUser
@@ -204,10 +205,18 @@ def producto(request, id='0'):
         return redirect('/')
 
     if request.method == "POST":
+        listaDeseos = request.user.wishlist.split(',')
+        status = True
+        for item in listaDeseos:
+            if item == str(id):
+                status = False
 
-        request.user.wishlist += "," + str(id)
-        request.user.save()
-        messages.success(request, 'DPM')
+        if status:
+            request.user.wishlist += "," + str(id)
+            request.user.save()
+            messages.success(request, _('Product added to your wishlist'))
+        else:
+            messages.warning(request, _('You already have that product in your wishlist'))
 
     imagenes = []
 
