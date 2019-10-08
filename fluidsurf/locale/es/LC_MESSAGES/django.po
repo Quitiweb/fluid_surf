@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 10:39+0200\n"
+"POT-Creation-Date: 2019-10-08 14:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr "Contraseña incorrecta. Por favor, inténtalo de nuevo."
 msgid "Your passwords don't match"
 msgstr "Tus contraseñas no coinciden"
 
-#: fluidsurf/apps/home/forms.py:44 templates/home/mi-cuenta.html:99
+#: fluidsurf/apps/home/forms.py:44 templates/home/mi-cuenta.html:103
 msgid "Old Password"
 msgstr "Anterior contraseña"
 
@@ -103,6 +103,14 @@ msgstr "Escribe cuándo vas a vender tu producto..."
 msgid "Write your product's name..."
 msgstr "Escribe el nombre de tu producto"
 
+#: fluidsurf/apps/home/views.py:217
+msgid "Product added to your wishlist"
+msgstr "Producto añadido a tu lista de deseos"
+
+#: fluidsurf/apps/home/views.py:219
+msgid "You already have that product in your wishlist"
+msgstr "Ya tienes este producto en tu lista de deseos"
+
 #: fluidsurf/settings/base.py:159
 msgid "English"
 msgstr "Inglés"
@@ -120,7 +128,7 @@ msgid "Django administration"
 msgstr ""
 
 #: templates/dashboard/base.html:33 templates/dashboard/base.html:177
-#: templates/dashboard/main.html:16 templates/home/base.html:106
+#: templates/dashboard/main.html:16 templates/home/base.html:103
 msgid "Home"
 msgstr "Inicio"
 
@@ -129,32 +137,32 @@ msgid "Administrator"
 msgstr "Administrador"
 
 #: templates/dashboard/main.html:12 templates/dashboard/main.html:17
-#: templates/home/base.html:127
+#: templates/home/base.html:124
 msgid "Dashboard"
 msgstr "Panel de Control"
 
-#: templates/home/base.html:73 templates/home/base.html:75
+#: templates/home/base.html:72 templates/home/base.html:74
 msgid "Change language"
 msgstr "Cambiar idioma"
 
-#: templates/home/base.html:112 templates/home/index.html:184
+#: templates/home/base.html:109 templates/home/index.html:184
 #: templates/home/mi-cuenta.html:11
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: templates/home/base.html:119 templates/home/subir-producto.html:11
+#: templates/home/base.html:116 templates/home/subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: templates/home/base.html:135
+#: templates/home/base.html:132
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/home/base.html:141
+#: templates/home/base.html:138
 msgid "Signup"
 msgstr "Registro"
 
-#: templates/home/base.html:147
+#: templates/home/base.html:144
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -256,7 +264,7 @@ msgstr "Teléfono"
 msgid "Country"
 msgstr "Pais"
 
-#: templates/home/mi-cuenta.html:41
+#: templates/home/mi-cuenta.html:41 templates/home/producto.html:51
 msgid "Area"
 msgstr "Zona"
 
@@ -272,35 +280,35 @@ msgstr "Escribe tu alias de fotografo"
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
-#: templates/home/mi-cuenta.html:69
+#: templates/home/mi-cuenta.html:71
 msgid "Main picture"
 msgstr "Foto destacada"
 
-#: templates/home/mi-cuenta.html:88
+#: templates/home/mi-cuenta.html:92
 msgid "Press here to open Advanced Options"
 msgstr "Pulsa aqui para abrir las opciones avanzadas"
 
-#: templates/home/mi-cuenta.html:94
+#: templates/home/mi-cuenta.html:98
 msgid "Change Password"
 msgstr "Cambiar contraseña"
 
-#: templates/home/mi-cuenta.html:106
+#: templates/home/mi-cuenta.html:110
 msgid "New Password"
 msgstr "Nueva contraseña"
 
-#: templates/home/mi-cuenta.html:111 templates/registration/signup.html:49
+#: templates/home/mi-cuenta.html:115 templates/registration/signup.html:49
 msgid "Repeat your Password"
 msgstr "Repite tu contraseña"
 
-#: templates/home/mi-cuenta.html:118
+#: templates/home/mi-cuenta.html:122
 msgid "Change Wishlist"
 msgstr "Cambiar lista de deseos"
 
-#: templates/home/mi-cuenta.html:122
+#: templates/home/mi-cuenta.html:126
 msgid "View purchase history"
 msgstr "Ver historial de compras"
 
-#: templates/home/mi-cuenta.html:136 templates/home/subir-producto.html:113
+#: templates/home/mi-cuenta.html:140 templates/home/subir-producto.html:113
 msgid "Save"
 msgstr "Guardar"
 
@@ -312,18 +320,19 @@ msgstr "FOTÓGRAFO"
 msgid "Products uploaded by"
 msgstr "Productos subidos por"
 
-#: templates/home/perfil.html:39 templates/home/subir-producto.html:34
-#: templates/home/zona.html:23
+#: templates/home/perfil.html:39 templates/home/producto.html:52
+#: templates/home/subir-producto.html:34 templates/home/zona.html:23
 msgid "Date"
 msgstr "Fecha"
 
-#: templates/home/perfil.html:40 templates/home/producto.html:58
-#: templates/home/subir-producto.html:26 templates/home/zona.html:24
+#: templates/home/perfil.html:40 templates/home/producto.html:61
+#: templates/home/producto.html:90 templates/home/subir-producto.html:26
+#: templates/home/zona.html:24
 msgid "Price"
 msgstr "Precio"
 
 #: templates/home/perfil.html:41 templates/home/producto.html:17
-#: templates/home/zona.html:25
+#: templates/home/producto.html:53 templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
 
@@ -334,10 +343,18 @@ msgid "Go to product"
 msgstr "Ir al producto"
 
 #: templates/home/producto.html:65
+msgid "Close"
+msgstr "Cerrar"
+
+#: templates/home/producto.html:66 templates/home/producto.html:99
 msgid "I want it!"
 msgstr "Lo quiero!"
 
-#: templates/home/producto.html:71
+#: templates/home/producto.html:104
+msgid "Buy now"
+msgstr "Comprar ahora"
+
+#: templates/home/producto.html:110
 msgid "Share on Social Media"
 msgstr "Compartir en redes sociales"
 
@@ -378,12 +395,6 @@ msgstr "Usuario o contraseña incorrectos"
 #| msgid "Old Password"
 msgid "Password"
 msgstr "Anterior contraseña"
-
-#~ msgid "archivos"
-#~ msgstr "files"
-
-#~ msgid "Has subido"
-#~ msgstr "asdlkjh"
 
 #~ msgid "Where are you going to be?"
 #~ msgstr "¿Dónde vas a estar?"
