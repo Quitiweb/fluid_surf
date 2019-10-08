@@ -110,6 +110,14 @@
                    </li>
                </ul>
 
+               {% if user.tipo_de_usuario ==  'SURFERO' or user.is_staff %}
+                <ul>
+                   <li class="text-left mt-3">
+                       <a href="{% url 'wishlist' %}">{% trans 'Wishlist' %}</a>
+                   </li>
+               </ul>
+               {% endif %}
+
                {% if user.tipo_de_usuario ==  'FOTOGRAFO' or user.is_staff %}
                 <ul>
                    <li class="text-left mt-3">

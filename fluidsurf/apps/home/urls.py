@@ -12,4 +12,5 @@ urlpatterns = [
     path('mensaje-enviado', views.mensaje_enviado, name='mensaje-enviado'),
     path('formulario', views.formulario, name='formulario'),
     path('solicitud-recibida', views.solicitud_recibida, name='solicitud-recibida'),
+    path('wishlist', views.wishlist, name='wishlist'),
 ]

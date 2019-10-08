@@ -277,6 +277,13 @@ def perfil(request, nombre=''):
     return HttpResponse(template.render(context, request))
 
 
+def wishlist(request):
+    template = loader.get_template('home/wishlist.html')
+    context = {}
+
+    return HttpResponse(template.render(context, request))
+
+
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
     rgba_image = image.convert('RGBA')
