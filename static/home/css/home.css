@@ -9,19 +9,19 @@
 
 /* Kradleco Project */
 
-.modal {
+.modalFull {
     position: fixed;
     left: 10%;
 }
 
-.modal-dialog {
+.modal-dialogFull {
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
 
-.modal-content {
+.modal-contentFull {
   height: auto;
   min-height: 80vh;
   min-width: 80vw;
@@ -43,6 +43,10 @@
 
 .white {
     color: white;
+}
+
+.black {
+    color: black;
 }
 
 .naranja {
