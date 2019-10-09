@@ -105,6 +105,7 @@
               {% csrf_token %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                     data-key="{{ key }}"
+                    data-name="Payment with Django"
                     data-description="A Django Charge"
                     data-amount="500"
                     data-locale="auto">

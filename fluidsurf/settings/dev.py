@@ -37,8 +37,3 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-
-# Stripe
-STRIPE_SECRET_KEY = 'sk_test_nWEFMX7XIFMsyDgsrHBxjKkH00DQyr0ykP'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_53ciwitrIAzUGwCncznmkxWN00CYFVxjyL'
-STRIPE_CONNECT_CLIENT_ID = 'ca_EzcfVzY6Cq9fbjFHIqyskLriYDIM8grD'

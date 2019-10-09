@@ -234,20 +234,21 @@ def producto(request, id='0'):
     context = {
         'producto': producto,
         'imagenes': imagenes,
-        'key': settings.STRIPE_PUBLISHABLE_KEY
+        'key': settings.STRIPE_PUBLISHABLE_KEY,
+        'stripe': True
     }
 
     return HttpResponse(template.render(context, request))
 
-def charge(request): # new
+def charge(request):
     if request.method == 'POST':
         charge = stripe.Charge.create(
-            amount=500,
-            currency='usd',
+            amount=50000,
+            currency='eur',
             description='A Django charge',
             source=request.POST['stripeToken']
         )
-        return render(request, 'charge.html')
+        return render(request, 'payments/charge.html')
 
 
 def zona(request, nombre=''):
