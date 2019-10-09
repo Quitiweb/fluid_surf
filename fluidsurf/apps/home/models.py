@@ -31,6 +31,16 @@ class Producto(models.Model):
         return self.nombre
 
 
+class Compra(models.Model):
+    comprador = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='compra_c', default='')
+    vendedor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='compra_v', default='')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compra_p', default='')
+    fecha = models.DateField()
+
+    def __str__(self):
+        return str(self.user) + str(self.fecha)
+
+
 class Ubicacion(models.Model):
     direccion = AddressField(max_length=100)
     geoloc = GeoLocationField(blank=True)

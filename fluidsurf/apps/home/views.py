@@ -1,3 +1,5 @@
+from datetime import date
+
 import stripe
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -7,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
-from fluidsurf.apps.home.models import Producto, Ubicacion
+from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
 from ..helpers.helper import users_to_get
@@ -233,6 +235,13 @@ def producto(request, id='0'):
             if charge:
                 producto.stock = 0
                 producto.save()
+
+                compra = Compra(
+                    user = request.user,
+                    producto = producto,
+                    fecha = date.today()
+                )
+                compra.save()
 
             return render(request, 'payments/charge.html')
 
