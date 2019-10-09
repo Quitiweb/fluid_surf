@@ -126,6 +126,10 @@
                              {% trans 'Sold to' %}:
                                 {{ venta.comprador.first_name }} {{ venta.comprador.last_name }}
                         </p>
+                          <form action="" method="post">
+                              {% csrf_token %}
+                            <button type=submit" name="restock" class="btn btn-primary mt-3" value="{{venta.id}}">{% trans 'Restock' %}</button>
+                          </form>
                       </div>
                     </div>
                 </div>

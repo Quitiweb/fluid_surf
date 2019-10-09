@@ -38,7 +38,7 @@ class Compra(models.Model):
     fecha = models.DateField()
 
     def __str__(self):
-        return str(self.user) + str(self.fecha)
+        return str(self.vendedor) + "-" + str(self.comprador) + str(self.fecha)
 
 
 class Ubicacion(models.Model):
