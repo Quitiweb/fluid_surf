@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 17:33+0200\n"
+"POT-Creation-Date: 2019-10-09 11:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,15 +103,15 @@ msgstr "Escribe cuándo vas a vender tu producto..."
 msgid "Write your product's name..."
 msgstr "Escribe el nombre de tu producto"
 
-#: fluidsurf/apps/home/views.py:217
+#: fluidsurf/apps/home/views.py:222
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:219
+#: fluidsurf/apps/home/views.py:224
 msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:299
+#: fluidsurf/apps/home/views.py:316
 msgid "Wishlist emptied succesfully"
 msgstr "Lista de deseos vaciada con éxito"
 
@@ -356,11 +356,15 @@ msgstr "Cerrar"
 msgid "I want it!"
 msgstr "Lo quiero!"
 
-#: templates/home/producto.html:104
+#: templates/home/producto.html:109
+msgid "Buy product to"
+msgstr "Comprar producto a"
+
+#: templates/home/producto.html:118
 msgid "Buy now"
 msgstr "Comprar ahora"
 
-#: templates/home/producto.html:110
+#: templates/home/producto.html:125
 msgid "Share on Social Media"
 msgstr "Compartir en redes sociales"
 
@@ -422,16 +426,16 @@ msgstr "Usuario o contraseña incorrectos"
 msgid "Password"
 msgstr "Anterior contraseña"
 
+#, fuzzy
+#~| msgid "Add product"
+#~ msgid "Comprar producto a"
+#~ msgstr "Añadir producto"
+
 #~ msgid "Success"
 #~ msgstr "Exito"
 
 #~ msgid "Where are you going to be?"
 #~ msgstr "¿Dónde vas a estar?"
-
-#, fuzzy
-#~| msgid "Add product"
-#~ msgid "Ir al producto"
-#~ msgstr "Añadir producto"
 
 #, fuzzy
 #~| msgid "Uploaded by"

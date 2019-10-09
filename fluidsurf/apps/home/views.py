@@ -30,11 +30,11 @@ def index(request):
     #
     # noticias_gr = grouped(noticias, 3)
 
-    productos = Producto.objects.filter()[:10]
+    productos = Producto.objects.filter(stock=1)[:10]
 
-    productos2 = Producto.objects.filter()[11:20]
+    productos2 = Producto.objects.filter(stock=1)[11:20]
 
-    productos_all = Producto.objects.filter().all()
+    productos_all = Producto.objects.filter(stock=1).all()
 
     p_eu = 0
     p_af = 0
@@ -202,7 +202,7 @@ def subir_producto(request):
 def producto(request, id='0'):
     template = loader.get_template('home/producto.html')
 
-    producto = Producto.objects.filter(id=id).first()
+    producto = Producto.objects.filter(id=id, stock=1).first()
 
     if producto is None:
         return redirect('/')
@@ -222,6 +222,19 @@ def producto(request, id='0'):
                 messages.success(request, _('Product added to your wishlist'))
             else:
                 messages.warning(request, _('You already have that product in your wishlist'))
+        else:
+            charge = stripe.Charge.create(
+                amount=producto.precio * 100,
+                currency='eur',
+                description='Pago de producto',
+                source=request.POST['stripeToken']
+            )
+
+            if charge:
+                producto.stock = 0
+                producto.save()
+
+            return render(request, 'payments/charge.html')
 
     imagenes = []
 
@@ -240,15 +253,6 @@ def producto(request, id='0'):
 
     return HttpResponse(template.render(context, request))
 
-def charge(request):
-    if request.method == 'POST':
-        charge = stripe.Charge.create(
-            amount=50000,
-            currency='eur',
-            description='A Django charge',
-            source=request.POST['stripeToken']
-        )
-        return render(request, 'payments/charge.html')
 
 
 def zona(request, nombre=''):
@@ -261,7 +265,7 @@ def zona(request, nombre=''):
 
     productos = []
 
-    for i in Producto.objects.filter().all():
+    for i in Producto.objects.filter(stock=1).all():
         if i.spot == nombre:
             productos.append(i)
 
@@ -283,7 +287,7 @@ def perfil(request, nombre=''):
 
     productos = []
 
-    for i in Producto.objects.filter().all():
+    for i in Producto.objects.filter(stock=1).all():
         if i.user == user:
             productos.append(i)
 
@@ -307,7 +311,7 @@ def wishlist(request):
             if item == lista[-1]:
                 pass
             else:
-                producto = Producto.objects.filter(id=item).first()
+                producto = Producto.objects.filter(id=item, stock=1).first()
                 if producto:
                         productos.append(producto)
 
