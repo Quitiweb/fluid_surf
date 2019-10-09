@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load i18n %}
+{% load imagekit %}
 
 {% block main %}
 <div class="container mt-5">
@@ -47,14 +48,14 @@
 
         {% if user.tipo_de_usuario ==  'FOTOGRAFO' or user.tipo_de_usuario == "ADMIN"%}
 
-        <h1 class="display-4 mt-5" style="color:black;">
+        <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;" id="photo">
             {% trans 'My Photographer Profile' %}
         </h1>
 
+    <div id="photo-show">
         <div class="row mt-5">
             <div class="col-6">
                 <label>Alias</label>
-<!--                <input type="text" placeholder="{% trans 'Write your photographer alias' %}">-->
                 {{ photo_form.alias }}
             </div>
         </div>
@@ -78,14 +79,59 @@
 
         <div class="row mt-5">
             <label>Curriculum Vitae</label>
-<!--            <textarea name="" id="" cols="20" rows="10" maxlength="200"></textarea>-->
             {{ photo_form.CV }}
         </div>
+</div>
 
         {% endif %}
 
-
-
+        {% if compras %}
+        <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;" id="history">
+            {% trans 'Purchase History' %}
+        </h1>
+        <div class="row" id="history-show">
+            {% for compra in compras %}
+            <div class="col-lg-3 col-12 pb-3 mt-5">
+                <div class="card col-12">
+                {% generateimage 'home:watermark' source=compra.producto.imagen0 -- class='card-img-top' style='object-fit:cover;' height='150'%}
+                  <div class="card-body">
+                    <h5 class="card-title text-left">{{ compra.producto.nombre }}</h5>
+                    <p class="card-text text-left">{% trans 'Date' %}: {{ compra.fecha }} <br>
+                         {% trans 'Price' %}: <strong style="color:black;"> {{ compra.producto.precio }} € </strong> <br>
+                         {% trans 'Uploaded by' %}:
+                            {% if compra.vendedor.alias %}
+                            <a href="{% url 'perfil' nombre=compra.vendedor.alias %}">{{ compra.vendedor.alias }}</a>
+                            {% else %}
+                            {{ compra.vendedor.first_name }} {{ compra.vendedor.last_name }}
+                        {% endif %}
+                    </p>
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% elif ventas %}
+            <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;" id="history">
+                {% trans 'Sales History' %}
+            </h1>
+            <div class="row" id="history-show">
+                {% for venta in ventas %}
+                <div class="col-lg-3 col-12 pb-3 mt-5">
+                    <div class="card col-12">
+                    {% generateimage 'home:watermark' source=venta.producto.imagen0 -- class='card-img-top' style='object-fit:cover;' height='150'%}
+                      <div class="card-body">
+                        <h5 class="card-title text-left">{{ venta.producto.nombre }}</h5>
+                        <p class="card-text text-left">{% trans 'Date' %}: {{ venta.fecha }} <br>
+                             {% trans 'Price' %}: <strong style="color:black;"> {{ venta.producto.precio }} € </strong> <br>
+                             {% trans 'Sold to' %}:
+                                {{ venta.comprador.first_name }} {{ venta.comprador.last_name }}
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         <span class="row toggle-chk mt-5" id="advanced" style="cursor: pointer;">
             <i class="fas fa-cog mr-1 mt-1"></i>

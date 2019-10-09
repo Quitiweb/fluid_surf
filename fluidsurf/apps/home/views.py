@@ -102,7 +102,9 @@ def solicitud_recibida(request):
 
 def mi_cuenta(request):
     template = loader.get_template('home/mi-cuenta.html')
-    context = {}
+
+    compras = Compra.objects.filter(comprador=request.user).all()
+    ventas = Compra.objects.filter(vendedor=request.user).all()
 
     if request.user.is_authenticated:
         if request.method == 'GET':
@@ -132,12 +134,14 @@ def mi_cuenta(request):
             context = {
                 'form': form,
                 'passform': passform,
-                'photo_form': photo_form
+                'photo_form': photo_form,
+                'ventas': ventas,
             }
         else:
             context = {
                 'form': form,
                 'passform': passform,
+                'compras': compras
             }
 
         return HttpResponse(template.render(context, request))
@@ -237,9 +241,10 @@ def producto(request, id='0'):
                 producto.save()
 
                 compra = Compra(
-                    user = request.user,
-                    producto = producto,
-                    fecha = date.today()
+                    comprador=request.user,
+                    vendedor=producto.user,
+                    producto=producto,
+                    fecha=date.today()
                 )
                 compra.save()
 
