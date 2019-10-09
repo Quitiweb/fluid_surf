@@ -3,8 +3,10 @@
 {% load static %}
 
 {% block main %}
-	<div class="container text-center mt-5">
-		<h2>Thanks for your payment!</h2>
-		<p>You've made a Bank Transfer to a Connected account</p>
+	<div class="container text-center mt-5 pt-5">
+		<h2>{% trans 'Thank for your purchase!' %}</h2>
+		<p>{% trans 'You can check your order record %} <a href="">here</a></p>
+
+		<a href="{% url 'index' %}" class="btn btn-primary">{% trans 'Go back to FluidSurf' %}</a>
 	</div>
 {% endblock %}
