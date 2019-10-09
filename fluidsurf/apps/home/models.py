@@ -3,6 +3,7 @@ from django.db import models
 from fluidsurf.apps.users.models import CustomUser
 from django_google_maps.fields import AddressField, GeoLocationField
 
+
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
 
@@ -47,3 +48,7 @@ class Ubicacion(models.Model):
 
     def __str__(self):
         return self.direccion
+
+    class Meta:
+        verbose_name = 'Ubicacion'
+        verbose_name_plural = 'Ubicaciones'
