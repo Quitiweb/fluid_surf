@@ -1,2 +1,2 @@
-# Kradleco
-KRADLECO, es una plataforma Online donde nuestra prioridad es dar al pequeño retailer todos los recursos que la tecnología y la tendencias nos ofrecen. En KRADLECO Podrás encontrar espacios físicos acordes a tu posicionamiento para poner tu producto, o marcas que poder acoger en tu espacio, sin perder tiempo, necesidad de sobrestock, sólo haciendo uso de tus medios actuales, de nuestro HUB, y poniendo un poco de imaginación.
+# Fluid Surf
+FluidSurf, es una plataforma Online para fotògrafos y surferos.
