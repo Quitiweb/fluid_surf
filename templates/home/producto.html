@@ -101,17 +101,19 @@
         </div>
 
         <div class="col-lg-6 col-12 mt-3">
-            <form action="" method="post">
+            <form action="{% url 'charge' %}" method="post">
               {% csrf_token %}
-              <script
-                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="{{ key }}"
-                data-name="Comprar producto"
-                data-description="PAGO DJANGO"
-                data-amount="{{producto.precio}}00"
-                data-currency="eur"
-                data-label="{% trans 'Buy now' %}">
-              </script>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="{{ key }}"
+                    data-description="A Django Charge"
+                    data-amount="500"
+                    data-locale="auto">
+            </script>
+                <script>
+                      document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                </script>
+
+                <button type="submit" class="btn btn-primary">{% trans 'Buy now' %}</button>
             </form>
         </div>
     </div>

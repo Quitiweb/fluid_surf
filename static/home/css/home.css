@@ -1321,6 +1321,8 @@ input, select, textarea {
             outline:none;
 		}
 
+
+
         .btn-transparent:hover {
         		    background-color: Transparent;
             background-repeat:no-repeat;

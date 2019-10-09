@@ -13,4 +13,5 @@ urlpatterns = [
     path('formulario', views.formulario, name='formulario'),
     path('solicitud-recibida', views.solicitud_recibida, name='solicitud-recibida'),
     path('wishlist', views.wishlist, name='wishlist'),
+    path('charge/', views.charge, name='charge'), # new
 ]

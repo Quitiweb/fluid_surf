@@ -222,20 +222,6 @@ def producto(request, id='0'):
                 messages.success(request, _('Product added to your wishlist'))
             else:
                 messages.warning(request, _('You already have that product in your wishlist'))
-        else:
-            charge = stripe.Charge.create(
-                amount=producto.precio,
-                currency='eur',
-                description='PAGO DJANGO',
-                source=request.POST['stripeToken']
-            )
-
-            if charge:
-                print('ole')
-            else:
-                print('error')
-            return render(request, 'payments/charge.html')
-
 
     imagenes = []
 
@@ -252,6 +238,17 @@ def producto(request, id='0'):
     }
 
     return HttpResponse(template.render(context, request))
+
+def charge(request): # new
+    if request.method == 'POST':
+        charge = stripe.Charge.create(
+            amount=500,
+            currency='usd',
+            description='A Django charge',
+            source=request.POST['stripeToken']
+        )
+        return render(request, 'charge.html')
+
 
 def zona(request, nombre=''):
     template = loader.get_template('home/zona.html')
