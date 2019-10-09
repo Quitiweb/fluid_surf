@@ -284,10 +284,8 @@ msgid "Main picture"
 msgstr "Foto destacada"
 
 #: templates/home/mi-cuenta.html:90
-#, fuzzy
-#| msgid "View purchase history"
 msgid "Purchase History"
-msgstr "Ver historial de compras"
+msgstr "Historial de compras"
 
 #: templates/home/mi-cuenta.html:99 templates/home/mi-cuenta.html:124
 #: templates/home/perfil.html:39 templates/home/producto.html:52

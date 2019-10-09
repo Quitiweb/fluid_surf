@@ -103,9 +103,6 @@ def solicitud_recibida(request):
 def mi_cuenta(request):
     template = loader.get_template('home/mi-cuenta.html')
 
-    compras = Compra.objects.filter(comprador=request.user).all()
-    ventas = Compra.objects.filter(vendedor=request.user).all()
-
     if request.user.is_authenticated:
         if request.method == 'GET':
             passform = PasswordChangeCustomForm(request.user)
@@ -116,43 +113,31 @@ def mi_cuenta(request):
             passform = PasswordChangeCustomForm(request.user, request.POST)
             form = ChangeUserForm(request.POST, instance=request.user)
 
-            if 'restock' in request.POST:
+            if request.user.tipo_de_usuario == "FOTOGRAFO":
                 photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
-                compra = Compra.objects.filter(id=request.POST.get('restock')).first()
-                compra.producto.stock = 1
-                compra.producto.save()
-
-                compra.delete()
+                if photo_form.is_valid():
+                    photo_form.save()
+            if form.is_valid():
+                messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
+                form.save()
+                if passform.is_valid():
+                    pwd = passform.save()
+                    update_session_auth_hash(request, pwd)  # Important!
+                    messages.success(request, 'Contraseña cambiada con éxito')
+                elif passform.data['new_password1'] or passform.data['new_password2']:
+                    messages.warning(request, passform.errors)
 
                 return redirect('mi-cuenta')
-            else:
-                if request.user.tipo_de_usuario == "FOTOGRAFO":
-                    photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
-                    if photo_form.is_valid():
-                        photo_form.save()
-                if form.is_valid():
-                    messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
-                    form.save()
-                    if passform.is_valid():
-                        pwd = passform.save()
-                        update_session_auth_hash(request, pwd)  # Important!
-                        messages.success(request, 'Contraseña cambiada con éxito')
-                    elif passform.data['new_password1'] or passform.data['new_password2']:
-                        messages.warning(request, passform.errors)
-
-                    return redirect('mi-cuenta')
         if request.user.tipo_de_usuario == "FOTOGRAFO":
             context = {
                 'form': form,
                 'passform': passform,
                 'photo_form': photo_form,
-                'ventas': ventas,
             }
         else:
             context = {
                 'form': form,
                 'passform': passform,
-                'compras': compras
             }
 
         return HttpResponse(template.render(context, request))
@@ -348,6 +333,30 @@ def wishlist(request):
 
     context = {
         'productos': productos,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def historial(request):
+    template = loader.get_template('home/historial.html')
+
+    compras = Compra.objects.filter(comprador=request.user).all()
+    ventas = Compra.objects.filter(vendedor=request.user).all()
+
+    if request.method == 'POST':
+        photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
+        compra = Compra.objects.filter(id=request.POST.get('restock')).first()
+        compra.producto.stock = 1
+        compra.producto.save()
+
+        compra.delete()
+
+        return redirect('historial')
+
+    context = {
+        'compras': compras,
+        'ventas': ventas
     }
 
     return HttpResponse(template.render(context, request))

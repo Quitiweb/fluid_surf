@@ -106,8 +106,20 @@
 
                <ul>
                    <li class="text-left mt-3">
-                       <a href="{% url 'mi-cuenta' %}">{% trans 'My account' %}</a>
+                    <h1>MI PERFIL</h1>
                    </li>
+                   <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'mi-cuenta' %}" style="color:#838383">{% trans 'My account' %}</a>
+                   </li>
+                   {% if user.tipo_de_usuario == 'SURFERO' %}
+                    <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Purchase History' %}</a>
+                    </li>
+                   {% elif user.tipo_de_usuario == 'FOTOGRAFO' %}
+                    <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Sales History' %}</a>
+                    </li>
+                   {% endif %}
                </ul>
 
                {% if user.tipo_de_usuario ==  'SURFERO' or user.is_staff %}
