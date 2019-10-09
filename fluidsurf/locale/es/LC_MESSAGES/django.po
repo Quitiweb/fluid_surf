@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-09 11:13+0200\n"
+"POT-Creation-Date: 2019-10-09 17:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr "Contraseña incorrecta. Por favor, inténtalo de nuevo."
 msgid "Your passwords don't match"
 msgstr "Tus contraseñas no coinciden"
 
-#: fluidsurf/apps/home/forms.py:44 templates/home/mi-cuenta.html:103
+#: fluidsurf/apps/home/forms.py:44 templates/home/mi-cuenta.html:153
 msgid "Old Password"
 msgstr "Anterior contraseña"
 
@@ -103,15 +103,15 @@ msgstr "Escribe cuándo vas a vender tu producto..."
 msgid "Write your product's name..."
 msgstr "Escribe el nombre de tu producto"
 
-#: fluidsurf/apps/home/views.py:222
+#: fluidsurf/apps/home/views.py:239
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:224
+#: fluidsurf/apps/home/views.py:241
 msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:316
+#: fluidsurf/apps/home/views.py:346
 msgid "Wishlist emptied succesfully"
 msgstr "Lista de deseos vaciada con éxito"
 
@@ -150,11 +150,11 @@ msgid "Change language"
 msgstr "Cambiar idioma"
 
 #: templates/home/base.html:109 templates/home/index.html:184
-#: templates/home/mi-cuenta.html:11
+#: templates/home/mi-cuenta.html:12
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: templates/home/base.html:116 templates/home/index.html:187
+#: templates/home/base.html:116 templates/home/index.html:186
 #: templates/home/wishlist.html:49
 msgid "Wishlist"
 msgstr "Lista de deseos"
@@ -247,71 +247,105 @@ msgstr "Devoluciones"
 msgid "MANAGEMENT AREA"
 msgstr "ÁREA DE GESTIÓN"
 
-#: templates/home/index.html:185 templates/home/index.html:186
+#: templates/home/index.html:185
 msgid "Order record"
 msgstr "Historial de compras"
 
-#: templates/home/mi-cuenta.html:15 templates/home/subir-producto.html:21
+#: templates/home/mi-cuenta.html:16 templates/home/subir-producto.html:21
 msgid "Name"
 msgstr "Nombre"
 
-#: templates/home/mi-cuenta.html:19
+#: templates/home/mi-cuenta.html:20
 msgid "Surname"
 msgstr "Apellido(s)"
 
-#: templates/home/mi-cuenta.html:30
+#: templates/home/mi-cuenta.html:31
 msgid "Phone"
 msgstr "Teléfono"
 
-#: templates/home/mi-cuenta.html:37
+#: templates/home/mi-cuenta.html:38
 msgid "Country"
 msgstr "Pais"
 
-#: templates/home/mi-cuenta.html:41 templates/home/producto.html:51
+#: templates/home/mi-cuenta.html:42 templates/home/producto.html:51
 msgid "Area"
 msgstr "Zona"
 
-#: templates/home/mi-cuenta.html:51
+#: templates/home/mi-cuenta.html:52
 msgid "My Photographer Profile"
 msgstr "Mi perfil de Fotografo"
 
-#: templates/home/mi-cuenta.html:57
-msgid "Write your photographer alias"
-msgstr "Escribe tu alias de fotografo"
-
-#: templates/home/mi-cuenta.html:64
+#: templates/home/mi-cuenta.html:65
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
-#: templates/home/mi-cuenta.html:71
+#: templates/home/mi-cuenta.html:72
 msgid "Main picture"
 msgstr "Foto destacada"
 
-#: templates/home/mi-cuenta.html:92
+#: templates/home/mi-cuenta.html:90
+#, fuzzy
+#| msgid "View purchase history"
+msgid "Purchase History"
+msgstr "Ver historial de compras"
+
+#: templates/home/mi-cuenta.html:99 templates/home/mi-cuenta.html:124
+#: templates/home/perfil.html:39 templates/home/producto.html:52
+#: templates/home/subir-producto.html:34 templates/home/wishlist.html:28
+#: templates/home/zona.html:23
+msgid "Date"
+msgstr "Fecha"
+
+#: templates/home/mi-cuenta.html:100 templates/home/mi-cuenta.html:125
+#: templates/home/perfil.html:40 templates/home/producto.html:61
+#: templates/home/producto.html:90 templates/home/subir-producto.html:26
+#: templates/home/wishlist.html:29 templates/home/zona.html:24
+msgid "Price"
+msgstr "Precio"
+
+#: templates/home/mi-cuenta.html:101 templates/home/perfil.html:41
+#: templates/home/producto.html:17 templates/home/producto.html:53
+#: templates/home/wishlist.html:30 templates/home/zona.html:25
+msgid "Uploaded by"
+msgstr "Subido por"
+
+#: templates/home/mi-cuenta.html:115
+msgid "Sales History"
+msgstr "Historial de Ventas"
+
+#: templates/home/mi-cuenta.html:126
+msgid "Sold to"
+msgstr "Vendido a"
+
+#: templates/home/mi-cuenta.html:131
+msgid "Restock"
+msgstr "Reponer Stock"
+
+#: templates/home/mi-cuenta.html:142
 msgid "Press here to open Advanced Options"
 msgstr "Pulsa aqui para abrir las opciones avanzadas"
 
-#: templates/home/mi-cuenta.html:98
+#: templates/home/mi-cuenta.html:148
 msgid "Change Password"
 msgstr "Cambiar contraseña"
 
-#: templates/home/mi-cuenta.html:110
+#: templates/home/mi-cuenta.html:160
 msgid "New Password"
 msgstr "Nueva contraseña"
 
-#: templates/home/mi-cuenta.html:115 templates/registration/signup.html:49
+#: templates/home/mi-cuenta.html:165 templates/registration/signup.html:49
 msgid "Repeat your Password"
 msgstr "Repite tu contraseña"
 
-#: templates/home/mi-cuenta.html:122
+#: templates/home/mi-cuenta.html:172
 msgid "Change Wishlist"
 msgstr "Cambiar lista de deseos"
 
-#: templates/home/mi-cuenta.html:126
+#: templates/home/mi-cuenta.html:176
 msgid "View purchase history"
 msgstr "Ver historial de compras"
 
-#: templates/home/mi-cuenta.html:140 templates/home/subir-producto.html:113
+#: templates/home/mi-cuenta.html:190 templates/home/subir-producto.html:113
 msgid "Save"
 msgstr "Guardar"
 
@@ -323,28 +357,8 @@ msgstr "FOTÓGRAFO"
 msgid "Products uploaded by"
 msgstr "Productos subidos por"
 
-#: templates/home/perfil.html:39 templates/home/producto.html:52
-#: templates/home/subir-producto.html:34 templates/home/wishlist.html:28
-#: templates/home/zona.html:23
-msgid "Date"
-msgstr "Fecha"
-
-#: templates/home/perfil.html:40 templates/home/producto.html:61
-#: templates/home/producto.html:90 templates/home/subir-producto.html:26
-#: templates/home/wishlist.html:29 templates/home/zona.html:24
-msgid "Price"
-msgstr "Precio"
-
-#: templates/home/perfil.html:41 templates/home/producto.html:17
-#: templates/home/producto.html:53 templates/home/wishlist.html:30
-#: templates/home/zona.html:25
-msgid "Uploaded by"
-msgstr "Subido por"
-
 #: templates/home/perfil.html:48 templates/home/wishlist.html:37
 #: templates/home/zona.html:32
-#, fuzzy
-#| msgid "Add product"
 msgid "Go to product"
 msgstr "Ir al producto"
 
@@ -416,6 +430,22 @@ msgstr "Confirmar"
 msgid "Products in "
 msgstr "Productos en "
 
+#: templates/payments/charge.html:8
+msgid "Thank for your purchase!"
+msgstr "¡Gracias por tu compra!"
+
+#: templates/payments/charge.html:9
+msgid "You can check your order record"
+msgstr "Puedes ver tu historial de compras"
+
+#: templates/payments/charge.html:9
+msgid "here"
+msgstr "aquí"
+
+#: templates/payments/charge.html:11
+msgid "Go back to FluidSurf"
+msgstr "Volver a FluidSurf"
+
 #: templates/registration/login.html:11
 msgid "User or password invalid"
 msgstr "Usuario o contraseña incorrectos"
@@ -425,6 +455,9 @@ msgstr "Usuario o contraseña incorrectos"
 #| msgid "Old Password"
 msgid "Password"
 msgstr "Anterior contraseña"
+
+#~ msgid "Write your photographer alias"
+#~ msgstr "Escribe tu alias de fotografo"
 
 #, fuzzy
 #~| msgid "Add product"
