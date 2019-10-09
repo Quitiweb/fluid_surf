@@ -11,10 +11,7 @@ SECRET_KEY = 'i52ahg=sxvuw9w9heb#j_-cle!3)z6gg1$pc_s9omkpthw8$8*'
 ALLOWED_HOSTS += [
     '127.0.0.1',
     'localhost',
-    '.qw-test.club',
-    'fluidsurf-grego.es',
-    '192.168.1.21',
-    '192.168.1.36',
+    'fs.quitiweb.com',
 ]
 
 
