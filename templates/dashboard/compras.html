@@ -30,8 +30,8 @@
                             <td><a href="{% url 'admin:home_compra_change' compra.id %}">OR{{ compra.id }}</a></td>
                             <td>{{ compra.fecha|date:"d M Y" }}</td>
                             <td>{{ compra.producto.nombre }}</td>
-                            <td>{{ compra.comprador }}</td>
-                            <td>{{ compra.vendedor }}</td>
+                            <td><a href="{% url 'perfil' id=compra.comprador.id %}">{{ compra.comprador }}</a></td>
+                            <td><a href="{% url 'perfil' id=compra.vendedor.id %}">{{ compra.vendedor }}</a></td>
                           </tr>
                       {% endfor %}
                     </tbody>

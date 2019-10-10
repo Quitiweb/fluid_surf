@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="card card-primary card-outline col-10">
+          <div class="card-body box-profile">
+            <div class="text-center">
+                {% if usuario.profile_pic %}
+                    <img class="profile-user-img img-fluid img-circle" src="/media/{{ usuario.profile_pic }}" alt="User profile picture">
+                {% else %}
+                    <img class="profile-user-img img-fluid img-circle" src="{% static 'main/images/no_user.png' %}" alt="User profile picture">
+                {% endif %}
+            </div>
+
+            <h3 class="profile-username text-center">{{ usuario.first_name }} {{ usuario.last_name }}</h3>
+
+            <p class="text-muted text-center">{{ usuario.tipo_de_usuario }}</p>
+
+            <ul class="list-group list-group-unbordered mb-3">
+            {% if usuario.tipo_de_usuario == 'FOTOGRAFO' %}
+              <li class="list-group-item">
+                <b>Productos listados</b> <a class="float-right">{{ productos.count }}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Productos vendidos</b> <a class="float-right">{{ ventas.count }}</a>
+              </li>
+            {% else %}
+                <li class="list-group-item">
+                <b>Productos listados</b> <a class="float-right">{{ productos.count }}</a>
+              </li>
+              <li class="list-group-item">
+                <b>Productos en lista de deseos</b> <a class="float-right">{{ wishlist }}</a>
+              </li>
+            {% endif %}
+              <li class="list-group-item">
+                <b>Reportes recibidos</b> <a class="float-right"><strong style="color:green;">0</strong></a>
+              </li>
+            </ul>
+
+              <a href="/perfil/{{ usuario.username }}" class="btn btn-primary"><b>Ver perfil en la web</b></a>
+              <a href="#" class="btn btn-danger float-right"><b>Bloquear usuario</b></a>
+
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

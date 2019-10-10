@@ -1,3 +1,5 @@
+from itertools import count
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
@@ -73,6 +75,27 @@ def usuarios(request):
 
     context = {
         'usuarios': usuarios
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def perfil(request, id=''):
+    template = loader.get_template('dashboard/perfil.html')
+
+    usuario = CustomUser.objects.filter(id=id).first()
+    wishlist = len(usuario.wishlist.split(',')) -1
+
+    productos = Producto.objects.filter(user=usuario).all()
+    compras = Compra.objects.filter(comprador=usuario).all()
+    ventas = Compra.objects.filter(vendedor=usuario).all()
+
+    context = {
+        'usuario': usuario,
+        'wishlist': wishlist,
+        'productos': productos,
+        'compras': compras,
+        'ventas': ventas
     }
 
     return HttpResponse(template.render(context, request))
