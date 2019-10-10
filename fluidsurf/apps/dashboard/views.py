@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from django.db.models import Q
 
 # Create your views here.
 from django.template import loader
@@ -17,6 +17,11 @@ def dashboard(request):
         return redirect('/')
 
     productos = Producto.objects.filter().all()
+    europa = Producto.objects.filter(spot='Europa').all()
+    oceania = Producto.objects.filter(spot='Oceania').all()
+    africa = Producto.objects.filter(spot='Africa').all()
+    asia = Producto.objects.filter(spot='Asia').all()
+    america = Producto.objects.filter(Q(spot='America del Norte') | Q(spot='America del Sur')).all()
     compras = Compra.objects.filter().all()
 
     fotografos = CustomUser.objects.filter(tipo_de_usuario='FOTOGRAFO').all()
@@ -24,6 +29,11 @@ def dashboard(request):
 
     context = {
         'productos': productos,
+        'europa': europa,
+        'oceania': oceania,
+        'africa': africa,
+        'asia': asia,
+        'america': america,
         'compras': compras,
         'fotografos': fotografos,
         'surferos': surferos
