@@ -350,7 +350,7 @@ def historial(request):
         compra.producto.stock = 1
         compra.producto.save()
 
-        compra.delete()
+        # compra.delete()
 
         return redirect('historial')
 
