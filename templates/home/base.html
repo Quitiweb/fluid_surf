@@ -109,16 +109,19 @@
                <ul>
                    {% if user.is_authenticated %}
                    <li class="text-left mt-3">
-                        <h1>MI PERFIL</h1>
+                        <h1>{% trans 'MY PROFILE' %}</h1>
                    </li>
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'mi-cuenta' %}" style="color:#838383">{% trans 'My account' %}</a>
                    </li>
-                   {% if user.tipo_de_usuario == 'SURFERO' %}
+                   {% if user.tipo_de_usuario == 'SURFERO' or user.is_staff %}
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Purchase History' %}</a>
                     </li>
-                   {% elif user.tipo_de_usuario == 'FOTOGRAFO' %}
+                    <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'wishlist' %}" style="color:#838383">{% trans 'Wishlist' %}</a>
+                   </li>
+                   {% elif user.tipo_de_usuario == 'FOTOGRAFO' or user.is_staff %}
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Sales History' %}</a>
                     </li>
@@ -126,26 +129,24 @@
                    {% endif %}
                </ul>
 
-               {% if user.tipo_de_usuario ==  'SURFERO' or user.is_staff %}
-                <ul>
-                   <li class="text-left mt-3">
-                       <a href="{% url 'wishlist' %}">{% trans 'Wishlist' %}</a>
-                   </li>
-               </ul>
-               {% endif %}
-
                {% if user.tipo_de_usuario ==  'FOTOGRAFO' or user.is_staff %}
                 <ul>
                    <li class="text-left mt-3">
-                       <a href="{% url 'subir-producto' %}">{% trans 'Add product' %}</a>
+                        <h1>{% trans 'PHOTOGRAPHER' %}</h1>
+                   </li>
+                   <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'subir-producto' %}" style="color:#838383">{% trans 'Add product' %}</a>
                    </li>
                </ul>
                {% endif %}
 
                {% if user.is_staff %}
                 <ul>
-                   <li class="text-left mt-3">
-                       <a href="{% url 'dashboard' %}">{% trans 'Dashboard' %}</a>
+                <li class="text-left mt-3">
+                        <h1>{% trans 'ADMIN AREA' %}</h1>
+                   </li>
+                   <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'dashboard' %}" style="color:#838383">{% trans 'Dashboard' %}</a>
                    </li>
                </ul>
                {% endif %}
@@ -164,7 +165,7 @@
                </ul>
                {% else %}
                <ul>
-                   <li class="text-center mt-3">
+                   <li class="text-center mt-5 pt-5">
                        <a href="{% url 'logout' %}" ><button class="pl-5 pr-5"> {% trans 'Logout' %}</button></a>
                    </li>
                </ul>
