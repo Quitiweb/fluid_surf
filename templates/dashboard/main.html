@@ -89,7 +89,7 @@
         </div>
         <!-- /.row -->
 
-        <div class="row">
+        <div class="row d-none">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -230,7 +230,7 @@
           <!-- Left col -->
           <div class="col-md-8">
             <!-- MAP & BOX PANE -->
-            <div class="card">
+            <div class="card d-none">
               <div class="card-header">
                 <h3 class="card-title">Visitors Report</h3>
 
@@ -280,7 +280,7 @@
             <!-- TABLE: LATEST ORDERS -->
             <div class="card">
               <div class="card-header border-transparent">
-                <h3 class="card-title">Ventas recientes</h3>
+                <h3 class="card-title">Compras recientes</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -304,9 +304,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                      {% for compra in compras %}
+                      {% for compra in compras|slice:"5" %}
                           <tr>
-                            <td><a href="pages/examples/invoice.html">OR{{ compra.id }}</a></td>
+                            <td><a href="{% url 'admin:home_compra_change' compra.id %}">OR{{ compra.id }}</a></td>
                             <td>{{ compra.producto.nombre }}</td>
                             <td>{{ compra.comprador }}</td>
                             <td>{{ compra.vendedor }}</td>
@@ -318,17 +318,13 @@
                 <!-- /.table-responsive -->
               </div>
               <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <a href="{% url 'admin:home_compra_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar ventas</a>
+              <div class="card-footer text-center">
+                <a href="{% url 'compras' %}" class="uppercase">Ver todas las compras</a>
               </div>
               <!-- /.card-footer -->
             </div>
             <!-- /.card -->
-          </div>
-          <!-- /.col -->
 
-          <div class="col-md-4">
-            <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-warning">
               <span class="info-box-icon"><i class="fas fa-globe-europe"></i></span>
 
@@ -379,8 +375,54 @@
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-4">
 
             <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Productos añadidos recientemente</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <ul class="products-list product-list-in-card pl-2 pr-2">
+
+                  {% for producto in productos|slice:"5" %}
+                    <li class="item">
+                    <div class="product-img">
+                      <img src="/media/{{ producto.imagen0 }}" alt="Product Image" class="img-size-50">
+                    </div>
+                    <div class="product-info">
+                      <a href="{% url 'admin:home_producto_change' producto.id %}" class="product-title">{{ producto.nombre }}
+                        <span class="badge badge-warning float-right">{{ producto.precio }} €</span></a>
+                      <span class="product-description">
+                        Publicado por {{ producto.user }}
+                      </span>
+                    </div>
+                  </li>
+                  {% endfor %}
+                  <!-- /.item -->
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer text-center">
+                <a href="{% url 'productos' %}" class="uppercase">Ver todos los productos</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- Info Boxes Style 2 -->
+
+            <div class="card d-none">
               <div class="card-header">
                 <h3 class="card-title">Browser Usage</h3>
 

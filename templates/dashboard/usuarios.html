@@ -1,0 +1,64 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="container pt-5">
+    <div class="row">
+       <div class="card col-12">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Usuarios</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>ID del Usuario</th>
+                      <th>Perfil</th>
+                      <th>Nombre completo</th>
+                      <th>Tipo de usuario</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for usuario in usuarios %}
+                          <tr>
+                            <td><a href="{% url 'admin:users_customuser_change' usuario.id %}">US{{ usuario.id }}</a></td>
+                            <td>
+                                <div class="product-img">
+                                  {% if usuario.profile_pic %}
+                                  <img src="/media/{{ usuario.profile_pic }}" alt="Product Image" class="img-size-50 mr-2">
+                                    {% else %}
+                                    <img src="{% static 'main/images/no_user.png' %}" alt="Product Image" class="img-size-50 mr-2">
+                                    {% endif %}
+                                       {{ usuario.username }}
+                                </div>
+
+                            </td>
+                            <td>{{ usuario.first_name }}  {{ usuario.last_name }}</td>
+                            <td>{{ usuario.tipo_de_usuario }}</td>
+                            <td>
+                                <a href="{% url 'admin:users_customuser_delete' usuario.id %}" class="btn btn-danger" style="color:white;">Borrar</a>
+                                <a href="{% url 'admin:users_customuser_change' usuario.id %}" class="btn btn-primary" style="color:white;">Modificar</a>
+                            </td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a href="{% url 'admin:users_customuser_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar usuarios</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+    </div>
+</div>
+{% endblock %}

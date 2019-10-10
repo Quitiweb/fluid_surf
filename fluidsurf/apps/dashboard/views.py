@@ -40,3 +40,39 @@ def dashboard(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def productos(request):
+    template = loader.get_template('dashboard/productos.html')
+
+    productos = Producto.objects.filter().all()
+
+    context = {
+        'productos': productos
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def compras(request):
+    template = loader.get_template('dashboard/compras.html')
+
+    compras = Compra.objects.filter().all()
+
+    context = {
+        'compras': compras
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def usuarios(request):
+    template = loader.get_template('dashboard/usuarios.html')
+
+    usuarios = CustomUser.objects.filter().all()
+
+    context = {
+        'usuarios': usuarios
+    }
+
+    return HttpResponse(template.render(context, request))

@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+<div class="container pt-5">
+    <div class="row">
+       <div class="card col-12">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Compras</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>ID del Pedido</th>
+                      <th>Fecha</th>
+                      <th>Producto</th>
+                      <th>Comprador</th>
+                      <th>Vendedor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for compra in compras %}
+                          <tr>
+                            <td><a href="{% url 'admin:home_compra_change' compra.id %}">OR{{ compra.id }}</a></td>
+                            <td>{{ compra.fecha|date:"d M Y" }}</td>
+                            <td>{{ compra.producto.nombre }}</td>
+                            <td>{{ compra.comprador }}</td>
+                            <td>{{ compra.vendedor }}</td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a href="{% url 'admin:home_compra_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar ventas</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+    </div>
+</div>
+
+{% endblock %}
