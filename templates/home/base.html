@@ -105,8 +105,9 @@
                </ul>
 
                <ul>
+                   {% if user.is_authenticated %}
                    <li class="text-left mt-3">
-                    <h1>MI PERFIL</h1>
+                        <h1>MI PERFIL</h1>
                    </li>
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'mi-cuenta' %}" style="color:#838383">{% trans 'My account' %}</a>
@@ -119,6 +120,7 @@
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Sales History' %}</a>
                     </li>
+                   {% endif %}
                    {% endif %}
                </ul>
 

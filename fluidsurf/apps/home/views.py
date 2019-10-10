@@ -148,52 +148,55 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
-    if request.method == "GET":
-        form = AddProductForm()
-    else:
-        form = AddProductForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            producto = form.save(commit=False)
-            producto.user = request.user
-
-            files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
-                'imagen2') + \
-                    request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist(
-                'imagen5') + \
-                    request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist(
-                'imagen8') + \
-                    request.FILES.getlist('imagen9')
-
-            if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
-                counter = 0
-                total_size = 0
-                upload = True
-                for afile in files:
-                    if afile.size > 5242880:
-                        messages.warning(request, 'Al menos una de tus fotos tiene un peso superior a 5MB. '
-                                                  'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
-                        upload = False
-                    else:
-                        total_size += afile.size
-                        producto.__setattr__('imagen' + str(counter), afile)
-                        counter += 1
-
-                if total_size < 26214400 and upload:
-                    producto.save()
-                    messages.success(request, 'Tu producto se ha subido correctamente')
-                else:
-                    if not upload:
-                        pass
-                    else:
-                        messages.warning(request, 'Has subido fotos con un peso superior a 25MB. '
-                                                  'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
-            else:
-                messages.warning(request, 'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
-                                          'superar las 10 fotos.')
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            form = AddProductForm()
         else:
-            messages.warning(request, form.errors)
+            form = AddProductForm(request.POST, request.FILES)
 
+            if form.is_valid():
+                producto = form.save(commit=False)
+                producto.user = request.user
+
+                files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
+                    'imagen2') + \
+                        request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist(
+                    'imagen5') + \
+                        request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist(
+                    'imagen8') + \
+                        request.FILES.getlist('imagen9')
+
+                if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
+                    counter = 0
+                    total_size = 0
+                    upload = True
+                    for afile in files:
+                        if afile.size > 5242880:
+                            messages.warning(request, 'Al menos una de tus fotos tiene un peso superior a 5MB. '
+                                                      'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
+                            upload = False
+                        else:
+                            total_size += afile.size
+                            producto.__setattr__('imagen' + str(counter), afile)
+                            counter += 1
+
+                    if total_size < 26214400 and upload:
+                        producto.save()
+                        messages.success(request, 'Tu producto se ha subido correctamente')
+                    else:
+                        if not upload:
+                            pass
+                        else:
+                            messages.warning(request, 'Has subido fotos con un peso superior a 25MB. '
+                                                      'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
+                else:
+                    messages.warning(request,
+                                     'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
+                                     'superar las 10 fotos.')
+            else:
+                messages.warning(request, form.errors)
+    else:
+        return redirect('index')
     context = {
         'form': form,
     }
@@ -312,28 +315,31 @@ def perfil(request, nombre=''):
 def wishlist(request):
     template = loader.get_template('home/wishlist.html')
 
-    productos = []
-    if len(request.user.wishlist) > 0:
+    if request.user.is_authenticated:
+        productos = []
+        if len(request.user.wishlist) > 0:
 
-        lista = request.user.wishlist.split(',')
+            lista = request.user.wishlist.split(',')
 
-        for item in lista:
-            if item == lista[-1]:
-                pass
-            else:
-                producto = Producto.objects.filter(id=item, stock=1).first()
-                if producto:
-                        productos.append(producto)
+            for item in lista:
+                if item == lista[-1]:
+                    pass
+                else:
+                    producto = Producto.objects.filter(id=item, stock=1).first()
+                    if producto:
+                            productos.append(producto)
 
-        if request.method == "POST":
-            request.user.wishlist = ''
-            request.user.save()
-            messages.success(request, _('Wishlist emptied succesfully'))
-            return redirect('wishlist')
+            if request.method == "POST":
+                request.user.wishlist = ''
+                request.user.save()
+                messages.success(request, _('Wishlist emptied succesfully'))
+                return redirect('wishlist')
 
-    context = {
-        'productos': productos,
-    }
+        context = {
+            'productos': productos,
+        }
+    else:
+        return redirect('index')
 
     return HttpResponse(template.render(context, request))
 
@@ -341,19 +347,21 @@ def wishlist(request):
 def historial(request):
     template = loader.get_template('home/historial.html')
 
-    compras = Compra.objects.filter(comprador=request.user).all()
-    ventas = Compra.objects.filter(vendedor=request.user).all()
+    if request.user.is_authenticated:
+        compras = Compra.objects.filter(comprador=request.user).all()
+        ventas = Compra.objects.filter(vendedor=request.user).all()
 
-    if request.method == 'POST':
-        photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
-        compra = Compra.objects.filter(id=request.POST.get('restock')).first()
-        compra.producto.stock = 1
-        compra.producto.save()
+        if request.method == 'POST':
+            photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
+            compra = Compra.objects.filter(id=request.POST.get('restock')).first()
+            compra.producto.stock = 1
+            compra.producto.save()
 
-        # compra.delete()
+            # compra.delete()
 
-        return redirect('historial')
-
+            return redirect('historial')
+    else:
+        return redirect('index')
     context = {
         'compras': compras,
         'ventas': ventas
