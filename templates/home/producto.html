@@ -99,7 +99,7 @@
                 <button type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist">{% trans 'I want it!' %}</button>
             </form>
         </div>
-
+        {% if user != producto.user %}
         <div class="col-lg-6 col-12 mt-3">
             <form action="" method="post">
               {% csrf_token %}
@@ -118,6 +118,11 @@
                 <button type="submit" class="btn btn-primary">{% trans 'Buy now' %}</button>
             </form>
         </div>
+        {% else %}
+        <div class="col-lg-6 col-12 mt-3">
+            <button type="submit" disabled class="btn btn-primary">{% trans 'Buy now' %}</button>
+        </div>
+        {% endif %}
     </div>
 {% else %}
 

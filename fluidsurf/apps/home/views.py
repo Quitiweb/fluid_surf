@@ -213,41 +213,44 @@ def producto(request, id='0'):
         return redirect('/')
 
     if request.method == "POST":
+       if request.user.is_authenticated:
+           if producto.user == request.user:
+               messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
+           else:
+               if 'wishlist' in request.POST:
+                   listaDeseos = request.user.wishlist.split(',')
+                   status = True
+                   for item in listaDeseos:
+                       if item == str(id):
+                           status = False
 
-        if 'wishlist' in request.POST:
-            listaDeseos = request.user.wishlist.split(',')
-            status = True
-            for item in listaDeseos:
-                if item == str(id):
-                    status = False
+                   if status:
+                       request.user.wishlist += str(id) + ","
+                       request.user.save()
+                       messages.success(request, _('Product added to your wishlist'))
+                   else:
+                       messages.warning(request, _('You already have that product in your wishlist'))
+               else:
+                   charge = stripe.Charge.create(
+                       amount=producto.precio * 100,
+                       currency='eur',
+                       description='Pago de producto',
+                       source=request.POST['stripeToken']
+                   )
 
-            if status:
-                request.user.wishlist += str(id) + ","
-                request.user.save()
-                messages.success(request, _('Product added to your wishlist'))
-            else:
-                messages.warning(request, _('You already have that product in your wishlist'))
-        else:
-            charge = stripe.Charge.create(
-                amount=producto.precio * 100,
-                currency='eur',
-                description='Pago de producto',
-                source=request.POST['stripeToken']
-            )
+                   if charge:
+                       producto.stock = 0
+                       producto.save()
 
-            if charge:
-                producto.stock = 0
-                producto.save()
+                       compra = Compra(
+                           comprador=request.user,
+                           vendedor=producto.user,
+                           producto=producto,
+                           fecha=date.today()
+                       )
+                       compra.save()
 
-                compra = Compra(
-                    comprador=request.user,
-                    vendedor=producto.user,
-                    producto=producto,
-                    fecha=date.today()
-                )
-                compra.save()
-
-            return render(request, 'payments/charge.html')
+                       return render(request, 'payments/charge.html')
 
     imagenes = []
 

@@ -88,6 +88,8 @@
                 <div class="img-logo">
                      {% if user.profile_pic %}
                         <img src="/media/{{ user.profile_pic }}"/>
+                     {% else %}
+                    <img src="{% static 'main/images/no_user.png' %}" alt="">
                      {% endif %}
                 </div>
 
