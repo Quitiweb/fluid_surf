@@ -4,7 +4,7 @@ from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 
-from fluidsurf.apps.home.models import Producto, Ubicacion
+from fluidsurf.apps.home.models import Producto
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -86,7 +86,7 @@ class AddProductForm(forms.ModelForm):
     nombre = forms.CharField(required=True)
     precio = forms.CharField(required=True)
 
-    fecha = forms.DateField(required=True,input_formats=DATE_INPUT_FORMATS)
+    fecha = forms.DateField(required=True, input_formats=DATE_INPUT_FORMATS)
     spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
     imagen0 = forms.ImageField(required=False)
     imagen1 = forms.ImageField(required=False)

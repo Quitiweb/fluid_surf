@@ -1,7 +1,17 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.users.models import CustomUser
 from django_google_maps.fields import AddressField, GeoLocationField
+
+AREA_CHOICES = (
+    ('Europa', _("Europe")),
+    ('Africa', _("Africa")),
+    ('Asia', _("Asia")),
+    ('Oceania', _("Oceania")),
+    ('America del Norte', _("North America")),
+    ('America del Sur', _("South America"))
+)
 
 
 class Producto(models.Model):
@@ -11,7 +21,7 @@ class Producto(models.Model):
     precio = models.IntegerField()
 
     fecha = models.DateField()
-    spot = models.CharField(max_length=25)
+    spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='Europa')
 
     imagen0 = models.ImageField(upload_to="img/productos/", blank=True)
     imagen1 = models.ImageField(upload_to="img/productos/", blank=True)
@@ -43,7 +53,7 @@ class Compra(models.Model):
 
 
 class Ubicacion(models.Model):
-    direccion = AddressField(max_length=100)
+    spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='Europa')
     geoloc = GeoLocationField(blank=True)
 
     def __str__(self):
