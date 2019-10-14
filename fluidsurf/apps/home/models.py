@@ -57,7 +57,7 @@ class Ubicacion(models.Model):
     geoloc = GeoLocationField(blank=True)
 
     def __str__(self):
-        return self.direccion
+        return self.spot
 
     class Meta:
         verbose_name = 'Ubicacion'

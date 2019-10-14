@@ -20,19 +20,19 @@
 
         //Create custom Pushpin
         var pin = new Microsoft.Maps.Pushpin(punto, {
-			title: '{{ ubicacion.direccion }}',
+			title: '{{ ubicacion.spot }}',
             subTitle: '',
-            {% if ubicacion.direccion == 'Europa' %}
+            {% if ubicacion.spot == 'Europa' %}
             	text: '{{ p_eu }}'
-            {% elif ubicacion.direccion == 'Asia' %}
+            {% elif ubicacion.spot == 'Asia' %}
             	text: '{{ p_as }}'
-			{% elif ubicacion.direccion == 'Africa' %}
+			{% elif ubicacion.spot == 'Africa' %}
             	text: '{{ p_af }}'
-			{% elif ubicacion.direccion == 'Oceania' %}
+			{% elif ubicacion.spot == 'Oceania' %}
             	text: '{{ p_oc }}'
-			{% elif ubicacion.direccion == 'America del Norte' %}
+			{% elif ubicacion.spot == 'America del Norte' %}
             	text: '{{ p_na }}'
-			{% elif ubicacion.direccion == 'America del Sur' %}
+			{% elif ubicacion.spot == 'America del Sur' %}
             	text: '{{ p_sa }}'
             {% endif %}
         });
@@ -42,7 +42,7 @@
         map.entities.push(pin);
 
          Microsoft.Maps.Events.addHandler(pin, 'click', function () {
-         	window.location.href = "{% url 'zona' nombre=ubicacion.direccion %}";
+         	window.location.href = "{% url 'zona' nombre=ubicacion.spot %}";
          });
 
         {% endfor %}

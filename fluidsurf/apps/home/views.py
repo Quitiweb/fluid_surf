@@ -274,7 +274,7 @@ def producto(request, id='0'):
 def zona(request, nombre=''):
     template = loader.get_template('home/zona.html')
 
-    zona = Ubicacion.objects.filter(direccion=nombre).first()
+    zona = Ubicacion.objects.filter(spot=nombre).first()
 
     if zona is None:
         return redirect('/')
