@@ -138,11 +138,11 @@
 	</section>
 </div>
                         {% if user.is_authenticated %}
-                    <div class="row text-center mt-5 pb-5">
+                    <div class="row text-center mt-5">
                         <div class="col-lg-6 col-12">
                             <form action="" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist">{% trans 'I want it!' %}</button>
+                                <button type="submit" class="pr-5 pl-5 btn btn-secondary mt-1" name="wishlist">{% trans 'I want it!' %}</button>
                             </form>
                         </div>
                         {% if user != producto.user %}
@@ -161,12 +161,12 @@
                                       document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                                 </script>
 
-                                <button type="submit" class="btn btn-primary">{% trans 'Buy now' %}</button>
+                                <button type="submit" class="btn btn-primary mt-1">{% trans 'Buy now' %}</button>
                             </form>
                         </div>
 
                         {% else %}
-                        <div class="col-lg-6 col-12 mt-3">
+                        <div class="col-lg-6 col-12 mt-1">
                             <button type="submit" disabled class="btn btn-primary">{% trans 'Buy now' %}</button>
                         </div>
                         {% endif %}

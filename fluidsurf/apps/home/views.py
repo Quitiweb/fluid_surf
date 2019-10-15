@@ -211,6 +211,8 @@ def producto(request, id='0'):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
+    ubicaciones = Ubicacion.objects.filter().all()
+
     if producto is None:
         return redirect('/')
 
@@ -274,6 +276,7 @@ def producto(request, id='0'):
         'imagenes': A,
         'imagenes2': B,
         'imagenes3': C,
+        'ubicaciones': ubicaciones,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe': True,
