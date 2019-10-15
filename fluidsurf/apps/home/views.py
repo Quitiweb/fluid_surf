@@ -32,9 +32,9 @@ def index(request):
     #
     # noticias_gr = grouped(noticias, 3)
 
-    productos = Producto.objects.filter(stock=1)[:10]
+    productos = Producto.objects.filter(stock=1)[:7]
 
-    productos2 = Producto.objects.filter(stock=1)[11:20]
+    productos2 = Producto.objects.filter(stock=1)[8:18]
 
     productos_all = Producto.objects.filter(stock=1).all()
 

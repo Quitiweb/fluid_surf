@@ -336,17 +336,10 @@ input, select, textarea {
 			font-family: 'Font Awesome 5 Brands';
 		}
 
-body {
-    background-image: url(../../images/bgsurf.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-
 /* Wrapper */
 
 	#wrapper {
-		margin-top: 200px;
+		margin-top: 150px;
 		display: -moz-flex;
 		display: -webkit-flex;
 		display: -ms-flex;
@@ -480,6 +473,23 @@ body {
 
 			#main .item.intro {
 				background-color: #d64760;
+				display: -moz-flex;
+				display: -webkit-flex;
+				display: -ms-flex;
+				display: flex;
+				-moz-flex-direction: column;
+				-webkit-flex-direction: column;
+				-ms-flex-direction: column;
+				flex-direction: column;
+				-moz-justify-content: center;
+				-webkit-justify-content: center;
+				-ms-justify-content: center;
+				justify-content: center;
+				padding: 1em 3em;
+			}
+
+            #main .item.intro2 {
+				background-color: #7F7FFF;
 				background-image: url("images/overlay.png");
 				display: -moz-flex;
 				display: -webkit-flex;
