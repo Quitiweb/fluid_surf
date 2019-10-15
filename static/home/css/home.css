@@ -11,29 +11,21 @@
 
 .modalFull {
     position: fixed;
-    left: 10%;
+    left: 20%;
 }
 
 .modal-dialogFull {
-  width: 80vw;
-  height: 80vh;
+  width: 60vw;
+  height: 60vh;
   margin: 0;
   padding: 0;
 }
 
 .modal-contentFull {
   height: auto;
-  min-height: 80vh;
-  min-width: 80vw;
+  min-height: 60vh;
+  min-width: 60vw;
   border-radius: 0;
-}
-.masthead {
-  height: 100vh;
-  min-height: 500px;
-  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 /* Variables */
@@ -1557,18 +1549,17 @@ input, select, textarea {
 
 		#menu .close {
 			background-image: url("images/close.svg");
+			color: black;
 			background-position: 75% 25%;
 			background-repeat: no-repeat;
 			background-size: 2em 2em;
 			border: 0;
 			content: '';
 			display: block;
-			height: 4em;
 			overflow: hidden;
 			position: absolute;
 			right: 0;
 			text-align: center;
-			text-indent: 4em;
 			top: 0;
 			width: 4em;
 		}

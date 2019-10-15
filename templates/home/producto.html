@@ -7,136 +7,169 @@
 
 {% block main %}
 
+  <script type='text/javascript'>
+        var map;
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map('#myMap', {
+				 zoom: 1
+        });
+
+        var center = map.getCenter();
+        {% for ubicacion in ubicaciones %}
+
+        var punto = new Microsoft.Maps.Location({{ubicacion.geoloc}});
+
+        //Create custom Pushpin
+        var pin = new Microsoft.Maps.Pushpin(punto, {
+			title: '{{ ubicacion.spot }}',
+            subTitle: '',
+            {% if ubicacion.spot == 'Europa' %}
+            	text: '{{ p_eu }}'
+            {% elif ubicacion.spot == 'Asia' %}
+            	text: '{{ p_as }}'
+			{% elif ubicacion.spot == 'Africa' %}
+            	text: '{{ p_af }}'
+			{% elif ubicacion.spot == 'Oceania' %}
+            	text: '{{ p_oc }}'
+			{% elif ubicacion.spot == 'America del Norte' %}
+            	text: '{{ p_na }}'
+			{% elif ubicacion.spot == 'America del Sur' %}
+            	text: '{{ p_sa }}'
+            {% endif %}
+        });
+
+
+        //Add the pushpin to the map
+        map.entities.push(pin);
+
+         Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+         	window.location.href = "{% url 'zona' nombre=ubicacion.spot %}";
+         });
+
+        {% endfor %}
+        }
+        </script>
+
 <div class="container">
+<!-- Wrapper -->
+<div id="wrapper">
+	<section id="main">
+		<!-- Items -->
+			<div class="items">
+				{% if user.is_authenticated %}
+				<div class="item intro span-2">
+					<h1 class="white mt-5">{{ producto.nombre }}</h1>
+						<p class="white">{% trans 'Uploaded by' %} {{ producto.user }}</p>
+                    {% if user.is_authenticated %}
+                    <div class="row text-center mt-5 pb-5">
+                        <div class="col-lg-6 col-12 mt-3">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist">{% trans 'I want it!' %}</button>
+                            </form>
+                        </div>
+                        {% if user != producto.user %}
+                        <div class="col-lg-6 col-12 mt-3">
+                            <form action="" method="post">
+                              {% csrf_token %}
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{ key }}"
+                                    data-name="FluidSurf"
+                                    data-description="{% trans 'Buy product to' %} {{ producto.user }} "
+                                    data-currency="eur"
+                                    data-amount="{{ producto.precio }}00"
+                                    data-locale="{{ LANGUAGE_CODE }}">
+                            </script>
+                                <script>
+                                      document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                </script>
 
-    <div class="row text-center mt-5 pt-5">
-        <div class="col-12">
-            <h1 class="display-1" style="font-size: 60px;">
-                {{ producto.nombre }}
-            </h1>
-            <p class="float-right mr-5">{% trans 'Uploaded by' %}
-                {% if producto.user.alias %}
-                <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
-                {% else %}
-                    {{ producto.user.first_name }} {{ producto.user.last_name }}
-                {% endif %}
-            </p>
-        </div>
-    </div>
-
-    <div class="row mt-5 text-center">
-<!--        <div class="col-lg-3"></div>-->
-        <div class="col-12">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-                {% for imagen in imagenes %}
-                  {% if forloop.first %}
-                    <div class="carousel-item active" data-toggle="modal" data-target="#exampleModal{{forloop.counter}}" style="cursor: pointer;">
-                  {% else %}
-                    <div class="carousel-item" data-toggle="modal" data-target="#exampleModal{{forloop.counter}}" style="cursor: pointer;">
-                  {% endif %}
-                      {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="400" %}
+                                <button type="submit" class="btn btn-primary">{% trans 'Buy now' %}</button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <div class="col-lg-6 col-12 mt-3">
+                            <button type="submit" disabled class="btn btn-primary">{% trans 'Buy now' %}</button>
+                        </div>
+                        {% endif %}
                     </div>
+                {% else %}
+
+                       <div class="row mt-5 pb-5">
+                           <div class="col-12 text-center">
+                               <a href="{% url 'signup' %}" class="btn btn-primary pr-5 pl-5 pt-3 pb-3">{% trans 'SIGNUP' %}</a>
+                               <p class="mt-3">{% trans 'Already have an account?' %}</p>
+                               <a href="{% url 'login' %}" class="btn btn-secondary mt-2">{% trans 'Login' %}</a>
+                           </div>
+                       </div>
+                {% endif %}
+				</div>
+				{% else %}
+				<div class="item intro span-2">
+					<h1 class="white">Bienvenido a FluidSurf</h1>
+					<a href="{% url 'login' %}" class="btn btn-primary w-75 mt-3">{% trans 'Login' %}</a>
+					<a href="{% url 'signup' %}" class="btn btn-secondary mt-1 w-75">{% trans 'Signup' %}</a>
+				</div>
+				{% endif %}
+                <div class="item intro intro2 span-2">
+					<h1 class="white">Buscador</h1>
+						<input type="text" class="mt-3">
+				</div>
+				<div class="item intro3 span-2">
+					<body class="text-center" onload='loadMapScenario();'>
+					  <div id='printoutPanel'></div>
+						<div id='myMap' class="mt-1" style=""></div>
+					</body>
+				</div>
+				{% for imagen in imagenes2 %}
+				<article class="item thumb span-3">
+					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter}}" data-backdrop="false"><!-- deberia ser true -->
+						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
+					</a>
+				</article>
 
                     <!--  Modal que muestra la vista detalle de la imagen  -->
-                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-lg modal-dialogFull " role="document">
-                        <div class="modal-content modal-contentFull ">
-                          <div class="modal-body">
-                            {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="100%"%}
+                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
+                      <div class="modal-dialog modal-lg modal-dialogFull" role="document">
+                        <div class="modal-content modal-contentFull">
+                          <div class="modal-header">
+                               <button class="btn-transparent" data-dismiss="modal"><i class="fa fa-window-close fa-2x black text-center" aria-hidden="true"></i></button>
                           </div>
-                          <div class="modal-footer">
-                              <div class="col-6 text-left row mb-5">
-                                  <div class="col-lg-6 mb-5">
-                                      <strong class="black">{% trans 'Area' %}:</strong> {{ producto.spot }} <br>
-                                      <strong class="black">{% trans 'Date' %}:</strong> {{ producto.fecha }} <br>
-                                      <strong class="black">{% trans 'Uploaded by' %}: </strong>
-                                          {% if producto.user.alias %}
-                                              <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
-                                          {% else %}
-                                                {{ producto.user.first_name }} {{ producto.user.last_name }}
-                                          {% endif %}
-                                  </div>
-                                  <div class="col-lg-6">
-                                      <strong class="black">{% trans 'Price' %}:</strong> {{ producto.precio }} €<br>
-                                  </div>
-                              </div>
-                              <div class="col-6 text-right">
-                                  <button type="button" class="btn btn-secondary mr-2 mt-1" data-dismiss="modal">{% trans 'Close' %}</button>
-                                  <button type="button" class="btn btn-primary ml-2 mt-1">{% trans 'I want it!' %}</button>
-                              </div>
+                          <div class="modal-body">
+                            {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="50%"%}
                           </div>
                         </div>
                       </div>
                     </div>
-                {% endfor %}
+				{% endfor %}
 
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-3">
-        <div class="col-12">
-            <h1 class="display-1 text-right mr-3" style="font-size: 40px;">
-                {% trans 'Price' %}: {{ producto.precio }}€
-            </h1>
-        </div>
-    </div>
-{% if user.is_authenticated %}
-    <div class="row text-center mt-5 pb-5">
-        <div class="col-lg-6 col-12 mt-3">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist">{% trans 'I want it!' %}</button>
-            </form>
-        </div>
-        {% if user != producto.user %}
-        <div class="col-lg-6 col-12 mt-3">
-            <form action="" method="post">
-              {% csrf_token %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="{{ key }}"
-                    data-name="FluidSurf"
-                    data-description="{% trans 'Buy product to' %} {{ producto.user }} "
-                    data-currency="eur"
-                    data-amount="{{ producto.precio }}00"
-                    data-locale="{{ LANGUAGE_CODE }}">
-            </script>
-                <script>
-                      document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                </script>
-
-                <button type="submit" class="btn btn-primary">{% trans 'Buy now' %}</button>
-            </form>
-        </div>
-        {% else %}
-        <div class="col-lg-6 col-12 mt-3">
-            <button type="submit" disabled class="btn btn-primary">{% trans 'Buy now' %}</button>
-        </div>
-        {% endif %}
-    </div>
-{% else %}
-
-       <div class="row mt-5 pb-5">
-           <div class="col-12 text-center">
-               <a href="{% url 'signup' %}" class="btn btn-primary pr-5 pl-5 pt-3 pb-3">{% trans 'SIGNUP' %}</a>
-               <p class="mt-3">{% trans 'Already have an account?' %}</p>
-               <a href="{% url 'login' %}" class="btn btn-secondary mt-2">{% trans 'Login' %}</a>
-           </div>
-       </div>
-        
-{% endif %}
-
-    <div class="row pb-5">
+			</div>
+		<!-- Items -->
+			<div class="items">
+				{% for imagen in imagenes %}
+				<article class="item thumb span-3">
+					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter}}" data-backdrop="false"><!-- deberia ser true -->
+						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
+					</a>
+				</article>
+                                    <!--  Modal que muestra la vista detalle de la imagen  -->
+                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
+                      <div class="modal-dialog modal-lg modal-dialogFull" role="document">
+                        <div class="modal-content modal-contentFull">
+                          <div class="modal-header">
+                               <button class="btn-transparent" data-dismiss="modal"><i class="fa fa-window-close fa-2x black text-center" aria-hidden="true"></i></button>
+                          </div>
+                          <div class="modal-body">
+                            {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="50%"%}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+				{% endfor %}
+			</div>
+	</section>
+</div>
+    <div class="row pb-5 mt-5">
         <div class="col-12 mb-2">
             <h1>{% trans 'Share on Social Media' %}</h1>
         </div>
@@ -147,9 +180,9 @@
             {% send_email "Mira este producto en fluidsurf!" "Acabo de encontrar este producto en fluid surf. Puede ser perfecto para ti!" object_or_url "Share via email"%}
 
             {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}
-
     </div>
+</div>
+</div>
 
-</div>
-</div>
+<script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>
 {% endblock %}

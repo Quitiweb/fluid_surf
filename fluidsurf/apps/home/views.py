@@ -209,6 +209,8 @@ def producto(request, id='0'):
 
     producto = Producto.objects.filter(id=id, stock=1).first()
 
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+
     if producto is None:
         return redirect('/')
 
@@ -260,11 +262,22 @@ def producto(request, id='0'):
         else:
             break
 
+    A = imagenes[:3]
+    B = imagenes[3:7]
+    C = imagenes[7:10]
+
+    print(str(B))
+    print(str(C))
+
     context = {
         'producto': producto,
-        'imagenes': imagenes,
+        'imagenes': A,
+        'imagenes2': B,
+        'imagenes3': C,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
-        'stripe': True
+        'key': settings.STRIPE_PUBLISHABLE_KEY,
+        'stripe': True,
+        'API_KEY': API_KEY
     }
 
     return HttpResponse(template.render(context, request))
