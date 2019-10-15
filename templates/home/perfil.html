@@ -6,49 +6,104 @@
 {% load imagekit %}
 
 {% block main %}
+  <script type='text/javascript'>
+        var map;
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map('#myMap', {
+				 zoom: 1
+        });
 
-    <div class="w-100 card mt-5 pt-3">
-        <div class="row img-logo h-100 text-center" style="background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.2)), url('/media/{{ user.main_pic }}') no-repeat; background-size:cover; background-position: center; min-height: 500px;">
-            <div class="col-lg-4"></div>
-            <div class="card col-12 col-lg-4 mt-4 text-center" style="margin-bottom:15px;">
-                 <div class="card-body text-center">
-                     {% if user.profile_pic %}
-                        <img src="/media/{{ user.profile_pic }}" class="rounded-circle center-block img-responsive mt-3" style="width: 150px; margin: 0 auto; "/>
-                     {% endif %}
-                     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-                     <p>{% trans 'PHOTOGRAPHER' %}</p>
-                     <p><i class="fas fa-map-marker-alt"></i> {{ user.zona }}</p>
-                     <p class="text-center mt-5 pb-5">{{ user.CV }}</p>
-                 </div>
-             </div>
-        </div>
-    </div>
+        var center = map.getCenter();
+        {% for ubicacion in ubicaciones %}
 
-<div class="row text-center mt-5">
-    <div class="col-12">
-        <h1 class="display-4" style="font-size: 40px;">{% trans 'Products uploaded by' %} {{ user.first_name }}</h1>
-    </div>
+        var punto = new Microsoft.Maps.Location({{ubicacion.geoloc}});
+
+        //Create custom Pushpin
+        var pin = new Microsoft.Maps.Pushpin(punto, {
+			title: '{{ ubicacion.spot }}',
+            subTitle: '',
+            {% if ubicacion.spot == 'Europa' %}
+            	text: '{{ p_eu }}'
+            {% elif ubicacion.spot == 'Asia' %}
+            	text: '{{ p_as }}'
+			{% elif ubicacion.spot == 'Africa' %}
+            	text: '{{ p_af }}'
+			{% elif ubicacion.spot == 'Oceania' %}
+            	text: '{{ p_oc }}'
+			{% elif ubicacion.spot == 'America del Norte' %}
+            	text: '{{ p_na }}'
+			{% elif ubicacion.spot == 'America del Sur' %}
+            	text: '{{ p_sa }}'
+            {% endif %}
+        });
+
+
+        //Add the pushpin to the map
+        map.entities.push(pin);
+
+         Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+         	window.location.href = "{% url 'zona' nombre=ubicacion.spot %}";
+         });
+
+        {% endfor %}
+        }
+        </script>
+
+
+    <div id="wrapper">
+	<section id="main">
+		<!-- Items -->
+			<div class="items">
+				{% if user.tipo_de_usuario == 'FOTOGRAFO' %}
+				<div class="item intro span-2" style="background: url(/media/{{ user.main_pic }}) !important;">
+                    {% else %}
+                <div class="item intro span-2" style="">
+                    {% endif %}
+					<h1 class="white">Perfil de {{ user.username }}</h1>
+						<p class="white">{{ user.tipo_de_usuario }}</p>
+                     <p class="white"><i class="fas fa-map-marker-alt"></i> {{ user.zona }}</p>
+				</div>
+					<div class="item intro intro2 span-2">
+					<h1 class="white">Buscador</h1>
+						<input type="text" class="mt-3">
+				</div>
+				<div class="item intro3 span-2">
+					<body class="text-center" onload='loadMapScenario();'>
+					  <div id='printoutPanel'></div>
+						<div id='myMap' class="mt-1" style=""></div>
+					</body>
+				</div>
+				{% for producto in productos2 %}
+				<article class="item thumb span-3">
+					<h2 class="white">{{ producto.nombre }}</h2>
+					<a href="{% url 'producto' id=producto.id%}" class="">
+						{% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
+					</a>
+				</article>
+				{% endfor %}
+
+			</div>
+
+		<!-- Items -->
+			<div class="items">
+
+<!--				FUNCIONA, PERO COMO NO TENEMOS SUFICIENTES PRODUCTOS EN LA BDD POR AHORA LO DEJO
+					(SI HAY MENOS DE X NUMERO DE PRODUCTOS EN LA BBDD SE DESCUADRA)
+					LA IDEA ES QUE SE MUESTREN LOS 10 PRIMEROS PRODUCTOS DE LA QUERY ARRIBA Y LOS 10 SEGUNDOS ABAJO
+					-->
+				{% for producto in productos %}
+				<article class="item thumb span-3">
+                    <h2 class="white">{{ producto.nombre }}</h2>
+                    <a href="{% url 'producto' id=producto.id%}">
+                        {% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
+                    </a>
+
+				</article>
+				{% endfor %}
+			</div>
+	</section>
 </div>
 
-<div class="row p-5">
-    {% for producto in productos %}
-    <div class="card col-lg-3  col-12 mt-5 ml-1">
-        {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top' style='object-fit:cover; margin-left: -10px;' height='200'%}
-      <div class="card-body">
-        <h5 class="card-title text-left">{{ producto.nombre }}</h5>
-        <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
-                             {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
-                             {% trans 'Uploaded by' %}:
-                                {% if producto.user.alias %}
-                                {{ producto.user.alias }}
-                                {% else %}
-                                {{ producto.user.first_name }} {{ producto.user.last_name }}
-                            {% endif %}
-        </p>
-        <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
-      </div>
-    </div>
-{% endfor %}
-</div>
+<script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>
 
 {% endblock %}

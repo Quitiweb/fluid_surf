@@ -314,6 +314,8 @@ def perfil(request, nombre=''):
 
     user = CustomUser.objects.filter(username=nombre).first()
 
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+
     if not user:
         return redirect("/")
 
@@ -323,9 +325,16 @@ def perfil(request, nombre=''):
         if i.user == user:
             productos.append(i)
 
+    A = productos[:2]
+    B = productos[2:4]
+    C = productos[3:]
+
     context = {
         'user': user,
-        'productos': productos
+        'API_KEY': API_KEY,
+        'productos': A,
+        'productos2': B,
+        'productos3': C,
     }
 
     return HttpResponse(template.render(context, request))
