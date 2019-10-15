@@ -51,46 +51,9 @@
 
 
 
-<!-- Full Page Image Header with Vertically Centered Content -->
-<header class="masthead">
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center">
-        <h1 class="font-weight-light display-4">{% trans 'Connecting photographers and surfers' %}</h1>
-		  <input type="text" class="mt-5">
-      </div>
-    </div>
-  </div>
-</header>
-
-<section>
-	<div class="row mt-5 text-center align-middle">
-		<div class="col-xl-1 col-1"></div>
-		<div class="col-10 col-xl-3 text-center mr-3 pl-3" style="margin-top: 250px;">
-			<h1 class="display-3 surf"> {% trans 'Choose your area in the map' %}</h1>
-		</div>
-		<div class="col-1"></div>
-
-		<body class="col-10 col-xl-6 text-center" onload='loadMapScenario();'>
-		  <div id='printoutPanel'></div>
-
-        <div id='myMap' class="col-12 col-xl-6 mt-5" style="position:relative;width:600px;height:600px;"></div>
-		</body>
-	</div>
-</section>
-
 <!-- Wrapper -->
 <div id="wrapper">
-	<!-- Main -->
-			<div class="row mt-5 w-100">
-			<div class="col-12" style="background-color: #1C8CC4; margin-top:150px">
-			<h1 class="display-4 surf white ml-5">
-				{% trans 'Your area' %}
-			</h1>
-			</div>
-		</div>
 	<section id="main">
-
 		<!-- Items -->
 			<div class="items">
 				{% for producto in productos %}
@@ -131,80 +94,26 @@
 	</section>
 </div>
 
-		<div class="row mt-5">
-			<div class="col-12" style="background-color: #1C8CC4;">
-			<h1 class="display-4 surf white ml-5">
-				{% trans 'Recommended for you' %}
-			</h1>
-			</div>
-		</div>
 
-		<div class="row mt-5 ml-1 mr-2 text-center">
-			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-md-3 col-6 mt-3" style="object-fit:cover;" height="350">
-			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-md-3 col-6 mt-3" style="object-fit:cover;" height="350">
-			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-md-3 col-6 mt-3" style="object-fit:cover;" height="350">
-			<img src="https://www.upsurfboard.com/wp-content/uploads/2019/01/Tabla-Surf-Funny-Up-UPSURFBOARD-Olas.jpg" class="rounded col-md-3 col-6 mt-3" style="object-fit:cover;" height="350">
-		</div>
-
-		<div class="row mt-5 text-center">
-			<div class="col-12">
-				<form action="{% url 'signup' %}"><button type="submit">{% trans 'Subscribe' %}</button></form>
-			</div>
-		</div>
 <!--	TODO poner enlaces en los li-->
-	<!-- Footer -->
-		<section id="footer" class="mt-5">
-			<div class="row col-12">
-				<div class="col-12 col-md-3 mt-3">
-					<strong class="naranja">{% trans 'INFORMATION'%}</strong>
-					<ul style="color:#F5F5F5;">
-						<li>{% trans 'How does Fluid House work?' %}</li>
-						<li>{% trans 'Security  in payments'%}</li>
-						<li>{% trans 'Free subscription' %}</li>
-						<li>{% trans 'Sell photographs' %}</li>
-						<li>{% trans 'Copyright, licenses and sizes' %}</li>
-						<li>{% trans 'Terms & Conditions' %}</li>
-						<li>{% trans 'Privacy Policy' %}</li>
-						<li>{% trans 'Taxes & Facturation' %}</li>
-					</ul>
-				</div>
-
-			<div class="col-12 col-md-3 mt-3">
-				<div class="col-12">
-					<strong class="naranja">{% trans 'CUSTOMER SERVICE' %}</strong>
-					<ul style="color:#F5F5F5;">
-						<li>{% trans 'Contact' %}</li>
-						<li>{% trans 'Refunds' %}</li>
-					</ul>
-				</div>
-		</div>
-				<div class="col-md-6 col-12 mt-3">
-					<strong class="naranja">{% trans 'MANAGEMENT AREA' %}</strong>
-					<ul style="color:#F5F5F5;">
-						<li>{% trans 'My account' %}</li>
-						<li>{% trans 'Order record' %}</li>
-						<li>{% trans 'Wishlist' %}</li>
-						<li>Newsletter</li>
-					</ul>
-				</div>
-
-				<div class="col-6"></div>
-				<div class="col-12 col-md-6 mt-5 text-right">
-					<ul class="icons" style="color:#F5F5F5;">
-						<li><a href="#" class="icon brands fa fa-twitter" ><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon brands fa fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon brands fa fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon brands fa fa-dribbble"><span class="label">Dribbble</span></a></li>
-						<li><a href="#" class="icon solid fa fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-				</div>
-		</div>
-
-
-			<section>
-
-			</section>
-		</section>
+<section id="footer">
+						<section>
+							<p>This is <strong>Parallelism</strong>, a responsive portfolio site template by <a href="http://html5up.net">HTML5 UP</a>. Free for personal
+							and commercial use under the <a href="http://html5up.net/license">Creative Commons Attribution</a> license.</p>
+						</section>
+						<section>
+							<ul class="icons">
+								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+								<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>© Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li><li>Demo Images: <a href="http://ineedchemicalx.deviantart.com/">Felicia Simion</a></li>
+							</ul>
+						</section>
+					</section>
 
 <script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>
 

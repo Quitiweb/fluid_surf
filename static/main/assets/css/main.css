@@ -336,10 +336,17 @@ input, select, textarea {
 			font-family: 'Font Awesome 5 Brands';
 		}
 
+body {
+    background-image: url(../../images/bgsurf.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
 /* Wrapper */
 
 	#wrapper {
-		min-height: 100vh;
+		margin-top: 200px;
 		display: -moz-flex;
 		display: -webkit-flex;
 		display: -ms-flex;
@@ -686,7 +693,6 @@ input, select, textarea {
 /* Header */
 
 	#footer {
-	    background: #040404;
 		width: 100%;
 		padding: 1.5em;
 		display: -moz-flex;
