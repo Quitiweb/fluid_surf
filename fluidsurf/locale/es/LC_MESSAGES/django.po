@@ -223,7 +223,7 @@ msgstr "Reponer Stock"
 
 #: templates/home/index.html:60
 msgid "Welcome"
-msgstr ""
+msgstr "Bienvenido"
 
 #: templates/home/index.html:61
 msgid "Here you have some recommended products for you"
