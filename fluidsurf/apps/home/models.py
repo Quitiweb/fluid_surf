@@ -17,11 +17,13 @@ AREA_CHOICES = (
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
 
-    nombre = models.CharField(max_length=25)
+    nombre = models.CharField(max_length=100)
     precio = models.IntegerField()
 
     fecha = models.DateField()
     spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='Europa')
+
+    descripcion = models.CharField(max_length=50, blank=True)
 
     imagen0 = models.ImageField(upload_to="img/productos/", blank=True)
     imagen1 = models.ImageField(upload_to="img/productos/", blank=True)

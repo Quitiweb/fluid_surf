@@ -19,12 +19,12 @@
 
         <div class="row mt-5">
             <div class="col-9">
-                <label>{% trans 'Name' %}</label>
+                <label>{% trans 'Name' %}*</label>
                 {{ form.nombre }}
             </div>
 
             <div class="col-3">
-                <label>{% trans 'Price' %}</label>
+                <label>{% trans 'Price' %}*</label>
                 {{ form.precio }}
             </div>
         </div>
@@ -32,12 +32,19 @@
         <!-- date & spot -->
         <div class="row mt-5">
             <div class="col-6">
-                <label>{% trans 'Date' %}</label>
+                <label>{% trans 'Date' %}*</label>
                 {{ form.fecha }}
             </div>
             <div class="col-6">
-                <label>{% trans 'Spot' %}</label>
+                <label>{% trans 'Spot' %}*</label>
                 {{ form.spot }}
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <label>{% trans 'Description' %}</label>
+            <div class="col-12">
+                {{ form.descripcion }}
             </div>
         </div>
 

@@ -88,6 +88,8 @@ class AddProductForm(forms.ModelForm):
 
     fecha = forms.DateField(required=True, input_formats=DATE_INPUT_FORMATS)
     spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
+    descripcion = forms.CharField(required=False)
+
     imagen0 = forms.ImageField(required=False)
     imagen1 = forms.ImageField(required=False)
     imagen2 = forms.ImageField(required=False)
@@ -134,8 +136,9 @@ class AddProductForm(forms.ModelForm):
     fecha.widget = forms.TextInput(attrs={'placeholder': _('Write when are you selling your product...')})
     nombre.widget = forms.TextInput(attrs={'placeholder': _("Write your product's name...")})
     precio.widget = forms.TextInput(attrs={'placeholder': '€'})
+    descripcion.widget = forms.TextInput(attrs={'placeholder': _('Add a brief description about your product...')})
 
     class Meta:
         model = Producto
-        fields = ('nombre', 'precio', 'fecha', 'spot', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
+        fields = ('nombre', 'precio', 'fecha', 'spot', 'descripcion', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9')
