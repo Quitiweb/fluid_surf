@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 15:09+0200\n"
+"POT-Creation-Date: 2019-10-16 10:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,27 +71,27 @@ msgstr "Nueva contraseña"
 msgid "Repeat your new password"
 msgstr "Repite tu contraseña"
 
-#: fluidsurf/apps/home/forms.py:78
+#: fluidsurf/apps/home/forms.py:78 fluidsurf/apps/home/models.py:8
 msgid "Europe"
 msgstr "Europa"
 
-#: fluidsurf/apps/home/forms.py:79
+#: fluidsurf/apps/home/forms.py:79 fluidsurf/apps/home/models.py:9
 msgid "Africa"
 msgstr "África"
 
-#: fluidsurf/apps/home/forms.py:80
+#: fluidsurf/apps/home/forms.py:80 fluidsurf/apps/home/models.py:10
 msgid "Asia"
 msgstr "Asia"
 
-#: fluidsurf/apps/home/forms.py:81
+#: fluidsurf/apps/home/forms.py:81 fluidsurf/apps/home/models.py:11
 msgid "Oceania"
 msgstr "Oceanía"
 
-#: fluidsurf/apps/home/forms.py:82
+#: fluidsurf/apps/home/forms.py:82 fluidsurf/apps/home/models.py:12
 msgid "North America"
 msgstr "América del Norte"
 
-#: fluidsurf/apps/home/forms.py:83
+#: fluidsurf/apps/home/forms.py:83 fluidsurf/apps/home/models.py:13
 msgid "South America"
 msgstr "América del Sur"
 
@@ -103,19 +103,19 @@ msgstr "Escribe cuándo vas a vender tu producto..."
 msgid "Write your product's name..."
 msgstr "Escribe el nombre de tu producto"
 
-#: fluidsurf/apps/home/views.py:218
+#: fluidsurf/apps/home/views.py:228
 msgid "You are the owner of this product, you cannot do actions over it."
 msgstr "Eres el dueño de este producto, no puedes realizar acciones sobre el."
 
-#: fluidsurf/apps/home/views.py:230
+#: fluidsurf/apps/home/views.py:240
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:232
+#: fluidsurf/apps/home/views.py:242
 msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:338
+#: fluidsurf/apps/home/views.py:369
 msgid "Wishlist emptied succesfully"
 msgstr "Lista de deseos vaciada con éxito"
 
@@ -141,7 +141,7 @@ msgid "Home"
 msgstr "Inicio"
 
 #: templates/dashboard/main.html:12 templates/dashboard/main.html:17
-#: templates/home/base.html:148
+#: templates/home/base.html:149
 msgid "Dashboard"
 msgstr "Panel de Control"
 
@@ -149,8 +149,11 @@ msgstr "Panel de Control"
 msgid "Change language"
 msgstr "Cambiar idioma"
 
-#: templates/home/base.html:115 templates/home/index.html:184
-#: templates/home/mi-cuenta.html:12
+#: templates/home/base.html:112
+msgid "MY PROFILE"
+msgstr ""
+
+#: templates/home/base.html:115 templates/home/mi-cuenta.html:12
 msgid "My account"
 msgstr "Mi cuenta"
 
@@ -158,47 +161,54 @@ msgstr "Mi cuenta"
 msgid "Purchase History"
 msgstr "Historial de compras"
 
-#: templates/home/base.html:123 templates/home/historial.html:36
-msgid "Sales History"
-msgstr "Historial de Ventas"
-
-#: templates/home/base.html:132 templates/home/index.html:186
-#: templates/home/wishlist.html:49
+#: templates/home/base.html:122 templates/home/wishlist.html:49
 msgid "Wishlist"
 msgstr "Lista de deseos"
 
-#: templates/home/base.html:140 templates/home/subir-producto.html:11
+#: templates/home/base.html:126 templates/home/historial.html:36
+msgid "Sales History"
+msgstr "Historial de Ventas"
+
+#: templates/home/base.html:135
+msgid "PHOTOGRAPHER"
+msgstr "FOTÓGRAFO"
+
+#: templates/home/base.html:138 templates/home/subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: templates/home/base.html:156 templates/home/producto.html:133
+#: templates/home/base.html:146
+#, fuzzy
+#| msgid "MANAGEMENT AREA"
+msgid "ADMIN AREA"
+msgstr "ÁREA DE GESTIÓN"
+
+#: templates/home/base.html:157 templates/home/index.html:66
+#: templates/home/producto.html:174
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/home/base.html:162
+#: templates/home/base.html:163 templates/home/index.html:67
 msgid "Signup"
 msgstr "Registro"
 
-#: templates/home/base.html:168
+#: templates/home/base.html:169
 msgid "Logout"
 msgstr "Cerrar sesión"
 
 #: templates/home/historial.html:20 templates/home/historial.html:45
-#: templates/home/perfil.html:39 templates/home/producto.html:52
 #: templates/home/subir-producto.html:34 templates/home/wishlist.html:28
 #: templates/home/zona.html:23
 msgid "Date"
 msgstr "Fecha"
 
 #: templates/home/historial.html:21 templates/home/historial.html:46
-#: templates/home/perfil.html:40 templates/home/producto.html:61
-#: templates/home/producto.html:90 templates/home/subir-producto.html:26
-#: templates/home/wishlist.html:29 templates/home/zona.html:24
+#: templates/home/subir-producto.html:26 templates/home/wishlist.html:29
+#: templates/home/zona.html:24
 msgid "Price"
 msgstr "Precio"
 
-#: templates/home/historial.html:22 templates/home/perfil.html:41
-#: templates/home/producto.html:17 templates/home/producto.html:53
+#: templates/home/historial.html:22 templates/home/producto.html:62
 #: templates/home/wishlist.html:30 templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
@@ -211,81 +221,21 @@ msgstr "Vendido a"
 msgid "Restock"
 msgstr "Reponer Stock"
 
-#: templates/home/index.html:59
-msgid "Connecting photographers and surfers"
-msgstr "Conectando fotógrafos y surferos"
+#: templates/home/index.html:60
+msgid "Welcome"
+msgstr ""
 
-#: templates/home/index.html:70
-msgid "Choose your area in the map"
-msgstr "Escoge una zona en el mapa"
+#: templates/home/index.html:61
+msgid "Here you have some recommended products for you"
+msgstr "Aqui tienes productos recomendados para ti"
 
-#: templates/home/index.html:88
-msgid "Your area"
-msgstr "Tu zona"
+#: templates/home/index.html:65
+msgid "Welcome to"
+msgstr "Bienvenido a"
 
-#: templates/home/index.html:137
-msgid "Recommended for you"
-msgstr "Recomendado para ti"
-
-#: templates/home/index.html:151
-msgid "Subscribe"
-msgstr "Suscríbete"
-
-#: templates/home/index.html:159
-msgid "INFORMATION"
-msgstr "INFORMACIÓN"
-
-#: templates/home/index.html:161
-msgid "How does Fluid House work?"
-msgstr "¿Cómo funciona Fluid House?"
-
-#: templates/home/index.html:162
-msgid "Security  in payments"
-msgstr "Seguridad en los pagos"
-
-#: templates/home/index.html:163
-msgid "Free subscription"
-msgstr "Suscripción gratuita"
-
-#: templates/home/index.html:164
-msgid "Sell photographs"
-msgstr "Vender fotografías"
-
-#: templates/home/index.html:165
-msgid "Copyright, licenses and sizes"
-msgstr "Copyright, licencias y tamaños"
-
-#: templates/home/index.html:166
-msgid "Terms & Conditions"
-msgstr "Términos y Condiciones"
-
-#: templates/home/index.html:167
-msgid "Privacy Policy"
-msgstr "Política de Privacidad"
-
-#: templates/home/index.html:168
-msgid "Taxes & Facturation"
-msgstr "Impuestos  y facturación"
-
-#: templates/home/index.html:174
-msgid "CUSTOMER SERVICE"
-msgstr "ATENCIÓN AL CLIENTE"
-
-#: templates/home/index.html:176
-msgid "Contact"
-msgstr "Contacto"
-
-#: templates/home/index.html:177
-msgid "Refunds"
-msgstr "Devoluciones"
-
-#: templates/home/index.html:182
-msgid "MANAGEMENT AREA"
-msgstr "ÁREA DE GESTIÓN"
-
-#: templates/home/index.html:185
-msgid "Order record"
-msgstr "Historial de compras"
+#: templates/home/index.html:71
+msgid "Browser"
+msgstr "Buscador"
 
 #: templates/home/mi-cuenta.html:16 templates/home/subir-producto.html:21
 msgid "Name"
@@ -303,7 +253,7 @@ msgstr "Teléfono"
 msgid "Country"
 msgstr "Pais"
 
-#: templates/home/mi-cuenta.html:42 templates/home/producto.html:51
+#: templates/home/mi-cuenta.html:42
 msgid "Area"
 msgstr "Zona"
 
@@ -347,46 +297,25 @@ msgstr "Ver historial de compras"
 msgid "Save"
 msgstr "Guardar"
 
-#: templates/home/perfil.html:19
-msgid "PHOTOGRAPHER"
-msgstr "FOTÓGRAFO"
-
-#: templates/home/perfil.html:29
-msgid "Products uploaded by"
-msgstr "Productos subidos por"
-
-#: templates/home/perfil.html:48 templates/home/wishlist.html:37
-#: templates/home/zona.html:32
-msgid "Go to product"
-msgstr "Ir al producto"
-
-#: templates/home/producto.html:65
-msgid "Close"
-msgstr "Cerrar"
-
-#: templates/home/producto.html:66 templates/home/producto.html:99
+#: templates/home/producto.html:140
 msgid "I want it!"
 msgstr "Lo quiero!"
 
-#: templates/home/producto.html:109
+#: templates/home/producto.html:150
 msgid "Buy product to"
 msgstr "Comprar producto a"
 
-#: templates/home/producto.html:118 templates/home/producto.html:123
+#: templates/home/producto.html:159 templates/home/producto.html:165
 msgid "Buy now"
 msgstr "Comprar ahora"
 
-#: templates/home/producto.html:131
+#: templates/home/producto.html:172
 msgid "SIGNUP"
 msgstr "REGISTRATE"
 
-#: templates/home/producto.html:132
+#: templates/home/producto.html:173
 msgid "Already have an account?"
 msgstr "¿Ya tienes cuenta?"
-
-#: templates/home/producto.html:141
-msgid "Share on Social Media"
-msgstr "Compartir en redes sociales"
 
 #: templates/home/subir-producto.html:38
 msgid "Spot"
@@ -419,6 +348,10 @@ msgstr "Tu Lista de Deseos"
 #: templates/home/wishlist.html:19
 msgid "Empty wishlist"
 msgstr "Vaciar Lista de deseos"
+
+#: templates/home/wishlist.html:37 templates/home/zona.html:32
+msgid "Go to product"
+msgstr "Ir al producto"
 
 #: templates/home/wishlist.html:52
 msgid "Are you sure you want to empty your wishlist?"
@@ -461,6 +394,69 @@ msgstr "Usuario o contraseña incorrectos"
 #| msgid "Old Password"
 msgid "Password"
 msgstr "Anterior contraseña"
+
+#~ msgid "Connecting photographers and surfers"
+#~ msgstr "Conectando fotógrafos y surferos"
+
+#~ msgid "Choose your area in the map"
+#~ msgstr "Escoge una zona en el mapa"
+
+#~ msgid "Your area"
+#~ msgstr "Tu zona"
+
+#~ msgid "Recommended for you"
+#~ msgstr "Recomendado para ti"
+
+#~ msgid "Subscribe"
+#~ msgstr "Suscríbete"
+
+#~ msgid "INFORMATION"
+#~ msgstr "INFORMACIÓN"
+
+#~ msgid "How does Fluid House work?"
+#~ msgstr "¿Cómo funciona Fluid House?"
+
+#~ msgid "Security  in payments"
+#~ msgstr "Seguridad en los pagos"
+
+#~ msgid "Free subscription"
+#~ msgstr "Suscripción gratuita"
+
+#~ msgid "Sell photographs"
+#~ msgstr "Vender fotografías"
+
+#~ msgid "Copyright, licenses and sizes"
+#~ msgstr "Copyright, licencias y tamaños"
+
+#~ msgid "Terms & Conditions"
+#~ msgstr "Términos y Condiciones"
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Política de Privacidad"
+
+#~ msgid "Taxes & Facturation"
+#~ msgstr "Impuestos  y facturación"
+
+#~ msgid "CUSTOMER SERVICE"
+#~ msgstr "ATENCIÓN AL CLIENTE"
+
+#~ msgid "Contact"
+#~ msgstr "Contacto"
+
+#~ msgid "Refunds"
+#~ msgstr "Devoluciones"
+
+#~ msgid "Order record"
+#~ msgstr "Historial de compras"
+
+#~ msgid "Products uploaded by"
+#~ msgstr "Productos subidos por"
+
+#~ msgid "Close"
+#~ msgstr "Cerrar"
+
+#~ msgid "Share on Social Media"
+#~ msgstr "Compartir en redes sociales"
 
 #~ msgid "Administrator"
 #~ msgstr "Administrador"
