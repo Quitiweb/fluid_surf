@@ -84,7 +84,7 @@
 <section id="menu" style="z-index: 9999999999999">
         <section id="member" class="banner">
             {% if user.is_authenticated %}
-            <div class="inner">
+            <div class="inner pb-5">
 
                 <div class="img-logo">
                      {% if user.profile_pic %}
@@ -117,14 +117,14 @@
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'mi-cuenta' %}" style="color:#838383">{% trans 'My account' %}</a>
                    </li>
-                   {% if user.tipo_de_usuario == 'SURFERO' or user.is_staff %}
+                   {% if user.tipo_de_usuario == 'SURFERO' %}
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Purchase History' %}</a>
                     </li>
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'wishlist' %}" style="color:#838383">{% trans 'Wishlist' %}</a>
                    </li>
-                   {% elif user.tipo_de_usuario == 'FOTOGRAFO' or user.is_staff %}
+                   {% elif user.tipo_de_usuario == 'FOTOGRAFO'%}
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Sales History' %}</a>
                     </li>

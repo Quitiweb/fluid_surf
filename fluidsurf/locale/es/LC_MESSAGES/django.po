@@ -165,7 +165,7 @@ msgstr "Cambiar idioma"
 
 #: templates/home/base-p.html:115 templates/home/base.html:115
 msgid "MY PROFILE"
-msgstr ""
+msgstr "MI PERFIL"
 
 #: templates/home/base-p.html:118 templates/home/base.html:118
 #: templates/home/mi-cuenta.html:12
