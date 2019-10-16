@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %}
+{% extends 'home/base-p.html' %}
 
 {% load static %}
 {% load i18n %}
@@ -73,8 +73,9 @@
                             {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}
                            </div>
 				</div>
+                {% endif %}
                 <div class="item intro intro2 span-2">
-					<h1 class="white">Buscador</h1>
+					<h1 class="white">{% trans 'Browser'  %}</h1>
 						<input type="text" class="mt-3">
 				</div>
 				<div class="item intro3 span-2">
