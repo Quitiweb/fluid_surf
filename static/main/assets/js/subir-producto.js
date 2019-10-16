@@ -1,10 +1,8 @@
-  $(function() {
+$(function() {
     $( "#id_fecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
-  } );
+} );
 
 var numFiles = 0;
-//TODO Comprobar que se controle que no se puedan mas de 10 imagenes
-//TODO Comprobar el tamanio individual de cada imagen y el del conjunto de ellas.
 $(document).on("change", "#id_imagenes", function(){
      numFiles += $("#id_imagenes")[0].files.length;
      console.log(numFiles);
@@ -79,4 +77,21 @@ $(document).ready(function () {
         numFiles += $("#id_imagen9")[0].files.length;
         $(".textFiles").text("Has subido " + numFiles + " archivos.");
     });
+    
+    $('#id_nombre').val('usuario-Zona-20/12/2019-1');
+
+    $('#id_nombre').prop("readonly", true);
+
+    $('#id_spot').on("change", function(){
+        str =  $('#id_nombre').val() + '-' +  $('#id_spot').val();
+        var array = $('#id_nombre').val().split('-');
+
+        console.log(array);
+
+        array[1] = $('#id_spot').val();
+
+        $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
+
+    });
+
 });
