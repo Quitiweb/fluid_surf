@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
 from fluidsurf.apps.users.models import CustomUser
-from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm
+from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm
 from ..helpers.helper import users_to_get
 
 from django.conf import settings
@@ -225,11 +225,21 @@ def producto(request, id='0'):
     if producto is None:
         return redirect('/')
 
+    productform = EditProductForm(instance=producto)
+
     if request.method == "POST":
-       if request.user.is_authenticated:
-           if producto.user == request.user:
-               messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
-           else:
+        if request.user.is_authenticated:
+            if producto.user == request.user:
+                if 'editProduct' in request.POST:
+                    productform = EditProductForm(request.POST, instance=producto)
+                    if productform.is_valid():
+                        productform.save()
+                        messages.success(request, _('Your product was saved successfully'))
+                    else:
+                        messages.warning(request, _('There was an error while trying to save your product'))
+                else:
+                    messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
+        else:
                if 'wishlist' in request.POST:
                    listaDeseos = request.user.wishlist.split(',')
                    status = True
@@ -282,6 +292,7 @@ def producto(request, id='0'):
 
     context = {
         'producto': producto,
+        'productform': productform,
         'imagenes': A,
         'imagenes2': B,
         'imagenes3': C,
@@ -369,7 +380,7 @@ def wishlist(request):
             if request.method == "POST":
                 request.user.wishlist = ''
                 request.user.save()
-                messages.success(request, _('Wishlist emptied succesfully'))
+                messages.success(request, _('Wishlist emptied successfully'))
                 return redirect('wishlist')
 
         context = {
@@ -414,7 +425,7 @@ def change_image(request):
         request.user.profile_pic = image
         request.user.save()
 
-        messages.success(request, _('Profile pic changed succesfully!'))
+        messages.success(request, _('Profile pic changed successfully!'))
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 

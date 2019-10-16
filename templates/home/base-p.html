@@ -136,6 +136,9 @@
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Sales History' %}</a>
                     </li>
+                   <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'perfil' nombre=user.username %}" style="color:#838383">{% trans 'Public Profile' %}</a>
+                    </li>
                    {% endif %}
                    {% endif %}
                </ul>

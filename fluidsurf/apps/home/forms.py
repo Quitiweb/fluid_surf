@@ -142,3 +142,13 @@ class AddProductForm(forms.ModelForm):
         model = Producto
         fields = ('nombre', 'precio', 'fecha', 'spot', 'descripcion', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9')
+
+
+class EditProductForm(forms.ModelForm):
+    nombre = forms.CharField(required=True)
+    precio = forms.CharField(required=True)
+    descripcion = forms.CharField(required=False)
+
+    class Meta:
+        model = Producto
+        fields = ('nombre', 'precio', 'descripcion')
