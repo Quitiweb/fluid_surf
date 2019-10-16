@@ -42,26 +42,6 @@ def index(request):
 
     productos_all = Producto.objects.filter(stock=1).all()
 
-    p_eu = 0
-    p_af = 0
-    p_as = 0
-    p_oc = 0
-    p_na = 0
-    p_sa = 0
-    for producto in productos_all:
-        if producto.spot == 'Europa':
-            p_eu += 1
-        if producto.spot == 'Africa':
-            p_af += 1
-        if producto.spot == 'Asia':
-            p_as += 1
-        if producto.spot == 'Oceania':
-            p_oc += 1
-        if producto.spot == 'America del Norte':
-            p_na += 1
-        if producto.spot == 'America del Sur':
-            p_sa += 1
-
     usuarios = CustomUser.objects.exclude(
         username=request.user.username
     )[:users_to_get(CustomUser.objects.count() - 1)]
@@ -78,12 +58,6 @@ def index(request):
         'usuarios': usuarios,
         'API_KEY': API_KEY,
         'ubicaciones': ubicaciones,
-        'p_eu': p_eu,
-        'p_af': p_af,
-        'p_as': p_as,
-        'p_oc': p_oc,
-        'p_na': p_na,
-        'p_sa': p_sa,
     }
 
     return HttpResponse(template.render(context, request))
@@ -334,6 +308,8 @@ def perfil(request, nombre=''):
 
     user = CustomUser.objects.filter(username=nombre).first()
 
+    ubicaciones = Ubicacion.objects.filter().all()
+
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
     if not user:
@@ -352,6 +328,7 @@ def perfil(request, nombre=''):
     context = {
         'user': user,
         'API_KEY': API_KEY,
+        'ubicaciones': ubicaciones,
         'productos': A,
         'productos2': B,
         'productos3': C,
