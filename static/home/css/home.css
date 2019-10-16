@@ -1171,6 +1171,14 @@ input, select, textarea {
         height:40px; /* or whatever */
     }
 
+    @media screen and (max-width: 480px) {
+        .transButton {
+            width:30px; /* or whatever */
+            height:30px; /* or whatever */
+            margin-top: 10px;
+        }
+    }
+
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],

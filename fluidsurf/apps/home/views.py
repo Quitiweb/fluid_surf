@@ -32,9 +32,13 @@ def index(request):
     #
     # noticias_gr = grouped(noticias, 3)
 
-    productos = Producto.objects.filter(stock=1)[:7]
+    productos = Producto.objects.filter(stock=1)[:3]
 
-    productos2 = Producto.objects.filter(stock=1)[8:18]
+    productos2 = Producto.objects.filter(stock=1)[4:7]
+
+    productos3 = Producto.objects.filter(stock=1)[8:14]
+
+    productos4 = Producto.objects.filter(stock=1)[15:19]
 
     productos_all = Producto.objects.filter(stock=1).all()
 
@@ -68,7 +72,9 @@ def index(request):
 
     context = {
         'productos': productos,
-        'producto2': productos2,
+        'productos2': productos2,
+        'productos3': productos3,
+        'productos4': productos4,
         'usuarios': usuarios,
         'API_KEY': API_KEY,
         'ubicaciones': ubicaciones,
