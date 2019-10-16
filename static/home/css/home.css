@@ -1530,6 +1530,9 @@ background: none;
 	}
 
 		#menu .inner {
+		    max-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
 			padding: 2.5em 1.5em 0.5em 1.5em ;
 			-moz-transform: translateY(0.5em);
 			-webkit-transform: translateY(0.5em);

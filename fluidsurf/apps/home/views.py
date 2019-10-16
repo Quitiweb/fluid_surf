@@ -4,7 +4,7 @@ import stripe
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
@@ -405,6 +405,18 @@ def historial(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+def change_image(request):
+    if request.method == 'POST':
+        image = request.FILES['changeImage']
+        print(image)
+
+        request.user.profile_pic = image
+        request.user.save()
+
+        messages.success(request, _('Profile pic changed succesfully!'))
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS

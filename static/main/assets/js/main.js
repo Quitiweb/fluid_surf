@@ -12,6 +12,9 @@
       });
     }, 5000);
 
+    $("#changeImage").on('change', function(){
+        $('#buttonSubmitImage').click();
+    });
 
     // Función para todos los elementos tipo toggle-chk
     $(".toggle-chk").click(function (event) {

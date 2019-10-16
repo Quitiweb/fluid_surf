@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-16 13:03+0200\n"
+"POT-Creation-Date: 2019-10-16 14:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,6 +123,10 @@ msgstr "Ya tienes este producto en tu lista de deseos"
 msgid "Wishlist emptied succesfully"
 msgstr "Lista de deseos vaciada con éxito"
 
+#: fluidsurf/apps/home/views.py:417
+msgid "Profile pic changed succesfully!"
+msgstr "Foto de perfil cambiada con éxito!"
+
 #: fluidsurf/apps/users/forms.py:14
 msgid "Surfer"
 msgstr "Surfero"
@@ -148,13 +152,13 @@ msgid "Django administration"
 msgstr ""
 
 #: templates/dashboard/base.html:33 templates/dashboard/base.html:179
-#: templates/dashboard/main.html:16 templates/home/base-p.html:108
-#: templates/home/base.html:108
+#: templates/dashboard/main.html:16 templates/home/base-p.html:116
+#: templates/home/base.html:116
 msgid "Home"
 msgstr "Inicio"
 
 #: templates/dashboard/main.html:12 templates/dashboard/main.html:17
-#: templates/home/base-p.html:152 templates/home/base.html:152
+#: templates/home/base-p.html:160 templates/home/base.html:160
 msgid "Dashboard"
 msgstr "Panel de Control"
 
@@ -163,56 +167,60 @@ msgstr "Panel de Control"
 msgid "Change language"
 msgstr "Cambiar idioma"
 
-#: templates/home/base-p.html:115 templates/home/base.html:115
+#: templates/home/base-p.html:98 templates/home/base.html:98
+msgid "edit"
+msgstr "editar"
+
+#: templates/home/base-p.html:123 templates/home/base.html:123
 msgid "MY PROFILE"
 msgstr "MI PERFIL"
 
-#: templates/home/base-p.html:118 templates/home/base.html:118
+#: templates/home/base-p.html:126 templates/home/base.html:126
 #: templates/home/mi-cuenta.html:12
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: templates/home/base-p.html:122 templates/home/base.html:122
+#: templates/home/base-p.html:130 templates/home/base.html:130
 #: templates/home/historial.html:11
 msgid "Purchase History"
 msgstr "Historial de compras"
 
-#: templates/home/base-p.html:125 templates/home/base.html:125
+#: templates/home/base-p.html:133 templates/home/base.html:133
 #: templates/home/wishlist.html:49
 msgid "Wishlist"
 msgstr "Lista de deseos"
 
-#: templates/home/base-p.html:129 templates/home/base.html:129
+#: templates/home/base-p.html:137 templates/home/base.html:137
 #: templates/home/historial.html:36
 msgid "Sales History"
 msgstr "Historial de Ventas"
 
-#: templates/home/base-p.html:138 templates/home/base.html:138
+#: templates/home/base-p.html:146 templates/home/base.html:146
 msgid "PHOTOGRAPHER"
 msgstr "FOTÓGRAFO"
 
-#: templates/home/base-p.html:141 templates/home/base.html:141
+#: templates/home/base-p.html:149 templates/home/base.html:149
 #: templates/home/subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: templates/home/base-p.html:149 templates/home/base.html:149
+#: templates/home/base-p.html:157 templates/home/base.html:157
 #, fuzzy
 #| msgid "MANAGEMENT AREA"
 msgid "ADMIN AREA"
 msgstr "ÁREA DE GESTIÓN"
 
-#: templates/home/base-p.html:160 templates/home/base.html:160
+#: templates/home/base-p.html:168 templates/home/base.html:168
 #: templates/home/index.html:66 templates/home/producto.html:175
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/home/base-p.html:166 templates/home/base.html:166
+#: templates/home/base-p.html:174 templates/home/base.html:174
 #: templates/home/index.html:67
 msgid "Signup"
 msgstr "Registro"
 
-#: templates/home/base-p.html:172 templates/home/base.html:172
+#: templates/home/base-p.html:180 templates/home/base.html:180
 msgid "Logout"
 msgstr "Cerrar sesión"
 

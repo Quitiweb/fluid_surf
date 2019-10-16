@@ -85,19 +85,27 @@
         <section id="member" class="banner">
             {% if user.is_authenticated %}
             <div class="inner pb-5">
-
                 <div class="img-logo">
                      {% if user.profile_pic %}
-                        <img src="/media/{{ user.profile_pic }}"/>
+                        <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">
                      {% else %}
-                    <img src="{% static 'main/images/no_user.png' %}" alt="">
+                        <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">
                      {% endif %}
-                </div>
+                    <div class="overlay">
+                        <form action="{% url 'change-image' %}" id="formImage" method="post" enctype='multipart/form-data'>
+                            {% csrf_token %}
 
-                <div class="w-100"></div>
+                                <label for="changeImage" class="white info" style="cursor: pointer;">{% trans 'edit' %}</label>
+
+                            <input id="changeImage" type="file" name="changeImage" style="display: none;">
+                            <input type="submit" class="d-none" id="buttonSubmitImage">
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="w-100 h-25"></div>
                 <h3>{{ user.username }}</h3>
                 <p>{{ user.email }}</p>
-
             </div>
 
             {% endif %}
@@ -225,4 +233,5 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     </body>
+
 </html>
