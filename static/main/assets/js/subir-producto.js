@@ -78,15 +78,21 @@ $(document).ready(function () {
         $(".textFiles").text("Has subido " + numFiles + " archivos.");
     });
     
-    $('#id_nombre').val('usuario-Zona-20/12/2019-1');
+    $('#id_nombre').val($('#username').text() + '-Europa-Fecha-' + $('#current').text());
 
     $('#id_nombre').prop("readonly", true);
 
-    $('#id_spot').on("change", function(){
-        str =  $('#id_nombre').val() + '-' +  $('#id_spot').val();
+    $('#id_fecha').on("change", function(){
         var array = $('#id_nombre').val().split('-');
 
-        console.log(array);
+        array[2] = $('#id_fecha').val();
+
+        $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
+
+    });
+
+    $('#id_spot').on("change", function(){
+        var array = $('#id_nombre').val().split('-');
 
         array[1] = $('#id_spot').val();
 

@@ -154,6 +154,8 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
+    current = Producto.objects.latest('id').id + 1
+
     if request.user.is_authenticated:
         if request.method == "GET":
             form = AddProductForm()
@@ -205,6 +207,7 @@ def subir_producto(request):
         return redirect('index')
     context = {
         'form': form,
+        'current': current,
     }
 
     return HttpResponse(template.render(context, request))
