@@ -15,6 +15,7 @@ $(document).ready(function () {
         $('#form0').toggleClass('hide');
         $('#form1').toggleClass('hide');
         $(".textFiles").text("Has subido " + numFiles + " archivos.");
+        $('#clearBtn').toggleClass('hide');
     });
 
     $('#id_imagen1').on("change", function(){
@@ -78,6 +79,7 @@ $(document).ready(function () {
         $(".textFiles").text("Has subido " + numFiles + " archivos.");
     });
     
+    // Eventos para la modificacion del nombre de manera dinamica
     $('#id_nombre').val($('#username').text() + '-Europa-Fecha-' + $('#current').text());
 
     $('#id_nombre').prop("readonly", true);
@@ -99,5 +101,37 @@ $(document).ready(function () {
         $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
 
     });
+
+    // Evento para limpiar la lista de imagenes
+    $('#clearBtn').on("click", function(){
+        console.log('click!');
+        $('#id_imagen0').val(''); 
+        $('#id_imagen1').val(''); 
+        $('#id_imagen2').val(''); 
+        $('#id_imagen3').val(''); 
+        $('#id_imagen4').val(''); 
+        $('#id_imagen5').val(''); 
+        $('#id_imagen6').val(''); 
+        $('#id_imagen7').val(''); 
+        $('#id_imagen8').val(''); 
+        $('#id_imagen9').val(''); 
+
+        $('#form0').removeClass('hide'); 
+        $('#form1').addClass('hide'); 
+        $('#form2').addClass('hide'); 
+        $('#form3').addClass('hide'); 
+        $('#form4').addClass('hide'); 
+        $('#form5').addClass('hide'); 
+        $('#form6').addClass('hide'); 
+        $('#form7').addClass('hide'); 
+        $('#form8').addClass('hide'); 
+        $('#form9').addClass('hide'); 
+        $('#clearBtn').addClass('hide'); 
+
+        $(".textFiles").text("");
+        numFiles = 0;
+    });
+
+
 
 });
