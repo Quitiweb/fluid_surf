@@ -15,4 +15,5 @@ django-qr-code
 openpyxl
 django_social_share
 django-google-maps
+django_filters
 

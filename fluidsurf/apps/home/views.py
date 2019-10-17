@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
+from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm
@@ -211,6 +212,10 @@ def producto(request, id='0'):
                         messages.success(request, _('Your product was saved successfully'))
                     else:
                         messages.warning(request, _('There was an error while trying to save your product'))
+                elif 'deleteProduct' in request.POST:
+                    producto.delete()
+                    messages.success(request, _('Your product was deleted successfully'))
+                    return redirect('/perfil/' + request.user.username)
                 else:
                     messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
         else:
@@ -220,7 +225,6 @@ def producto(request, id='0'):
                    for item in listaDeseos:
                        if item == str(id):
                            status = False
-
                    if status:
                        request.user.wishlist += str(id) + ","
                        request.user.save()
@@ -261,9 +265,6 @@ def producto(request, id='0'):
     B = imagenes[3:7]
     C = imagenes[7:10]
 
-    print(str(B))
-    print(str(C))
-
     context = {
         'producto': producto,
         'productform': productform,
@@ -272,13 +273,11 @@ def producto(request, id='0'):
         'imagenes3': C,
         'ubicaciones': ubicaciones,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
-        'key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe': True,
         'API_KEY': API_KEY
     }
 
     return HttpResponse(template.render(context, request))
-
 
 
 def zona(request, nombre=''):
@@ -308,6 +307,9 @@ def perfil(request, nombre=''):
 
     user = CustomUser.objects.filter(username=nombre).first()
 
+    prod_list = Producto.objects.all()
+    prod_filter = ProductoFilter(request.GET, queryset=prod_list)
+
     ubicaciones = Ubicacion.objects.filter().all()
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
@@ -328,6 +330,7 @@ def perfil(request, nombre=''):
     context = {
         'user': user,
         'API_KEY': API_KEY,
+        'filter': prod_filter,
         'ubicaciones': ubicaciones,
         'productos': A,
         'productos2': B,
@@ -397,7 +400,6 @@ def historial(request):
 def change_image(request):
     if request.method == 'POST':
         image = request.FILES['changeImage']
-        print(image)
 
         request.user.profile_pic = image
         request.user.save()
