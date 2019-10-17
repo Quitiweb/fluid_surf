@@ -6,6 +6,7 @@ from django.db.models import Q
 
 # Create your views here.
 from django.template import loader
+from openpyxl import Workbook
 
 from fluidsurf.apps.home.models import Producto, Compra
 from fluidsurf.apps.users.models import CustomUser
@@ -48,6 +49,18 @@ def productos(request):
     template = loader.get_template('dashboard/productos.html')
 
     productos = Producto.objects.filter().all()
+
+    if request.method == "POST":
+        workbook = Workbook()
+        sheet = workbook.active
+
+        sheet.append(["ID", "Name"])
+
+        for product in productos:
+            data = [product.id, product.nombre]
+            sheet.append(data)
+
+        workbook.save(filename="spreadsheets/oop_sample.xlsx")
 
     context = {
         'productos': productos

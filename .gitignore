@@ -112,5 +112,8 @@ passenger_*.py
 # Media folder:
 media/
 
+# Spreadsheets folder:
+spreadsheets/
+
 # dbSQLite
 db.sqlite3
