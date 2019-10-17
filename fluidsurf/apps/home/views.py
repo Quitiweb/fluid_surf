@@ -27,11 +27,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def index(request):
     template = loader.get_template('home/index.html')
 
-    # noticias = Post.objects.filter(
-    #     fecha_de_publicacion__lte=timezone.now()
-    # ).order_by('-fecha_de_publicacion')[:news_to_get(Post.objects.count())]
-    #
-    # noticias_gr = grouped(noticias, 3)
+    prod_list = Producto.objects.filter(stock=1).all()
+    prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     productos = Producto.objects.filter(stock=1)[:3]
 
@@ -56,6 +53,7 @@ def index(request):
         'productos2': productos2,
         'productos3': productos3,
         'productos4': productos4,
+        'filter': prod_filter,
         'usuarios': usuarios,
         'API_KEY': API_KEY,
         'ubicaciones': ubicaciones,
@@ -193,6 +191,9 @@ def producto(request, id='0'):
 
     producto = Producto.objects.filter(id=id, stock=1).first()
 
+    prod_list = Producto.objects.filter(stock=1).all()
+    prod_filter = ProductoFilter(request.GET, queryset=prod_list)
+
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
     ubicaciones = Ubicacion.objects.filter().all()
@@ -268,6 +269,7 @@ def producto(request, id='0'):
     context = {
         'producto': producto,
         'productform': productform,
+        'filter': prod_filter,
         'imagenes': A,
         'imagenes2': B,
         'imagenes3': C,
@@ -307,7 +309,7 @@ def perfil(request, nombre=''):
 
     user = CustomUser.objects.filter(username=nombre).first()
 
-    prod_list = Producto.objects.all()
+    prod_list = Producto.objects.filter(user=user, stock=1).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     ubicaciones = Ubicacion.objects.filter().all()
