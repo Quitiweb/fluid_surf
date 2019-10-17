@@ -5,7 +5,7 @@ import openpyxl
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.db.models import Q
+from django.db.models import Q, ImageField
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -67,11 +67,23 @@ def productos(request):
 
             for row in elements:
                 producto = Producto()
+                producto.id = str(row[0].value)
                 producto.nombre = str(row[1].value)
                 producto.precio = str(row[2].value)
                 producto.fecha = str(row[3].value.strftime("%Y-%m-%d"))
                 producto.spot = str(row[4].value)
                 producto.stock = str(row[5].value)
+
+                producto.imagen0 = str(row[7].value)[7:]
+                producto.imagen1 = str(row[8].value)[7:]
+                producto.imagen2 = str(row[9].value)[7:]
+                producto.imagen3 = str(row[10].value)[7:]
+                producto.imagen4 = str(row[11].value)[7:]
+                producto.imagen5 = str(row[12].value)[7:]
+                producto.imagen6 = str(row[13].value)[7:]
+                producto.imagen7 = str(row[14].value)[7:]
+                producto.imagen8 = str(row[15].value)[7:]
+                producto.imagen9 = str(row[16].value)[7:]
 
                 usuario = CustomUser.objects.filter(username=row[6].value).first()
                 producto.user = usuario
@@ -82,10 +94,11 @@ def productos(request):
             workbook = Workbook()
             sheet = workbook.active
 
-            sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario"])
+            sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario", 'imagen0', 'imagen1', 'imagen2'
+                          , 'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen9', 'imagen9'])
 
             for p in productos:
-                data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username]
+                data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username, p.imagen0.url]
                 sheet.append(data)
 
             workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
