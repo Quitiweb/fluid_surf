@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-16 16:55+0200\n"
+"POT-Creation-Date: 2019-10-17 13:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: fluidsurf/apps/home/filters.py:9 templates/home/mi-cuenta.html:16
+#: templates/home/producto.html:205 templates/home/subir-producto.html:22
+msgid "Name"
+msgstr "Nombre"
+
+#: fluidsurf/apps/home/filters.py:10 templates/home/subir-producto.html:39
+msgid "Spot"
+msgstr "Zona"
+
+#: fluidsurf/apps/home/filters.py:11 fluidsurf/apps/users/forms.py:15
+msgid "Photographer"
+msgstr "Fotografo"
 
 #: fluidsurf/apps/home/forms.py:25
 msgid "Write your name here..."
@@ -107,31 +120,37 @@ msgstr "Escribe el nombre de tu producto"
 msgid "Add a brief description about your product..."
 msgstr "Añade una breve descripcion sobre tu producto"
 
-#: fluidsurf/apps/home/views.py:237
+#: fluidsurf/apps/home/views.py:213
 msgid "Your product was saved successfully"
 msgstr "Tu producto ha sido guardado con éxito"
 
-#: fluidsurf/apps/home/views.py:239
+#: fluidsurf/apps/home/views.py:215
 msgid "There was an error while trying to save your product"
 msgstr "Ha habido un error mientras se intentaba guardar tu producto."
 
-#: fluidsurf/apps/home/views.py:241
+#: fluidsurf/apps/home/views.py:218
+#, fuzzy
+#| msgid "Your product was saved successfully"
+msgid "Your product was deleted successfully"
+msgstr "Tu producto ha sido guardado con éxito"
+
+#: fluidsurf/apps/home/views.py:221
 msgid "You are the owner of this product, you cannot do actions over it."
 msgstr "Eres el dueño de este producto, no puedes realizar acciones sobre el."
 
-#: fluidsurf/apps/home/views.py:253
+#: fluidsurf/apps/home/views.py:232
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:255
+#: fluidsurf/apps/home/views.py:234
 msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:383
+#: fluidsurf/apps/home/views.py:365
 msgid "Wishlist emptied successfully"
 msgstr "Lista de deseos vaciada con éxito"
 
-#: fluidsurf/apps/home/views.py:428
+#: fluidsurf/apps/home/views.py:409
 msgid "Profile pic changed successfully!"
 msgstr "Foto de perfil cambiada con éxito!"
 
@@ -139,15 +158,11 @@ msgstr "Foto de perfil cambiada con éxito!"
 msgid "Surfer"
 msgstr "Surfero"
 
-#: fluidsurf/apps/users/forms.py:15
-msgid "Photographer"
-msgstr "Fotografo"
-
-#: fluidsurf/settings/base.py:159
+#: fluidsurf/settings/base.py:160
 msgid "English"
 msgstr "Inglés"
 
-#: fluidsurf/settings/base.py:160
+#: fluidsurf/settings/base.py:161
 msgid "Spanish"
 msgstr "Español"
 
@@ -160,13 +175,13 @@ msgid "Django administration"
 msgstr ""
 
 #: templates/dashboard/base.html:33 templates/dashboard/base.html:179
-#: templates/dashboard/main.html:16 templates/home/base-p.html:116
-#: templates/home/base.html:116
+#: templates/dashboard/main.html:16 templates/home/base-p.html:115
+#: templates/home/base.html:115
 msgid "Home"
 msgstr "Inicio"
 
 #: templates/dashboard/main.html:12 templates/dashboard/main.html:17
-#: templates/home/base-p.html:163 templates/home/base.html:160
+#: templates/home/base-p.html:162 templates/home/base.html:162
 msgid "Dashboard"
 msgstr "Panel de Control"
 
@@ -179,60 +194,60 @@ msgstr "Cambiar idioma"
 msgid "edit"
 msgstr "editar"
 
-#: templates/home/base-p.html:123 templates/home/base.html:123
+#: templates/home/base-p.html:122 templates/home/base.html:122
 msgid "MY PROFILE"
 msgstr "MI PERFIL"
 
-#: templates/home/base-p.html:126 templates/home/base.html:126
+#: templates/home/base-p.html:125 templates/home/base.html:125
 #: templates/home/mi-cuenta.html:12
 msgid "My account"
 msgstr "Mi cuenta"
 
-#: templates/home/base-p.html:130 templates/home/base.html:130
+#: templates/home/base-p.html:129 templates/home/base.html:129
 #: templates/home/historial.html:11
 msgid "Purchase History"
 msgstr "Historial de compras"
 
-#: templates/home/base-p.html:133 templates/home/base.html:133
+#: templates/home/base-p.html:132 templates/home/base.html:132
 #: templates/home/wishlist.html:49
 msgid "Wishlist"
 msgstr "Lista de deseos"
 
-#: templates/home/base-p.html:137 templates/home/base.html:137
+#: templates/home/base-p.html:136 templates/home/base.html:136
 #: templates/home/historial.html:36
 msgid "Sales History"
 msgstr "Historial de Ventas"
 
-#: templates/home/base-p.html:140
+#: templates/home/base-p.html:139 templates/home/base.html:139
 msgid "Public Profile"
 msgstr "Perfil público"
 
-#: templates/home/base-p.html:149 templates/home/base.html:146
+#: templates/home/base-p.html:148 templates/home/base.html:148
 msgid "PHOTOGRAPHER"
 msgstr "FOTÓGRAFO"
 
-#: templates/home/base-p.html:152 templates/home/base.html:149
+#: templates/home/base-p.html:151 templates/home/base.html:151
 #: templates/home/subir-producto.html:11
 msgid "Add product"
 msgstr "Añadir producto"
 
-#: templates/home/base-p.html:160 templates/home/base.html:157
+#: templates/home/base-p.html:159 templates/home/base.html:159
 #, fuzzy
 #| msgid "MANAGEMENT AREA"
 msgid "ADMIN AREA"
 msgstr "ÁREA DE GESTIÓN"
 
-#: templates/home/base-p.html:171 templates/home/base.html:168
-#: templates/home/index.html:66 templates/home/producto.html:188
+#: templates/home/base-p.html:170 templates/home/base.html:170
+#: templates/home/index.html:53 templates/home/producto.html:182
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/home/base-p.html:177 templates/home/base.html:174
-#: templates/home/index.html:67
+#: templates/home/base-p.html:176 templates/home/base.html:176
+#: templates/home/index.html:54
 msgid "Signup"
 msgstr "Registro"
 
-#: templates/home/base-p.html:183 templates/home/base.html:180
+#: templates/home/base-p.html:182 templates/home/base.html:182
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -243,12 +258,12 @@ msgid "Date"
 msgstr "Fecha"
 
 #: templates/home/historial.html:21 templates/home/historial.html:46
-#: templates/home/producto.html:215 templates/home/subir-producto.html:27
+#: templates/home/producto.html:209 templates/home/subir-producto.html:27
 #: templates/home/wishlist.html:29 templates/home/zona.html:24
 msgid "Price"
 msgstr "Precio"
 
-#: templates/home/historial.html:22 templates/home/producto.html:62
+#: templates/home/historial.html:22 templates/home/producto.html:49
 #: templates/home/wishlist.html:30 templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
@@ -261,26 +276,22 @@ msgstr "Vendido a"
 msgid "Restock"
 msgstr "Reponer Stock"
 
-#: templates/home/index.html:60
+#: templates/home/index.html:47
 msgid "Welcome"
 msgstr "Bienvenido"
 
-#: templates/home/index.html:61
+#: templates/home/index.html:48
 msgid "Here you have some recommended products for you"
 msgstr "Aqui tienes productos recomendados para ti"
 
-#: templates/home/index.html:65
+#: templates/home/index.html:52
 msgid "Welcome to"
 msgstr "Bienvenido a"
 
-#: templates/home/index.html:71 templates/home/producto.html:91
+#: templates/home/index.html:58 templates/home/perfil.html:59
+#: templates/home/producto.html:78
 msgid "Browser"
 msgstr "Buscador"
-
-#: templates/home/mi-cuenta.html:16 templates/home/producto.html:211
-#: templates/home/subir-producto.html:22
-msgid "Name"
-msgstr "Nombre"
 
 #: templates/home/mi-cuenta.html:20
 msgid "Surname"
@@ -334,51 +345,59 @@ msgstr "Cambiar lista de deseos"
 msgid "View purchase history"
 msgstr "Ver historial de compras"
 
-#: templates/home/mi-cuenta.html:137 templates/home/subir-producto.html:121
+#: templates/home/mi-cuenta.html:137 templates/home/subir-producto.html:122
 msgid "Save"
 msgstr "Guardar"
 
-#: templates/home/producto.html:69
+#: templates/home/perfil.html:88
+msgid "About"
+msgstr "Sobre"
+
+#: templates/home/perfil.html:97
+msgid "This user hasn't completed their profile yet"
+msgstr "Este usuario no ha completado su perfil aún"
+
+#: templates/home/producto.html:56
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
-#: templates/home/producto.html:73
+#: templates/home/producto.html:60
 msgid "Delete"
-msgstr ""
+msgstr "Borrar "
 
-#: templates/home/producto.html:154
+#: templates/home/producto.html:148
 msgid "I want it!"
 msgstr "Lo quiero!"
 
-#: templates/home/producto.html:164
+#: templates/home/producto.html:158
 msgid "Buy product to"
 msgstr "Comprar producto a"
 
-#: templates/home/producto.html:173 templates/home/producto.html:179
+#: templates/home/producto.html:167 templates/home/producto.html:173
 msgid "Buy now"
 msgstr "Comprar ahora"
 
-#: templates/home/producto.html:186
+#: templates/home/producto.html:180
 msgid "SIGNUP"
 msgstr "REGISTRATE"
 
-#: templates/home/producto.html:187
+#: templates/home/producto.html:181
 msgid "Already have an account?"
 msgstr "¿Ya tienes cuenta?"
 
-#: templates/home/producto.html:202
+#: templates/home/producto.html:196
 msgid "Edit the basic information of your product"
-msgstr ""
+msgstr "Edita la información básica de tu producto"
 
-#: templates/home/producto.html:219 templates/home/subir-producto.html:45
+#: templates/home/producto.html:213 templates/home/subir-producto.html:45
 #, fuzzy
 #| msgid "Free subscription"
 msgid "Description"
 msgstr "Suscripción gratuita"
 
-#: templates/home/subir-producto.html:39
-msgid "Spot"
-msgstr "Zona"
+#: templates/home/producto.html:234
+msgid "Are you sure you want to delete this product?"
+msgstr "¿Estás seguro de que quieres borrar este producto?"
 
 #: templates/home/subir-producto.html:57
 msgid ""
@@ -392,12 +411,12 @@ msgstr ""
 msgid "Upload your product's pictures"
 msgstr "Añade las fotos de tu producto"
 
-#: templates/home/subir-producto.html:67 templates/home/subir-producto.html:72
-#: templates/home/subir-producto.html:77 templates/home/subir-producto.html:82
-#: templates/home/subir-producto.html:87 templates/home/subir-producto.html:92
-#: templates/home/subir-producto.html:97 templates/home/subir-producto.html:102
-#: templates/home/subir-producto.html:107
-#: templates/home/subir-producto.html:112
+#: templates/home/subir-producto.html:68 templates/home/subir-producto.html:73
+#: templates/home/subir-producto.html:78 templates/home/subir-producto.html:83
+#: templates/home/subir-producto.html:88 templates/home/subir-producto.html:93
+#: templates/home/subir-producto.html:98 templates/home/subir-producto.html:103
+#: templates/home/subir-producto.html:108
+#: templates/home/subir-producto.html:113
 msgid "Click or drag over here to upload your images"
 msgstr "Pulsa aquí o arrastra tus imagenes para subirlas"
 
