@@ -85,8 +85,17 @@
 		<!-- Items -->
 			<div class="items">
 				<div class="item intro span-3" style="background-color: #58949C;">
-					<h1 class="white">{% trans 'About' %} {{ usuario.username }}</h1>
+					<h1 class="white">{% trans 'About' %} {{ usuario.username }}
+					{% if usuario.profile_pic %}
+                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="75" width="75">
+                     {% else %}
+                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="75" width="75">
+                     {% endif %}</h1>
+					{% if usuario.CV is not None %}
 						<p class="white">{{ usuario.CV }}</p>
+					{% else %}
+						<p class="">{% trans "This user hasn't completed their profile yet" %}</p>
+					{% endif %}
 				</div>
 				{% for producto in filter.qs|slice:"1:4" %}
 				<article class="item thumb span-3">
