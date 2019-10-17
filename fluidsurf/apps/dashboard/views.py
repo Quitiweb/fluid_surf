@@ -1,10 +1,13 @@
+from datetime import date
 from itertools import count
 
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
 
-# Create your views here.
+from django.utils.translation import ugettext_lazy as _
+
 from django.template import loader
 from openpyxl import Workbook
 
@@ -54,13 +57,14 @@ def productos(request):
         workbook = Workbook()
         sheet = workbook.active
 
-        sheet.append(["ID", "Name"])
+        sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario"])
 
-        for product in productos:
-            data = [product.id, product.nombre]
+        for p in productos:
+            data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username]
             sheet.append(data)
 
-        workbook.save(filename="spreadsheets/oop_sample.xlsx")
+        workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
+        messages.success(request, _('Your products were exported successfully!'))
 
     context = {
         'productos': productos
