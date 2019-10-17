@@ -84,11 +84,10 @@
 
 		<!-- Items -->
 			<div class="items">
-
-<!--				FUNCIONA, PERO COMO NO TENEMOS SUFICIENTES PRODUCTOS EN LA BDD POR AHORA LO DEJO
-					(SI HAY MENOS DE X NUMERO DE PRODUCTOS EN LA BBDD SE DESCUADRA)
-					LA IDEA ES QUE SE MUESTREN LOS 10 PRIMEROS PRODUCTOS DE LA QUERY ARRIBA Y LOS 10 SEGUNDOS ABAJO
-					-->
+				<div class="item intro span-3" style="background-color: #58949C;">
+					<h1 class="white">{% trans 'About' %} {{ usuario.username }}</h1>
+						<p class="white">{{ usuario.CV }}</p>
+				</div>
 				{% for producto in filter.qs|slice:"1:4" %}
 				<article class="item thumb span-3">
                     <h2 class="white">{{ producto.nombre }}</h2>
