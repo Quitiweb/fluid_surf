@@ -89,20 +89,25 @@ def productos(request):
                 producto.user = usuario
 
                 producto.save()
-            messages.success(request, _('Products uploaded successfully'))
+            messages.success(request, 'Productos importados correctamente!')
         else:
             workbook = Workbook()
             sheet = workbook.active
 
             sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario", 'imagen0', 'imagen1', 'imagen2'
-                          , 'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen9', 'imagen9'])
+                          , 'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen8', 'imagen9'])
 
             for p in productos:
-                data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username, p.imagen0.url]
+                data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username]
+                for i in range(10):
+                    if getattr(p, 'imagen' + str(i)):
+                        data.append(getattr(p, 'imagen' + str(i)).url)
+                    else:
+                        break
                 sheet.append(data)
 
             workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
-            messages.success(request, _('Your products were exported successfully!'))
+            messages.success(request, 'Productos exportados correctamente!')
 
     context = {
         'productos': productos
@@ -127,6 +132,19 @@ def usuarios(request):
     template = loader.get_template('dashboard/usuarios.html')
 
     usuarios = CustomUser.objects.filter().all()
+
+    if request.method == "POST":
+        workbook = Workbook()
+        sheet = workbook.active
+
+        sheet.append(["ID", "Username", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin', 'Tipo De Usuario'])
+
+        for u in usuarios:
+            data = [u.id, u.username, u.first_name, u.last_name, u.email, u.is_active, u.is_staff, u.is_superuser, u.tipo_de_usuario]
+            sheet.append(data)
+
+        workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
+        messages.success(request, 'Usuarios exportados correctamente!')
 
     context = {
         'usuarios': usuarios
