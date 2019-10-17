@@ -43,7 +43,7 @@
 	<section id="main">
 		<!-- Items -->
 			<div class="items">
-				{% if user.is_authenticated %}
+
 				<div class="item intro span-2">
 					<h1 class="white mt-5">{{ producto.nombre }}</h1>
 						<p class="white">{% trans 'Uploaded by' %}
@@ -73,7 +73,7 @@
                             {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}
                            </div>
 				</div>
-                {% endif %}
+
                 <div class="item intro intro2 span-2">
 					<h1 class="white">{% trans 'Browser'  %}</h1>
                     <form action="{% url 'index' %}" method="get" class="mt-3">

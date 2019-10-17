@@ -330,7 +330,7 @@ def perfil(request, nombre=''):
     C = productos[3:]
 
     context = {
-        'user': user,
+        'usuario': user,
         'API_KEY': API_KEY,
         'filter': prod_filter,
         'ubicaciones': ubicaciones,

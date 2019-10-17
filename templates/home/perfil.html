@@ -41,15 +41,15 @@
 	<section id="main">
 		<!-- Items -->
 			<div class="items">
-				{% if user.tipo_de_usuario == 'FOTOGRAFO' and user.main_pic %}
-				<div class="item intro span-2" style="background: url(/media/{{ user.main_pic }}) !important;">
+				{% if usuario.tipo_de_usuario == 'FOTOGRAFO' and usuario.main_pic %}
+				<div class="item intro span-2" style="background: url(/media/{{ usuario.main_pic }}) !important;">
                     {% else %}
                 <div class="item intro span-2" style="">
                     {% endif %}
-					<h1 class="white">Perfil de {{ user.username }}</h1>
-						<p class="white">{{ user.tipo_de_usuario }}</p>
-                     <p class="white"><i class="fas fa-map-marker-alt"></i> {{ user.zona }}</p>
-					{% if request.user == user %}
+					<h1 class="white">Perfil de {{ usuario.username }}</h1>
+						<p class="white">{{ usuario.tipo_de_usuario }}</p>
+                     <p class="white"><i class="fas fa-map-marker-alt"></i> {{ usuario.zona }}</p>
+					{% if request.user == usuario %}
 						<a class="btn btn-primary float-right mt-3 white" href="{% url 'mi-cuenta' %}">
 							<i class="fas fa-edit"></i> Editar perfil
 						</a>
