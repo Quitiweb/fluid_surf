@@ -30,29 +30,15 @@ def index(request):
     prod_list = Producto.objects.filter(stock=1).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
-    productos = Producto.objects.filter(stock=1)[:3]
-
-    productos2 = Producto.objects.filter(stock=1)[4:7]
-
-    productos3 = Producto.objects.filter(stock=1)[8:14]
-
-    productos4 = Producto.objects.filter(stock=1)[15:19]
-
-    productos_all = Producto.objects.filter(stock=1).all()
-
     usuarios = CustomUser.objects.exclude(
         username=request.user.username
     )[:users_to_get(CustomUser.objects.count() - 1)]
 
-    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
     ubicaciones = Ubicacion.objects.filter().all()
 
     context = {
-        'productos': productos,
-        'productos2': productos2,
-        'productos3': productos3,
-        'productos4': productos4,
         'filter': prod_filter,
         'usuarios': usuarios,
         'API_KEY': API_KEY,
@@ -127,7 +113,10 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
-    current = Producto.objects.latest('id').id + 1
+    current = 0
+    if Producto.objects.all().count() > 0:
+        current = Producto.objects.latest('id').id + 1
+
 
     if request.user.is_authenticated:
         if request.method == "GET":

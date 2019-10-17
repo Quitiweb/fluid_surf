@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'django_social_share',
     'imagekit',
     'django_google_maps',
-    'django_filters',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

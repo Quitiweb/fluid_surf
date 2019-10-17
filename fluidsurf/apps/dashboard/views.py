@@ -1,6 +1,7 @@
 from datetime import date
 from itertools import count
 
+import openpyxl
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -54,17 +55,41 @@ def productos(request):
     productos = Producto.objects.filter().all()
 
     if request.method == "POST":
-        workbook = Workbook()
-        sheet = workbook.active
+        if 'import' in request.POST:
+            excel_file = request.FILES["fileInput"]
+            wb = openpyxl.load_workbook(excel_file)
 
-        sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario"])
+            worksheet = wb['Sheet']
+            print(worksheet)
 
-        for p in productos:
-            data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username]
-            sheet.append(data)
+            elements = worksheet.iter_rows()
+            next(elements)
 
-        workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
-        messages.success(request, _('Your products were exported successfully!'))
+            for row in elements:
+                producto = Producto()
+                producto.nombre = str(row[1].value)
+                producto.precio = str(row[2].value)
+                producto.fecha = str(row[3].value.strftime("%Y-%m-%d"))
+                producto.spot = str(row[4].value)
+                producto.stock = str(row[5].value)
+
+                usuario = CustomUser.objects.filter(username=row[6].value).first()
+                producto.user = usuario
+
+                producto.save()
+            messages.success(request, _('Products uploaded successfully'))
+        else:
+            workbook = Workbook()
+            sheet = workbook.active
+
+            sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario"])
+
+            for p in productos:
+                data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username]
+                sheet.append(data)
+
+            workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
+            messages.success(request, _('Your products were exported successfully!'))
 
     context = {
         'productos': productos
