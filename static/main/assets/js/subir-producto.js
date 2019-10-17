@@ -80,7 +80,7 @@ $(document).ready(function () {
     });
     
     // Eventos para la modificacion del nombre de manera dinamica
-    $('#id_nombre').val($('#username').text() + '-Europa-Fecha-' + $('#current').text());
+    $('#id_nombre').val($('#username').text() + '-EU-Fecha-' + $('#current').text());
 
     $('#id_nombre').prop("readonly", true);
 

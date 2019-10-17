@@ -75,12 +75,12 @@ class AddProductForm(forms.ModelForm):
     DATE_INPUT_FORMATS = ['%d/%m/%Y']
 
     AREA_CHOICES = (
-        ('Europa', _("Europe")),
-        ('Africa', _("Africa")),
-        ('Asia', _("Asia")),
-        ('Oceania', _("Oceania")),
-        ('America del Norte', _("North America")),
-        ('America del Sur', _("South America"))
+        ('EU', _("Europe")),
+        ('AF', _("Africa")),
+        ('AS', _("Asia")),
+        ('OC', _("Oceania")),
+        ('NA', _("North America")),
+        ('SA', _("South America"))
     )
 
     nombre = forms.CharField(required=True)
