@@ -12,7 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
 from fluidsurf.apps.users.models import CustomUser
-from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm
+from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
+    DenunciaForm
 from ..helpers.helper import users_to_get
 
 from django.conf import settings
@@ -309,24 +310,24 @@ def perfil(request, nombre=''):
     if not user:
         return redirect("/")
 
-    productos = []
+    form = DenunciaForm()
 
-    for i in Producto.objects.filter(stock=1).all():
-        if i.user == user:
-            productos.append(i)
+    if request.method == "POST":
+        form = DenunciaForm(request.POST)
 
-    A = productos[:2]
-    B = productos[2:4]
-    C = productos[3:]
+        if form.is_valid():
+            denuncia = form.save(commit=False)
+            denuncia.emisor = request.user
+            denuncia.receptor = user
+            denuncia.save()
+            messages.success(request, _('Your report has been submitted'))
 
     context = {
         'usuario': user,
+        'form': form,
         'API_KEY': API_KEY,
         'filter': prod_filter,
         'ubicaciones': ubicaciones,
-        'productos': A,
-        'productos2': B,
-        'productos3': C,
     }
 
     return HttpResponse(template.render(context, request))

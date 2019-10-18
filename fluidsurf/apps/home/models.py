@@ -64,3 +64,17 @@ class Ubicacion(models.Model):
     class Meta:
         verbose_name = 'Ubicacion'
         verbose_name_plural = 'Ubicaciones'
+
+
+class Denuncia(models.Model):
+    CHOICES = (
+        ('MAL USO', _("Bad usage of the app")),
+        ('INAPROPIADO', _("Innapropiate content")),
+        ('SPAM', _("Spam")),
+        ('OTRO', _("Other")),
+    )
+
+    emisor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='denuncia_e', default='')
+    receptor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='denuncia_r', default='')
+    motivo = models.CharField(max_length=30, choices=CHOICES, default='MAL USO')
+    detalles = models.CharField(max_length=200)

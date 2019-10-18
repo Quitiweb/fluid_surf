@@ -50,10 +50,16 @@
 						<p class="white">{{ usuario.tipo_de_usuario }}</p>
                      <p class="white"><i class="fas fa-map-marker-alt"></i> {{ usuario.zona }}</p>
 					{% if request.user == usuario %}
-						<a class="btn btn-primary float-right mt-3 white" href="{% url 'mi-cuenta' %}">
+						<a class="btn btn-primary float-right mt-3 white" href="">
 							<i class="fas fa-edit"></i> Editar perfil
 						</a>
-					{%endif%}
+					{% else %}
+
+						<a class="btn btn-danger float-right mt-3 white" href="" data-toggle="modal" data-target="#reportModal">
+							<i class="fas fa-user-slash"></i> Denunciar perfil
+						</a>
+
+					{% endif %}
 				</div>
 					<div class="item intro intro2 span-2">
 					<h1 class="white">{% trans 'Browser' %}</h1>
@@ -107,7 +113,42 @@
 				</article>
 				{% endfor %}
 			</div>
+		</div>
 	</section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade mt-5" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title display-4" id="exampleModalLabel" style="font-size:36px;">{% trans 'Report an user' %}</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form action="" method="POST">
+	  {% csrf_token %}
+      <div class="modal-body">
+		<div class="row">
+			<div class="col-12">
+				<label for="id_motivo">{% trans 'Reason' %}</label>
+				{{ form.motivo }}
+			</div>
+
+			<div class="col-12">
+				<label for="id_detalles">{% trans 'Details' %}</label>
+				{{ form.detalles }}
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
+        <button type="submit" class="btn btn-primary">{% trans 'Report'  %}</button>
+      </div>
+	</form>
+    </div>
+  </div>
 </div>
 
 <script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>

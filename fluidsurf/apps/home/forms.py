@@ -4,7 +4,7 @@ from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 
-from fluidsurf.apps.home.models import Producto
+from fluidsurf.apps.home.models import Producto, Denuncia
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -152,3 +152,20 @@ class EditProductForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = ('nombre', 'precio', 'descripcion')
+
+
+class DenunciaForm(forms.ModelForm):
+    CHOICES = (
+        ('MAL USO', _("Bad usage of the app")),
+        ('INAPROPIADO', _("Innapropiate content")),
+        ('SPAM', _("Spam")),
+        ('OTRO', _("Other")),
+    )
+
+    motivo = forms.ChoiceField(required=True, choices=CHOICES)
+    detalles = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('Tell us more about the reason you are'
+                                                                             'reporting this user.')}), required=True)
+
+    class Meta:
+        model = Denuncia
+        fields = ('motivo', 'detalles')
