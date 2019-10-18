@@ -292,6 +292,12 @@ def perfil(request, id=''):
     ventas = Compra.objects.filter(vendedor=usuario).all()
     denuncias = Denuncia.objects.filter(receptor=usuario).all()
 
+    if request.method == "POST":
+        # Togglea si el usuario esta activo o no
+        usuario.is_active = not usuario.is_active
+
+        usuario.save()
+
     context = {
         'usuario': usuario,
         'wishlist': wishlist,

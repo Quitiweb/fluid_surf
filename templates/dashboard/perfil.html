@@ -51,9 +51,14 @@
               </a>
               </li>
             </ul>
-
-              <a href="/perfil/{{ usuario.username }}" class="btn btn-primary"><b>Ver perfil en la web</b></a>
-              <a href="#" class="btn btn-danger float-right"><b>Bloquear usuario</b></a>
+            <form action="" method="POST"> {% csrf_token %}
+                <a href="/perfil/{{ usuario.username }}" class="btn btn-primary"><b>Ver perfil en la web</b></a>
+                    {% if usuario.is_active %}
+                        <button type="submit" class="btn btn-danger float-right"><b>Desactivar usuario</b></button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary float-right"><b>Reactivar usuario</b></button>
+                    {% endif %}
+              </form>
 
           </div>
         </div>
