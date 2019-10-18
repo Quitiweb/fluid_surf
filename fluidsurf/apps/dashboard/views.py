@@ -214,7 +214,6 @@ def usuarios(request):
                 usuario.tipo_de_usuario = str(row[9].value)
 
                 usuario.profile_pic = str(row[10].value)[7:]
-
                 usuario.main_pic = str(row[11].value)[7:]
 
                 if row[12].value is not None:
@@ -227,6 +226,16 @@ def usuarios(request):
                 else:
                     usuario.pais = ""
 
+                if row[14].value is not None:
+                    usuario.alias = str(row[14].value)
+                else:
+                    usuario.alias = ""
+
+                if row[15].value is not None:
+                    usuario.CV = str(row[15].value)
+                else:
+                    usuario.cv = ""
+
                 usuario.save()
             messages.success(request, 'Usuarios importados correctamente!')
 
@@ -235,7 +244,7 @@ def usuarios(request):
             sheet = workbook.active
 
             sheet.append(["ID", "Username", "Contraseña", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin',
-                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada', 'Zona', 'Pais'])
+                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada', 'Zona', 'Pais', 'Alias de Fotografo', 'CV de Fotografo'])
 
             for u in usuarios:
                 if u.first_name is not None:
@@ -266,9 +275,17 @@ def usuarios(request):
                     mpic = u.main_pic.url
                 else:
                     mpic = ""
+                if u.alias:
+                    alias = u.alias
+                else:
+                    alias = ""
+                if u.CV:
+                    CV = u.CV
+                else:
+                    CVs = ""
 
                 data = [u.id, u.username, u.password, nombre, apellidos, email, u.is_active, u.is_staff, u.is_superuser,
-                        u.tipo_de_usuario, ppic, mpic, zona, pais]
+                        u.tipo_de_usuario, ppic, mpic, zona, pais, alias, CV]
                 sheet.append(data)
 
             workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
