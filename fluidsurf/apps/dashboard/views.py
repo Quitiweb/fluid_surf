@@ -217,6 +217,15 @@ def usuarios(request):
 
                 usuario.main_pic = str(row[11].value)[7:]
 
+                if row[12].value is not None:
+                    usuario.zona = str(row[12].value)
+                else:
+                    usuario.zona = ""
+
+                if row[13].value is not None:
+                    usuario.pais = str(row[13].value)
+                else:
+                    usuario.pais = ""
 
                 usuario.save()
             messages.success(request, 'Usuarios importados correctamente!')
@@ -226,7 +235,7 @@ def usuarios(request):
             sheet = workbook.active
 
             sheet.append(["ID", "Username", "Contraseña", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin',
-                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada'])
+                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada', 'Zona', 'Pais'])
 
             for u in usuarios:
                 if u.first_name is not None:
@@ -241,6 +250,14 @@ def usuarios(request):
                     email = u.email
                 else:
                     email = ""
+                if u.zona is not None:
+                    zona = u.zona
+                else:
+                    zona = ""
+                if u.pais is not None:
+                    pais = u.pais
+                else:
+                    pais = ""
                 if u.profile_pic:
                     ppic = u.profile_pic.url
                 else:
@@ -251,7 +268,7 @@ def usuarios(request):
                     mpic = ""
 
                 data = [u.id, u.username, u.password, nombre, apellidos, email, u.is_active, u.is_staff, u.is_superuser,
-                        u.tipo_de_usuario, ppic, mpic]
+                        u.tipo_de_usuario, ppic, mpic, zona, pais]
                 sheet.append(data)
 
             workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
