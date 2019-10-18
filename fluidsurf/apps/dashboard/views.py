@@ -60,8 +60,9 @@ def productos(request):
             wb = openpyxl.load_workbook(excel_file)
 
             worksheet = wb['Sheet']
-            print(worksheet)
 
+            # Estas dos lineas son para ignorar la primera fila del excel, ya que contiene los
+            # nombres de las columnas
             elements = worksheet.iter_rows()
             next(elements)
 
@@ -134,17 +135,69 @@ def usuarios(request):
     usuarios = CustomUser.objects.filter().all()
 
     if request.method == "POST":
-        workbook = Workbook()
-        sheet = workbook.active
+        if 'import' in request.POST:
+            excel_file = request.FILES["fileInput"]
+            wb = openpyxl.load_workbook(excel_file)
 
-        sheet.append(["ID", "Username", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin', 'Tipo De Usuario'])
+            worksheet = wb['Sheet']
 
-        for u in usuarios:
-            data = [u.id, u.username, u.first_name, u.last_name, u.email, u.is_active, u.is_staff, u.is_superuser, u.tipo_de_usuario]
-            sheet.append(data)
+            # Estas dos lineas son para ignorar la primera fila del excel, ya que contiene los
+            # nombres de las columnas
+            elements = worksheet.iter_rows()
+            next(elements)
 
-        workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
-        messages.success(request, 'Usuarios exportados correctamente!')
+            for row in elements:
+                usuario = CustomUser()
+                usuario.id = str(row[0].value)
+                usuario.username = str(row[1].value)
+                usuario.password = str(row[2].value)
+
+                if row[3].value is not None:
+                    usuario.first_name = str(row[3].value)
+                else:
+                    usuario.first_name = ""
+                if row[4].value is not None:
+                    usuario.last_name = str(row[4].value)
+                else:
+                    usuario.last_name = ""
+                if row[5].value is not None:
+                    usuario.email = str(row[5].value)
+                else:
+                    usuario.email = ""
+
+                usuario.is_active = str(row[6].value)
+                usuario.is_staff = str(row[7].value)
+                usuario.is_superuser = str(row[8].value)
+                usuario.tipo_de_usuario = str(row[9].value)
+
+                usuario.save()
+            messages.success(request, 'Usuarios importados correctamente!')
+
+        else:
+            workbook = Workbook()
+            sheet = workbook.active
+
+            sheet.append(["ID", "Username", "Contraseña", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin', 'Tipo De Usuario'])
+
+            for u in usuarios:
+                if u.first_name is not None:
+                    nombre = u.first_name
+                else:
+                    nombre = ""
+                if u.last_name is not None:
+                    apellidos = u.last_name
+                else:
+                    apellidos = ""
+                if u.email is not None:
+                    email = u.email
+                else:
+                    email = ""
+
+                data = [u.id, u.username, u.password, nombre, apellidos, email, u.is_active, u.is_staff, u.is_superuser, u.tipo_de_usuario]
+                sheet.append(data)
+
+            workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
+            messages.success(request, 'Usuarios exportados correctamente!')
 
     context = {
         'usuarios': usuarios
