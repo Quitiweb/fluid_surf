@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 13:15+0200\n"
+"POT-Creation-Date: 2019-10-18 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,27 +84,27 @@ msgstr "Nueva contraseña"
 msgid "Repeat your new password"
 msgstr "Repite tu contraseña"
 
-#: fluidsurf/apps/home/forms.py:78 fluidsurf/apps/home/models.py:8
+#: fluidsurf/apps/home/forms.py:78 fluidsurf/apps/home/models.py:10
 msgid "Europe"
 msgstr "Europa"
 
-#: fluidsurf/apps/home/forms.py:79 fluidsurf/apps/home/models.py:9
+#: fluidsurf/apps/home/forms.py:79 fluidsurf/apps/home/models.py:11
 msgid "Africa"
 msgstr "África"
 
-#: fluidsurf/apps/home/forms.py:80 fluidsurf/apps/home/models.py:10
+#: fluidsurf/apps/home/forms.py:80 fluidsurf/apps/home/models.py:12
 msgid "Asia"
 msgstr "Asia"
 
-#: fluidsurf/apps/home/forms.py:81 fluidsurf/apps/home/models.py:11
+#: fluidsurf/apps/home/forms.py:81 fluidsurf/apps/home/models.py:13
 msgid "Oceania"
 msgstr "Oceanía"
 
-#: fluidsurf/apps/home/forms.py:82 fluidsurf/apps/home/models.py:12
+#: fluidsurf/apps/home/forms.py:82 fluidsurf/apps/home/models.py:14
 msgid "North America"
 msgstr "América del Norte"
 
-#: fluidsurf/apps/home/forms.py:83 fluidsurf/apps/home/models.py:13
+#: fluidsurf/apps/home/forms.py:83 fluidsurf/apps/home/models.py:15
 msgid "South America"
 msgstr "América del Sur"
 
@@ -120,37 +120,61 @@ msgstr "Escribe el nombre de tu producto"
 msgid "Add a brief description about your product..."
 msgstr "Añade una breve descripcion sobre tu producto"
 
-#: fluidsurf/apps/home/views.py:213
+#: fluidsurf/apps/home/forms.py:159 fluidsurf/apps/home/models.py:73
+msgid "Bad usage of the app"
+msgstr "Mal uso de la app"
+
+#: fluidsurf/apps/home/forms.py:160 fluidsurf/apps/home/models.py:74
+msgid "Innapropiate content"
+msgstr "Contenido inapropiado"
+
+#: fluidsurf/apps/home/forms.py:161 fluidsurf/apps/home/models.py:75
+msgid "Spam"
+msgstr "Spam"
+
+#: fluidsurf/apps/home/forms.py:162 fluidsurf/apps/home/models.py:76
+msgid "Other"
+msgstr "Otro"
+
+#: fluidsurf/apps/home/forms.py:166
+msgid "Tell us more about the reason you are reporting this user."
+msgstr "Dinos más sobre la razón por la cual estás reportando a este usuario"
+
+#: fluidsurf/apps/home/views.py:203
 msgid "Your product was saved successfully"
 msgstr "Tu producto ha sido guardado con éxito"
 
-#: fluidsurf/apps/home/views.py:215
+#: fluidsurf/apps/home/views.py:205
 msgid "There was an error while trying to save your product"
 msgstr "Ha habido un error mientras se intentaba guardar tu producto."
 
-#: fluidsurf/apps/home/views.py:218
+#: fluidsurf/apps/home/views.py:208
 #, fuzzy
 #| msgid "Your product was saved successfully"
 msgid "Your product was deleted successfully"
 msgstr "Tu producto ha sido guardado con éxito"
 
-#: fluidsurf/apps/home/views.py:221
+#: fluidsurf/apps/home/views.py:211
 msgid "You are the owner of this product, you cannot do actions over it."
 msgstr "Eres el dueño de este producto, no puedes realizar acciones sobre el."
 
-#: fluidsurf/apps/home/views.py:232
+#: fluidsurf/apps/home/views.py:222
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:234
+#: fluidsurf/apps/home/views.py:224
 msgid "You already have that product in your wishlist"
 msgstr "Ya tienes este producto en tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:365
+#: fluidsurf/apps/home/views.py:323
+msgid "Your report has been submitted"
+msgstr "Tu reporte ha sido enviado"
+
+#: fluidsurf/apps/home/views.py:356
 msgid "Wishlist emptied successfully"
 msgstr "Lista de deseos vaciada con éxito"
 
-#: fluidsurf/apps/home/views.py:409
+#: fluidsurf/apps/home/views.py:400
 msgid "Profile pic changed successfully!"
 msgstr "Foto de perfil cambiada con éxito!"
 
@@ -288,7 +312,7 @@ msgstr "Aqui tienes productos recomendados para ti"
 msgid "Welcome to"
 msgstr "Bienvenido a"
 
-#: templates/home/index.html:58 templates/home/perfil.html:59
+#: templates/home/index.html:58 templates/home/perfil.html:65
 #: templates/home/producto.html:78
 msgid "Browser"
 msgstr "Buscador"
@@ -349,13 +373,33 @@ msgstr "Ver historial de compras"
 msgid "Save"
 msgstr "Guardar"
 
-#: templates/home/perfil.html:88
+#: templates/home/perfil.html:94
 msgid "About"
 msgstr "Sobre"
 
-#: templates/home/perfil.html:97
+#: templates/home/perfil.html:103
 msgid "This user hasn't completed their profile yet"
 msgstr "Este usuario no ha completado su perfil aún"
+
+#: templates/home/perfil.html:125
+msgid "Report an user"
+msgstr "Reportar un usuario"
+
+#: templates/home/perfil.html:135
+msgid "Reason"
+msgstr "Razón"
+
+#: templates/home/perfil.html:140
+msgid "Details"
+msgstr "Detalles"
+
+#: templates/home/perfil.html:146
+msgid "Close"
+msgstr "Cerrar"
+
+#: templates/home/perfil.html:147
+msgid "Report"
+msgstr "Reportar"
 
 #: templates/home/producto.html:56
 msgid "Edit"
@@ -398,6 +442,10 @@ msgstr "Suscripción gratuita"
 #: templates/home/producto.html:234
 msgid "Are you sure you want to delete this product?"
 msgstr "¿Estás seguro de que quieres borrar este producto?"
+
+#: templates/home/producto.html:241
+msgid "Yes"
+msgstr "Si"
 
 #: templates/home/subir-producto.html:57
 msgid ""
@@ -527,9 +575,6 @@ msgstr "Anterior contraseña"
 
 #~ msgid "Products uploaded by"
 #~ msgstr "Productos subidos por"
-
-#~ msgid "Close"
-#~ msgstr "Cerrar"
 
 #~ msgid "Share on Social Media"
 #~ msgstr "Compartir en redes sociales"

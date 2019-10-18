@@ -163,7 +163,7 @@ class DenunciaForm(forms.ModelForm):
     )
 
     motivo = forms.ChoiceField(required=True, choices=CHOICES)
-    detalles = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('Tell us more about the reason you are'
+    detalles = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('Tell us more about the reason you are '
                                                                              'reporting this user.')}), required=True)
 
     class Meta:
