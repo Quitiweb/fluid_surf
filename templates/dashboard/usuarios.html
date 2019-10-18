@@ -54,9 +54,9 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <a href="{% url 'admin:users_customuser_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar usuarios</a>
+                    <a href="{% url 'admin:users_customuser_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar usuarios</a>
 
-                    <form method="post">
+                  <form method="post">
                       {% csrf_token %}
                       <button type="submit" class="btn btn-sm btn-success float-left ml-3"> <i class="fas fa-file-export"></i>Exportar a Excel</button>
                   </form>
@@ -79,7 +79,7 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                Al importar nuevos productos desde excel, sobreescribirán los productos que tengan el mismo campo ID.
+                                Al importar nuevos usuarios desde excel, se sobreescribirán los usuarios que tengan el mismo campo ID.
                                   ¿Deseas continuar?
                               </div>
                               <div class="modal-footer">

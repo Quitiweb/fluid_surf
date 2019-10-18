@@ -122,6 +122,49 @@ def compras(request):
 
     compras = Compra.objects.filter().all()
 
+    if request.method == "POST":
+        if 'import' in request.POST:
+            excel_file = request.FILES["fileInput"]
+            wb = openpyxl.load_workbook(excel_file)
+
+            worksheet = wb['Sheet']
+
+            # Estas dos lineas son para ignorar la primera fila del excel, ya que contiene los
+            # nombres de las columnas
+            elements = worksheet.iter_rows()
+            next(elements)
+
+            for row in elements:
+                compra = Compra()
+                compra.id = str(row[0].value)
+
+                comprador = CustomUser.objects.filter(username=row[1].value).first()
+                compra.comprador = comprador
+
+                vendedor = CustomUser.objects.filter(username=row[2].value).first()
+                compra.vendedor = vendedor
+
+                producto = Producto.objects.filter(id=row[3].value).first()
+                compra.producto = producto
+
+                compra.fecha = str(row[4].value.strftime("%Y-%m-%d"))
+
+                compra.save()
+            messages.success(request, 'Compras importadas correctamente!')
+        else:
+            workbook = Workbook()
+            sheet = workbook.active
+
+            sheet.append(["ID", "Comprador", "Vendedor", "Producto", "Fecha"])
+
+            for c in compras:
+                data = [c.id, c.comprador.username, c.vendedor.username, c.producto.id, c.fecha]
+                sheet.append(data)
+
+            workbook.save(filename="spreadsheets/compras" + str(date.today()) + ".xlsx")
+            messages.success(request, 'Compras exportadas correctamente!')
+
+
     context = {
         'compras': compras
     }

@@ -241,6 +241,8 @@ def producto(request, id='0'):
                        )
                        compra.save()
 
+                       messages.success(request, 'asdasd')
+
                        return render(request, 'payments/charge.html')
 
     imagenes = []
