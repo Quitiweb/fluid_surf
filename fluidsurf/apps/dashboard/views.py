@@ -309,8 +309,13 @@ def denuncias(request):
 
     denuncias = Denuncia.objects.filter().all()
 
+    if request.method == "POST":
+        denuncia = Denuncia.objects.filter(id=request.POST.get('borrar')).first()
+        denuncia.delete()
+
+
     context = {
         'denuncias': denuncias
     }
 
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))\

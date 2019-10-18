@@ -44,10 +44,12 @@
                             {% else %}
                               <td>{{ denuncia.detalles }}</td>
                             {% endif %}
-                               <td>
-                                <a href="{% url 'admin:home_denuncia_delete' denuncia.id %}" class="btn btn-danger" style="color:white;">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                           <td>
+                               <form action="" method="post"> {% csrf_token %}
+                                   <button type="submit" class="btn btn-danger" style="color:white;" name="borrar" value="{{ denuncia.id }}" >
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                               </form>
                             </td>
                           </tr>
 
