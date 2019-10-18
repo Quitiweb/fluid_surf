@@ -38,7 +38,17 @@
               </li>
             {% endif %}
               <li class="list-group-item">
-                <b>Reportes recibidos</b> <a class="float-right"><strong style="color:green;">0</strong></a>
+                <b>Reportes recibidos</b> <a class="float-right">
+                  {% if denuncias.count < 3 %}
+                  <strong style="color:green;">
+                  {% elif denuncias.count < 8 %}
+                  <strong style="color:orange;">
+                  {% else %}
+                  <strong style="color:red;">
+                  {% endif %}
+                      {{ denuncias.count }}
+                  </strong>
+              </a>
               </li>
             </ul>
 

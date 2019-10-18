@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -78,3 +80,6 @@ class Denuncia(models.Model):
     receptor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='denuncia_r', default='')
     motivo = models.CharField(max_length=30, choices=CHOICES, default='MAL USO')
     detalles = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.receptor.username + '-' + self.emisor.username + '-' + str(datetime.date.today())

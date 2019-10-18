@@ -1,0 +1,68 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+<div class="container">
+        <div class="row">
+       <div class="card col-12">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Usuarios</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                        <th>ID de la denuncia</th>
+                        <th>Usuario denunciado</th>
+                        <th>Usuario emisor</th>
+                        <th>Motivo</th>
+                        <th>Detalles de la denuncia</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for denuncia in denuncias %}
+                          <tr>
+                            <td><a href="{% url 'admin:home_denuncia_change' denuncia.id %}">DE{{ denuncia.id }}</a></td>
+                            <td>
+                                <a href="{% url 'perfil' id=denuncia.receptor.id %}">
+                                {{ denuncia.receptor.username }}
+                                </a>
+                            </td>
+                            <td>
+                            <a href="{% url 'perfil' id=denuncia.emisor.id %}">
+                                {{ denuncia.emisor.username }}
+                                </a>
+                            </td>
+                            <td>{{ denuncia.motivo }}</td>
+                            {% if denuncia.detalles|length  > 20%}
+                              <td>{{ denuncia.detalles|slice:":20" }}...<a href=""> leer más</a></td>
+                            {% else %}
+                              <td>{{ denuncia.detalles }}</td>
+                            {% endif %}
+                               <td>
+                                <a href="{% url 'admin:home_denuncia_delete' denuncia.id %}" class="btn btn-danger" style="color:white;">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                    <a href="{% url 'admin:home_denuncia_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar denuncias</a>
+              </div>
+              <!-- /.card-footer -->
+        </div>
+            <!-- /.card -->
+    </div>
+</div>
+{% endblock %}

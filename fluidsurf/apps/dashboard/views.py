@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.template import loader
 from openpyxl import Workbook
 
-from fluidsurf.apps.home.models import Producto, Compra
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -290,13 +290,27 @@ def perfil(request, id=''):
     productos = Producto.objects.filter(user=usuario).all()
     compras = Compra.objects.filter(comprador=usuario).all()
     ventas = Compra.objects.filter(vendedor=usuario).all()
+    denuncias = Denuncia.objects.filter(receptor=usuario).all()
 
     context = {
         'usuario': usuario,
         'wishlist': wishlist,
         'productos': productos,
         'compras': compras,
-        'ventas': ventas
+        'ventas': ventas,
+        'denuncias': denuncias
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def denuncias(request):
+    template = loader.get_template('dashboard/denuncias.html')
+
+    denuncias = Denuncia.objects.filter().all()
+
+    context = {
+        'denuncias': denuncias
     }
 
     return HttpResponse(template.render(context, request))
