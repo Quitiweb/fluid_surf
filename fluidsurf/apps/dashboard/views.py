@@ -170,6 +170,11 @@ def usuarios(request):
                 usuario.is_superuser = str(row[8].value)
                 usuario.tipo_de_usuario = str(row[9].value)
 
+                usuario.profile_pic = str(row[10].value)[7:]
+
+                usuario.main_pic = str(row[11].value)[7:]
+
+
                 usuario.save()
             messages.success(request, 'Usuarios importados correctamente!')
 
@@ -177,7 +182,8 @@ def usuarios(request):
             workbook = Workbook()
             sheet = workbook.active
 
-            sheet.append(["ID", "Username", "Contraseña", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin', 'Tipo De Usuario'])
+            sheet.append(["ID", "Username", "Contraseña", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin',
+                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada'])
 
             for u in usuarios:
                 if u.first_name is not None:
@@ -192,8 +198,17 @@ def usuarios(request):
                     email = u.email
                 else:
                     email = ""
+                if u.profile_pic:
+                    ppic = u.profile_pic.url
+                else:
+                    ppic = ""
+                if u.main_pic:
+                    mpic = u.main_pic.url
+                else:
+                    mpic = ""
 
-                data = [u.id, u.username, u.password, nombre, apellidos, email, u.is_active, u.is_staff, u.is_superuser, u.tipo_de_usuario]
+                data = [u.id, u.username, u.password, nombre, apellidos, email, u.is_active, u.is_staff, u.is_superuser,
+                        u.tipo_de_usuario, ppic, mpic]
                 sheet.append(data)
 
             workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
