@@ -208,7 +208,7 @@ def producto(request, id='0'):
                     return redirect('/perfil/' + request.user.username)
                 else:
                     messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
-        else:
+            else:
                if 'wishlist' in request.POST:
                    listaDeseos = request.user.wishlist.split(',')
                    status = True
@@ -241,7 +241,6 @@ def producto(request, id='0'):
                        )
                        compra.save()
 
-                       messages.success(request, 'asdasd')
 
                        return render(request, 'payments/charge.html')
 
