@@ -188,7 +188,7 @@ def producto(request, id='0'):
 
     ubicaciones = Ubicacion.objects.filter().all()
 
-    if producto is None:
+    if producto is None or not producto.user.is_active:
         return redirect('/')
 
     productform = EditProductForm(instance=producto)
