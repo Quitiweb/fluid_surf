@@ -1,4 +1,4 @@
-{% extends 'home/base.html' %}
+{% extends 'home/base-p.html' %}
 
 {% load static %}
 {% load i18n %}
@@ -7,33 +7,79 @@
 
 {% block main %}
 
-<div class="container text-center pt-5 mt-5">
-    <div class="row text-center pb-5 mt-3">
-        <div class="col-12 text-center">
-            <h1 class="display-4">{% trans 'Products in ' %}{{ zona.spot }}</h1>
-        </div>
-    </div>
+<div id="wrapper">
+	<section id="main">
+		<!-- Items -->
+			<div class="items">
+				{% if user.is_authenticated %}
+				<div class="item intro span-2">
+					<h1 class="white" style="font-size: 3em;">{% trans 'Products in' %} {{ zona.spot }}</h1>
+				</div>
+				{% else %}
+				<div class="item intro span-2">
+					<h1 class="white">{% trans 'Welcome to' %} FluidSurf</h1>
+					<a href="{% url 'login' %}" class="btn btn-primary w-75 mt-3">{% trans 'Login' %}</a>
+					<a href="{% url 'signup' %}" class="btn btn-secondary mt-1 w-75">{% trans 'Signup' %}</a>
+				</div>
+				{% endif %}
+					<div class="item intro intro2 span-2">
+					<h1 class="white">{% trans 'Browser' %}</h1>
+						<form action="" method="get" class="mt-3">
+                        <div class="row">
+							<div class="col-12">{{ filter.form.nombre }}</div>
+							<div class="col-6 mt-3">{{ filter.form.user__username }}</div>
+							<div class="col-6 mt-3">{{ filter.form.spot  }}</div>
+						</div>
+                        <input type="submit" class="btn btn-primary mt-3 d-none">
+                    </form>
+				</div>
+				<div class="item intro3 span-2">
+					<body class="text-center" onload='loadMapScenario();'>
+					  <div id='printoutPanel'></div>
+						<div id='myMap' class="mt-1" style=""></div>
+					</body>
+				</div>
+				{% for producto in filter.qs|slice:"4:8" %}
+				<article class="item thumb span-3">
+					<h2 class="white">{{ producto.nombre }}</h2>
+					<a href="{% url 'producto' id=producto.id%}" class="">
+						{% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
+					</a>
+				</article>
+				{% endfor %}
 
-<div class="row">
-    {% for producto in productos %}
-    <div class="card col-lg-3  col-12 mt-5 ml-1">
-        {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top' style='object-fit:cover; margin-left: -10px;' height='200'%}
-      <div class="card-body">
-        <h5 class="card-title text-left">{{ producto.nombre }}</h5>
-        <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
-                             {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
-                             {% trans 'Uploaded by' %}:
-                                {% if producto.user.alias %}
-                                <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
-                                {% else %}
-                                {{ producto.user.first_name }} {{ producto.user.last_name }}
-                            {% endif %}
-        </p>
-        <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
-      </div>
-    </div>
-{% endfor %}
+			</div>
+
+		<!-- Items -->
+			<div class="items">
+				{% for producto in filter.qs|slice:":4" %}
+				<article class="item thumb span-3">
+					<h2 class="white">{{ producto.nombre }}</h2>
+					<a href="{% url 'producto' id=producto.id%}" class="">
+						{% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
+					</a>
+				</article>
+				{% endfor %}
+			</div>
+	</section>
 </div>
 
-</div>
+<section id="footer" class="pt-5">
+	<section class="white">
+		<p>{% trans 'Connecting photographers and surfers' %}</p>
+	</section>
+	<section>
+		<ul class="icons">
+			<li>{% post_to_twitter _("Take a look at FluidSurf!") request.get_full_path  %}</li>
+			<li>{% post_to_facebook object_or_url "" %}</li>
+			<li>{% send_email _("Take a look at FluidSurf!") object_or_url "Share via email"%}</li>
+			<li>{% post_to_telegram _("Take a look at FluidSurf!") request.get_full_path %}</li>
+		</ul>
+		<ul class="copyright white">
+			<li><a href="https://quitiweb.com/" class="white">© Quitiweb</a></li><li>Design: HTML5 UP</li>
+		</ul>
+	</section>
+</section>
+
+<script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>
 {% endblock %}

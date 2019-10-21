@@ -279,20 +279,23 @@ def producto(request, id='0'):
 def zona(request, nombre=''):
     template = loader.get_template('home/zona.html')
 
+    ubicaciones = Ubicacion.objects.filter().all()
+
     zona = Ubicacion.objects.filter(spot=nombre).first()
 
     if zona is None:
         return redirect('/')
 
-    productos = []
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    for i in Producto.objects.filter(stock=1).all():
-        if i.spot == nombre:
-            productos.append(i)
+    prod_list = Producto.objects.filter(spot=zona).all()
+    prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     context = {
         'zona' : zona,
-        'productos': productos
+        'filter': prod_filter,
+        'API_KEY': API_KEY,
+        'ubicaciones': ubicaciones,
     }
 
     return HttpResponse(template.render(context, request))

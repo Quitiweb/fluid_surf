@@ -6,37 +6,6 @@
 {% load imagekit %}
 
 {% block main %}
-  <script type='text/javascript'>
-        var map;
-        function loadMapScenario() {
-            var map = new Microsoft.Maps.Map('#myMap', {
-				 zoom: 1
-        });
-
-        var center = map.getCenter();
-        {% for ubicacion in ubicaciones %}
-
-        var punto = new Microsoft.Maps.Location({{ubicacion.geoloc}});
-
-        //Create custom Pushpin
-        var pin = new Microsoft.Maps.Pushpin(punto, {
-			title: '{{ ubicacion.spot }}',
-            subTitle: '',
-        });
-
-
-        //Add the pushpin to the map
-        map.entities.push(pin);
-
-         Microsoft.Maps.Events.addHandler(pin, 'click', function () {
-         	window.location.href = "{% url 'zona' nombre=ubicacion.spot %}";
-         });
-
-        {% endfor %}
-        }
-        </script>
-
-
 
 <!-- Wrapper -->
 <div id="wrapper">
