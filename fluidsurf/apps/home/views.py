@@ -1,3 +1,5 @@
+import json
+import urllib
 from datetime import date
 
 import stripe
@@ -412,13 +414,31 @@ def contacto(request):
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            subject = 'FluidSurf formulario de contacto'
-            from_email = form.cleaned_data['from_email']
-            message = 'Email recibido de: ' + from_email + '\n\n' + form.cleaned_data['message']
 
-            enviar_email(subject, message, from_email)
+            ''' Begin reCAPTCHA validation '''
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode("utf-8")
+            req = urllib.request.Request(url, data)
+            response = urllib.request.urlopen(req)
+            result = json.load(response)
+            ''' End reCAPTCHA validation '''
 
-            messages.success(request, 'Mensaje')
+            if result['success']:
+
+                subject = 'FluidSurf formulario de contacto'
+                from_email = form.cleaned_data['from_email']
+                message = 'Email recibido de: ' + from_email + '\n\n' + form.cleaned_data['message']
+
+                enviar_email(subject, message, from_email)
+
+                messages.success(request, _('Your message was sent successfully!'))
+            else:
+                messages.warning(request, _('Invalid reCAPTCHA. Please try again.'))
         else:
             print(form.errors)
 

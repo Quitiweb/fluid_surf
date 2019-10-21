@@ -18,8 +18,8 @@ AREA_CHOICES = (
 
 
 class ContactForm(forms.Form):
-    from_email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'email@ejemplo.com'}))
-    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Escribe aquí tu duda o comentario'}),
+    from_email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'email@domain.com'}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('Write here your doubt or comment')}),
                               required=True)
 
 
