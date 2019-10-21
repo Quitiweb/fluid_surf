@@ -19,6 +19,7 @@
                 <h1 class="mt-1">{% trans 'Empty wishlist' %}</h1>
 
         </div>
+     {% if productos %}
      {% for producto in productos %}
         <div class="col-lg-3 col-12 pb-3 mt-3">
             <div class="card col-12">
@@ -39,6 +40,9 @@
             </div>
         </div>
     {% endfor %}
+    {% else %}
+        <div class="col-12 text-center mt-5">{% trans 'There are no products here' %}</div>
+    {% endif %}
     </div>
 </div>
 

@@ -376,8 +376,8 @@ def historial(request):
         ventas = Compra.objects.filter(vendedor=request.user).all()
 
         if request.method == 'POST':
-            photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
             compra = Compra.objects.filter(id=request.POST.get('restock')).first()
+            print(compra)
             compra.producto.stock = 1
             compra.producto.save()
 

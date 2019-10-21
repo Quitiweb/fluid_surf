@@ -11,6 +11,7 @@
             {% trans 'Purchase History' %}
         </h1>
         <div class="row">
+            {% if compras %}
             {% for compra in compras %}
             <div class="col-lg-3 col-12 pb-3 mt-5">
                 <div class="card col-12">
@@ -30,12 +31,16 @@
                 </div>
             </div>
             {% endfor %}
+            {% else %}
+            hola
+            {% endif %}
         </div>
         {% elif user.tipo_de_usuario == 'FOTOGRAFO' %}
             <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;">
                 {% trans 'Sales History' %}
             </h1>
             <div class="row">
+                {% if ventas %}
                 {% for venta in ventas %}
                 <div class="col-lg-3 col-12 pb-3 mt-5">
                     <div class="card col-12">
@@ -45,16 +50,21 @@
                         <p class="card-text text-left">{% trans 'Date' %}: {{ venta.fecha }} <br>
                              {% trans 'Price' %}: <strong style="color:black;"> {{ venta.producto.precio }} € </strong> <br>
                              {% trans 'Sold to' %}:
-                                {{ venta.comprador.first_name }} {{ venta.comprador.last_name }}
+                            <a href="{% url 'perfil' nombre=venta.comprador.username %}">{{ venta.comprador.username }}</a>
                         </p>
+                          {% if venta.producto.stock == 0 %}
                           <form action="" method="post">
                               {% csrf_token %}
                             <button type=submit" name="restock" class="btn btn-primary mt-3" value="{{venta.id}}">{% trans 'Restock' %}</button>
                           </form>
+                          {% endif %}
                       </div>
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+                <div class="col-12 text-center mt-5">{% trans 'There are no products here' %}</div>
+                {% endif %}
             </div>
         {% endif %}
 </div>
