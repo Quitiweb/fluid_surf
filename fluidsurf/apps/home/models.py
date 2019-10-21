@@ -7,12 +7,12 @@ from fluidsurf.apps.users.models import CustomUser
 from django_google_maps.fields import AddressField, GeoLocationField
 
 AREA_CHOICES = (
-    ('Europa', _("Europe")),
-    ('Africa', _("Africa")),
-    ('Asia', _("Asia")),
-    ('Oceania', _("Oceania")),
-    ('America del Norte', _("North America")),
-    ('America del Sur', _("South America"))
+    ('EU', _("Europe")),
+    ('AF', _("Africa")),
+    ('AS', _("Asia")),
+    ('OC', _("Oceania")),
+    ('NA', _("North America")),
+    ('AS', _("South America"))
 )
 
 
@@ -23,7 +23,7 @@ class Producto(models.Model):
     precio = models.IntegerField()
 
     fecha = models.DateField()
-    spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='Europa')
+    spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='EU')
 
     descripcion = models.CharField(max_length=50, blank=True)
 
