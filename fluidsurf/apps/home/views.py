@@ -31,7 +31,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def index(request):
     template = loader.get_template('home/index.html')
 
-    prod_list = Producto.objects.filter(stock=1, user__is_active=True).all()
+    prod_list = Producto.objects.filter(stock__gte=1, user__is_active=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     usuarios = CustomUser.objects.exclude(
