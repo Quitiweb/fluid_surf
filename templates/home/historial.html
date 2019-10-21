@@ -32,7 +32,7 @@
             </div>
             {% endfor %}
             {% else %}
-            hola
+            <div class="col-12 text-center mt-5">{% trans 'There are no products here' %} :(</div>
             {% endif %}
         </div>
         {% elif user.tipo_de_usuario == 'FOTOGRAFO' %}
