@@ -433,7 +433,7 @@ class WatermarkProcessor(object):
 class Watermark(ImageSpec):
     processors = [WatermarkProcessor()]
     format = 'JPEG'
-    options = {'quality': 75}
+    options = {'quality': 50}
 
 
 register.generator('home:watermark', Watermark)
