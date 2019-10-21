@@ -22,7 +22,7 @@
 						<p class="white">{{ usuario.tipo_de_usuario }}</p>
                      <p class="white"><i class="fas fa-map-marker-alt"></i> {{ usuario.zona }}</p>
 					{% if request.user == usuario %}
-						<a class="btn btn-primary float-right mt-3 white" href="mi-cuenta">
+						<a class="btn btn-primary float-right mt-3 white" href="{% url 'mi-cuenta' %}">
 							<i class="fas fa-edit"></i> {% trans 'Edit profile' %}
 						</a>
 					{% else %}
