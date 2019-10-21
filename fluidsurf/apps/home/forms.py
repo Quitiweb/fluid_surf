@@ -7,6 +7,15 @@ from django.utils.translation import ugettext_lazy as _
 from fluidsurf.apps.home.models import Producto, Denuncia
 from fluidsurf.apps.users.models import CustomUser
 
+AREA_CHOICES = (
+        ('EU', _("Europe")),
+        ('AF', _("Africa")),
+        ('AS', _("Asia")),
+        ('OC', _("Oceania")),
+        ('NA', _("North America")),
+        ('SA', _("South America"))
+    )
+
 
 class ContactForm(forms.Form):
     from_email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'email@ejemplo.com'}))
@@ -20,14 +29,13 @@ class ChangeUserForm(forms.ModelForm):
     last_name = forms.CharField(max_length=50)
     telefono = forms.CharField(max_length=15)
     pais = forms.CharField(max_length=50)
-    zona = forms.CharField(max_length=50)
+    zona = forms.ChoiceField(choices=AREA_CHOICES)
 
     first_name.widget = forms.TextInput(attrs={'placeholder': _('Write your name here...')})
     last_name.widget = forms.TextInput(attrs={'placeholder': _('Write your surname here...')})
     email.widget = forms.TextInput(attrs={'placeholder': _('Write your email here...')})
     telefono.widget = forms.TextInput(attrs={'placeholder': _('Write your phone here...')})
-    pais.widget = forms.TextInput(attrs={'placeholder': _('Write your country here...')})
-    zona.widget = forms.TextInput(attrs={'placeholder': _('Write your area here...')})
+    pais.widget = forms.TextInput(attrs={'placeholder': _('Write your country here...'), 'readonly': '', 'onfocus': "this.removeAttribute('readonly');"})
 
     class Meta:
         model = CustomUser
@@ -73,15 +81,6 @@ class PhotographerForm(forms.ModelForm):
 class AddProductForm(forms.ModelForm):
 
     DATE_INPUT_FORMATS = ['%d/%m/%Y']
-
-    AREA_CHOICES = (
-        ('EU', _("Europe")),
-        ('AF', _("Africa")),
-        ('AS', _("Asia")),
-        ('OC', _("Oceania")),
-        ('NA', _("North America")),
-        ('SA', _("South America"))
-    )
 
     nombre = forms.CharField(required=True)
     precio = forms.CharField(required=True)
