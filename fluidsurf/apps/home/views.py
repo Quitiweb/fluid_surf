@@ -3,8 +3,9 @@ from datetime import date
 import stripe
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, BadHeaderError
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
@@ -13,7 +14,7 @@ from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
-    DenunciaForm
+    DenunciaForm, ContactForm
 from ..helpers.helper import users_to_get
 
 from django.conf import settings
@@ -401,6 +402,31 @@ def change_image(request):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+def contacto(request):
+    template = loader.get_template('home/contacto.html')
+
+    form = ContactForm()
+
+    if request.method == "POST":
+
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            subject = 'FluidSurf formulario de contacto'
+            from_email = form.cleaned_data['from_email']
+            message = 'Email recibido de: ' + from_email + '\n\n' + form.cleaned_data['message']
+
+            enviar_email(subject, message, from_email)
+
+            messages.success(request, 'Mensaje')
+        else:
+            print(form.errors)
+
+    context = {
+        'form': form
+    }
+
+    return HttpResponse(template.render(context, request))
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
@@ -437,3 +463,10 @@ class Watermark(ImageSpec):
 
 
 register.generator('home:watermark', Watermark)
+
+
+def enviar_email(subject, message, from_email):
+    try:
+        send_mail(subject, message, from_email, ['jlramos97@gmail.com', 'joseluis@quitiweb.com'])
+    except BadHeaderError:
+        return HttpResponse('Invalid header found')

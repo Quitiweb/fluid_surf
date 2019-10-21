@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load social_share %}
+{% load imagekit %}
+
+{% block main %}
+
+<div class="container pt-5 text-center">
+    <h1 class="display-4 mt-5">{% trans 'Contact FluidSurf' %}</h1>
+    <form action="" method="post" class="mt-5"> {% csrf_token %}
+        <div class="row text-center">
+            <div class="col-3"></div>
+            <div class="col-6">
+                {{ form.from_email }}
+            </div>
+        </div>
+
+        <div class="row text-center mt-5">
+            <div class="col-3"></div>
+            <div class="col-6">
+                {{ form.message }}
+            </div>
+        </div>
+
+        <input class="mt-5" type="submit">
+    </form>
+</div>
+{% endblock %}

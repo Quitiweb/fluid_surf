@@ -15,4 +15,5 @@ urlpatterns = [
     path('solicitud-recibida', views.solicitud_recibida, name='solicitud-recibida'),
     path('wishlist', views.wishlist, name='wishlist'),
     path('historial', views.historial, name='historial'),
+    path('contacto', views.contacto, name='contacto'),
 ]
