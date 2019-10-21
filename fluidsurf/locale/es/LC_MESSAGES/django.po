@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-21 12:40+0200\n"
+"POT-Creation-Date: 2019-10-21 14:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,12 +247,12 @@ msgid "Purchase History"
 msgstr "Historial de compras"
 
 #: templates/home/base-p.html:132 templates/home/base.html:132
-#: templates/home/wishlist.html:49
+#: templates/home/wishlist.html:53
 msgid "Wishlist"
 msgstr "Lista de deseos"
 
 #: templates/home/base-p.html:136 templates/home/base.html:136
-#: templates/home/historial.html:36
+#: templates/home/historial.html:40
 msgid "Sales History"
 msgstr "Historial de Ventas"
 
@@ -299,30 +299,34 @@ msgstr "Volver a FluidSurf"
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: templates/home/historial.html:20 templates/home/historial.html:45
-#: templates/home/subir-producto.html:35 templates/home/wishlist.html:28
+#: templates/home/historial.html:21 templates/home/historial.html:50
+#: templates/home/subir-producto.html:35 templates/home/wishlist.html:29
 #: templates/home/zona.html:23
 msgid "Date"
 msgstr "Fecha"
 
-#: templates/home/historial.html:21 templates/home/historial.html:46
+#: templates/home/historial.html:22 templates/home/historial.html:51
 #: templates/home/producto.html:209 templates/home/subir-producto.html:27
-#: templates/home/wishlist.html:29 templates/home/zona.html:24
+#: templates/home/wishlist.html:30 templates/home/zona.html:24
 msgid "Price"
 msgstr "Precio"
 
-#: templates/home/historial.html:22 templates/home/producto.html:49
-#: templates/home/wishlist.html:30 templates/home/zona.html:25
+#: templates/home/historial.html:23 templates/home/producto.html:49
+#: templates/home/wishlist.html:31 templates/home/zona.html:25
 msgid "Uploaded by"
 msgstr "Subido por"
 
-#: templates/home/historial.html:47
+#: templates/home/historial.html:52
 msgid "Sold to"
 msgstr "Vendido a"
 
-#: templates/home/historial.html:52
+#: templates/home/historial.html:58
 msgid "Restock"
 msgstr "Reponer Stock"
+
+#: templates/home/historial.html:66 templates/home/wishlist.html:44
+msgid "There are no products here"
+msgstr "No hay productos aquí"
 
 #: templates/home/index.html:48
 msgid "Welcome"
@@ -509,19 +513,19 @@ msgstr "Tu Lista de Deseos"
 msgid "Empty wishlist"
 msgstr "Vaciar Lista de deseos"
 
-#: templates/home/wishlist.html:37 templates/home/zona.html:32
+#: templates/home/wishlist.html:38 templates/home/zona.html:32
 msgid "Go to product"
 msgstr "Ir al producto"
 
-#: templates/home/wishlist.html:52
+#: templates/home/wishlist.html:56
 msgid "Are you sure you want to empty your wishlist?"
 msgstr "¿Estás seguro de que quieres borrar tu lista de deseos?"
 
-#: templates/home/wishlist.html:57
+#: templates/home/wishlist.html:61
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/home/wishlist.html:58
+#: templates/home/wishlist.html:62
 msgid "Confirm"
 msgstr "Confirmar"
 
