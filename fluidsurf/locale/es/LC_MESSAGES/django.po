@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-18 14:03+0200\n"
+"POT-Creation-Date: 2019-10-21 09:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -312,10 +312,14 @@ msgstr "Aqui tienes productos recomendados para ti"
 msgid "Welcome to"
 msgstr "Bienvenido a"
 
-#: templates/home/index.html:58 templates/home/perfil.html:65
+#: templates/home/index.html:58 templates/home/perfil.html:67
 #: templates/home/producto.html:78
 msgid "Browser"
 msgstr "Buscador"
+
+#: templates/home/index.html:102
+msgid "Connecting photographers and surfers"
+msgstr "Conectando fotógrafos y surferos"
 
 #: templates/home/mi-cuenta.html:20
 msgid "Surname"
@@ -373,31 +377,31 @@ msgstr "Ver historial de compras"
 msgid "Save"
 msgstr "Guardar"
 
-#: templates/home/perfil.html:94
+#: templates/home/perfil.html:96
 msgid "About"
 msgstr "Sobre"
 
-#: templates/home/perfil.html:103
+#: templates/home/perfil.html:105
 msgid "This user hasn't completed their profile yet"
 msgstr "Este usuario no ha completado su perfil aún"
 
-#: templates/home/perfil.html:125
+#: templates/home/perfil.html:127
 msgid "Report an user"
 msgstr "Reportar un usuario"
 
-#: templates/home/perfil.html:135
+#: templates/home/perfil.html:137
 msgid "Reason"
 msgstr "Razón"
 
-#: templates/home/perfil.html:140
+#: templates/home/perfil.html:142
 msgid "Details"
 msgstr "Detalles"
 
-#: templates/home/perfil.html:146
+#: templates/home/perfil.html:148
 msgid "Close"
 msgstr "Cerrar"
 
-#: templates/home/perfil.html:147
+#: templates/home/perfil.html:149
 msgid "Report"
 msgstr "Reportar"
 
@@ -521,9 +525,6 @@ msgstr "Usuario o contraseña incorrectos"
 #| msgid "Old Password"
 msgid "Password"
 msgstr "Anterior contraseña"
-
-#~ msgid "Connecting photographers and surfers"
-#~ msgstr "Conectando fotógrafos y surferos"
 
 #~ msgid "Choose your area in the map"
 #~ msgstr "Escoge una zona en el mapa"
