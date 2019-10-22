@@ -75,7 +75,7 @@
 						<p class="">{% trans "This user hasn't completed their profile yet" %}</p>
 					{% endif %}
 				</div>
-				{% for producto in filter.qs|slice:"1:4" %}
+				{% for producto in filter.qs|slice:":4" %}
 				<article class="item thumb span-3">
                     <h2 class="white">{{ producto.nombre }}</h2>
                     <a href="{% url 'producto' id=producto.id%}">

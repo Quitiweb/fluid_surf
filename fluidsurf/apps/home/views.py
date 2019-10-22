@@ -301,10 +301,10 @@ def zona(request, nombre=''):
     return HttpResponse(template.render(context, request))
 
 
-def perfil(request, nombre=''):
+def perfil(request, id=''):
     template = loader.get_template('home/perfil.html')
 
-    user = CustomUser.objects.filter(username=nombre).first()
+    user = CustomUser.objects.filter(id=id).first()
 
     prod_list = Producto.objects.filter(user=user, stock=1).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
