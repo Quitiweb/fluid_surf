@@ -1,13 +1,10 @@
 from datetime import date
-from itertools import count
-
+import os
 import openpyxl
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.db.models import Q, ImageField
-
-from django.utils.translation import ugettext_lazy as _
+from django.db.models import Q
 
 from django.template import loader
 from openpyxl import Workbook
@@ -107,6 +104,9 @@ def productos(request):
                         break
                 sheet.append(data)
 
+            if not os.path.isdir("spreadsheets"):
+                os.makedirs("spreadsheets")
+
             workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
             messages.success(request, 'Productos exportados correctamente!')
 
@@ -160,6 +160,9 @@ def compras(request):
             for c in compras:
                 data = [c.id, c.comprador.username, c.vendedor.username, c.producto.id, c.fecha]
                 sheet.append(data)
+
+            if not os.path.isdir("spreadsheets"):
+                os.makedirs("spreadsheets")
 
             workbook.save(filename="spreadsheets/compras" + str(date.today()) + ".xlsx")
             messages.success(request, 'Compras exportadas correctamente!')
@@ -287,6 +290,9 @@ def usuarios(request):
                 data = [u.id, u.username, u.password, nombre, apellidos, email, u.is_active, u.is_staff, u.is_superuser,
                         u.tipo_de_usuario, ppic, mpic, zona, pais, alias, CV]
                 sheet.append(data)
+
+            if not os.path.isdir("spreadsheets"):
+                os.makedirs("spreadsheets")
 
             workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
             messages.success(request, 'Usuarios exportados correctamente!')
