@@ -50,6 +50,7 @@ class Compra(models.Model):
     comprador = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='compra_c', default='')
     vendedor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='compra_v', default='')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compra_p', default='')
+    descargas = models.IntegerField(default=3)
     fecha = models.DateField()
 
     def __str__(self):

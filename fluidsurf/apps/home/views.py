@@ -1,4 +1,8 @@
+import os
+
+from io import BytesIO
 import json
+import zipfile
 import urllib
 from datetime import date
 
@@ -377,13 +381,52 @@ def historial(request):
         ventas = Compra.objects.filter(vendedor=request.user).all()
 
         if request.method == 'POST':
-            compra = Compra.objects.filter(id=request.POST.get('restock')).first()
-            print(compra)
-            compra.producto.stock = 1
-            compra.producto.save()
+            if request.user.tipo_de_usuario == "FOTOGRAFO":
+                compra = Compra.objects.filter(id=request.POST.get('restock')).first()
+                compra.producto.stock = 1
+                compra.producto.save()
+            elif request.user.tipo_de_usuario == "SURFERO":
 
-            # compra.delete()
+                compra = Compra.objects.filter(id=request.POST.get('download')).first()
 
+                if compra.descargas > 0:
+                    compra.descargas -= 1
+                    compra.save()
+
+                    # Añado los archivo que quiero subir al zip a un array
+                    filenames = []
+                    for i in range(10):
+                        if getattr(compra.producto, 'imagen' + str(i)):
+                            imagen = getattr(compra.producto, 'imagen' + str(i))
+                            filenames.append(str(imagen))
+                        else:
+                            break
+
+                    # Nombre de la carpeta que va a contener el archivo zip
+                    zip_subdir = "FluidSurf -" + str(compra)
+                    zip_filename = "fs-purchase.zip"
+
+                    # El compresor a zip
+                    s = BytesIO()
+                    zf = zipfile.ZipFile(s, "w")
+
+                    for fpath in filenames:
+                        # Saca la ruta para los archivos dentro del zip
+                        fdir, fname = os.path.split(fpath)
+                        zip_path = os.path.join(zip_subdir, fname)
+
+                        # Añade el archivo a la ruta
+                        zf.write('media/' + fpath,  zip_path)
+                    # Se cierra el archivo zip para guardar todo
+                    zf.close()
+                    # Coge el archivo zip
+                    resp = HttpResponse(s.getvalue())
+                    # Y se prepara para ser devuelto
+                    resp['Content-Disposition'] = 'attachment; filename=%s' % zip_filename
+
+                    return resp
+                else:
+                    messages.warning(request, _('Sorry, you exceeded the download limit of this product.'))
             return redirect('historial')
     else:
         return redirect('index')
