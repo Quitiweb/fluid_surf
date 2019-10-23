@@ -41,7 +41,22 @@
 						<div id='myMap' class="mt-1" style=""></div>
 					</body>
 				</div>
-				{% for producto in filter.qs|slice:"4:8" %}
+				{% for producto in filter.qs|slice:"3:20"   %}
+					{% if not forloop.counter|divisibleby:2 %}
+					<article class="item thumb span-3">
+						<h2 class="white">{{ producto.nombre }}</h2>
+						<a href="{% url 'producto' id=producto.id%}" class="">
+							{% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
+						</a>
+					</article>
+					{% endif %}
+				{% endfor %}
+
+			</div>
+
+		<!-- Items -->
+			<div class="items">
+				{% for producto in filter.qs|slice:":3" %}
 				<article class="item thumb span-3">
 					<h2 class="white">{{ producto.nombre }}</h2>
 					<a href="{% url 'producto' id=producto.id%}" class="">
@@ -49,18 +64,15 @@
 					</a>
 				</article>
 				{% endfor %}
-
-			</div>
-
-		<!-- Items -->
-			<div class="items">
-				{% for producto in filter.qs|slice:":4" %}
-				<article class="item thumb span-3">
-					<h2 class="white">{{ producto.nombre }}</h2>
-					<a href="{% url 'producto' id=producto.id%}" class="">
-						{% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
-					</a>
-				</article>
+				{% for producto in filter.qs|slice:"3:20"   %}
+					{% if forloop.counter|divisibleby:2 %}
+					<article class="item thumb span-3">
+						<h2 class="white">{{ producto.nombre }}</h2>
+						<a href="{% url 'producto' id=producto.id%}" class="">
+							{% generateimage 'home:watermark' source=producto.imagen0 -- class='d-block w-100' style='object-fit:cover' height='400' %}
+						</a>
+					</article>
+					{% endif %}
 				{% endfor %}
 			</div>
 	</section>
