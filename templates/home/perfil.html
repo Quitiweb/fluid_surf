@@ -20,13 +20,18 @@
                     {% endif %}
 					<h1 class="white">{% trans 'Profile of' %} {{ usuario.username }}
 					{% if usuario.profile_pic %}
-                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="100" width="100">
+                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="100" width="100" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
                      {% else %}
-                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="100" width="100">
-                     {% endif %}</h1>
-						<p class="white">{{ usuario.tipo_de_usuario }}</p>
-                     <p class="white"><i class="fas fa-map-marker-alt"></i> {{ usuario.zona }}</p>
-					{% if request.user != usuario %}
+                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="100" width="100" style="cursor: pointer;" data-toggle="modal" data-target="profileModal">
+                     {% endif %}
+					</h1>
+
+					{% if request.user == usuario %}
+						<a class="btn btn-primary float-right mt-3 white" href="{% url 'mi-cuenta' %}">
+							<i class="fas fa-edit"></i> {% trans 'Edit profile' %}
+						</a>
+					{% else %}
+
 						<a class="btn btn-danger float-right mt-3 white" href="" data-toggle="modal" data-target="#reportModal">
 							<i class="fas fa-user-slash"></i> {% trans 'Report profile' %}
 						</a>
@@ -64,6 +69,9 @@
 			<div class="items">
 				<div class="item intro span-3" style="background-color: #58949C;">
 					<h1 class="white">{% trans 'About' %} {{ usuario.username }}</h1>
+
+					<p class="white">{{ usuario.tipo_de_usuario }} <i class="fas fa-map-marker-alt ml-3"></i> {{ usuario.zona }}</p>
+
 					{% if usuario.CV is not None %}
 						<p class="white">{{ usuario.CV }}</p>
 					{% else %}
@@ -114,6 +122,29 @@
         <button type="submit" class="btn btn-primary">{% trans 'Report'  %}</button>
       </div>
 	</form>
+    </div>
+  </div>
+</div>
+
+<!-- profileModal -->
+<div class="modal fade mt-5" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div class="row">
+			<div class="col-12">
+				{% if usuario.profile_pic %}
+                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="500" width="500" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
+                     {% else %}
+                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="100" width="100" style="cursor: pointer;" data-toggle="modal" data-target="profileModal">
+                     {% endif %}
+			</div>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pl-5 pr-5" data-dismiss="modal">OK</button>
+      </div>
     </div>
   </div>
 </div>
