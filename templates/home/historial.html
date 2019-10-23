@@ -5,6 +5,12 @@
 {% load imagekit %}
 
 {% block main %}
+<style>
+	body {
+		background: url({% static 'main/images/bg.jpg' %}) no-repeat center center fixed; background-size: cover;
+	}
+</style>
+
 <div class="container pt-5">
      {% if user.tipo_de_usuario == 'SURFERO' %}
         <h1 class="display-4 mt-5 black toggle-chk">

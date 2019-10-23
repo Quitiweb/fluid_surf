@@ -7,6 +7,12 @@
 
 {% block main %}
 
+<style>
+	body {
+		background: url({% static 'main/images/bg.jpg' %}) no-repeat center center fixed; background-size: cover;
+	}
+</style>
+
 <div class="container mt-5 pt-5">
     <div class="row pl-1">
         <div class="col-8">
@@ -22,15 +28,15 @@
      {% if productos %}
      {% for producto in productos %}
         <div class="col-lg-3 col-12 pb-3 mt-3">
-            <div class="card col-12">
-            {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top' style='object-fit:cover;' height='200'%}
+            <div class="card col-12 p-2">
+            {% generateimage 'home:watermark' source=producto.imagen0 -- class='card-img-top pl-1 pr-1' style='object-fit:cover;' height='200'%}
               <div class="card-body">
                 <h5 class="card-title text-left">{{ producto.nombre }}</h5>
                 <p class="card-text text-left">{% trans 'Date' %}: {{ producto.fecha }} <br>
                                      {% trans 'Price' %}: <strong style="color:black;"> {{ producto.precio }} € </strong> <br>
                                      {% trans 'Uploaded by' %}:
                                         {% if producto.user.alias %}
-                                        <a href="{% url 'perfil' nombre=producto.user.alias %}">{{ producto.user.alias }}</a>
+                                        <a href="{% url 'perfil' id=producto.user.id %}">{{ producto.user.alias }}</a>
                                         {% else %}
                                         {{ producto.user.first_name }} {{ producto.user.last_name }}
                                     {% endif %}
