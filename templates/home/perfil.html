@@ -18,15 +18,15 @@
                     {% else %}
                 <div class="item intro span-2" style="">
                     {% endif %}
-					<h1 class="white">Perfil de {{ usuario.username }}</h1>
+					<h1 class="white">{% trans 'Profile of' %} {{ usuario.username }}
+					{% if usuario.profile_pic %}
+                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="100" width="100">
+                     {% else %}
+                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="100" width="100">
+                     {% endif %}</h1>
 						<p class="white">{{ usuario.tipo_de_usuario }}</p>
                      <p class="white"><i class="fas fa-map-marker-alt"></i> {{ usuario.zona }}</p>
-					{% if request.user == usuario %}
-						<a class="btn btn-primary float-right mt-3 white" href="{% url 'mi-cuenta' %}">
-							<i class="fas fa-edit"></i> {% trans 'Edit profile' %}
-						</a>
-					{% else %}
-
+					{% if request.user != usuario %}
 						<a class="btn btn-danger float-right mt-3 white" href="" data-toggle="modal" data-target="#reportModal">
 							<i class="fas fa-user-slash"></i> {% trans 'Report profile' %}
 						</a>
@@ -63,12 +63,7 @@
 		<!-- Items -->
 			<div class="items">
 				<div class="item intro span-3" style="background-color: #58949C;">
-					<h1 class="white">{% trans 'About' %} {{ usuario.username }}
-					{% if usuario.profile_pic %}
-                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="75" width="75">
-                     {% else %}
-                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="75" width="75">
-                     {% endif %}</h1>
+					<h1 class="white">{% trans 'About' %} {{ usuario.username }}</h1>
 					{% if usuario.CV is not None %}
 						<p class="white">{{ usuario.CV }}</p>
 					{% else %}
