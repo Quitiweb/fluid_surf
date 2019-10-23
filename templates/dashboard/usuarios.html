@@ -28,7 +28,7 @@
                       {% for usuario in usuarios %}
                           <tr>
                             <td><a href="{% url 'admin:users_customuser_change' usuario.id %}">US{{ usuario.id }}</a></td>
-                            <td onclick="location.href='{% url 'perfil' id=usuario.id %}'" style="cursor:pointer;">
+                            <td onclick="location.href='{% url 'perfil_admin' id=usuario.id %}'" style="cursor:pointer;">
                                 <div class="product-img">
                                   {% if usuario.profile_pic %}
                                   <img src="/media/{{ usuario.profile_pic }}" alt="Product Image" class="img-size-50 mr-2 img-circle">

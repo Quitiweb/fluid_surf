@@ -29,12 +29,12 @@
                           <tr>
                             <td><a href="{% url 'admin:home_denuncia_change' denuncia.id %}">DE{{ denuncia.id }}</a></td>
                             <td>
-                                <a href="{% url 'perfil' id=denuncia.receptor.id %}">
+                                <a href="{% url 'perfil_admin' id=denuncia.receptor.id %}">
                                 {{ denuncia.receptor.username }}
                                 </a>
                             </td>
                             <td>
-                            <a href="{% url 'perfil' id=denuncia.emisor.id %}">
+                            <a href="{% url 'perfil_admin' id=denuncia.emisor.id %}">
                                 {{ denuncia.emisor.username }}
                                 </a>
                             </td>

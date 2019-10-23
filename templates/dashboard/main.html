@@ -308,8 +308,8 @@
                           <tr>
                             <td><a href="{% url 'admin:home_compra_change' compra.id %}">OR{{ compra.id }}</a></td>
                             <td>{{ compra.producto.nombre }}</td>
-                            <td><a href="{% url 'perfil' id=compra.comprador.id %}">{{ compra.comprador }}</a></td>
-                            <td><a href="{% url 'perfil' id=compra.vendedor.id %}">{{ compra.vendedor }}</a></td>
+                            <td><a href="{% url 'perfil_admin' id=compra.comprador.id %}">{{ compra.comprador }}</a></td>
+                            <td><a href="{% url 'perfil_admin' id=compra.vendedor.id %}">{{ compra.vendedor }}</a></td>
                           </tr>
                       {% endfor %}
                     </tbody>
@@ -406,7 +406,7 @@
                       <a href="{% url 'admin:home_producto_change' producto.id %}" class="product-title">{{ producto.nombre }}
                         <span class="badge badge-warning float-right">{{ producto.precio }} €</span></a>
                       <span class="product-description">
-                        Publicado por <a href="{% url 'perfil' id=producto.user.id %}">{{ producto.user }}</a>
+                        Publicado por <a href="{% url 'perfil_admin' id=producto.user.id %}">{{ producto.user }}</a>
                       </span>
                     </div>
                   </li>

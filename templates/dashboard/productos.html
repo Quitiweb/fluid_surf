@@ -25,7 +25,7 @@
                       <a href="{% url 'admin:home_producto_change' producto.id %}" class="product-title">{{ producto.nombre }}
                         <span class="badge badge-warning float-right">{{ producto.precio }} €</span></a>
                       <span class="product-description">
-                        Publicado por <a href="{% url 'perfil' id=producto.user.id %}">{{ producto.user }}</a>
+                        Publicado por <a href="{% url 'perfil_admin' id=producto.user.id %}">{{ producto.user }}</a>
                       </span>
                     </div>
                   </li>
