@@ -1,8 +1,9 @@
 from datetime import date
 import os
 import openpyxl
+from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, response
 from django.shortcuts import render, redirect
 from django.db.models import Q
 
@@ -108,8 +109,12 @@ def productos(request):
                 os.makedirs("spreadsheets")
 
             workbook.save(filename="spreadsheets/productos" + str(date.today()) + ".xlsx")
-            messages.success(request, 'Productos exportados correctamente!')
-
+            file_path = os.path.join("spreadsheets/productos" + str(date.today()) + ".xlsx")
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as fh:
+                    response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+                    response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+                    return response
     context = {
         'productos': productos
     }
@@ -165,7 +170,12 @@ def compras(request):
                 os.makedirs("spreadsheets")
 
             workbook.save(filename="spreadsheets/compras" + str(date.today()) + ".xlsx")
-            messages.success(request, 'Compras exportadas correctamente!')
+            file_path = os.path.join("spreadsheets/compras" + str(date.today()) + ".xlsx")
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as fh:
+                    response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+                    response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+                    return response
 
 
     context = {
@@ -295,7 +305,12 @@ def usuarios(request):
                 os.makedirs("spreadsheets")
 
             workbook.save(filename="spreadsheets/usuarios" + str(date.today()) + ".xlsx")
-            messages.success(request, 'Usuarios exportados correctamente!')
+            file_path = os.path.join("spreadsheets/usuarios" + str(date.today()) + ".xlsx")
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as fh:
+                    response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+                    response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+                    return response
 
     context = {
         'usuarios': usuarios
