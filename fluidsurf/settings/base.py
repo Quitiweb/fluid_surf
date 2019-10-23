@@ -29,6 +29,8 @@ PUBLIC_ROOT = os.path.abspath(os.path.join(HOST_ROOT, 'public'))
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
     '.fluidsurf.es',
 ]
 

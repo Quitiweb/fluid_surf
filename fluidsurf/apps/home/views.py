@@ -15,6 +15,7 @@ from django.http import HttpResponse, HttpResponseRedirect, BadHeaderError
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
+from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
@@ -534,3 +535,7 @@ def enviar_email(subject, message, from_email):
         send_mail(subject, message, from_email, ['jlramos97@gmail.com', 'joseluis@quitiweb.com'])
     except BadHeaderError:
         return HttpResponse('Invalid header found')
+
+
+def error_404(request):
+    return render(request, '404.html', status=404)

@@ -16,3 +16,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'home.views.error_404'
