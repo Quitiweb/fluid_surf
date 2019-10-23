@@ -130,15 +130,13 @@
 <div class="modal fade mt-5" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      
+
       <div class="modal-body">
         <div class="row">
 			<div class="col-12">
 				{% if usuario.profile_pic %}
-                        <img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="500" width="500" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
-                     {% else %}
-                        <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right" height="100" width="100" style="cursor: pointer;" data-toggle="modal" data-target="profileModal">
-                     {% endif %}
+					<img src="/media/{{ usuario.profile_pic }}" class="rounded-circle float-right" height="500" width="500" style="cursor: pointer;" data-toggle="modal" data-target="#profileModal">
+				 {% endif %}
 			</div>
 		</div>
       </div>
