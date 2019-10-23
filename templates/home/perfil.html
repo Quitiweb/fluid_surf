@@ -30,8 +30,7 @@
 						<a class="btn btn-primary float-right mt-3 white" href="{% url 'mi-cuenta' %}">
 							<i class="fas fa-edit"></i> {% trans 'Edit profile' %}
 						</a>
-					{% else %}
-
+					{% elif user.is_authenticated %}
 						<a class="btn btn-danger float-right mt-3 white" href="" data-toggle="modal" data-target="#reportModal">
 							<i class="fas fa-user-slash"></i> {% trans 'Report profile' %}
 						</a>
