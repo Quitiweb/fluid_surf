@@ -140,7 +140,8 @@
 	</section>
 </div>
 
-{% if user.is_authenticated %}
+{% if user.is_authenticated%}
+    {% if user.tipo_de_usuario == "FOTOGRAFO"  %}
     <div class="row text-center mt-5">
         <div class="col-lg-6 col-12">
             <form action="" method="POST">
@@ -172,6 +173,7 @@
         <div class="col-lg-6 col-12 mt-1">
             <button type="submit" disabled class="btn btn-primary">{% trans 'Buy now' %}</button>
         </div>
+        {% endif %}
         {% endif %}
     </div>
 {% else %}
