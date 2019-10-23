@@ -257,8 +257,7 @@ def producto(request, id='0'):
             break
 
     A = imagenes[:3]
-    B = imagenes[3:7]
-    C = imagenes[7:10]
+    B = imagenes[3:]
 
     context = {
         'producto': producto,
@@ -266,7 +265,6 @@ def producto(request, id='0'):
         'filter': prod_filter,
         'imagenes': A,
         'imagenes2': B,
-        'imagenes3': C,
         'ubicaciones': ubicaciones,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe': True,
