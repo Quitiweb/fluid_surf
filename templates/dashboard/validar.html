@@ -39,8 +39,10 @@
 
                             </td>
                             <td>{{ usuario.first_name }}  {{ usuario.last_name }}</td>
-                            <td>
-                                <a href="{% url 'admin:users_customuser_change' usuario.id %}" class="btn btn-primary" style="color:white;">Validar</a>
+                            <td class="text-left">
+                                <form action="" method="post">{% csrf_token %}
+                                    <button class="btn btn-primary" style="color:white;" name="validar" value="{{ usuario.id }}"><i class="fas fa-check"></i></button>
+                                </form>
                             </td>
                           </tr>
                       {% endfor %}

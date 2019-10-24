@@ -370,6 +370,12 @@ def validar(request):
 
     usuarios = CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all()
 
+    if request.method == "POST":
+        usuario = CustomUser.objects.filter(id=request.POST.get('validar')).first()
+        usuario.validado = True
+        usuario.save()
+        messages.success(request, 'El usuario ' + usuario.username + ' ha sido validado.')
+
     context = {
         'usuarios': usuarios
     }
