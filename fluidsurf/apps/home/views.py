@@ -269,7 +269,7 @@ def producto(request, id='0'):
                             to_mail = request.user.email
 
                             try:
-                                send_mail(subject, message, from_email, [to_mail])
+                                send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
                             except BadHeaderError:
                                 return HttpResponse('Invalid header found')
                         if producto.user.email:
@@ -281,7 +281,7 @@ def producto(request, id='0'):
                             to_mail = producto.user.email
 
                             try:
-                                send_mail(subject, message, from_email, [to_mail])
+                                send_mail(subject, message, from_email, [to_mail,settings.SERVER_EMAIL])
                             except BadHeaderError:
                                 return HttpResponse('Invalid header found')
 
