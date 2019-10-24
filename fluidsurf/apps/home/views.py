@@ -261,16 +261,29 @@ def producto(request, id='0'):
                         )
                         compra.save()
 
-                        subject = _("Your FluidSurf purchase")
-                        message = _("Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
-                        message += " ID: OR" + str(compra.id)
-                        from_email = settings.SERVER_EMAIL
-                        to_mail = request.user.email
+                        if request.user.email:
+                            subject = _("Your FluidSurf purchase")
+                            message = _("Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
+                            message += "\nID: OR" + str(compra.id)
+                            from_email = settings.SERVER_EMAIL
+                            to_mail = request.user.email
 
-                        try:
-                            send_mail(subject, message, from_email, [to_mail])
-                        except BadHeaderError:
-                            return HttpResponse('Invalid header found')
+                            try:
+                                send_mail(subject, message, from_email, [to_mail])
+                            except BadHeaderError:
+                                return HttpResponse('Invalid header found')
+                        if producto.user.email:
+                            subject = _("Your product has been sold!")
+                            message = str(_("Your product ")) + producto.nombre + str(_(" has been sold to ")) + compra.comprador.first_name + " " +compra.comprador.last_name + "!"
+                            message += "\nYou can check it in your Sales History."
+                            message += "\nID: OR" + str(compra.id)
+                            from_email = settings.SERVER_EMAIL
+                            to_mail = producto.user.email
+
+                            try:
+                                send_mail(subject, message, from_email, [to_mail])
+                            except BadHeaderError:
+                                return HttpResponse('Invalid header found')
 
                         return render(request, 'payments/charge.html')
 
