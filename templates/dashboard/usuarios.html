@@ -42,6 +42,7 @@
                             <td>{{ usuario.first_name }}  {{ usuario.last_name }}</td>
                             <td>{{ usuario.tipo_de_usuario }}</td>
                             <td>
+                                <a href="{% url 'perfil_admin' id=usuario.id %}" class="btn btn-success" >Ver perfil</a>
                                 <a href="{% url 'admin:users_customuser_delete' usuario.id %}" class="btn btn-danger" style="color:white;">Borrar</a>
                                 <a href="{% url 'admin:users_customuser_change' usuario.id %}" class="btn btn-primary" style="color:white;">Modificar</a>
                             </td>
