@@ -1,4 +1,5 @@
 import os
+import re
 
 from io import BytesIO
 import json
@@ -90,7 +91,10 @@ def mi_cuenta(request):
             if request.user.tipo_de_usuario == "FOTOGRAFO":
                 photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
                 if photo_form.is_valid():
-                    photo_form.save()
+                    fotografo = photo_form.save(commit=False)
+                    fotografo.CV = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', fotografo.CV)
+                    fotografo.CV = re.sub(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", '', fotografo.CV)
+                    fotografo.save()
             if form.is_valid():
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
