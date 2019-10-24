@@ -24,14 +24,21 @@
             <ul class="list-group list-group-unbordered mb-3">
             {% if usuario.tipo_de_usuario == 'FOTOGRAFO' %}
               <li class="list-group-item">
-                <b>Productos listados</b> <a class="float-right">{{ productos.count }}</a>
+                <b class="toggle-chk" id="listados" style="cursor: pointer;">Productos listados</b> <a class="float-right">{{ productos.count }}</a>
+                  <div id="listados-show" style="display:none;">
+                      <ul>
+                          {% for producto in productos %}
+                          <li><a href="{% url 'producto' id=producto.id %}">{{ producto }}</a></li>
+                          {% endfor %}
+                      </ul>
+                  </div>
               </li>
               <li class="list-group-item">
                 <b>Productos vendidos</b> <a class="float-right">{{ ventas.count }}</a>
               </li>
             {% else %}
-                <li class="list-group-item">
-                <b>Productos listados</b> <a class="float-right">{{ productos.count }}</a>
+              <li class="list-group-item">
+                <b>Productos comprados</b> <a class="float-right">{{ compras.count }}</a>
               </li>
               <li class="list-group-item">
                 <b>Productos en lista de deseos</b> <a class="float-right">{{ wishlist }}</a>
