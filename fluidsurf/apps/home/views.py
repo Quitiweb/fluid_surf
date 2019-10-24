@@ -37,12 +37,14 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def index(request):
     template = loader.get_template('home/index.html')
 
-    prod_list = Producto.objects.filter(stock__gte=1, user__is_active=True).all()
+    prod_list = Producto.objects.filter(stock__gte=1, user__is_active=True, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
-    usuarios = CustomUser.objects.exclude(
-        username=request.user.username
-    )[:users_to_get(CustomUser.objects.count() - 1)]
+    if request.user.is_authenticated and not request.user.validado:
+        messages.warning(request, _("Your profile ins't active yet. Please, wait until "
+                                    "your first product gets validated by an admin to start selling."))
+
+
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
@@ -50,7 +52,6 @@ def index(request):
 
     context = {
         'filter': prod_filter,
-        'usuarios': usuarios,
         'API_KEY': API_KEY,
         'ubicaciones': ubicaciones,
     }
