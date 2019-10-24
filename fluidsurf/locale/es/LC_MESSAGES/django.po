@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 10:07+0200\n"
+"POT-Creation-Date: 2019-10-24 15:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,53 +146,75 @@ msgstr "Otro"
 msgid "Tell us more about the reason you are reporting this user."
 msgstr "Dinos más sobre la razón por la cual estás reportando a este usuario"
 
-#: fluidsurf/apps/home/views.py:216
+#: fluidsurf/apps/home/views.py:44
+msgid "Your profile ins't active yet. Please, wait until your first product gets validated by an admin to start selling."
+msgstr "Tu perfil no ha sido activado. Por favor, espera hasta que tu primer producto sea validado por un administrador para empezar a vender."
+
+#: fluidsurf/apps/home/views.py:221
 msgid "Your product was saved successfully"
 msgstr "Tu producto ha sido guardado con éxito"
 
-#: fluidsurf/apps/home/views.py:218
+#: fluidsurf/apps/home/views.py:223
 msgid "There was an error while trying to save your product"
 msgstr "Ha habido un error mientras se intentaba guardar tu producto."
 
-#: fluidsurf/apps/home/views.py:221
-#, fuzzy
-#| msgid "Your product was saved successfully"
+#: fluidsurf/apps/home/views.py:226
 msgid "Your product was deleted successfully"
-msgstr "Tu producto ha sido guardado con éxito"
+msgstr "Tu producto ha sido borrado con éxito"
 
-#: fluidsurf/apps/home/views.py:224
+#: fluidsurf/apps/home/views.py:229
 msgid "You are the owner of this product, you cannot do actions over it."
 msgstr "Eres el dueño de este producto, no puedes realizar acciones sobre el."
 
-#: fluidsurf/apps/home/views.py:230
+#: fluidsurf/apps/home/views.py:235
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:237
+#: fluidsurf/apps/home/views.py:242
 msgid "Product removed from your wishlist"
 msgstr "Producto eliminado de de deseos"
 
-#: fluidsurf/apps/home/views.py:338
+#: fluidsurf/apps/home/views.py:265
+msgid "Your FluidSurf purchase"
+msgstr "Tu compra en FluidSurf"
+
+#: fluidsurf/apps/home/views.py:266
+msgid "Thank you for buying a product in FluidSurf!. You can check it in your Purchase History."
+msgstr "Gracias por compra un producto en FluidSurf! Puedes comprobarlo en tu Historial de compras"
+
+#: fluidsurf/apps/home/views.py:276
+msgid "Your product has been sold!"
+msgstr "Tu producto ha sido vendido"
+
+#: fluidsurf/apps/home/views.py:277
+msgid "Your product "
+msgstr "Tu producto "
+
+#: fluidsurf/apps/home/views.py:277
+msgid " has been sold to "
+msgstr "ha sido vendido a"
+
+#: fluidsurf/apps/home/views.py:367
 msgid "Your report has been submitted"
 msgstr "Tu reporte ha sido enviado"
 
-#: fluidsurf/apps/home/views.py:371
+#: fluidsurf/apps/home/views.py:400
 msgid "Wishlist emptied successfully"
 msgstr "Lista de deseos vaciada con éxito"
 
-#: fluidsurf/apps/home/views.py:436
+#: fluidsurf/apps/home/views.py:465
 msgid "Sorry, you exceeded the download limit of this product."
 msgstr "Lo siento, has superado el limite de descargas para este producto."
 
-#: fluidsurf/apps/home/views.py:455
+#: fluidsurf/apps/home/views.py:484
 msgid "Profile pic changed successfully!"
 msgstr "Foto de perfil cambiada con éxito!"
 
-#: fluidsurf/apps/home/views.py:492
+#: fluidsurf/apps/home/views.py:521
 msgid "Your message was sent successfully!"
 msgstr "Tu mensaje ha sido enviado con éxito!"
 
-#: fluidsurf/apps/home/views.py:494
+#: fluidsurf/apps/home/views.py:523
 msgid "Invalid reCAPTCHA. Please try again."
 msgstr "reCAPTCHA incorrecto. Por favor, inténtalo de nuevo."
 
@@ -216,16 +238,13 @@ msgstr ""
 msgid "Django administration"
 msgstr ""
 
-#: templates/dashboard/base.html:33 templates/dashboard/base.html:179
-#: templates/dashboard/main.html:16 templates/home/base-p.html:145
-#: templates/home/base.html:115
+#: templates/dashboard/base.html:33 templates/dashboard/base.html:86
+#: templates/dashboard/compras.html:13 templates/dashboard/denuncias.html:14
+#: templates/dashboard/main.html:13 templates/dashboard/productos.html:14
+#: templates/dashboard/usuarios.html:12 templates/dashboard/validar.html:14
+#: templates/home/base-p.html:145 templates/home/base.html:115
 msgid "Home"
 msgstr "Inicio"
-
-#: templates/dashboard/main.html:12 templates/dashboard/main.html:17
-#: templates/home/base-p.html:192 templates/home/base.html:162
-msgid "Dashboard"
-msgstr "Panel de Control"
 
 #: templates/home/base-p.html:102 templates/home/base-p.html:104
 #: templates/home/base.html:72 templates/home/base.html:74
@@ -278,6 +297,10 @@ msgstr "Añadir producto"
 #| msgid "MANAGEMENT AREA"
 msgid "ADMIN AREA"
 msgstr "ÁREA DE GESTIÓN"
+
+#: templates/home/base-p.html:192 templates/home/base.html:162
+msgid "Dashboard"
+msgstr "Panel de Control"
 
 #: templates/home/base-p.html:200 templates/home/base.html:170
 #: templates/home/index.html:23 templates/home/producto.html:189
@@ -569,9 +592,7 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 #: templates/home/zona.html:16
-#, fuzzy
-#| msgid "Products in "
-msgid "Products in"
+msgid "Products in "
 msgstr "Productos en "
 
 #: templates/payments/charge.html:8
