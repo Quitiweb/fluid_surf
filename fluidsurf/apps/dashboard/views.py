@@ -362,4 +362,16 @@ def denuncias(request):
         'denuncias': denuncias
     }
 
-    return HttpResponse(template.render(context, request))\
+    return HttpResponse(template.render(context, request))
+
+
+def validar(request):
+    template = loader.get_template('dashboard/validar.html')
+
+    usuarios = CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all()
+
+    context = {
+        'usuarios': usuarios
+    }
+
+    return HttpResponse(template.render(context, request))
