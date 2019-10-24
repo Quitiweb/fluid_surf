@@ -126,7 +126,6 @@ def subir_producto(request):
     if Producto.objects.all().count() > 0:
         current = Producto.objects.latest('id').id + 1
 
-
     if request.user.is_authenticated:
         if request.method == "GET":
             form = AddProductForm()
@@ -196,6 +195,12 @@ def producto(request, id='0'):
 
     ubicaciones = Ubicacion.objects.filter().all()
 
+    listaDeseos = request.user.wishlist.split(',')
+    status = True
+    for item in listaDeseos:
+        if item == str(id):
+            status = False
+
     if producto is None or not producto.user.is_active:
         return redirect('/')
 
@@ -218,40 +223,40 @@ def producto(request, id='0'):
                 else:
                     messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
             else:
-               if 'wishlist' in request.POST:
-                   listaDeseos = request.user.wishlist.split(',')
-                   status = True
-                   for item in listaDeseos:
-                       if item == str(id):
-                           status = False
-                   if status:
-                       request.user.wishlist += str(id) + ","
-                       request.user.save()
-                       messages.success(request, _('Product added to your wishlist'))
-                   else:
-                       messages.warning(request, _('You already have that product in your wishlist'))
-               else:
-                   charge = stripe.Charge.create(
-                       amount=producto.precio * 100,
-                       currency='eur',
-                       description='Pago de producto',
-                       source=request.POST['stripeToken']
-                   )
+                if 'wishlist' in request.POST:
+                    if status:
+                        request.user.wishlist += str(id) + ","
+                        request.user.save()
+                        messages.success(request, _('Product added to your wishlist'))
+                    else:
+                        for item in listaDeseos:
+                            if item == str(id):
+                                listaDeseos.remove(item)
+                                request.user.wishlist = ",".join(listaDeseos)
+                                request.user.save()
+                                messages.success(request, _('Product removed from your wishlist'))
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    charge = stripe.Charge.create(
+                        amount=producto.precio * 100,
+                        currency='eur',
+                        description='Pago de producto',
+                        source=request.POST['stripeToken']
+                    )
 
-                   if charge:
-                       producto.stock = 0
-                       producto.save()
+                    if charge:
+                        producto.stock = 0
+                        producto.save()
 
-                       compra = Compra(
-                           comprador=request.user,
-                           vendedor=producto.user,
-                           producto=producto,
-                           fecha=date.today()
-                       )
-                       compra.save()
+                        compra = Compra(
+                            comprador=request.user,
+                            vendedor=producto.user,
+                            producto=producto,
+                            fecha=date.today()
+                        )
+                        compra.save()
 
-
-                       return render(request, 'payments/charge.html')
+                        return render(request, 'payments/charge.html')
 
     imagenes = []
 
@@ -271,6 +276,7 @@ def producto(request, id='0'):
         'imagenes': A,
         'imagenes2': B,
         'ubicaciones': ubicaciones,
+        'in_wishlist': not status,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe': True,
         'API_KEY': API_KEY
@@ -295,7 +301,7 @@ def zona(request, nombre=''):
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     context = {
-        'zona' : zona,
+        'zona': zona,
         'filter': prod_filter,
         'API_KEY': API_KEY,
         'ubicaciones': ubicaciones,
@@ -357,7 +363,7 @@ def wishlist(request):
                 else:
                     producto = Producto.objects.filter(id=item, stock=1).first()
                     if producto:
-                            productos.append(producto)
+                        productos.append(producto)
 
             if request.method == "POST":
                 request.user.wishlist = ''
@@ -417,7 +423,7 @@ def historial(request):
                         zip_path = os.path.join(zip_subdir, fname)
 
                         # Añade el archivo a la ruta
-                        zf.write('media/' + fpath,  zip_path)
+                        zf.write('media/' + fpath, zip_path)
                     # Se cierra el archivo zip para guardar todo
                     zf.close()
                     # Coge el archivo zip
@@ -438,6 +444,7 @@ def historial(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def change_image(request):
     if request.method == 'POST':
         image = request.FILES['changeImage']
@@ -448,6 +455,7 @@ def change_image(request):
         messages.success(request, _('Profile pic changed successfully!'))
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def contacto(request):
     template = loader.get_template('home/contacto.html')
@@ -492,6 +500,7 @@ def contacto(request):
     }
 
     return HttpResponse(template.render(context, request))
+
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
