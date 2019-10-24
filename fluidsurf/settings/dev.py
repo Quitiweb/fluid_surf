@@ -14,19 +14,6 @@ ALLOWED_HOSTS += [
     'fs.quitiweb.com',
 ]
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'fluidsurf',
-#         'USER': 'diegea',
-#         'PASSWORD': 'HdByaNYk',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-
 # To send emails to the console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

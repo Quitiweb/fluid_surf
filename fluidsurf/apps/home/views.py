@@ -40,7 +40,7 @@ def index(request):
     prod_list = Producto.objects.filter(stock__gte=1, user__is_active=True, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
-    if request.user.is_authenticated and not request.user.validado:
+    if request.user.is_authenticated and request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
         messages.warning(request, _("Your profile ins't active yet. Please, wait until "
                                     "your first product gets validated by an admin to start selling."))
 
@@ -260,6 +260,17 @@ def producto(request, id='0'):
                             fecha=date.today()
                         )
                         compra.save()
+
+                        subject = _("Your FluidSurf purchase")
+                        message = _("Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
+                        message += " ID: OR" + str(compra.id)
+                        from_email = settings.SERVER_EMAIL
+                        to_mail = request.user.email
+
+                        try:
+                            send_mail(subject, message, from_email, [to_mail])
+                        except BadHeaderError:
+                            return HttpResponse('Invalid header found')
 
                         return render(request, 'payments/charge.html')
 

@@ -202,6 +202,8 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login'
 
+SERVER_EMAIL = 'contact@fluidsurf.es'
+
 # Imagen que se pone como marca de agua
 WATERMARK_IMAGE = os.path.join(PROJECT_ROOT, 'static/home/img/logo.png')
 
