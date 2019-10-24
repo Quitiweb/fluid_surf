@@ -41,7 +41,8 @@ def dashboard(request):
         'america': america,
         'compras': compras,
         'fotografos': fotografos,
-        'surferos': surferos
+        'surferos': surferos,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -116,7 +117,8 @@ def productos(request):
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
                     return response
     context = {
-        'productos': productos
+        'productos': productos,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -179,7 +181,8 @@ def compras(request):
 
 
     context = {
-        'compras': compras
+        'compras': compras,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -313,7 +316,8 @@ def usuarios(request):
                     return response
 
     context = {
-        'usuarios': usuarios
+        'usuarios': usuarios,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -342,7 +346,8 @@ def perfil(request, id=''):
         'productos': productos,
         'compras': compras,
         'ventas': ventas,
-        'denuncias': denuncias
+        'denuncias': denuncias,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -359,7 +364,8 @@ def denuncias(request):
 
 
     context = {
-        'denuncias': denuncias
+        'denuncias': denuncias,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -377,7 +383,8 @@ def validar(request):
         messages.success(request, 'El usuario ' + usuario.username + ' ha sido validado.')
 
     context = {
-        'usuarios': usuarios
+        'usuarios': usuarios,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
     return HttpResponse(template.render(context, request))
