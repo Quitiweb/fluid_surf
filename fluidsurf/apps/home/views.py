@@ -191,7 +191,7 @@ def subir_producto(request):
 def producto(request, id='0'):
     template = loader.get_template('home/producto.html')
 
-    producto = Producto.objects.filter(id=id, stock=1).first()
+    producto = Producto.objects.filter(id=id, stock=1, user__validado=True, user__is_active=True).first()
 
     prod_list = Producto.objects.filter(stock=1).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
@@ -206,7 +206,7 @@ def producto(request, id='0'):
         if item == str(id):
             status = False
 
-    if producto is None or not producto.user.is_active:
+    if producto is None:
         return redirect('/')
 
     productform = EditProductForm(instance=producto)
@@ -302,7 +302,7 @@ def zona(request, nombre=''):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    prod_list = Producto.objects.filter(spot=zona).all()
+    prod_list = Producto.objects.filter(spot=zona, stock=1, user__validado=True, user__is_active=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     context = {
@@ -320,7 +320,7 @@ def perfil(request, id=''):
 
     user = CustomUser.objects.filter(id=id).first()
 
-    prod_list = Producto.objects.filter(user=user, stock=1).all()
+    prod_list = Producto.objects.filter(user=user, stock=1, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     ubicaciones = Ubicacion.objects.filter().all()
