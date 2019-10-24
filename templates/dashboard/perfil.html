@@ -34,11 +34,25 @@
                   </div>
               </li>
               <li class="list-group-item">
-                <b>Productos vendidos</b> <a class="float-right">{{ ventas.count }}</a>
+                <b class="toggle-chk" id="vendidos" style="cursor: pointer;">Productos vendidos</b> <a class="float-right">{{ ventas.count }}</a>
+                    <div id="vendidos-show" style="display:none;">
+                      <ul>
+                          {% for venta in ventas %}
+                          <li><a href="{% url 'producto' id=venta.producto.id %}">{{ venta.producto }}</a></li>
+                          {% endfor %}
+                      </ul>
+                  </div>
               </li>
             {% else %}
               <li class="list-group-item">
-                <b>Productos comprados</b> <a class="float-right">{{ compras.count }}</a>
+                <b class="toggle-chk" id="comprados" style="cursor: pointer;">Productos comprados</b> <a class="float-right">{{ compras.count }}</a>
+                  <div id="comprados-show" style="display:none;">
+                      <ul>
+                          {% for compra in compras %}
+                          <li><a href="{% url 'producto' id=compra.producto.id %}">{{ compra.producto }}</a></li>
+                          {% endfor %}
+                      </ul>
+                  </div>
               </li>
               <li class="list-group-item">
                 <b>Productos en lista de deseos</b> <a class="float-right">{{ wishlist }}</a>
