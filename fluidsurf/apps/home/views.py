@@ -166,6 +166,18 @@ def subir_producto(request):
                     if total_size < 26214400 and upload:
                         producto.save()
                         messages.success(request, 'Tu producto se ha subido correctamente')
+
+                        subject = _("New product in your area")
+                        message = producto.user.first_name + " " + producto.user.last_name + str(_(" has uploaded a product nearby you"))
+                        message += "\n You can check it here: " #TODO Añadir link
+                        from_email = settings.SERVER_EMAIL
+                        to_mail = request.user.email
+
+                        try:
+                            send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                            return redirect('producto', id=producto.id)
+                        except BadHeaderError:
+                            return HttpResponse('Invalid header found')
                     else:
                         if not upload:
                             pass
@@ -453,7 +465,7 @@ def historial(request):
 
                         # Añade el archivo a la ruta
                         zf.write('media/' + fpath, zip_path)
-                    # Se cierra el archivo zip para guardar todo
+                    # Se cierra el archivo zip para guardar
                     zf.close()
                     # Coge el archivo zip
                     resp = HttpResponse(s.getvalue())
