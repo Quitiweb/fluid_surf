@@ -176,7 +176,7 @@ def subir_producto(request):
                         subject = _("New product in your area")
                         message = producto.user.first_name + " " + producto.user.last_name + str(
                             _(" has uploaded a product nearby you"))
-                        message += "\n You can check it here: "  # TODO Añadir link
+                        message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(producto.id)  # TODO Añadir link
                         from_email = settings.SERVER_EMAIL
                         to_mail = mails
 
