@@ -172,6 +172,7 @@ def subir_producto(request):
                         for usuario in usuarios:
                             if usuario.email:
                                 mails.append(usuario.email)
+                        mails.append(settings.SERVER_EMAIL)
 
                         subject = _("New product in your area")
                         message = producto.user.first_name + " " + producto.user.last_name + str(
