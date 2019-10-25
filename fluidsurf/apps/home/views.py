@@ -220,11 +220,14 @@ def producto(request, id='0'):
 
     ubicaciones = Ubicacion.objects.filter().all()
 
-    listaDeseos = request.user.wishlist.split(',')
-    status = True
-    for item in listaDeseos:
-        if item == str(id):
-            status = False
+    if request.user.is_authenticated:
+        listaDeseos = request.user.wishlist.split(',')
+        status = True
+        for item in listaDeseos:
+            if item == str(id):
+                status = False
+    else:
+        status = ''
 
     if producto is None:
         return redirect('/')
