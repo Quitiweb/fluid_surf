@@ -44,8 +44,6 @@ def index(request):
         messages.warning(request, _("Your profile ins't active yet. Please, wait until "
                                     "your first product gets validated by an admin to start selling."))
 
-
-
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
     ubicaciones = Ubicacion.objects.filter().all()
@@ -167,11 +165,20 @@ def subir_producto(request):
                         producto.save()
                         messages.success(request, 'Tu producto se ha subido correctamente')
 
+                        # Busca los usuarios en la zona del producto para despues mandarles un mail
+                        usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO", zona=producto.spot).all()
+
+                        mails = []
+                        for usuario in usuarios:
+                            if usuario.email:
+                                mails.append(usuario.email)
+
                         subject = _("New product in your area")
-                        message = producto.user.first_name + " " + producto.user.last_name + str(_(" has uploaded a product nearby you"))
-                        message += "\n You can check it here: " #TODO Añadir link
+                        message = producto.user.first_name + " " + producto.user.last_name + str(
+                            _(" has uploaded a product nearby you"))
+                        message += "\n You can check it here: "  # TODO Añadir link
                         from_email = settings.SERVER_EMAIL
-                        to_mail = request.user.email
+                        to_mail = mails
 
                         try:
                             send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
@@ -275,7 +282,8 @@ def producto(request, id='0'):
 
                         if request.user.email:
                             subject = _("Your FluidSurf purchase")
-                            message = _("Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
+                            message = _(
+                                "Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
                             message += "\nID: OR" + str(compra.id)
                             from_email = settings.SERVER_EMAIL
                             to_mail = request.user.email
@@ -286,14 +294,15 @@ def producto(request, id='0'):
                                 return HttpResponse('Invalid header found')
                         if producto.user.email:
                             subject = _("Your product has been sold!")
-                            message = str(_("Your product ")) + producto.nombre + str(_(" has been sold to ")) + compra.comprador.first_name + " " +compra.comprador.last_name + "!"
+                            message = str(_("Your product ")) + producto.nombre + str(_(
+                                " has been sold to ")) + compra.comprador.first_name + " " + compra.comprador.last_name + "!"
                             message += "\nYou can check it in your Sales History."
                             message += "\nID: OR" + str(compra.id)
                             from_email = settings.SERVER_EMAIL
                             to_mail = producto.user.email
 
                             try:
-                                send_mail(subject, message, from_email, [to_mail,settings.SERVER_EMAIL])
+                                send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
                             except BadHeaderError:
                                 return HttpResponse('Invalid header found')
 
