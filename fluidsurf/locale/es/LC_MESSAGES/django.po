@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 15:51+0200\n"
+"POT-Creation-Date: 2019-10-28 16:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: fluidsurf/apps/home/filters.py:9 templates/home/mi-cuenta.html:16
-#: templates/home/producto.html:212 templates/home/subir-producto.html:22
+#: templates/home/producto.html:224 templates/home/subir-producto.html:22
 msgid "Name"
 msgstr "Nombre"
 
@@ -146,75 +146,91 @@ msgstr "Otro"
 msgid "Tell us more about the reason you are reporting this user."
 msgstr "Dinos más sobre la razón por la cual estás reportando a este usuario"
 
-#: fluidsurf/apps/home/views.py:44
-msgid "Your profile ins't active yet. Please, wait until your first product gets validated by an admin to start selling."
-msgstr "Tu perfil no ha sido activado. Por favor, espera hasta que tu primer producto sea validado por un administrador para empezar a vender."
+#: fluidsurf/apps/home/views.py:49
+msgid ""
+"Your profile ins't active yet. Please, wait until your first product gets "
+"validated by an admin to start selling."
+msgstr ""
+"Tu perfil no ha sido activado. Por favor, espera hasta que tu primer "
+"producto sea validado por un administrador para empezar a vender."
 
-#: fluidsurf/apps/home/views.py:221
+#: fluidsurf/apps/home/views.py:187
+msgid "New product in your area"
+msgstr "Nuevo producto en tu zona"
+
+#: fluidsurf/apps/home/views.py:189
+msgid " has uploaded a product nearby you"
+msgstr " ha subido un producto cerca de ti"
+
+#: fluidsurf/apps/home/views.py:253
 msgid "Your product was saved successfully"
 msgstr "Tu producto ha sido guardado con éxito"
 
-#: fluidsurf/apps/home/views.py:223
+#: fluidsurf/apps/home/views.py:255
 msgid "There was an error while trying to save your product"
 msgstr "Ha habido un error mientras se intentaba guardar tu producto."
 
-#: fluidsurf/apps/home/views.py:226
+#: fluidsurf/apps/home/views.py:258
 msgid "Your product was deleted successfully"
 msgstr "Tu producto ha sido borrado con éxito"
 
-#: fluidsurf/apps/home/views.py:229
+#: fluidsurf/apps/home/views.py:261
 msgid "You are the owner of this product, you cannot do actions over it."
 msgstr "Eres el dueño de este producto, no puedes realizar acciones sobre el."
 
-#: fluidsurf/apps/home/views.py:235
+#: fluidsurf/apps/home/views.py:267
 msgid "Product added to your wishlist"
 msgstr "Producto añadido a tu lista de deseos"
 
-#: fluidsurf/apps/home/views.py:242
+#: fluidsurf/apps/home/views.py:274
 msgid "Product removed from your wishlist"
 msgstr "Producto eliminado de de deseos"
 
-#: fluidsurf/apps/home/views.py:265
+#: fluidsurf/apps/home/views.py:297
 msgid "Your FluidSurf purchase"
 msgstr "Tu compra en FluidSurf"
 
-#: fluidsurf/apps/home/views.py:266
-msgid "Thank you for buying a product in FluidSurf!. You can check it in your Purchase History."
-msgstr "Gracias por compra un producto en FluidSurf! Puedes comprobarlo en tu Historial de compras"
+#: fluidsurf/apps/home/views.py:299
+msgid ""
+"Thank you for buying a product in FluidSurf!. You can check it in your "
+"Purchase History."
+msgstr ""
+"Gracias por compra un producto en FluidSurf! Puedes comprobarlo en tu "
+"Historial de compras"
 
-#: fluidsurf/apps/home/views.py:276
+#: fluidsurf/apps/home/views.py:309
 msgid "Your product has been sold!"
 msgstr "Tu producto ha sido vendido"
 
-#: fluidsurf/apps/home/views.py:277
+#: fluidsurf/apps/home/views.py:310
 msgid "Your product "
 msgstr "Tu producto "
 
-#: fluidsurf/apps/home/views.py:277
+#: fluidsurf/apps/home/views.py:311
 msgid " has been sold to "
 msgstr "ha sido vendido a"
 
-#: fluidsurf/apps/home/views.py:367
+#: fluidsurf/apps/home/views.py:401
 msgid "Your report has been submitted"
 msgstr "Tu reporte ha sido enviado"
 
-#: fluidsurf/apps/home/views.py:400
+#: fluidsurf/apps/home/views.py:434
 msgid "Wishlist emptied successfully"
 msgstr "Lista de deseos vaciada con éxito"
 
-#: fluidsurf/apps/home/views.py:465
+#: fluidsurf/apps/home/views.py:499
 msgid "Sorry, you exceeded the download limit of this product."
 msgstr "Lo siento, has superado el limite de descargas para este producto."
 
-#: fluidsurf/apps/home/views.py:484
+#: fluidsurf/apps/home/views.py:518
 msgid "Profile pic changed successfully!"
 msgstr "Foto de perfil cambiada con éxito!"
 
-#: fluidsurf/apps/home/views.py:521
+#: fluidsurf/apps/home/views.py:555
 msgid "Your message was sent successfully!"
 msgstr "Tu mensaje ha sido enviado con éxito!"
 
-#: fluidsurf/apps/home/views.py:523
+#: fluidsurf/apps/home/views.py:557
 msgid "Invalid reCAPTCHA. Please try again."
 msgstr "reCAPTCHA incorrecto. Por favor, inténtalo de nuevo."
 
@@ -222,11 +238,11 @@ msgstr "reCAPTCHA incorrecto. Por favor, inténtalo de nuevo."
 msgid "Surfer"
 msgstr "Surfero"
 
-#: fluidsurf/settings/base.py:162
+#: fluidsurf/settings/base.py:163
 msgid "English"
 msgstr "Inglés"
 
-#: fluidsurf/settings/base.py:163
+#: fluidsurf/settings/base.py:164
 msgid "Spanish"
 msgstr "Español"
 
@@ -303,7 +319,7 @@ msgid "Dashboard"
 msgstr "Panel de Control"
 
 #: templates/home/base-p.html:200 templates/home/base.html:170
-#: templates/home/index.html:23 templates/home/producto.html:189
+#: templates/home/index.html:23 templates/home/producto.html:201
 #: templates/home/zona.html:21
 msgid "Login"
 msgstr "Iniciar sesión"
@@ -318,10 +334,8 @@ msgid "Logout"
 msgstr "Cerrar sesión"
 
 #: templates/home/contacto.html:11
-#, fuzzy
-#| msgid "Go back to FluidSurf"
 msgid "Contact FluidSurf"
-msgstr "Volver a FluidSurf"
+msgstr "Contactar con  FluidSurf"
 
 #: templates/home/contacto.html:35
 msgid "Send message"
@@ -333,7 +347,7 @@ msgid "Date"
 msgstr "Fecha"
 
 #: templates/home/historial.html:28 templates/home/historial.html:62
-#: templates/home/producto.html:216 templates/home/subir-producto.html:27
+#: templates/home/producto.html:228 templates/home/subir-producto.html:27
 #: templates/home/wishlist.html:36
 msgid "Price"
 msgstr "Precio"
@@ -377,7 +391,7 @@ msgid "Welcome to"
 msgstr "Bienvenido a"
 
 #: templates/home/index.html:28 templates/home/perfil.html:41
-#: templates/home/producto.html:54 templates/home/zona.html:26
+#: templates/home/producto.html:49 templates/home/zona.html:26
 msgid "Browser"
 msgstr "Buscador"
 
@@ -449,22 +463,16 @@ msgid "Save"
 msgstr "Guardar"
 
 #: templates/home/perfil.html:21
-#, fuzzy
-#| msgid "Profile picture"
 msgid "Profile of"
-msgstr "Foto de perfil"
+msgstr "Perfil de"
 
 #: templates/home/perfil.html:31
-#, fuzzy
-#| msgid "Public Profile"
 msgid "Edit profile"
-msgstr "Perfil público"
+msgstr "Editar perfil"
 
 #: templates/home/perfil.html:35
-#, fuzzy
-#| msgid "Report"
 msgid "Report profile"
-msgstr "Reportar"
+msgstr "Reportar perfil"
 
 #: templates/home/perfil.html:72
 msgid "About"
@@ -494,55 +502,55 @@ msgstr "Cerrar"
 msgid "Report"
 msgstr "Reportar"
 
-#: templates/home/producto.html:32
+#: templates/home/producto.html:33
 msgid "Edit"
 msgstr "Editar"
 
-#: templates/home/producto.html:36
+#: templates/home/producto.html:37
 msgid "Delete"
 msgstr "Borrar "
 
-#: templates/home/producto.html:151
-#, fuzzy
-#| msgid "Your Wishlist"
-msgid "Remove from wishlist"
-msgstr "Tu Lista de Deseos"
+#: templates/home/producto.html:95
+msgid "Share on Social Media"
+msgstr ""
 
-#: templates/home/producto.html:153
+#: templates/home/producto.html:163
+msgid "Remove from wishlist"
+msgstr "Eliminar de lista de deseos"
+
+#: templates/home/producto.html:165
 msgid "I want it!"
 msgstr "Lo quiero!"
 
-#: templates/home/producto.html:165
+#: templates/home/producto.html:177
 msgid "Buy product to"
 msgstr "Comprar producto a"
 
-#: templates/home/producto.html:174 templates/home/producto.html:179
+#: templates/home/producto.html:186 templates/home/producto.html:191
 msgid "Buy now"
 msgstr "Comprar ahora"
 
-#: templates/home/producto.html:187
+#: templates/home/producto.html:199
 msgid "SIGNUP"
 msgstr "REGISTRATE"
 
-#: templates/home/producto.html:188
+#: templates/home/producto.html:200
 msgid "Already have an account?"
 msgstr "¿Ya tienes cuenta?"
 
-#: templates/home/producto.html:203
+#: templates/home/producto.html:215
 msgid "Edit the basic information of your product"
 msgstr "Edita la información básica de tu producto"
 
-#: templates/home/producto.html:220 templates/home/subir-producto.html:45
-#, fuzzy
-#| msgid "Free subscription"
+#: templates/home/producto.html:232 templates/home/subir-producto.html:45
 msgid "Description"
-msgstr "Suscripción gratuita"
+msgstr "Descripcion"
 
-#: templates/home/producto.html:241
+#: templates/home/producto.html:253
 msgid "Are you sure you want to delete this product?"
 msgstr "¿Estás seguro de que quieres borrar este producto?"
 
-#: templates/home/producto.html:248
+#: templates/home/producto.html:260
 msgid "Yes"
 msgstr "Si"
 
@@ -592,7 +600,9 @@ msgid "Confirm"
 msgstr "Confirmar"
 
 #: templates/home/zona.html:16
-msgid "Products in "
+#, fuzzy
+#| msgid "Products in "
+msgid "Products in"
 msgstr "Productos en "
 
 #: templates/payments/charge.html:8
@@ -616,10 +626,8 @@ msgid "User or password invalid"
 msgstr "Usuario o contraseña incorrectos"
 
 #: templates/registration/signup.html:44
-#, fuzzy
-#| msgid "Old Password"
 msgid "Password"
-msgstr "Anterior contraseña"
+msgstr "Contraseña"
 
 #~ msgid "You already have that product in your wishlist"
 #~ msgstr "Ya tienes este producto en tu lista de deseos"
@@ -677,9 +685,6 @@ msgstr "Anterior contraseña"
 
 #~ msgid "Products uploaded by"
 #~ msgstr "Productos subidos por"
-
-#~ msgid "Share on Social Media"
-#~ msgstr "Compartir en redes sociales"
 
 #~ msgid "Administrator"
 #~ msgstr "Administrador"

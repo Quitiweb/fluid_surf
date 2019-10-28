@@ -92,7 +92,7 @@
                     <div class="item intro span-3" style="background-color: #58949C;">
 					<div>
                         <p class="white">{{ producto.descripcion }}</p>
-                        <h1 class="white mt-3">Share this product on social media</h1>
+                        <h1 class="white mt-3">{% trans 'Share on Social Media' %}</h1>
                            <div class="row ml-3 white">
                             {% post_to_twitter "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path  %}
 
