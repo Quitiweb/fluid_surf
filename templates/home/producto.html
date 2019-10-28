@@ -17,7 +17,7 @@
 				<div class="item intro span-2">
 					<h1 class="white mt-5">{{ producto.nombre }}</h1>
 						<p class="white">{% trans 'Uploaded by' %}
-                            <a href="{% url 'perfil' id=producto.user.id %}">
+                            <a href="{% url 'perfil' id=producto.user.id %}" style="color: #e5e5e5;">
                                 {% if producto.user.alias %}
                                     {{ producto.user.alias }}
                                 {% else %}
@@ -25,29 +25,24 @@
                                 {% endif %}
                             </a>
 
+                            <i class="fas fa-map-marker-alt ml-3"></i> {{ producto.spot }}
+
                             {%  if producto.user == user %}
-                            <div class="text-right">
+                                <div class="text-right">
+                                    <a class="btn btn-primary mt-1 white" data-toggle="modal" data-target="#exampleModal" href="">
+                                        <i class="fas fa-edit"></i> {% trans 'Edit' %}
+                                    </a>
 
-                            <a class="btn btn-primary mt-3 white" data-toggle="modal" data-target="#exampleModal" href="">
-                                <i class="fas fa-edit"></i> {% trans 'Edit' %}
-                            </a>
+                                    <a class="btn btn-warning mt-1 ml-1" data-toggle="modal" data-target="#exampleModalDelete" href="">
+                                        <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                    </a>
+                                </div>
 
-                            <a class="btn btn-warning mt-3 ml-1" data-toggle="modal" data-target="#exampleModalDelete" href="">
-                                <i class="fa fa-trash"></i> {% trans 'Delete' %}
-                            </a>
-                            </div>
-                            {%endif%}
+                            {% else %}
+                                <div class="h-25"></div>
+                            {% endif %}
                         </p>
-                           <div class="row">
-                               <div class="col-4"></div>
-                            {% post_to_twitter "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path  %}
 
-                            {% post_to_facebook object_or_url "" %}
-
-                            {% send_email "Mira este producto en fluidsurf!" "Acabo de encontrar este producto en fluid surf. Puede ser perfecto para ti!" object_or_url "Share via email"%}
-
-                            {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}
-                           </div>
 				</div>
 
                 <div class="item intro intro2 span-2">
@@ -70,13 +65,13 @@
 				{% for imagen in imagenes2 %}
                 {% if not forloop.counter|divisibleby:2 %}
 				<article class="item thumb span-3">
-					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter|add:'3'}}" data-backdrop="false"><!-- deberia ser true -->
+					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter|add:'2'}}" data-backdrop="false"><!-- deberia ser true -->
 						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
 					</a>
 				</article>
 
                     <!--  Modal que muestra la vista detalle de la imagen  -->
-                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter|add:'3'}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
+                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter|add:'2'}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
                       <div class="modal-dialog modal-lg modal-dialogFull" role="document">
                         <div class="modal-content modal-contentFull">
                           <div class="modal-header">
@@ -94,6 +89,21 @@
 			</div>
 		<!-- Items -->
 			<div class="items">
+                    <div class="item intro span-3" style="background-color: #58949C;">
+					<div>
+                        <p class="white">{{ producto.descripcion }}</p>
+                        <h1 class="white mt-3">Share this product on social media</h1>
+                           <div class="row ml-3 white">
+                            {% post_to_twitter "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path  %}
+
+                            {% post_to_facebook object_or_url "" %}
+
+                            {% send_email "Mira este producto en fluidsurf!" "Acabo de encontrar este producto en fluid surf. Puede ser perfecto para ti!" object_or_url "Share via email"%}
+
+                            {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}
+                           </div>
+                        </div>
+				</div>
 				{% for imagen in imagenes %}
 				<article class="item thumb span-3">
 					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter}}" data-backdrop="false"><!-- deberia ser true -->
@@ -118,13 +128,13 @@
             {% for imagen in imagenes2 %}
                 {% if forloop.counter|divisibleby:2 %}
 				<article class="item thumb span-3">
-					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter|add:'3'}}" data-backdrop="false"><!-- deberia ser true -->
+					<a data-toggle="modal" data-target="#exampleModal{{forloop.counter|add:'2'}}" data-backdrop="false"><!-- deberia ser true -->
 						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
 					</a>
 				</article>
 
                     <!--  Modal que muestra la vista detalle de la imagen  -->
-                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter|add:'3'}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
+                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter|add:'2'}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
                       <div class="modal-dialog modal-lg modal-dialogFull" role="document">
                         <div class="modal-content modal-contentFull">
                           <div class="modal-header">

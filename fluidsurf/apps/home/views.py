@@ -329,8 +329,8 @@ def producto(request, id='0'):
         else:
             break
 
-    A = imagenes[:3]
-    B = imagenes[3:]
+    A = imagenes[:2]
+    B = imagenes[2:]
 
     context = {
         'producto': producto,
