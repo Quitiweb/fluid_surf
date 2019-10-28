@@ -16,4 +16,6 @@ urlpatterns = [
     path('wishlist', views.wishlist, name='wishlist'),
     path('historial', views.historial, name='historial'),
     path('contacto', views.contacto, name='contacto'),
+    path('prueba2', views.prueba, name='prueba2'),
+    path('payment', views.payment, name='payment'),
 ]

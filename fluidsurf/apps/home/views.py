@@ -6,14 +6,16 @@ import json
 import zipfile
 import urllib
 from datetime import date
+import braintree
 
 import stripe
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, BadHeaderError
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
@@ -26,6 +28,9 @@ from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, A
 from ..helpers.helper import users_to_get
 
 from django.conf import settings
+
+from decimal import Decimal
+
 
 from PIL import Image
 from imagekit.registry import register
@@ -602,3 +607,53 @@ def enviar_email(subject, message, from_email):
 
 def error_404(request):
     return render(request, '404.html', status=404)
+
+
+def prueba(request):
+    template = loader.get_template('home/prueba.html')
+
+    # generate all other required data that you may need on the #checkout page and add them to context.
+
+    if settings.BRAINTREE_PRODUCTION:
+        braintree_env = braintree.Environment.Production
+    else:
+        braintree_env = braintree.Environment.Sandbox
+
+    # Configure Braintree
+    braintree.Configuration.configure(
+        braintree_env,
+        merchant_id=settings.BRAINTREE_MERCHANT_ID,
+        public_key=settings.BRAINTREE_PUBLIC_KEY,
+        private_key=settings.BRAINTREE_PRIVATE_KEY,
+    )
+
+    try:
+        braintree_client_token = braintree.ClientToken.generate({"customer_id": request.user.id})
+    except:
+        braintree_client_token = braintree.ClientToken.generate({})
+
+    context = {'braintree_client_token': braintree_client_token}
+
+    return HttpResponse(template.render(context, request))
+
+
+def payment(request):
+    print('payment')
+
+    nonce_from_the_client = request.POST['paymentMethodNonce']
+    customer_kwargs = {
+        "first_name": request.user.first_name,
+        "last_name": request.user.last_name,
+        "email": request.user.email,
+    }
+    customer_create = braintree.Customer.create(customer_kwargs)
+    customer_id = customer_create.customer.id
+    result = braintree.Transaction.sale({
+        "amount": "10.00",
+        "payment_method_nonce": nonce_from_the_client,
+        "options": {
+            "submit_for_settlement": True
+        }
+    })
+    print(result)
+    return HttpResponse('Ok')

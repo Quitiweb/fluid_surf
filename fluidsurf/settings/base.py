@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'django_social_share',
     'imagekit',
     'django_google_maps',
-    'django_filters'
+    'django_filters',
+    'braintree'
 ]
 
 MIDDLEWARE = [
@@ -214,3 +215,8 @@ STRIPE_SECRET_KEY = 'sk_test_iJctGZJJ8YRkZgzDGvqjmRRg002IHuQdnq'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_SIJFz5EtDD1yhqkzhunPbv7I00TUkM7IFA'
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LdNpL4UAAAAAF9IgR0Oz-mjlDg3KQKp6RSwxfci'
+
+BRAINTREE_PRODUCTION = False  # Para cambiar entre version live o sandbox
+BRAINTREE_MERCHANT_ID = "fjzw2mzxchqc5mc7"
+BRAINTREE_PUBLIC_KEY = "xwnbs5cgm8q2jr98"
+BRAINTREE_PRIVATE_KEY = "aea75ad6fe613b377999d5c852021e25"

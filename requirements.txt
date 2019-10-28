@@ -1,3 +1,4 @@
+braintree
 django-imagekit==4.0.2
 django==2.1.9
 django-tinymce==2.8.0

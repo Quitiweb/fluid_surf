@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+
+{% block main %}
+
+<div class="container mt-5 pt-5">
+  <form autocomplete="off">
+    {% csrf_token %}
+  {% if braintree_error %}
+    <div class="alert alert-danger fade in">
+        <button class="close" data-dismiss="alert">&times;</button>
+        {{ braintree_error|safe }}
+    </div>
+  {% endif %}
+  <div class="braintree-notifications"></div>
+  <div id="braintree-dropin"></div>
+  <input style="background-color: #0783ca" id="submit-button" class="btn btn-success btn-lg btn-block" type="button" value="Pay now!" />
+</form>
+
+<script src="https://js.braintreegateway.com/web/dropin/1.18.0/js/dropin.min.js"></script>
+
+  <script>
+
+  window.onload = function() {
+   braintree.dropin.create({
+      authorization: '{{ braintree_client_token }}',
+      container: '#braintree-dropin',
+      card: {
+        cardholderName: {
+            required: false
+        }
+      }
+    }, function (createErr, instance) {
+        $('#submit-button').click(function () {
+            instance.requestPaymentMethod(function (err, payload) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "payment" %}',
+                    data: {'paymentMethodNonce': payload.nonce,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'}
+                }).done(function (result) {
+                   //do accordingly
+                });
+            });
+        });
+    });
+  };
+
+  </script>
+</div>
+
+{% endblock %}
+
