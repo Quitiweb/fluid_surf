@@ -80,7 +80,16 @@ $(document).ready(function () {
     });
     
     // Eventos para la modificacion del nombre de manera dinamica
-    $('#id_nombre').val($('#username').text() + '-EU-Fecha-' + $('#current').text());
+    if (!$('#id_nombre').val())  {
+        $('#id_nombre').val($('#username').text() + '-EU-' + $.datepicker.formatDate('dd/mm/yy', new Date()) + '-' + $('#current').text());
+    } else {
+        var array = $('#id_nombre').val().split('-');
+
+        array[3]++ ;
+
+        $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
+
+    }
 
     $('#id_nombre').prop("readonly", true);
 

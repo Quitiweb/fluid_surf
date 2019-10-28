@@ -131,13 +131,18 @@ def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
     current = 0
-    if Producto.objects.all().count() > 0:
-        current = Producto.objects.latest('id').id + 1
 
     if request.user.is_authenticated:
         if request.method == "GET":
+
+            if Producto.objects.all().count() > 0:
+                current = Producto.objects.latest('id').id + 1
+
             form = AddProductForm()
         else:
+
+            if Producto.objects.all().count() > 0:
+                current = Producto.objects.latest('id').id + 1
             form = AddProductForm(request.POST, request.FILES)
 
             if form.is_valid():
@@ -188,7 +193,6 @@ def subir_producto(request):
 
                         try:
                             send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
-                            return redirect('producto', id=producto.id)
                         except BadHeaderError:
                             return HttpResponse('Invalid header found')
                     else:
