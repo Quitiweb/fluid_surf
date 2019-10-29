@@ -1,5 +1,6 @@
 $(function() {
-    $( "#id_fecha" ).datepicker({ dateFormat: 'dd/mm/yy' });
+    $( "#id_fecha" ).datepicker({ dateFormat: 'dd/mm/yy', defaultDate: new Date() });
+    $( "#id_fecha" ).val($.datepicker.formatDate('dd/mm/yy', new Date()));
 } );
 
 var numFiles = 0;
@@ -80,36 +81,33 @@ $(document).ready(function () {
     });
     
     // Eventos para la modificacion del nombre de manera dinamica
+
+    var contenido = 'Europe-' + $.datepicker.formatDate('dd/mm/yy', new Date()) + '-' + $('#current').text();
+    var username = $('#username').text();
+
     if (!$('#id_nombre').val())  {
-        $('#id_nombre').val($('#username').text() + '-EU-' + $.datepicker.formatDate('dd/mm/yy', new Date()) + '-' + $('#current').text());
+        $('#id_nombre').val( username + '-' + contenido);
     } else {
-        var array = $('#id_nombre').val().split('-');
+        var array = contenido.split('-');
 
-        array[3]++ ;
+        array[2]++ ;
 
-        $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
-
+        joinArray(array);
     }
 
     $('#id_nombre').prop("readonly", true);
 
-    $('#id_fecha').on("change", function(){
-        var array = $('#id_nombre').val().split('-');
+    $('#id_spot, #id_fecha').on("change", function(){
+        var array = contenido.split('-');
 
-        array[2] = $('#id_fecha').val();
+        array[0] = $('#id_spot').val();
+        array[1] = $('#id_fecha').val();
 
-        $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
+        contenido = array.toString().replace(/([,])/g, '-');
 
+        $('#id_nombre').val( username + '-' + contenido);
     });
 
-    $('#id_spot').on("change", function(){
-        var array = $('#id_nombre').val().split('-');
-
-        array[1] = $('#id_spot').val();
-
-        $('#id_nombre').val(array.toString().replace(/([,])/g, '-'));
-
-    });
 
     // Evento para limpiar la lista de imagenes
     $('#clearBtn').on("click", function(){
@@ -140,7 +138,4 @@ $(document).ready(function () {
         $(".textFiles").text("");
         numFiles = 0;
     });
-
-
-
 });
