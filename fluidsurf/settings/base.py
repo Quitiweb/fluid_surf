@@ -105,8 +105,7 @@ TEMPLATE_DIRS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'), 'templates', 'fluidsurf/templates',
-                 os.path.join(BASE_DIR, 'fluidsurf/templates'), ],
+        'DIRS': [os.path.join(PROJECT_ROOT, 'templates'), 'templates', 'fluidsurf/templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
