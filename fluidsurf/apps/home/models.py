@@ -7,12 +7,12 @@ from fluidsurf.apps.users.models import CustomUser
 from django_google_maps.fields import AddressField, GeoLocationField
 
 AREA_CHOICES = (
-    ('EU', _("Europe")),
-    ('AF', _("Africa")),
-    ('AS', _("Asia")),
-    ('OC', _("Oceania")),
-    ('NA', _("North America")),
-    ('AS', _("South America"))
+    ('Europe', _("Europe")),
+    ('Africa', _("Africa")),
+    ('Asia', _("Asia")),
+    ('Oceania', _("Oceania")),
+    ('North America', _("North America")),
+    ('South America', _("South America"))
 )
 
 
