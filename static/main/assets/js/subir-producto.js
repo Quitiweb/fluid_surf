@@ -88,11 +88,31 @@ $(document).ready(function () {
     if (!$('#id_nombre').val())  {
         $('#id_nombre').val( username + '-' + contenido);
     } else {
-        var array = contenido.split('-');
 
-        array[2]++ ;
+        let temp = $('#id_nombre').val().split('-');
 
-        joinArray(array);
+        temp2 = temp;
+
+        reversed = temp2.reverse();
+
+        console.log(temp, temp2, reversed);
+
+        reversed[0]++;
+
+        $( "#id_fecha" ).val(reversed[1]);
+
+        for (let i=reversed.length - 1; i >= 0; i--) {
+            console.log(reversed[i]);
+            if (i > 2) {
+                reversed.splice(i, 1);
+            }
+        }
+
+        temp2 = reversed.reverse()
+
+        contenido = temp2.toString().replace(/([,])/g, '-');
+
+        $('#id_nombre').val( username + '-' + contenido);
     }
 
     $('#id_nombre').prop("readonly", true);
