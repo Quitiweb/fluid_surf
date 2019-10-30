@@ -20,12 +20,12 @@ class CustomUser(AbstractUser):
     )
 
     AREA_CHOICES = (
-        ('EU', _("Europe")),
-        ('AF', _("Africa")),
-        ('AS', _("Asia")),
-        ('OC', _("Oceania")),
-        ('NA', _("North America")),
-        ('SA', _("South America"))
+        ('Europe', _("Europe")),
+        ('Africa', _("Africa")),
+        ('Asia', _("Asia")),
+        ('Oceania', _("Oceania")),
+        ('North America', _("North America")),
+        ('South America', _("South America"))
     )
 
     tipo_de_usuario = models.CharField(

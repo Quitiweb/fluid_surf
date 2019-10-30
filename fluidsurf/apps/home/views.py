@@ -102,6 +102,8 @@ def mi_cuenta(request):
             if form.is_valid():
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
+            else:
+                print(form.errors)
                 if passform.is_valid():
                     pwd = passform.save()
                     update_session_auth_hash(request, pwd)  # Important!
