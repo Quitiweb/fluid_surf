@@ -62,6 +62,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
+
 def mensaje_enviado(request):
     return render(request, 'home/mensaje-enviado.html')
 
@@ -98,7 +99,12 @@ def mi_cuenta(request):
                     fotografo = photo_form.save(commit=False)
                     fotografo.CV = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', fotografo.CV)
                     fotografo.CV = re.sub(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", '', fotografo.CV)
-                    fotografo.save()
+
+                    if CustomUser.objects.filter(alias=fotografo.alias).exists():
+                        messages.warning(request, _('A photographer with that alias already exists, please try again.'))
+                        return HttpResponseRedirect(request.path_info)
+                    else:
+                        fotografo.save()
             if form.is_valid():
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
