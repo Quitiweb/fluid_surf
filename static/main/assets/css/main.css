@@ -301,6 +301,10 @@ input, select, textarea {
 				margin: 0 0 2em 0;
 			}
 
+			ul.icons li {
+			    font-size: 1em;
+			}
+
 		}
 
 /* Icons */
@@ -767,7 +771,7 @@ input, select, textarea {
 
 				#footer > section:last-child {
 					text-align: left;
-					margin: 1.5em 0 0 0;
+					margin: 1em 0 0 0;
 					width: 100%;
 				}
 
