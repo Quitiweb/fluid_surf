@@ -751,7 +751,7 @@ input, select, textarea {
 				padding-left: 0;
 			}
 
-		@media screen and (max-width: 980px) {
+		@media screen and (max-width: 736px) {
 
 			#footer {
 				-moz-flex-direction: column;

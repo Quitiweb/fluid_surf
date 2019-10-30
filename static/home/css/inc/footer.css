@@ -112,18 +112,12 @@
 			/* background-image: linear-gradient(to top, rgba(46, 49, 65, 0.8), rgba(46, 49, 65, 0.8)), url("../../images/bg.jpg"); */
 			background-size: auto, cover;
 			background-position: center, center;
-			margin-top: 6.5em;
-			padding-top: 6.5em;
 		}
 
 	}
 
 	@media screen and (max-width: 980px) {
 
-		#footer {
-			margin-top: 4.75em;
-			padding-top: 4.75em;
-		}
 
 			#footer .inner {
 				padding: 3em 3em 1em 3em ;
