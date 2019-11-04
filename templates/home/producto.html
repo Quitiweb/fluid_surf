@@ -15,7 +15,7 @@
 			<div class="items">
 
 				<div class="item intro span-2">
-					<h1 class="white mt-5">{{ producto.nombre }}</h1>
+					<h1 class="white mt-5" id="productoH1">{{ producto.nombre }}</h1>
 						<p class="white">{% trans 'Uploaded by' %}
                             <a href="{% url 'perfil' id=producto.user.id %}" style="color: #e5e5e5;">
                                 {% if producto.user.alias %}

@@ -641,7 +641,7 @@ input, select, textarea {
 				}
 
 
-				#main .item.intro h1 {
+				#main .item.intro #productoH1 {
 					font-size: 1.3em;
 					line-height: 1em;
 				}
