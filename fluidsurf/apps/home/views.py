@@ -264,7 +264,7 @@ def producto(request, id='0'):
                 elif 'deleteProduct' in request.POST:
                     producto.delete()
                     messages.success(request, _('Your product was deleted successfully'))
-                    return redirect('/perfil/' + request.user.username)
+                    return redirect('perfil', request.user.id)
                 else:
                     messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
             else:
