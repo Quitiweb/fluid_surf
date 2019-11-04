@@ -75,7 +75,7 @@
                       <div class="modal-dialog modal-lg modal-dialogFull" role="document">
                         <div class="modal-content modal-contentFull">
                           <div class="modal-header">
-                               <button class="btn-transparent" data-dismiss="modal"><i class="fa fa-window-close fa-2x black text-center" aria-hidden="true"></i></button>
+                               <button class="btn" data-dismiss="modal" style="z-index: 11111;"><i class="fa fa-window-close fa-2x black text-center" aria-hidden="true"></i></button>
                           </div>
                           <div class="modal-body">
                             {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="50%"%}
@@ -110,19 +110,21 @@
 						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
 					</a>
 				</article>
-                <!--  Modal que muestra la vista detalle de la imagen  -->
-                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
-                      <div class="modal-dialog modal-lg modal-dialogFull" role="document">
-                        <div class="modal-content modal-contentFull">
-                          <div class="modal-header">
-                               <button class="btn-transparent" data-dismiss="modal"><i class="fa fa-window-close fa-2x black text-center" aria-hidden="true"></i></button>
-                          </div>
-                          <div class="modal-body">
-                            {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="50%"%}
-                          </div>
+                <div>
+                  <!--  Modal que muestra la vista detalle de la imagen  -->
+                  <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
+                    <div class="modal-dialog modal-lg modal-dialogFull" role="document">
+                      <div class="modal-content modal-contentFull">
+                        <div class="modal-header">
+                             <button class="btn" data-dismiss="modal"><i class="fa fa-window-close fa-2x black text-center" aria-hidden="false"></i></button>
+                        </div>
+                        <div class="modal-body">
+                          {% generateimage 'home:watermark' source=imagen -- class="d-block w-100" style="object-fit:cover" height="50%"%}
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
 				{% endfor %}
 
             {% for imagen in imagenes2 %}
@@ -134,7 +136,7 @@
 				</article>
 
                     <!--  Modal que muestra la vista detalle de la imagen  -->
-                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter|add:'2'}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
+                    <div class="modal fade bd-example-modal-lg modalFull pb-5 mt-5 pt-4" id="exampleModal{{forloop.counter|add:'2'}}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="position: fixed;">
                       <div class="modal-dialog modal-lg modal-dialogFull" role="document">
                         <div class="modal-content modal-contentFull">
                           <div class="modal-header">
