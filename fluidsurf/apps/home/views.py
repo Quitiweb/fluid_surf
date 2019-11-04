@@ -436,11 +436,22 @@ def wishlist(request):
                     if producto:
                         productos.append(producto)
             if request.method == "POST":
-                request.user.wishlist = ''
-                request.user.save()
-                messages.success(request, _('Wishlist emptied successfully'))
-                return redirect('wishlist')
 
+                if 'remove' in request.POST:
+                    id = request.POST.get('remove')
+
+                    for item in lista:
+                        if item == str(id):
+                            lista.remove(item)
+                            request.user.wishlist = ",".join(lista)
+                            request.user.save()
+                            messages.success(request, _('Product removed from your wishlist'))
+                else:
+                    request.user.wishlist = ''
+                    request.user.save()
+                    messages.success(request, _('Wishlist emptied successfully'))
+
+                return redirect('wishlist')
         context = {
             'productos': productos,
         }
