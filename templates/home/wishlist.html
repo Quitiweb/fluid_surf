@@ -41,7 +41,13 @@
                                         {{ producto.user.first_name }} {{ producto.user.last_name }}
                                     {% endif %}
                 </p>
+                   <form action="" class="m-0">
                 <a href="{% url 'producto' id=producto.id %}" class="btn btn-primary mt-3">{% trans 'Go to product' %}</a>
+
+                      <button href="" class="btn btn-secondary float-right mt-3" style="height: 2.5em !important;">
+                      <i class="fa fa-trash black" aria-hidden="true"></i>
+                  </button>
+                  </form>
               </div>
             </div>
         </div>

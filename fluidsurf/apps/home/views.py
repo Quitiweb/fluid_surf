@@ -435,7 +435,6 @@ def wishlist(request):
                     producto = Producto.objects.filter(id=item, stock=1).first()
                     if producto:
                         productos.append(producto)
-
             if request.method == "POST":
                 request.user.wishlist = ''
                 request.user.save()
