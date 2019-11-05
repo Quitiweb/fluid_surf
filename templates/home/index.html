@@ -79,24 +79,6 @@
 			</div>
 	</section>
 </div>
-
-<section id="footer" class="pt-5">
-	<section class="white">
-		<p>{% trans 'Connecting photographers and surfers' %}</p>
-	</section>
-	<section>
-		<ul class="icons">
-			<li>{% post_to_twitter _("Take a look at FluidSurf!") request.get_full_path  %}</li>
-			<li>{% post_to_facebook object_or_url "" %}</li>
-			<li>{% send_email _("Take a look at FluidSurf!") object_or_url "Share via email"%}</li>
-			<li>{% post_to_telegram _("Take a look at FluidSurf!") request.get_full_path %}</li>
-		</ul>
-		<ul class="copyright white">
-			<li><a href="https://quitiweb.com/" class="white">© Quitiweb</a></li><li>Design: HTML5 UP</li>
-		</ul>
-	</section>
-</section>
-
 <script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>
 
 {% endblock %}
