@@ -90,11 +90,24 @@ class Denuncia(models.Model):
 # PAGINAS DE INFORMACION DEL FOOTER
 class Terms(models.Model):
     titulo = models.CharField(max_length=200)
-    text = HTMLField(max_length=15000,
+    text = HTMLField(max_length=45000,
                      default="Terminos y condiciones de uso...",
                      help_text="Este es el texto que aparecera en la seccion terminos y condiciones")
     class Meta:
         verbose_name_plural = 'Terminos y Condiciones'
+
+    def __str__(self):
+        return str(self.titulo)
+
+
+class Privacy(models.Model):
+    titulo = models.CharField(max_length=200)
+    text = HTMLField(max_length=45000,
+                     default="Politica de privacidad...",
+                     help_text="Este es el texto que aparecera en la seccion politica de privacidad")
+
+    class Meta:
+        verbose_name_plural = 'Politica de Privacidad'
 
     def __str__(self):
         return str(self.titulo)

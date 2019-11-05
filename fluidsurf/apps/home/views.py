@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
-from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms
+from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm
@@ -595,6 +595,20 @@ def terms(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def privacy(request):
+    template = loader.get_template('home/privacy.html')
+
+    privacy = Privacy.objects.all().first()
+
+    context = {
+        'privacy': privacy
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
 
 
 

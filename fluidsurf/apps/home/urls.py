@@ -21,4 +21,5 @@ urlpatterns = [
 
     # PAGINAS DE INFORMACION DEL FOOTER
     path('terms', views.terms, name='terms'),
+    path('privacy_policy', views.privacy, name='privacy'),
 ]
