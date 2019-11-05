@@ -16,13 +16,13 @@
 <div class="container mt-5 pt-5">
     <div class="row pl-1">
         <div class="col-8">
-            <h1 class="display-4 pb-5">{% trans 'Your Wishlist' %}</h1>
+            <h1 class="display-4 pb-5 white" style="font-weight: 400;">{% trans 'Your Wishlist' %}</h1>
         </div>
         <div class="col-4 text-right mt-3">
-                 <button type="button" class="btn-transparent" data-toggle="modal" data-target="#exampleModal">
-                    <i class="fa fa-trash fa-3x black" aria-hidden="true"></i>
-                </button>
-                <h1 class="mt-1">{% trans 'Empty wishlist' %}</h1>
+                 <a class="btn-transparent mr-5" data-toggle="modal" data-target="#exampleModal" style="outline: none;">
+                    <i class="fa fa-trash fa-3x white" aria-hidden="true"></i>
+                </a>
+                <h1 class="mt-1 white">{% trans 'Empty wishlist' %}</h1>
 
         </div>
      {% if productos %}
