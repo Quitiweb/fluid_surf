@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
-from fluidsurf.apps.home.models import Producto, Ubicacion, Compra
+from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm
@@ -581,6 +581,21 @@ def contacto(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+# PAGINAS INFORMATIVAS DEL FOOTER
+
+def terms(request):
+    template = loader.get_template('home/terms.html')
+
+    terms = Terms.objects.all().first()
+
+    context = {
+        'terms': terms
+    }
+
+    return HttpResponse(template.render(context, request))
+
 
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS

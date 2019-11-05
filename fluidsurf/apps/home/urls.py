@@ -18,4 +18,7 @@ urlpatterns = [
     path('contacto', views.contacto, name='contacto'),
     path('prueba2', views.prueba, name='prueba2'),
     path('payment', views.payment, name='payment'),
+
+    # PAGINAS DE INFORMACION DEL FOOTER
+    path('terms', views.terms, name='terms'),
 ]

@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from tinymce.models import HTMLField
 
 from fluidsurf.apps.users.models import CustomUser
 from django_google_maps.fields import AddressField, GeoLocationField
@@ -84,3 +85,17 @@ class Denuncia(models.Model):
 
     def __str__(self):
         return self.receptor.username + '-' + self.emisor.username + '-' + str(datetime.date.today())
+
+
+# PAGINAS DE INFORMACION DEL FOOTER
+class Terms(models.Model):
+    titulo = models.CharField(max_length=200)
+    text = HTMLField(max_length=15000,
+                     default="Terminos y condiciones de uso...",
+                     help_text="Este es el texto que aparecera en la seccion terminos y condiciones")
+    class Meta:
+        verbose_name_plural = 'Terminos y Condiciones'
+
+    def __str__(self):
+        return str(self.titulo)
+
