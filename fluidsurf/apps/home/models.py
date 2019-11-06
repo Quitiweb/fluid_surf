@@ -200,3 +200,29 @@ class Manual(models.Model):
 
     def __str__(self):
         return 'Instrucciones-' + str(datetime.date.today())
+
+
+class HowDoesItWork(models.Model):
+    text = HTMLField(max_length=45000,
+                     default="Como funciona...",
+                     help_text="Este es el texto que aparecera en la seccion como funciona")
+
+    text_en = HTMLField(max_length=45000,
+                        default="How does it work...",
+                        help_text="This is the text that will appear on your how does it work section")
+
+    image = models.ImageField(upload_to='img/information/', blank=True)
+
+    text2 = HTMLField(max_length=45000,
+                     default="2 Como funciona...",
+                     help_text="Este es el texto que aparecera en la seccion como funciona")
+
+    text2_en = HTMLField(max_length=45000,
+                        default=" How does it work...",
+                        help_text="This is the text that will appear on your how does it work section")
+
+    class Meta:
+        verbose_name_plural = '¿Como funciona?'
+
+    def __str__(self):
+        return 'Comofunciona-' + str(datetime.date.today())

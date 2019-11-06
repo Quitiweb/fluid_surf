@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 
 
 from .models import Producto, Compra, Ubicacion, Denuncia, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright, \
-    Manual
+    Manual, HowDoesItWork
 
 admin.site.register(Producto)
 admin.site.register(Compra)
@@ -17,3 +17,4 @@ admin.site.register(FreeSub)
 admin.site.register(Copyright)
 admin.site.register(SecurePayments)
 admin.site.register(Manual)
+admin.site.register(HowDoesItWork)

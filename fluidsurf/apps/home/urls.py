@@ -27,4 +27,5 @@ urlpatterns = [
     path('copyright', views.copyright, name='copyright'),
     path('secure-payments', views.secure_payments, name='secure-payments'),
     path('manual', views.manual, name='manual'),
+    path('how-does-it-work', views.how_does_it_work, name='how-does-it-work'),
 ]

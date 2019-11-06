@@ -1,0 +1,41 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load social_share %}
+{% load imagekit %}
+
+{% block main %}
+<div class="container mt-5 pt-5 pb-5">
+
+<h1 class="display-4">{% trans 'How does it work?' %}</h1> <br>
+
+    {% if LANGUAGE_CODE == 'en'  %}
+        {% autoescape off %}
+            {{ how.text_en }}
+        {% endautoescape %}
+
+    <img src="{{ how.image.url }}" alt="">
+
+        {% autoescape off %}
+            {{ how.text2_en }}
+        {% endautoescape %}
+    
+    {% else %}
+        {% autoescape off %}
+            {{ how.text }}
+        {% endautoescape %}
+
+    <div class="row pb-5 mt-5">
+
+             <img src="{{ how.image.url }}" alt="" width="400">
+
+    </div>
+
+        {% autoescape off %}
+            {{ how.text2 }}
+        {% endautoescape %}
+
+    {% endif %}
+</div>
+{% endblock %}

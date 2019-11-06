@@ -22,7 +22,7 @@ from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
-    Copyright, Manual
+    Copyright, Manual, HowDoesItWork
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm
@@ -664,6 +664,18 @@ def manual(request):
 
     context = {
         'manual': manual
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def how_does_it_work(request):
+    template = loader.get_template('home/how-does-it-work.html')
+
+    how = HowDoesItWork.objects.all().first()
+
+    context = {
+        'how': how
     }
 
     return HttpResponse(template.render(context, request))
