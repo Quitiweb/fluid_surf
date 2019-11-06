@@ -1,0 +1,27 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load social_share %}
+{% load imagekit %}
+
+{% block main %}
+<div class="container mt-5 pt-5 pb-5">
+
+<h1 class="display-4">{% trans 'Selling photos: Manual' %}</h1> <br>
+
+    <iframe width="750" height="400" src="https://www.youtube.com/embed/EtHuS2EQG90" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <br><br>
+    {% if LANGUAGE_CODE == 'en'  %}
+        {% autoescape off %}
+            {{ manual.text_en }}
+        {% endautoescape %}
+    {% else %}
+        {% autoescape off %}
+            {{ manual.text }}
+        {% endautoescape %}
+    {% endif %}
+</div>
+
+
+{% endblock %}

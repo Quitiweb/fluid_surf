@@ -184,3 +184,19 @@ class SecurePayments(models.Model):
 
     def __str__(self):
         return 'Seguridadenpagos-' + str(datetime.date.today())
+
+
+class Manual(models.Model):
+    text = HTMLField(max_length=45000,
+                     default="Instrucciones: vender fotos...",
+                     help_text="Este es el texto que aparecera en la seccion instrucciones: vender fotos")
+
+    text_en = HTMLField(max_length=45000,
+                        default="Selling photos: manual...",
+                        help_text="This is the text that will appear on your selling photos: manual section")
+
+    class Meta:
+        verbose_name_plural = 'Instrucciones: vender fotos'
+
+    def __str__(self):
+        return 'Instrucciones-' + str(datetime.date.today())

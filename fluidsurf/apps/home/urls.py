@@ -26,4 +26,5 @@ urlpatterns = [
     path('free-sub', views.free_sub, name='free-sub'),
     path('copyright', views.copyright, name='copyright'),
     path('secure-payments', views.secure_payments, name='secure-payments'),
+    path('manual', views.manual, name='manual'),
 ]

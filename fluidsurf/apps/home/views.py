@@ -22,7 +22,7 @@ from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
-    Copyright
+    Copyright, Manual
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm
@@ -656,6 +656,17 @@ def secure_payments(request):
 
     return HttpResponse(template.render(context, request))
 
+
+def manual(request):
+    template = loader.get_template('home/manual.html')
+
+    manual = Manual.objects.all().first()
+
+    context = {
+        'manual': manual
+    }
+
+    return HttpResponse(template.render(context, request))
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
