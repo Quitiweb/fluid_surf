@@ -21,7 +21,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
-from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments
+from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
+    Copyright
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm
@@ -627,6 +628,18 @@ def free_sub(request):
 
     context = {
         'sub': sub
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def copyright(request):
+    template = loader.get_template('home/copyright.html')
+
+    copyright = Copyright.objects.all().first()
+
+    context = {
+        'copyright': copyright
     }
 
     return HttpResponse(template.render(context, request))

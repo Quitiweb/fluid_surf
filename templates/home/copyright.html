@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load social_share %}
+{% load imagekit %}
+
+{% block main %}
+<div class="container mt-5 pt-5 pb-5">
+
+<h1 class="display-4">{% trans 'Copyright, licenses and sizes' %}</h1> <br>
+
+    {% if LANGUAGE_CODE == 'en'  %}
+        {% autoescape off %}
+            {{ copyright.text_en }}
+        {% endautoescape %}
+    {% else %}
+        {% autoescape off %}
+            {{ copyright.text }}
+        {% endautoescape %}
+    {% endif %}
+</div>
+
+
+{% endblock %}

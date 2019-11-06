@@ -151,6 +151,22 @@ class FreeSub(models.Model):
         return 'Suscripciongratuita-' + str(datetime.date.today())
 
 
+class Copyright(models.Model):
+    text = HTMLField(max_length=45000,
+                     default="Copyright, licencias y tamaños...",
+                     help_text="Este es el texto que aparecera en la seccion copyright, licencias y tamaños")
+
+    text_en = HTMLField(max_length=45000,
+                        default="Copyright, licenses and sizes...",
+                        help_text="This is the text that will appear on your copyright, licenses and sizes section")
+
+    class Meta:
+        verbose_name_plural = 'Copyright, licencias y tamaños'
+
+    def __str__(self):
+        return 'Copyright-' + str(datetime.date.today())
+
+
 class SecurePayments(models.Model):
 
     image = models.ImageField(upload_to='img/information/', blank=True)
