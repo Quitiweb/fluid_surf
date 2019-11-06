@@ -8,15 +8,15 @@
 {% block main %}
 <div class="container mt-5 pt-5 pb-5">
 
-<h1 class="display-4">{% trans 'Terms and Conditions' %}</h1> <br>
+<h1 class="display-4">{% trans 'Taxes and billing' %}</h1> <br>
 
     {% if LANGUAGE_CODE == 'en'  %}
         {% autoescape off %}
-            {{ terms.text_en }}
+            {{ taxes.text_en }}
         {% endautoescape %}
     {% else %}
         {% autoescape off %}
-            {{ terms.text }}
+            {{ taxes.text }}
         {% endautoescape %}
     {% endif %}
 </div>

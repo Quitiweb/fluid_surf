@@ -89,26 +89,82 @@ class Denuncia(models.Model):
 
 # PAGINAS DE INFORMACION DEL FOOTER
 class Terms(models.Model):
-    titulo = models.CharField(max_length=200)
     text = HTMLField(max_length=45000,
                      default="Terminos y condiciones de uso...",
                      help_text="Este es el texto que aparecera en la seccion terminos y condiciones")
+
+    text_en = HTMLField(max_length=45000,
+                     default="Terms and conditions...",
+                     help_text="This is the text that will appear on your terms and conditions section")
     class Meta:
         verbose_name_plural = 'Terminos y Condiciones'
 
     def __str__(self):
-        return str(self.titulo)
+        return 'Terminos&Condiciones-' + str(datetime.date.today())
 
 
 class Privacy(models.Model):
-    titulo = models.CharField(max_length=200)
     text = HTMLField(max_length=45000,
                      default="Politica de privacidad...",
                      help_text="Este es el texto que aparecera en la seccion politica de privacidad")
+
+    text_en = HTMLField(max_length=45000,
+                     default="Privacy policy...",
+                     help_text="This is the text that will appear on your policy privacy section")
 
     class Meta:
         verbose_name_plural = 'Politica de Privacidad'
 
     def __str__(self):
-        return str(self.titulo)
+        return 'Politica de privacidad-' + str(datetime.date.today())
 
+
+class Taxes(models.Model):
+    text = HTMLField(max_length=45000,
+                     default="Impuestos y facturacion...",
+                     help_text="Este es el texto que aparecera en la seccion impuestos y facturacion")
+
+    text_en = HTMLField(max_length=45000,
+                     default="Taxes and billing...",
+                     help_text="This is the text that will appear on your taxes & billing section")
+
+    class Meta:
+        verbose_name_plural = 'Impuestos y facturacion'
+
+    def __str__(self):
+        return 'ImpuestosyFacturacion-' + str(datetime.date.today())
+
+
+class FreeSub(models.Model):
+    text = HTMLField(max_length=45000,
+                     default="Suscripcion gratuita...",
+                     help_text="Este es el texto que aparecera en la seccion suscripcion gratuita")
+
+    text_en = HTMLField(max_length=45000,
+                        default="Free subscription features...",
+                        help_text="This is the text that will appear on your free subcription features section")
+
+    class Meta:
+        verbose_name_plural = 'Suscripcion gratuita'
+
+    def __str__(self):
+        return 'Suscripciongratuita-' + str(datetime.date.today())
+
+
+class SecurePayments(models.Model):
+
+    image = models.ImageField(upload_to='img/information/', blank=True)
+
+    text = HTMLField(max_length=45000,
+                     default="Seguridad en pagos...",
+                     help_text="Este es el texto que aparecera en la seccion seguridad en pagos")
+
+    text_en = HTMLField(max_length=45000,
+                        default="Secure payments...",
+                        help_text="This is the text that will appear on your secure payments section")
+
+    class Meta:
+        verbose_name_plural = 'Seguridad en pagos'
+
+    def __str__(self):
+        return 'Seguridadenpagos-' + str(datetime.date.today())

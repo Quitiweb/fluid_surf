@@ -6,14 +6,21 @@
 {% load imagekit %}
 
 {% block main %}
-<div class="container mt-5 pt-5">
+<div class="container mt-5 pt-5 pb-5">
 
-<h1 class="display-4">{{ privacy.titulo }}</h1> <br>
+<h1 class="display-4">{% trans 'Privacy Policy' %}</h1> <br>
+    {% get_current_language as LANGUAGE_CODE %}
 
-{% autoescape off %}
-    {{ privacy.text }}
 
-    {% endautoescape %}
+    {% if LANGUAGE_CODE == 'en'  %}
+        {% autoescape off %}
+            {{ privacy.text_en }}
+        {% endautoescape %}
+    {% else %}
+        {% autoescape off %}
+            {{ privacy.text }}
+        {% endautoescape %}
+    {% endif %}
 </div>
 
 

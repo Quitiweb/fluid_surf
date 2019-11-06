@@ -8,15 +8,21 @@
 {% block main %}
 <div class="container mt-5 pt-5 pb-5">
 
-<h1 class="display-4">{% trans 'Terms and Conditions' %}</h1> <br>
+<h1 class="display-4">{% trans 'Secure payments' %}</h1> <br>
+
+    <div class="row">
+        <div class="col-12">
+            <img src="{{ payments.image.url }}" alt="">
+        </div>
+    </div>
 
     {% if LANGUAGE_CODE == 'en'  %}
         {% autoescape off %}
-            {{ terms.text_en }}
+            {{ payments.text_en }}
         {% endautoescape %}
     {% else %}
         {% autoescape off %}
-            {{ terms.text }}
+            {{ payments.text }}
         {% endautoescape %}
     {% endif %}
 </div>

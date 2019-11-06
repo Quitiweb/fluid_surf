@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
-from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy
+from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm
@@ -30,7 +30,6 @@ from ..helpers.helper import users_to_get
 from django.conf import settings
 
 from decimal import Decimal
-
 
 from PIL import Image
 from imagekit.registry import register
@@ -60,7 +59,6 @@ def index(request):
     }
 
     return HttpResponse(template.render(context, request))
-
 
 
 def mensaje_enviado(request):
@@ -195,7 +193,8 @@ def subir_producto(request):
                         subject = _("New product in your area")
                         message = producto.user.first_name + " " + producto.user.last_name + str(
                             _(" has uploaded a product nearby you"))
-                        message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(producto.id)  # TODO Añadir link
+                        message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
+                            producto.id)  # TODO Añadir link
                         from_email = settings.SERVER_EMAIL
                         to_mail = mails
 
@@ -609,7 +608,40 @@ def privacy(request):
     return HttpResponse(template.render(context, request))
 
 
+def taxes(request):
+    template = loader.get_template('home/taxes.html')
 
+    taxes = Taxes.objects.all().first()
+
+    context = {
+        'taxes': taxes
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def free_sub(request):
+    template = loader.get_template('home/sub.html')
+
+    sub = FreeSub.objects.all().first()
+
+    context = {
+        'sub': sub
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def secure_payments(request):
+    template = loader.get_template('home/secure-payments.html')
+
+    payments = SecurePayments.objects.all().first()
+
+    context = {
+        'payments': payments
+    }
+
+    return HttpResponse(template.render(context, request))
 
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
