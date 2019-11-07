@@ -19,7 +19,7 @@ urlpatterns = [
     path('prueba2', views.prueba, name='prueba2'),
     path('payment', views.payment, name='payment'),
 
-    # PAGINAS DE INFORMACION DEL FOOTER
+    # PAGINAS DE INFORMACION DEL FOOTERq
     path('terms', views.terms, name='terms'),
     path('privacy-policy', views.privacy, name='privacy'),
     path('taxes', views.taxes, name='taxes'),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('secure-payments', views.secure_payments, name='secure-payments'),
     path('manual', views.manual, name='manual'),
     path('how-does-it-work', views.how_does_it_work, name='how-does-it-work'),
+    path('devolucion', views.devolucion, name='devolucion'),
 ]

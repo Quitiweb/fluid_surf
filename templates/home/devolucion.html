@@ -1,0 +1,51 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load social_share %}
+{% load imagekit %}
+
+{% block main %}
+<div class="container mt-5 pt-5 pb-5">
+
+<h1 class="display-4 text-center">{% trans 'Return a product' %}</h1> <br>
+
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-0 col-lg-2"></div>
+            <div class="col-12 col-lg-8 pb-3">
+                <label for="id_order">Choose the product you want to return</label>
+                {{ form.order }}
+            </div>
+            <div class="col-0 col-lg-2"></div>
+
+            <div class="col-0 col-lg-2"></div>
+            <div class="col-12 col-lg-8 pb-3">
+                <label for="id_reason">Why do you want to return it?</label>
+                {{ form.reason }}
+            </div>
+            <div class="col-0 col-lg-2"></div>
+
+            <div class="col-0 col-lg-2"></div>
+            <div class="col-12 col-lg-8 pb-3">
+                <label for="id_is_opened">Have you opened this product?</label>
+                {{ form.is_opened }}
+            </div>
+            <div class="col-0 col-lg-2"></div>
+
+            <div class="col-0 col-lg-2"></div>
+            <div class="col-12 col-lg-8 pb-5">
+                <label for="id_detais">Tell us more about it</label>
+                {{ form.details }}
+            </div>
+
+            <div class="col-12 text-center">
+                <input type="submit" class="pr-5 pl-5">
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -4,7 +4,7 @@ from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 
-from fluidsurf.apps.home.models import Producto, Denuncia
+from fluidsurf.apps.home.models import Producto, Denuncia, Compra, Devolucion
 from fluidsurf.apps.users.models import CustomUser
 
 AREA_CHOICES = (
@@ -168,3 +168,37 @@ class DenunciaForm(forms.ModelForm):
     class Meta:
         model = Denuncia
         fields = ('motivo', 'detalles')
+
+
+class DevolucionForm(forms.ModelForm):
+    CHOICES = (
+        ('Dead on Arrival', _("Dead on Arrival")),
+        ('Faulty', _("Faulty, please supply details")),
+        ('Order Error', _("Order Error")),
+        ('Other', _("Other, please supply details")),
+        ('Wrong Item', _("Received Wrong Item"))
+    )
+
+    BOOL_CHOICES = (
+        ('Y', _("Yes")),
+        ('N', _("No"))
+    )
+
+    order = forms.ModelChoiceField(queryset=None)
+
+    reason = forms.ChoiceField(choices=CHOICES, required=True)
+    is_opened = forms.ChoiceField(choices=BOOL_CHOICES, required=True)
+
+    details = forms.Textarea()
+
+    class Meta:
+        model = Devolucion
+        fields = ('order', 'reason', 'is_opened', 'details')
+
+    def __init__(self, user, *args, **kwargs):
+        super(DevolucionForm, self).__init__(*args, **kwargs)
+        self.fields['order'].queryset = Producto.objects.all().filter(compra_p__comprador=user)
+
+
+
+

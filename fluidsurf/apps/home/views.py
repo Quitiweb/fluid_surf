@@ -25,7 +25,7 @@ from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Priva
     Copyright, Manual, HowDoesItWork
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
-    DenunciaForm, ContactForm
+    DenunciaForm, ContactForm, DevolucionForm
 from ..helpers.helper import users_to_get
 
 from django.conf import settings
@@ -676,6 +676,18 @@ def how_does_it_work(request):
 
     context = {
         'how': how
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def devolucion(request):
+    template = loader.get_template('home/devolucion.html')
+
+    form = DevolucionForm(user=request.user)
+
+    context = {
+        'form': form
     }
 
     return HttpResponse(template.render(context, request))
