@@ -16,6 +16,14 @@ AREA_CHOICES = (
     ('South America', _("South America"))
 )
 
+DEV_REASON_CHOICES = (
+    ('Dead on Arrival', _("Dead on Arrival")),
+    ('Faulty', _("Faulty, please supply details")),
+    ('Order Error', _("Order Error")),
+    ('Other', _("Other, please supply details")),
+    ('Wrong Item', _("Received Wrong Item"))
+)
+
 
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
@@ -226,3 +234,19 @@ class HowDoesItWork(models.Model):
 
     def __str__(self):
         return 'Comofunciona-' + str(datetime.date.today())
+
+
+class Devolucion(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='return_u')
+    order = models.ForeignKey(Compra, on_delete=models.CASCADE, related_name='return_o')
+
+    reason = models.CharField(max_length=50, choices=DEV_REASON_CHOICES)
+    is_opened = models.BooleanField(default=False)
+
+    details = models.TextField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = 'Devoluciones'
+
+    def __str__(self):
+        return self.user.username + "-" + self.order.id + "-" + str(datetime.date.today())
