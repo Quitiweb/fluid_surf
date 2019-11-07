@@ -684,7 +684,19 @@ def how_does_it_work(request):
 def devolucion(request):
     template = loader.get_template('home/devolucion.html')
 
-    form = DevolucionForm(user=request.user)
+    if request.method == "POST":
+        form = DevolucionForm(request.user, request.POST)
+
+        if form.is_valid():
+            devolucion = form.save(commit=False)
+            devolucion.user = request.user
+            devolucion.is_opened = request.POST.get('is_opened') == 'SI'
+            devolucion.save()
+            messages.success(request, 'nice')
+        else:
+            print(form.errors)
+    else:
+        form = DevolucionForm(user=request.user)
 
     context = {
         'form': form

@@ -180,24 +180,27 @@ class DevolucionForm(forms.ModelForm):
     )
 
     BOOL_CHOICES = (
-        ('Y', _("Yes")),
-        ('N', _("No"))
+        (True, _("Yes")),
+        (False, _("No"))
     )
 
-    order = forms.ModelChoiceField(queryset=None)
+    product = forms.ModelChoiceField(queryset=None)
 
     reason = forms.ChoiceField(choices=CHOICES, required=True)
     is_opened = forms.ChoiceField(choices=BOOL_CHOICES, required=True)
 
     details = forms.Textarea()
 
-    class Meta:
-        model = Devolucion
-        fields = ('order', 'reason', 'is_opened', 'details')
-
     def __init__(self, user, *args, **kwargs):
         super(DevolucionForm, self).__init__(*args, **kwargs)
-        self.fields['order'].queryset = Producto.objects.all().filter(compra_p__comprador=user)
+        self.fields['product'].queryset = Producto.objects.all().filter(compra_p__comprador=user)
+        self.fields["details"].required = False
+
+    class Meta:
+        model = Devolucion
+        fields = ('product', 'reason', 'is_opened', 'details')
+
+
 
 
 

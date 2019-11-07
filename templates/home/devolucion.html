@@ -10,12 +10,12 @@
 
 <h1 class="display-4 text-center">{% trans 'Return a product' %}</h1> <br>
 
-    <form action="" method="POST">
+    <form action="" method="POST"> {% csrf_token %}
         <div class="row">
             <div class="col-0 col-lg-2"></div>
             <div class="col-12 col-lg-8 pb-3">
                 <label for="id_order">Choose the product you want to return</label>
-                {{ form.order }}
+                {{ form.product }}
             </div>
             <div class="col-0 col-lg-2"></div>
 

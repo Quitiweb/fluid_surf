@@ -238,15 +238,15 @@ class HowDoesItWork(models.Model):
 
 class Devolucion(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='return_u')
-    order = models.ForeignKey(Compra, on_delete=models.CASCADE, related_name='return_o')
+    product = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='return_p')
 
     reason = models.CharField(max_length=50, choices=DEV_REASON_CHOICES)
     is_opened = models.BooleanField(default=False)
 
-    details = models.TextField(max_length=200)
+    details = models.TextField(max_length=200, blank=True)
 
     class Meta:
         verbose_name_plural = 'Devoluciones'
 
     def __str__(self):
-        return self.user.username + "-" + self.order.id + "-" + str(datetime.date.today())
+        return self.user.username + "-" + self.product.nombre + "-" + str(datetime.date.today())
