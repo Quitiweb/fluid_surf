@@ -14,35 +14,34 @@
         <div class="row">
             <div class="col-0 col-lg-2"></div>
             <div class="col-12 col-lg-8 pb-3">
-                <label for="id_order">Choose the product you want to return</label>
+                <label for="id_order">{% trans 'Choose the product you want to return' %}</label>
                 {{ form.product }}
             </div>
             <div class="col-0 col-lg-2"></div>
 
             <div class="col-0 col-lg-2"></div>
             <div class="col-12 col-lg-8 pb-3">
-                <label for="id_reason">Why do you want to return it?</label>
+                <label for="id_reason">{% trans 'Why do you want to return it?' %}</label>
                 {{ form.reason }}
             </div>
             <div class="col-0 col-lg-2"></div>
 
             <div class="col-0 col-lg-2"></div>
             <div class="col-12 col-lg-8 pb-3">
-                <label for="id_is_opened">Have you opened this product?</label>
+                <label for="id_is_opened">{% trans 'Have you opened this product?' %}</label>
                 {{ form.is_opened }}
             </div>
             <div class="col-0 col-lg-2"></div>
 
             <div class="col-0 col-lg-2"></div>
             <div class="col-12 col-lg-8 pb-5">
-                <label for="id_detais">Tell us more about it</label>
+                <label for="id_detais">{% trans 'Tell us more about it' %}</label>
                 {{ form.details }}
             </div>
 
             <div class="col-12 text-center">
                 <input type="submit" class="pr-5 pl-5">
             </div>
-
         </div>
     </form>
 </div>
