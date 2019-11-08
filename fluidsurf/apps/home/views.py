@@ -688,11 +688,26 @@ def devolucion(request):
         form = DevolucionForm(request.user, request.POST)
 
         if form.is_valid():
-            devolucion = form.save(commit=False)
-            devolucion.user = request.user
-            devolucion.is_opened = request.POST.get('is_opened') == 'SI'
-            devolucion.save()
-            messages.success(request, 'nice')
+            ''' Begin reCAPTCHA validation '''
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values).encode("utf-8")
+            req = urllib.request.Request(url, data)
+            response = urllib.request.urlopen(req)
+            result = json.load(response)
+            ''' End reCAPTCHA validation '''
+            if result['success']:
+                devolucion = form.save(commit=False)
+                devolucion.user = request.user
+                devolucion.is_opened = request.POST.get('is_opened') == 'SI'
+                devolucion.save()
+                messages.success(request, 'nice')
+            else:
+                messages.warning(request, _('Invalid reCAPTCHA. Please try again.'))
         else:
             print(form.errors)
     else:
