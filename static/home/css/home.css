@@ -1192,7 +1192,7 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out;
-		background-color: #0288d1;
+		background-color: #445963;
 		border-radius: 26px;
 		opacity: 0.89;
 		border: 0;
@@ -1221,7 +1221,7 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: rgba(0, 119, 190, 0.5);
+			background-color: #607d8b;
 		}
 
 		input[type="submit"]:active,

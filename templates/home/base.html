@@ -19,6 +19,7 @@
 
         {% load static %}
         {% load i18n %}
+        {% load social_share %}
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="icon" type="image/gif" href="{% static 'main/images/logo.ico' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -211,19 +212,117 @@
             {% block main %}
             {% endblock %}
 
+            <!-- Footer -->
+<footer class="page-footer font-small stylish-color-dark pt-4 mt-5" style="background-color: #eceff1;">
+
+  <!-- Footer Links -->
+  <div class="container text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-4 mx-auto">
+
+        <!-- Links -->
+        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">{% trans 'Information' %}</h5>
+
+        <ul class="list-unstyled">
+                      <li><a href="{% url 'how-does-it-work' %}">{% trans 'How does Fluid House works?' %}</a></li>
+                      <li><a href="{% url 'secure-payments' %}">{% trans 'Secure payments' %}</a></li>
+                      <li><a href="{% url 'free-sub' %}">{% trans 'Free subscription features' %}</a></li>
+                      <li><a href="{% url 'manual' %}">{% trans 'Selling photos: Manual' %}</a></li>
+                      <li><a href="{% url 'copyright' %}">{% trans 'Copyright, licenses and sizes' %}</a></li>
+                      <li><a href="{% url 'terms' %}">{% trans 'Terms & Conditions' %}</a></li>
+                      <li><a href="{% url 'privacy' %}">{% trans 'Privacy Policy' %}</a></li>
+                      <li><a href="{% url 'taxes' %}">{% trans 'Taxes and invoices' %}</a></li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none">
+
+      <!-- Grid column -->
+      <div class="col-md-4 mx-auto">
+
+        <!-- Links -->
+        <h5 class="font-weight-bold text-uppercase mt-3 mb-4">{% trans 'Customer Service' %}</h5>
+
+        <ul class="list-unstyled">
+            <li><a href="{% url 'contacto' %}">{% trans 'Contact' %}</a></li>
+            <li><a href="{% url 'devolucion' %}">{% trans 'Returns' %}</a></li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none">
+
+    </div>
+    <!-- Grid row -->
+
+  </div>
+  <!-- Footer Links -->
+
+  <hr>
+
+  <!-- Call to action -->
+  <ul class="list-unstyled list-inline text-center py-2">
+    {% if not user.is_authenticated  %}
+        <li class="list-inline-item">
+          <h5 class="mb-1">Register for free</h5>
+        </li>
+        <li class="list-inline-item">
+          <a href="{% url 'signup' %}" class="btn btn-danger btn-rounded">Sign up!</a>
+        </li>
+      {% endif %}
+  </ul>
+  <!-- Call to action -->
+
+  <hr>
+
+    <script defer async>
+
+    </script>
+  <!-- Social buttons -->
+  <ul class="list-unstyled list-inline text-center icons">
+      <li>{% post_to_twitter _("Take a look at FluidSurf!") request.get_full_path  %}</li>
+      <li>{% post_to_facebook object_or_url "" %}</li>
+      <li>{% send_email _("Take a look at FluidSurf!") object_or_url "Share via email"%}</li>
+      <li>{% post_to_telegram _("Take a look at FluidSurf!") request.get_full_path %}</li>
+  </ul>
+  <!-- Social buttons -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">
+    <a href="https://www.quitiweb.com/">© Quitiweb</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
         </div>
 
         <!-- Scripts -->
         <script src="{% static 'main/assets/js/jquery.min.js' %}"></script>
 
         <script src="https://code.jquery.com/jquery-1.12.4.js" defer></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
         <script src="{% static 'main/assets/js/jquery.poptrox.min.js' %}"></script>
         <script src="{% static 'main/assets/js/browser.min.js' %}"></script>
         <script src="{% static 'main/assets/js/breakpoints.min.js' %}"></script>
         <script src="{% static 'main/assets/js/util.js' %}"></script>
         <script src="{% static 'main/assets/js/main.js' %}"></script>
         <script src="{% static 'main/assets/js/menu.js' %}"></script>
+        <script src="{% static 'main/assets/js/cambiarcolor.js' %}"></script>
         <script
             src="https://code.jquery.com/jquery-1.12.4.js"
             integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
