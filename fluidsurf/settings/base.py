@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'imagekit',
     'django_google_maps',
     'django_filters',
-    'braintree'
+    'braintree',
+    'certifi'
 ]
 
 MIDDLEWARE = [
