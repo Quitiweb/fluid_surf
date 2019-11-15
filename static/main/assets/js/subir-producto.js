@@ -159,3 +159,4 @@ $(document).ready(function () {
         numFiles = 0;
     });
 });
+});
