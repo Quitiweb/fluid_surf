@@ -744,7 +744,10 @@ class WatermarkProcessor(object):
 
     image = WatermarkImage.objects.filter(activo=True).first()
 
-    watermark = Image.open(image.imagen.url[1:])
+    if image:
+        watermark = Image.open(image.imagen.url[1:])
+    else:
+        watermark = Image.open(settings.WATERMARK_IMAGE)
 
     def process(self, image):
         return add_watermark(image, self.watermark)
