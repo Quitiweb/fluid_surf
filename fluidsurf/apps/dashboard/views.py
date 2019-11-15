@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.template import loader
 from openpyxl import Workbook
 
-from fluidsurf.apps.home.models import Producto, Compra, Denuncia
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -393,7 +393,20 @@ def validar(request):
 def watermark(request):
     template = loader.get_template('dashboard/watermark.html')
 
+    watermarks = WatermarkImage.objects.filter().all()
+
+    if request.method == "POST":
+        if 'desactivar' in request.POST:
+            watermark = WatermarkImage.objects.filter(id=request.POST.get('desactivar')).first()
+            watermark.activo = False
+            watermark.save()
+        else:
+            watermark = WatermarkImage.objects.filter(id=request.POST.get('activar')).first()
+            watermark.activo = True
+            watermark.save()
+
     context = {
+        'watermarks': watermarks
     }
 
     return HttpResponse(template.render(context, request))

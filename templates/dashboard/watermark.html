@@ -21,6 +21,57 @@
     <!-- /.content-header -->
 
 <div class="container pt-5">
+<div class="row">
+       <div class="card col-12">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">watermarks</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                        <th>ID de la watermark</th>
+                        <th>Imagen</th>
+                        <th>Activo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for watermark in watermarks %}
+                          <tr>
+                            <td><a href="{% url 'admin:home_watermarkimage_change' watermark.id %}">WATERMARK{{ watermark.id }}</a></td>
+                            <td>
+                                <a href="{{ watermark.imagen.url }}" target="_blank">Ver imagen</a>
+                            </td>
+                            <td>
 
+                                <form action="" method="POST"> {% csrf_token %}
+                                    {% if watermark.activo %}
+                                        <i class="fas fa-check"></i>
+
+                                        <button type="submit" class="btn btn-warning ml-5" name="desactivar" value="{{ watermark.id }}">Desactivar</button>
+                                    {% else %}
+                                        <i class="fas fa-times"></i>
+
+                                        <button type="submit" class="btn btn-success ml-5" name="activar" value="{{ watermark.id }}">Activar</button>
+                                    {% endif %}
+                                </form>
+                            </td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                    <a href="{% url 'admin:home_watermarkimage_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar watermarks</a>
+              </div>
+              <!-- /.card-footer -->
+        </div>
+            <!-- /.card -->
+    </div>
 </div>
 {% endblock %}
