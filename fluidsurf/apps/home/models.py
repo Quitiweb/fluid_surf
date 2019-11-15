@@ -250,3 +250,14 @@ class Devolucion(models.Model):
 
     def __str__(self):
         return self.user.username + "-" + self.product.nombre + "-" + str(datetime.date.today())
+
+
+class WatermarkImage(models.Model):
+    activo = models.BooleanField(
+        default=False, blank=True, help_text=_("Ten activo solo uno al mismo tiempo")
+    )
+
+    imagen = models.ImageField(upload_to="img/watermark/", blank=False)
+
+    def __str__(self):
+        return 'Watermark-' + str(datetime.date.today())

@@ -22,7 +22,7 @@ from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
-    Copyright, Manual, HowDoesItWork
+    Copyright, Manual, HowDoesItWork, WatermarkImage
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm, DevolucionForm
@@ -741,7 +741,10 @@ def add_watermark(image, watermark):
 
 
 class WatermarkProcessor(object):
-    watermark = Image.open(settings.WATERMARK_IMAGE)
+
+    image = WatermarkImage.objects.filter(activo=True).first()
+
+    watermark = Image.open(image.imagen.url[1:])
 
     def process(self, image):
         return add_watermark(image, self.watermark)
