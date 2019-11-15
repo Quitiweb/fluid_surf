@@ -388,3 +388,12 @@ def validar(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def watermark(request):
+    template = loader.get_template('dashboard/watermark.html')
+
+    context = {
+    }
+
+    return HttpResponse(template.render(context, request))

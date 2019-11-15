@@ -10,4 +10,5 @@ urlpatterns = [
     path('denuncias', views.denuncias, name='denuncias'),
     path('validar', views.validar, name='validar'),
     path('perfil/<id>', views.perfil, name='perfil_admin'),
+    path('watermark', views.watermark, name='watermark'),
 ]
