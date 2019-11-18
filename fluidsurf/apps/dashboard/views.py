@@ -400,9 +400,15 @@ def watermark(request):
             watermark = WatermarkImage.objects.filter(id=request.POST.get('desactivar')).first()
             watermark.activo = False
             watermark.save()
-        else:
+        elif "activar" in request.POST:
             watermark = WatermarkImage.objects.filter(id=request.POST.get('activar')).first()
             watermark.activo = True
+            watermark.save()
+        else:
+            file = request.FILES['docfile']
+            watermark = WatermarkImage()
+            watermark.activo = True
+            watermark.imagen = file
             watermark.save()
 
     context = {
