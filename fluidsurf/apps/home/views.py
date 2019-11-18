@@ -99,7 +99,7 @@ def mi_cuenta(request):
                     fotografo.CV = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', fotografo.CV)
                     fotografo.CV = re.sub(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", '', fotografo.CV)
 
-                    if CustomUser.objects.filter(alias=fotografo.alias).exists():
+                    if CustomUser.objects.filter(alias=fotografo.alias).exclude(id=fotografo.id).exists():
                         messages.warning(request, _('A photographer with that alias already exists, please try again.'))
                         return HttpResponseRedirect(request.path_info)
                     else:
