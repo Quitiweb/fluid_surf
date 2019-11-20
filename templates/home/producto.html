@@ -64,14 +64,11 @@
 				</div>
 				{% for imagen in imagenes2 %}
                 {% if not forloop.counter|divisibleby:2 %}
-				<article class="item thumb span-3">
-					<a class="fancybox" data-fancybox="gallery" href="{{imagen.url}}">
-						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
+                <article id="img{{forloop.counter}}" class="item thumb span-3">
+					<a id="href{{forloop.counter}}" class="fancybox for2impar" data-fancybox="gallery" href="">
+						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
 					</a>
 				</article>
-
-                    <!--  Modal que muestra la vista detalle de la imagen  -->
-
                 {% endif %}
 				{% endfor %}
 
@@ -94,9 +91,9 @@
                         </div>
 				</div>
 				{% for imagen in imagenes %}
-				<article class="item thumb span-3">
-					<a class="fancybox" data-fancybox="gallery" href="{{imagen.url}}">
-						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
+				<article id="img{{forloop.counter}}" class="item thumb span-3">
+					<a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">
+						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
 					</a>
 				</article>
                 <div>
@@ -105,9 +102,9 @@
 
             {% for imagen in imagenes2 %}
                 {% if forloop.counter|divisibleby:2 %}
-				<article class="item thumb span-3">
-					<a class="fancybox" data-fancybox="gallery" href="{{imagen.url}}">
-						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' style='object-fit:cover' height='400' %}
+                <article id="img{{forloop.counter}}" class="item thumb span-3">
+					<a id="href{{forloop.counter}}" class="fancybox for2par" data-fancybox="gallery" href="">
+						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
 					</a>
 				</article>
 {% endif %}
@@ -228,4 +225,7 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'main/assets/js/producto.js' %}" defer></script>
+
 {% endblock %}
