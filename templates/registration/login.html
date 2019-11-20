@@ -4,6 +4,12 @@
 {% load i18n %}
 {% block main %}
 
+<style>
+	body {
+		background: url({% static 'main/images/bgsurf.jpg' %}) no-repeat center center fixed; background-size: cover;
+	}
+</style>
+
 {% if form.errors %}
     <div class="row text-center m-auto notificacion" style="height:75px;">
         <div class="col-3"></div>
@@ -14,10 +20,10 @@
         <div class="col-3"></div>
     </div>
 {% endif %}
-
-<form method="post">
+<div class="row">
+	<div class="col-sm-2 col-lg-3"></div>
+<form method="post" style="background: white; border-radius:25px; margin-top: 100px !important;" class="col-sm-8 col-lg-6 mt-5 pt-5">
     {% csrf_token %}
-
     <div class="container mt-5 pt-5" style="width: 380px;">
         	<div class="svgContainer">
 		<div>
@@ -141,6 +147,7 @@
 		Problemas para iniciar sesión? <a href="{% url 'contacto' %}">Contacta con nuestro soporte</a>
 	</div>
 </form>
+</div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js" defer></script>
 
         <script src="{% static 'main/assets/js/custom-login.js' %}" defer></script>
