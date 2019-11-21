@@ -18,4 +18,4 @@ django_social_share
 django-google-maps
 django_filters
 certifi
-
+sqlparse
