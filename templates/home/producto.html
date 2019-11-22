@@ -73,14 +73,6 @@
 			</div>
 		<!-- Items -->
 			<div class="items">
-
-                <div class="item intro3 span-2">
-					<body class="text-center" onload='loadMapScenario();'>
-					  <div id='printoutPanel'></div>
-						<div id='myMap' class="mt-1" style=""></div>
-					</body>
-				</div>
-
                 <div class="item intro span-3" style="background-color: #58949C;">
 					<div>
                         <p class="white">{{ producto.descripcion }}</p>
@@ -96,6 +88,14 @@
                            </div>
                         </div>
 				</div>
+
+                <div class="item intro3 span-2">
+					<body class="text-center" onload='loadMapScenario();'>
+					  <div id='printoutPanel'></div>
+						<div id='myMap' class="mt-1" style=""></div>
+					</body>
+				</div>
+
 				{% for imagen in imagenes %}
 				<article id="img{{forloop.counter}}" class="item thumb span-3">
 					<a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">
