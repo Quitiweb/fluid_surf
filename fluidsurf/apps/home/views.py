@@ -1,3 +1,4 @@
+import django
 import os
 import re
 
@@ -742,13 +743,17 @@ def add_watermark(image, watermark):
 
 class WatermarkProcessor(object):
 
-    image = WatermarkImage.objects.filter(activo=True).first()
+    print(django.db.connection.introspection.table_names())
 
-    if image:
-        watermark = Image.open(image.imagen.url[1:])
+    if 'home_watermarkimage' in django.db.connection.introspection.table_names():
+        image = WatermarkImage.objects.filter(activo=True).first()
+
+        if image:
+            watermark = Image.open(image.imagen.url[1:])
+        else:
+            watermark = Image.open(settings.WATERMARK_IMAGE)
     else:
         watermark = Image.open(settings.WATERMARK_IMAGE)
-
     def process(self, image):
         return add_watermark(image, self.watermark)
 
