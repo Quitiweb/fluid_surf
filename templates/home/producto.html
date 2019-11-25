@@ -45,8 +45,66 @@
 
 				</div>
 
-                <div class="item intro intro2 span-2">
-					<h1 class="white">Fotografia para enganchar fotografos</h1>
+                <div class="item intro intro2 span-2 text-left">
+					{% if user.is_authenticated%}
+                        {% if user.tipo_de_usuario == "SURFERO"  %}
+                        <div class="row">
+                            <h1 class="white">
+                                {% trans 'Price' %}:
+                                <span style="font-size: 35px;">
+                                    {{ producto.precio }}
+                                </span>
+                                €
+                            </h1>
+                        </div>
+                            <div class="row text-center mt-3">
+                            <div class="col-sm-12 col-6">
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                        {% if in_wishlist %}
+                                            <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'Remove from wishlist' %}">
+                                        {% else %}
+                                            <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'I want it!' %}">
+                                        {% endif %}
+                                </form>
+                            </div>
+                            {% if user != producto.user %}
+                            <div class="col-sm-12 col-6">
+                                <form action="" method="post">
+                                  {% csrf_token %}
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="{{ key }}"
+                                        data-name="FluidSurf"
+                                        data-description="{% trans 'Buy product to' %} {{ producto.user }} "
+                                        data-currency="eur"
+                                        data-amount="{{ producto.precio }}00"
+                                        data-locale="{{ LANGUAGE_CODE }}">
+                                </script>
+                                    <script>
+                                          document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                    </script>
+
+                                    <input type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">
+                                </form>
+                            </div>
+                            {% else %}
+                            <div class="col-sm-12 col-6">
+                                <input type="submit" disabled class="btn btn-primary" value="{% trans 'Buy now' %}">
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <h1 class="white" style="font-size: 35px; line-height: 70px;">
+                                <span class="mb-5">{% trans 'Price' %}:</span>
+                                <span style="font-size: 75px;">
+                                    {{ producto.precio }}
+                                </span>
+                                €
+                            </h1>
+                        </div>
+                        {% endif %}
+                    {% endif %}
 				</div>
 
                 <div class="item intro intro span-2">
@@ -118,60 +176,9 @@
 			</div>
 	</section>
 </div>
-
-{% if user.is_authenticated%}
-    {% if user.tipo_de_usuario == "SURFERO"  %}
-    <div class="row text-center mt-5">
-        <div class="col-lg-6 col-12">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <button type="submit" class="pr-5 pl-5 btn btn-secondary mt-1" name="wishlist">
-                    {% if in_wishlist %}
-                    {% trans 'Remove from wishlist' %}
-                    {% else %}
-                    {% trans 'I want it!' %}
-                    {% endif %}
-                </button>
-            </form>
-        </div>
-        {% if user != producto.user %}
-        <div class="col-lg-6 col-12">
-            <form action="" method="post">
-              {% csrf_token %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="{{ key }}"
-                    data-name="FluidSurf"
-                    data-description="{% trans 'Buy product to' %} {{ producto.user }} "
-                    data-currency="eur"
-                    data-amount="{{ producto.precio }}00"
-                    data-locale="{{ LANGUAGE_CODE }}">
-            </script>
-                <script>
-                      document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                </script>
-
-                <button type="submit" class="btn btn-primary mt-1">{% trans 'Buy now' %}</button>
-            </form>
-        </div>
-        {% else %}
-        <div class="col-lg-6 col-12 mt-1">
-            <button type="submit" disabled class="btn btn-primary">{% trans 'Buy now' %}</button>
-        </div>
-        {% endif %}
-        {% endif %}
-    </div>
-{% else %}
-   <div class="row mt-5 pb-5">
-       <div class="col-12 text-center">
-           <a href="{% url 'signup' %}" class="btn btn-primary pr-5 pl-5 pt-3 pb-3">{% trans 'SIGNUP' %}</a>
-           <p class="mt-3">{% trans 'Already have an account?' %}</p>
-           <a href="{% url 'login' %}" class="btn btn-secondary mt-2">{% trans 'Login' %}</a>
-       </div>
-   </div>
-{% endif %}
 </div>
 
-<script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}"defer async></script>
+<script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}" defer async></script>
 
 
 <!-- Modal -->
