@@ -121,6 +121,9 @@
 				{% for imagen in imagenes2 %}
                 {% if not forloop.counter|divisibleby:2 %}
                 <article id="img{{forloop.counter}}" class="item thumb span-3">
+                    {% if producto.user == user %}
+                            <button class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>
+                    {% endif %}
 					<a id="href{{forloop.counter}}" class="fancybox for2impar" data-fancybox="gallery" href="">
 						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
 					</a>
@@ -156,6 +159,13 @@
 
 				{% for imagen in imagenes %}
 				<article id="img{{forloop.counter}}" class="item thumb span-3">
+                    {% if producto.user == user %}
+                    {% if forloop.counter == 1 %}
+                    <button class="btn btn-warning" style="position: absolute; z-index: 300">Imagen principal</button>aa
+                    {% else %}
+                    <button class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>aa
+                    {% endif %}
+                    {% endif %}
 					<a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">
 						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
 					</a>
@@ -167,6 +177,9 @@
             {% for imagen in imagenes2 %}
                 {% if forloop.counter|divisibleby:2 %}
                 <article id="img{{forloop.counter}}" class="item thumb span-3">
+                    {% if producto.user == user %}
+                            <button class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>
+                    {% endif %}
 					<a id="href{{forloop.counter}}" class="fancybox for2par" data-fancybox="gallery" href="">
 						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
 					</a>
