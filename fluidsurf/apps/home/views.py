@@ -276,7 +276,7 @@ def producto(request, id='0'):
                     del w
 
                     producto.save()
-                    messages.success(request, 'Cambio de imagen de perfil' + value)
+                    messages.success(request, _('Main picture changed successfully'))
                 else:
                     messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
             else:
