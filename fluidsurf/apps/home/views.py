@@ -266,6 +266,17 @@ def producto(request, id='0'):
                     producto.delete()
                     messages.success(request, _('Your product was deleted successfully'))
                     return redirect('perfil', request.user.id)
+                elif 'main' in request.POST:
+                    value = request.POST['main']
+                    img = getattr(producto, 'imagen' + value)
+
+                    w = img
+                    setattr(producto, 'imagen' + value, producto.imagen0)
+                    producto.imagen0 = w
+                    del w
+
+                    producto.save()
+                    messages.success(request, 'Cambio de imagen de perfil' + value)
                 else:
                     messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
             else:
