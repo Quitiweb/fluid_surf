@@ -13,8 +13,10 @@
 		<!-- Items -->
 			<div class="items">
 				{% if user.is_authenticated %}
-				<div class="item intro2 span-1">
-					<a href="/"><img class="image-responsive" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
+				<div class="item intro2 span-1 row">
+					<div class="col-12">
+						<a href="/"><img class="img-responsive imagen" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
+					</div>
 				</div>
 				{% else %}
 				<div class="item intro span-2 text-center pt-5">

@@ -192,6 +192,11 @@ input, select, textarea {
 
 		@media screen and (max-width: 736px) {
 
+			.imagen {
+				margin-top: 10px;
+				max-height: 200px;
+			}
+
 			body {
 				background-attachment: scroll;
 				background-size: auto, 100% 100%, 250% auto;
@@ -712,6 +717,11 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 480px) {
+
+			.imagen {
+				margin-top: 10px;
+				max-height: 130px;
+			}
 
 			#main .item {
 				height: 10em;
