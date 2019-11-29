@@ -241,13 +241,30 @@
             {% endblock %}
 
             <section id="footer" class="pt-5">
+
                 <section class="white">
-                    <div class="copyright">
+                    <div class="copyright dropup">
+                    <span class="dropdown white dropup">
+                      <a href="#" class="dropdown-toggle white dropup" data-toggle="dropdown">{% trans 'Information' %}<b class="caret"></b></a>
+                      <ul class="dropdown-menu dropup information">
+                          <li><a href="{% url 'how-does-it-work' %}">{% trans 'How does Fluid House works?' %}</a></li>
+                          <li><a href="{% url 'secure-payments' %}">{% trans 'Secure payments' %}</a></li>
+                          <li><a href="{% url 'free-sub' %}">{% trans 'Free subscription features' %}</a></li>
+                          <li><a href="{% url 'manual' %}">{% trans 'Selling photos: Manual' %}</a></li>
+                          <li><a href="{% url 'copyright' %}">{% trans 'Copyright, licenses and sizes' %}</a></li>
+                          <li><a href="{% url 'terms' %}">{% trans 'Terms & Conditions' %}</a></li>
+                          <li><a href="{% url 'privacy' %}">{% trans 'Privacy Policy' %}</a></li>
+                          <li><a href="{% url 'taxes' %}">{% trans 'Taxes and invoices' %}</a></li>
+                      </ul>
+                    </span>
                         <li>
-                             <a href="" data-toggle="modal" data-target="#modalInformation" class="white">{% trans 'Information' %}</a>
-                        </li>
-                        <li>
-                            <a href="" data-toggle="modal" data-target="#modalCustomer" class="white">{% trans 'Customer Service' %}</a>
+                            <span class="dropdown white dropup">
+                              <a href="#" class="dropdown-toggle white dropup" data-toggle="dropdown">{% trans 'Customer Service' %}<b class="caret"></b></a>
+                              <ul class="dropdown-menu dropup customerservice">
+                                  <li><a href="{% url 'contacto' %}">{% trans 'Contact' %}</a></li>
+                                  <li><a href="{% url 'devolucion' %}">{% trans 'Returns' %}</a></li>
+                              </ul>
+                            </span>
                         </li>
                     </div>
                 </section>
@@ -261,59 +278,6 @@
                 </section>
             </section>
         </div>
-
-        <div class="modal fade mt-5" id="modalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">{% trans 'Information' %}</h5>
-                <button type="button" class="btn black" data-dismiss="modal" aria-label="Close">
-                  <span class="black">X</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                  <ul>
-                      <li><a href="{% url 'how-does-it-work' %}">{% trans 'How does Fluid House works?' %}</a></li>
-                      <li><a href="{% url 'secure-payments' %}">{% trans 'Secure payments' %}</a></li>
-                      <li><a href="{% url 'free-sub' %}">{% trans 'Free subscription features' %}</a></li>
-                      <li><a href="{% url 'manual' %}">{% trans 'Selling photos: Manual' %}</a></li>
-                      <li><a href="{% url 'copyright' %}">{% trans 'Copyright, licenses and sizes' %}</a></li>
-                      <li><a href="{% url 'terms' %}">{% trans 'Terms & Conditions' %}</a></li>
-                      <li><a href="{% url 'privacy' %}">{% trans 'Privacy Policy' %}</a></li>
-                      <li><a href="{% url 'taxes' %}">{% trans 'Taxes and invoices' %}</a></li>
-                  </ul>
-              </div>
-              <div class="modal-footer">
-                <a class="btn btn-primary" data-dismiss="modal"><span class="white">Entendido</span></a>
-              </div>
-            </div>
-        </div>
-      </div>
-
-        <div class="modal fade mt-5" id="modalCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">{% trans 'Customer Service' %}</h5>
-                <button type="button" class="btn black" data-dismiss="modal" aria-label="Close">
-                  <span class="black">X</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                  <ul>
-                      <li><a href="{% url 'contacto' %}">{% trans 'Contact' %}</a></li>
-                      <li><a href="{% url 'devolucion' %}">{% trans 'Returns' %}</a></li>
-                  </ul>
-              </div>
-              <div class="modal-footer">
-                <a class="btn btn-primary" data-dismiss="modal"><span class="white">Entendido</span></a>
-              </div>
-            </div>
-        </div>
-      </div>
-
-
-
 
         <!-- Scripts -->
         <script src="{% static 'main/assets/js/jquery.min.js' %}"></script>

@@ -6,6 +6,14 @@
 
 (function($) {
 
+	$( document ).ready(function() {
+		$('.dropdown').hover(function() {
+		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+		}, function() {
+		  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+		});
+	})
+
     window.setTimeout(function() {
       $(".notificacion").fadeTo(500, 0).slideUp(500, function(){
           $(this).remove();
