@@ -64,12 +64,13 @@
                                         {% if in_wishlist %}
                                             <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'Remove from wishlist' %}">
                                         {% else %}
-                                            <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'I want it!' %}">
+                                            <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'Add to wishlist' %}">
                                         {% endif %}
                                 </form>
                             </div>
                             {% if user != producto.user %}
                             <div class="col-sm-12 col-6">
+                                {% if producto.stock == 1  %}
                                 <form action="" method="post">
                                   {% csrf_token %}
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -86,6 +87,9 @@
 
                                     <input type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">
                                 </form>
+                                {% else %}
+                                <button class="mt-1">{% trans 'Ask for stock' %}</button>
+                                {% endif %}
                             </div>
                             {% else %}
                             <div class="col-sm-12 col-6">

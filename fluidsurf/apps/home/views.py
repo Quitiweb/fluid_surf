@@ -43,7 +43,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def index(request):
     template = loader.get_template('home/index.html')
 
-    prod_list = Producto.objects.filter(stock__gte=1, user__is_active=True, user__validado=True).all()
+    prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     if request.user.is_authenticated and request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
@@ -229,9 +229,9 @@ def subir_producto(request):
 def producto(request, id='0'):
     template = loader.get_template('home/producto.html')
 
-    producto = Producto.objects.filter(id=id, stock=1, user__validado=True, user__is_active=True).first()
+    producto = Producto.objects.filter(id=id, user__validado=True, user__is_active=True).first()
 
-    prod_list = Producto.objects.filter(stock=1).all()
+    prod_list = Producto.objects.filter().all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
@@ -380,7 +380,7 @@ def zona(request, nombre=''):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    prod_list = Producto.objects.filter(spot=zona, stock=1, user__validado=True, user__is_active=True).all()
+    prod_list = Producto.objects.filter(spot=zona, user__validado=True, user__is_active=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     context = {
@@ -398,7 +398,7 @@ def perfil(request, id=''):
 
     user = CustomUser.objects.filter(id=id).first()
 
-    prod_list = Producto.objects.filter(user=user, stock=1, user__validado=True).all()
+    prod_list = Producto.objects.filter(user=user, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     ubicaciones = Ubicacion.objects.filter().all()
@@ -444,7 +444,7 @@ def wishlist(request):
                 if item == lista[-1]:
                     pass
                 else:
-                    producto = Producto.objects.filter(id=item, stock=1).first()
+                    producto = Producto.objects.filter(id=item).first()
                     if producto:
                         productos.append(producto)
             if request.method == "POST":
