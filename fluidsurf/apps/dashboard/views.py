@@ -401,11 +401,12 @@ def solicitud(request):
 
     solicitudes = SolicitudStock.objects.all()
 
-    # if request.method == "POST":
-    #     usuario = CustomUser.objects.filter(id=request.POST.get('validar')).first()
-    #     usuario.validado = True
-    #     usuario.save()
-    #     messages.success(request, 'El usuario ' + usuario.username + ' ha sido validado.')
+    if request.method == "POST":
+        solicitud = SolicitudStock.objects.filter(id=request.POST.get('validar')).first()
+        solicitud.product.stock = 1
+        solicitud.product.save()
+        solicitud.delete()
+        messages.success(request, 'Se ha repuesto el stock correctamente.')
 
     context = {
         'solicitudes': solicitudes,
