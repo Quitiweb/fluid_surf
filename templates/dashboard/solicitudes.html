@@ -1,0 +1,74 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Home' %}</a></li>
+              <li class="breadcrumb-item active">Gestión de solicitudes</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<div class="container pt-5">
+    <div class="row">
+       <div class="card col-12">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Fotógrafos pendientes de validar</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>ID del solicitud</th>
+                      <th>Usuario</th>
+                      <th>Producto</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for solicitud in solicitudes %}
+                          <tr>
+                            <td><a href="{% url 'admin:users_customuser_change' solicitud.id %}">US{{ solicitud.id }}</a></td>
+                            <td onclick="location.href='{% url 'perfil_admin' id=solicitud.user.id %}'" style="cursor:pointer;">
+                                {{ solicitud.user.username }}
+                            </td>
+                            <td>
+                                {{ solicitud.product }}
+                            </td>
+                            <td class="text-left">
+                                <form action="" method="post">{% csrf_token %}
+                                    <button class="btn btn-primary" style="color:white;" name="validar" value="{{ solicitud.id }}"><i class="fas fa-check"></i></button>
+                                </form>
+                            </td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                    <a href="{% url 'admin:users_customuser_changelist' %}" class="btn btn-sm btn-secondary float-right">Gestionar solicitudes</a>
+              </div>
+
+
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+    </div>
+    <script src="{% static 'main/assets/js/dashboard-import.js' %}" defer></script>
+</div>
+{% endblock %}

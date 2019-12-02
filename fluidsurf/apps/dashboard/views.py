@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.template import loader
 from openpyxl import Workbook
 
-from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
 
 
@@ -42,7 +42,8 @@ def dashboard(request):
         'compras': compras,
         'fotografos': fotografos,
         'surferos': surferos,
-        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -118,7 +119,8 @@ def productos(request):
                     return response
     context = {
         'productos': productos,
-        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -182,7 +184,8 @@ def compras(request):
 
     context = {
         'compras': compras,
-        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -317,7 +320,8 @@ def usuarios(request):
 
     context = {
         'usuarios': usuarios,
-        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -347,7 +351,8 @@ def perfil(request, id=''):
         'compras': compras,
         'ventas': ventas,
         'denuncias': denuncias,
-        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))
@@ -384,11 +389,31 @@ def validar(request):
 
     context = {
         'usuarios': usuarios,
-        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))
 
+
+def solicitud(request):
+    template = loader.get_template('dashboard/solicitudes.html')
+
+    solicitudes = SolicitudStock.objects.all()
+
+    # if request.method == "POST":
+    #     usuario = CustomUser.objects.filter(id=request.POST.get('validar')).first()
+    #     usuario.validado = True
+    #     usuario.save()
+    #     messages.success(request, 'El usuario ' + usuario.username + ' ha sido validado.')
+
+    context = {
+        'solicitudes': solicitudes,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
+    }
+
+    return HttpResponse(template.render(context, request))
 
 def watermark(request):
     template = loader.get_template('dashboard/watermark.html')
@@ -425,7 +450,9 @@ def watermark(request):
 
 
     context = {
-        'watermarks': watermarks
+        'watermarks': watermarks,
+        'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
+        'num_solicitudes': SolicitudStock.objects.all().count()
     }
 
     return HttpResponse(template.render(context, request))

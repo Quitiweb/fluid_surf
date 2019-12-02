@@ -115,7 +115,6 @@
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Usuarios
-                <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
@@ -145,6 +144,16 @@
               <p>
                 Compras
                 <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'solicitudes' %}" class="nav-link">
+              <i class="nav-icon fas fa-sync"></i>
+              <p>
+                Reponer Stock
+                <span class="badge badge-info right">{{ num_solicitudes }}</span>
+                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
