@@ -294,7 +294,6 @@ def producto(request, id='0'):
                                 messages.success(request, _('Product removed from your wishlist'))
                     return HttpResponseRedirect(request.path_info)
                 if 'stock' in request.POST:
-
                     solicitud_exists = SolicitudStock.objects.filter(user=request.user, product=producto).first()
 
                     if not solicitud_exists:
@@ -303,6 +302,20 @@ def producto(request, id='0'):
                         solicitud.product = producto
                         solicitud.save()
                         messages.success(request, _('Request done successfully'))
+
+                        subject = _("Someone asked for stock in your product!")
+                        message = _(
+                            "Your product has been requested for more stock.")
+                        message += "\nProduct: " + str(producto)
+                        from_email = settings.SERVER_EMAIL
+                        to_mail = producto.user.email
+
+                        try:
+                            send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                        except BadHeaderError:
+                            return HttpResponse('Invalid header found')
+
+
                     else:
                         messages.warning(request, _('You already requested for stock for this product'))
                 else:
