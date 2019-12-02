@@ -294,11 +294,17 @@ def producto(request, id='0'):
                                 messages.success(request, _('Product removed from your wishlist'))
                     return HttpResponseRedirect(request.path_info)
                 if 'stock' in request.POST:
-                    solicitud = SolicitudStock()
-                    solicitud.user = request.user
-                    solicitud.product = producto
-                    solicitud.save()
-                    messages.success(request, _('Request done successfully'))
+
+                    solicitud_exists = SolicitudStock.objects.filter(user=request.user, product=producto).first()
+
+                    if not solicitud_exists:
+                        solicitud = SolicitudStock()
+                        solicitud.user = request.user
+                        solicitud.product = producto
+                        solicitud.save()
+                        messages.success(request, _('Request done successfully'))
+                    else:
+                        messages.warning(request, _('You already requested for stock for this product'))
                 else:
                     charge = stripe.Charge.create(
                         amount=producto.precio * 100,

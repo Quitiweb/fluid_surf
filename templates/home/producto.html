@@ -86,7 +86,15 @@
 
                                     <input type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">
                                 {% else %}
-                                    <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1">{% trans 'Ask for stock' %}</button>
+                                    <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1"
+                                            data-toggle="tooltip" data-placement="top"
+                                            title="This product is out of stock.
+                                           Please, ask for additional stock and you
+                                            will receive an email with aconfirmation
+                                            from the photographer. Thank you"
+                                    >
+                                        {% trans 'Ask for stock' %}
+                                    </button>
                                 </form>
                                 {% endif %}
                             </div>
