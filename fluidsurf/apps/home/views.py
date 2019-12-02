@@ -23,7 +23,7 @@ from django.views.defaults import page_not_found
 
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
-    Copyright, Manual, HowDoesItWork, WatermarkImage
+    Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm, DevolucionForm
@@ -293,6 +293,12 @@ def producto(request, id='0'):
                                 request.user.save()
                                 messages.success(request, _('Product removed from your wishlist'))
                     return HttpResponseRedirect(request.path_info)
+                if 'stock' in request.POST:
+                    solicitud = SolicitudStock()
+                    solicitud.user = request.user
+                    solicitud.product = producto
+                    solicitud.save()
+                    messages.success(request, _('Request done successfully'))
                 else:
                     charge = stripe.Charge.create(
                         amount=producto.precio * 100,

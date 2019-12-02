@@ -236,6 +236,17 @@ class HowDoesItWork(models.Model):
         return 'Comofunciona-' + str(datetime.date.today())
 
 
+class SolicitudStock(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='solicitud_u')
+    product = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='solicitud_p')
+
+    class Meta:
+        verbose_name_plural = 'Solicitudes de Stock'
+
+    def __str__(self):
+        return self.user.username + "-" + self.product.nombre
+
+
 class Devolucion(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='return_u')
     product = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='return_p')

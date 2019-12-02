@@ -70,25 +70,24 @@
                             </div>
                             {% if user != producto.user %}
                             <div class="col-sm-12 col-6">
-                                {% if producto.stock == 1  %}
-                                <form action="" method="post">
-                                  {% csrf_token %}
-                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                        data-key="{{ key }}"
-                                        data-name="FluidSurf"
-                                        data-description="{% trans 'Buy product to' %} {{ producto.user }} "
-                                        data-currency="eur"
-                                        data-amount="{{ producto.precio }}00"
-                                        data-locale="{{ LANGUAGE_CODE }}">
-                                </script>
+                                <form action="" method="post">{% csrf_token %}
+                                    {% if producto.stock == 1  %}
+                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="{{ key }}"
+                                            data-name="FluidSurf"
+                                            data-description="{% trans 'Buy product to' %} {{ producto.user }} "
+                                            data-currency="eur"
+                                            data-amount="{{ producto.precio }}00"
+                                            data-locale="{{ LANGUAGE_CODE }}">
+                                    </script>
                                     <script>
                                           document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                                     </script>
 
                                     <input type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">
-                                </form>
                                 {% else %}
-                                <button class="mt-1">{% trans 'Ask for stock' %}</button>
+                                    <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1">{% trans 'Ask for stock' %}</button>
+                                </form>
                                 {% endif %}
                             </div>
                             {% else %}
