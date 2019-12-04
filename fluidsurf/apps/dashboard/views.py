@@ -3,9 +3,10 @@ import os
 import openpyxl
 from django.conf import settings
 from django.contrib import messages
+from django.core import serializers
 from django.http import HttpResponse, response
 from django.shortcuts import render, redirect
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 
 from django.template import loader
 from openpyxl import Workbook
@@ -32,6 +33,12 @@ def dashboard(request):
     fotografos = CustomUser.objects.filter(tipo_de_usuario='FOTOGRAFO').all()
     surferos = CustomUser.objects.filter(tipo_de_usuario='SURFERO').all()
 
+    query = Compra.objects.all().query
+    query.group_by = ['fecha']
+    results = QuerySet(query=query, model=Compra)
+
+    json = serializers.serialize('json', results)
+
     context = {
         'productos': productos,
         'europa': europa,
@@ -43,7 +50,8 @@ def dashboard(request):
         'fotografos': fotografos,
         'surferos': surferos,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
-        'num_solicitudes': SolicitudStock.objects.all().count()
+        'num_solicitudes': SolicitudStock.objects.all().count(),
+        'array_compras': json
     }
 
     return HttpResponse(template.render(context, request))
@@ -362,7 +370,6 @@ def denuncias(request):
     template = loader.get_template('dashboard/denuncias.html')
 
     denuncias = Denuncia.objects.filter().all()
-
     if request.method == "POST":
         denuncia = Denuncia.objects.filter(id=request.POST.get('borrar')).first()
         denuncia.delete()
