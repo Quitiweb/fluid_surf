@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'fluidsurf.apps.users',
     'fluidsurf.apps.payments',
     'fluidsurf.apps.home',
+    'fluidsurf.apps.dashboard',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

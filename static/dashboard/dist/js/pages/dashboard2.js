@@ -16,42 +16,18 @@ $(function () {
   var salesChartCanvas2 = $('#salesChart2').get(0).getContext('2d')
 
   var arrayJSON = JSON.parse(array_compras.replace(/&quot;/g,'"'));
+  
+  var prettyArray = []
+  for (let item of arrayJSON) {
+    prettyArray.push(item.fields)
+  }
 
-  var arrayGB = _.groupBy(arrayJSON, function(currentObject) {
-    return currentObject.fields.fecha;
-  });
+  var fechasArray = [];
+  var dataArray = [];
 
-  console.log(arrayGB)
-
-  var lastKey = Object.keys(arrayGB).sort().reverse()[0];
-  var lastValue = arrayGB[lastKey];
-
-  var f = new Date();
-  f.setDate(f.getDate() - 1);
-
-  if(f.getMonth() < 10) {
-      var month = `0${f.getMonth()+1}`
-    } else {
-      var month = `${f.getMonth()+1}`
-    }
-
-    if(f.getDate() < 10) {
-      var formatF = `${f.getFullYear()}-${month}-0${f.getDate()}`
-    } else {
-      var formatF = `${f.getFullYear()}-${month}-${f.getDate()}`
-    }
-
-    if (arrayGB[lastKey] !== arrayGB[formatF]) {
-      arrayGB[formatF] = [];
-    }
-
-  var fechasArray = []
-  var dataArray = []
-
-  for (var key of Object.keys(arrayGB)) {
-    fechasArray.push(key); // Se crea un array de fechas
-    dataArray.push(arrayGB[key].length); // Se crea un array de valores numericos
-    console.log(dataArray)
+  for (let item of prettyArray) {
+    fechasArray.push(item.fecha);
+    dataArray.push(item.compras);
   }
 
   var salesChartData = {

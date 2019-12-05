@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 import os
 import openpyxl
 from django.conf import settings
@@ -11,6 +11,7 @@ from django.db.models import Q, QuerySet
 from django.template import loader
 from openpyxl import Workbook
 
+from fluidsurf.apps.dashboard.models import RegistroCompras
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
 
@@ -22,6 +23,27 @@ def dashboard(request):
     if not request.user.is_staff:
         return redirect('/')
 
+    registro_exists = RegistroCompras.objects.filter(fecha=datetime.today()).first()
+
+    if registro_exists:
+        registro_exists.delete()
+
+    registro = RegistroCompras()
+    registro.compras = Compra.objects.filter(fecha=datetime.today()).all().count()
+    registro.fecha = datetime.today()
+    registro.save()
+
+
+    query = RegistroCompras.objects.all().query
+
+    results = QuerySet(query=query, model=RegistroCompras).order_by('-fecha')[:7]
+    orderResults = reversed(results)
+
+    json = serializers.serialize('json', orderResults)
+
+    print(json)
+
+
     productos = Producto.objects.filter().all()
     europa = Producto.objects.filter(spot='Europa').all()
     oceania = Producto.objects.filter(spot='Oceania').all()
@@ -32,12 +54,6 @@ def dashboard(request):
 
     fotografos = CustomUser.objects.filter(tipo_de_usuario='FOTOGRAFO').all()
     surferos = CustomUser.objects.filter(tipo_de_usuario='SURFERO').all()
-
-    query = Compra.objects.all().query
-    query.group_by = ['fecha']
-    results = QuerySet(query=query, model=Compra)
-
-    json = serializers.serialize('json', results)
 
     context = {
         'productos': productos,
