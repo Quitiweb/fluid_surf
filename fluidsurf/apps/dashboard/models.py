@@ -8,5 +8,32 @@ class RegistroCompras(models.Model):
     fecha = models.DateField()
 
     def __str__(self):
-        return 'Registro-' + str(self.fecha)
+        return 'RegistroCompras-' + str(self.fecha)
+
+    class Meta:
+        verbose_name_plural = 'Registros de Compras'
+
+
+class RegistroFotografos(models.Model):
+    users = models.CharField(max_length=10)
+
+    fecha = models.DateField()
+
+    def __str__(self):
+        return 'RegistroFotografos-' + str(self.fecha)
+
+    class Meta:
+        verbose_name_plural = 'Registros de Fotografos'
+
+
+class RegistroSurferos(models.Model):
+    users = models.CharField(max_length=10)
+
+    fecha = models.DateField()
+
+    def __str__(self):
+        return 'RegistroSurferos-' + str(self.fecha)
+
+    class Meta:
+        verbose_name_plural = 'Registros de Surferos'
 

@@ -11,7 +11,7 @@ from django.db.models import Q, QuerySet
 from django.template import loader
 from openpyxl import Workbook
 
-from fluidsurf.apps.dashboard.models import RegistroCompras
+from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
 
@@ -23,15 +23,20 @@ def dashboard(request):
     if not request.user.is_staff:
         return redirect('/')
 
-    query = RegistroCompras.objects.all().query
-
-    results = QuerySet(query=query, model=RegistroCompras).order_by('-fecha')[:7]
+    compras_query = RegistroCompras.objects.all().query
+    results = QuerySet(query=compras_query, model=RegistroCompras).order_by('-fecha')[:7]
     orderResults = reversed(results)
-
     json = serializers.serialize('json', orderResults)
 
-    print(json)
+    photo_query = RegistroFotografos.objects.all().query
+    results = QuerySet(query=photo_query, model=RegistroFotografos)[:30]
+    json_photo = serializers.serialize('json', results)
 
+    surf_query = RegistroSurferos.objects.all().query
+    results = QuerySet(query=surf_query, model=RegistroSurferos)[:30]
+    json_surf = serializers.serialize('json', results)
+
+    print(json_surf);
 
     productos = Producto.objects.filter().all()
     europa = Producto.objects.filter(spot='Europa').all()
@@ -40,6 +45,7 @@ def dashboard(request):
     asia = Producto.objects.filter(spot='Asia').all()
     america = Producto.objects.filter(Q(spot='America del Norte') | Q(spot='America del Sur')).all()
     compras = Compra.objects.filter().all()
+    usuarios = CustomUser.objects.filter().all()
 
     fotografos = CustomUser.objects.filter(tipo_de_usuario='FOTOGRAFO').all()
     surferos = CustomUser.objects.filter(tipo_de_usuario='SURFERO').all()
@@ -52,11 +58,14 @@ def dashboard(request):
         'asia': asia,
         'america': america,
         'compras': compras,
+        'usuarios': usuarios,
         'fotografos': fotografos,
         'surferos': surferos,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count(),
-        'array_compras': json
+        'array_compras': json,
+        'array_photo': json_photo,
+        'array_surf': json_surf
     }
 
     return HttpResponse(template.render(context, request))
@@ -109,7 +118,7 @@ def productos(request):
             sheet = workbook.active
 
             sheet.append(["ID", "Nombre", "Precio", "Fecha", "Spot", "Stock", "Usuario", 'imagen0', 'imagen1', 'imagen2'
-                          , 'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen8', 'imagen9'])
+                             , 'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen8', 'imagen9'])
 
             for p in productos:
                 data = [p.id, p.nombre, p.precio, p.fecha, p.spot, p.stock, p.user.username]
@@ -194,7 +203,6 @@ def compras(request):
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
                     return response
 
-
     context = {
         'compras': compras,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
@@ -276,7 +284,8 @@ def usuarios(request):
             sheet = workbook.active
 
             sheet.append(["ID", "Username", "Contraseña", "Nombre", "Apellidos", "Email", "Activo", "Staff", 'Admin',
-                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada', 'Zona', 'Pais', 'Alias de Fotografo', 'CV de Fotografo'])
+                          'Tipo De Usuario', 'Foto de perfil', 'Foto destacada', 'Zona', 'Pais', 'Alias de Fotografo',
+                          'CV de Fotografo'])
 
             for u in usuarios:
                 if u.first_name is not None:
@@ -344,7 +353,7 @@ def perfil(request, id=''):
     template = loader.get_template('dashboard/perfil.html')
 
     usuario = CustomUser.objects.filter(id=id).first()
-    wishlist = len(usuario.wishlist.split(',')) -1
+    wishlist = len(usuario.wishlist.split(',')) - 1
 
     productos = Producto.objects.filter(user=usuario).all()
     compras = Compra.objects.filter(comprador=usuario).all()
@@ -378,7 +387,6 @@ def denuncias(request):
     if request.method == "POST":
         denuncia = Denuncia.objects.filter(id=request.POST.get('borrar')).first()
         denuncia.delete()
-
 
     context = {
         'denuncias': denuncias,
@@ -428,6 +436,7 @@ def solicitud(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def watermark(request):
     template = loader.get_template('dashboard/watermark.html')
 
@@ -460,7 +469,6 @@ def watermark(request):
             watermark.save()
 
             return redirect('watermark')
-
 
     context = {
         'watermarks': watermarks,

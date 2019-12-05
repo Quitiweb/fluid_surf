@@ -351,8 +351,6 @@ def producto(request, id='0'):
                         registro.fecha = date.today()
                         registro.save()
 
-                        print(registro)
-
                         if request.user.email:
                             subject = _("Your FluidSurf purchase")
                             message = _(

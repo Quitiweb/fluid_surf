@@ -16,22 +16,56 @@ $(function () {
   var salesChartCanvas2 = $('#salesChart2').get(0).getContext('2d')
 
   var arrayJSON = JSON.parse(array_compras.replace(/&quot;/g,'"'));
+  var arrayPhotoJSON = JSON.parse(array_photo.replace(/&quot;/g,'"'));
+  var arraySurfJSON = JSON.parse(array_surf.replace(/&quot;/g,'"'));
   
   var prettyArray = []
   for (let item of arrayJSON) {
     prettyArray.push(item.fields)
   }
 
-  var fechasArray = [];
-  var dataArray = [];
-
-  for (let item of prettyArray) {
-    fechasArray.push(item.fecha);
-    dataArray.push(item.compras);
+  var prettyPhotoArray = []
+  for (let item of arrayPhotoJSON) {
+    prettyPhotoArray.push(item.fields)
   }
 
+  var prettySurfArray = []
+  for (let item of arraySurfJSON) {
+    prettySurfArray.push(item.fields)
+  }
+
+  console.log(arraySurfJSON)
+
+  var fechasComprasArray = [];
+  var dataComprasArray = [];
+
+  for (let item of prettyArray) {
+    fechasComprasArray.push(item.fecha);
+    dataComprasArray.push(item.compras);
+  }
+
+  var fechasPhotoArray = [];
+  var dataPhotoArray = [];
+
+  for (let item of prettyPhotoArray) {
+    fechasPhotoArray.push(item.fecha);
+    dataPhotoArray.push(item.users);
+  }
+
+  var fechasSurfArray = [];
+  var dataSurfArray = [];
+
+  for (let item of prettySurfArray) {
+    fechasSurfArray.push(item.fecha);
+    dataSurfArray.push(item.users);
+  }
+
+  var fechasArray = fechasSurfArray.length > fechasPhotoArray.length ? fechasSurfArray : fechasPhotoArray;
+
+  console.log(fechasArray)
+
   var salesChartData = {
-    labels  : fechasArray,
+    labels  : fechasComprasArray,
     datasets: [
       {
         label               : 'Ventas',
@@ -42,34 +76,34 @@ $(function () {
         pointStrokeColor    : 'rgba(60,141,188,1)',
         pointHighlightFill  : '#fff',
         pointHighlightStroke: 'rgba(60,141,188,1)',
-        data                : dataArray
+        data                : dataComprasArray
       }
     ]
   }
 
     var salesChartData2 = {
-    labels  : ['Enero', 'Febrero', 'Marzo', 'Abril'],
+    labels  : fechasArray,
     datasets: [
       {
-        label               : 'Fotografos',
-        backgroundColor     : '#17a2b8',
-        borderColor         : '#17a2b8',
+        label               : 'Fotografos Nuevos',
+        backgroundColor     : 'rgba(23, 162, 184, 0.7)',
+        borderColor         : 'rgba(23, 162, 184, 0.7)',
         pointRadius          : 5,
-        pointColor          : '#3b8bba',
-        pointStrokeColor    : '#17a2b8',
+        pointColor          : 'rgba(23, 162, 184, 0.7)',
+        pointStrokeColor    : 'rgba(23, 162, 184, 0.7)',
         pointHighlightFill  : '#fff',
-        pointHighlightStroke: '#dc3545',
-        data                : [28, 48, 40, 19]
+        pointHighlightStroke: 'rgba(23, 162, 184, 0.7)',
+        data                : dataPhotoArray
       },      {
-        label               : 'Surferos',
-        backgroundColor     : 'rgba(210, 214, 222, 1)',
-        borderColor         : 'rgba(210, 214, 222, 1)',
+        label               : 'Surferos Nuevos',
+        backgroundColor     : 'rgba(210, 214, 222, 0.7)',
+        borderColor         : 'rgba(210, 214, 222, 0.7)',
         pointRadius         : 5,
-        pointColor          : 'rgba(210, 214, 222, 1)',
+        pointColor          : 'rgba(210, 214, 222, 0.7)',
         pointStrokeColor    : '#c1c7d1',
         pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(220,220,220,1)',
-        data                : [65, 59, 80, 81]
+        pointHighlightStroke: 'rgba(220,220,220,0.7)',
+        data                : dataSurfArray
       },
     ]
   }
