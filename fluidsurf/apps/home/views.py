@@ -1,3 +1,5 @@
+import datetime
+
 import django
 import os
 import re
@@ -27,6 +29,7 @@ from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Priva
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm, DevolucionForm
+from ..dashboard.models import RegistroCompras
 from ..helpers.helper import users_to_get
 
 from django.conf import settings
@@ -337,6 +340,18 @@ def producto(request, id='0'):
                             fecha=date.today()
                         )
                         compra.save()
+
+                        registro_exists = RegistroCompras.objects.filter(fecha=date.today()).first()
+
+                        if registro_exists:
+                            registro_exists.delete()
+
+                        registro = RegistroCompras()
+                        registro.compras = Compra.objects.filter(fecha=date.today()).all().count()
+                        registro.fecha = date.today()
+                        registro.save()
+
+                        print(registro)
 
                         if request.user.email:
                             subject = _("Your FluidSurf purchase")

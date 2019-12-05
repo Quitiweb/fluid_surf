@@ -23,17 +23,6 @@ def dashboard(request):
     if not request.user.is_staff:
         return redirect('/')
 
-    registro_exists = RegistroCompras.objects.filter(fecha=datetime.today()).first()
-
-    if registro_exists:
-        registro_exists.delete()
-
-    registro = RegistroCompras()
-    registro.compras = Compra.objects.filter(fecha=datetime.today()).all().count()
-    registro.fecha = datetime.today()
-    registro.save()
-
-
     query = RegistroCompras.objects.all().query
 
     results = QuerySet(query=query, model=RegistroCompras).order_by('-fecha')[:7]
