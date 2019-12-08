@@ -30,7 +30,7 @@ from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm, DevolucionForm
 from ..dashboard.models import RegistroCompras
-from ..helpers.helper import users_to_get
+from ..helpers.helper import users_to_get, registros_vacios_compras
 
 from django.conf import settings
 
@@ -340,6 +340,8 @@ def producto(request, id='0'):
                             fecha=date.today()
                         )
                         compra.save()
+
+                        registros_vacios_compras()
 
                         registro_exists = RegistroCompras.objects.filter(fecha=date.today()).first()
 

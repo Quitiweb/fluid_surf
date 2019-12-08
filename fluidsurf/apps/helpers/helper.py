@@ -1,6 +1,52 @@
+from datetime import date, timedelta
+
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 
+from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
+
+
+def registros_vacios_compras():
+    registro_last = RegistroCompras.objects.last()
+    diferencia = (date.today() - registro_last.fecha).days
+
+    for dia in reversed(range(0, diferencia)):
+        fecha = date.today() - timedelta(days=dia)
+        registro_exists = RegistroCompras.objects.filter(fecha=fecha).first()
+        if not registro_exists:
+            registro = RegistroCompras()
+            registro.compras = 0
+            registro.fecha = fecha
+            registro.save()
+
+
+def registros_vacios_fotografos():
+    registro_photo_last = RegistroFotografos.objects.last()
+    diferencia = (date.today() - registro_photo_last.fecha).days
+
+    for dia in reversed(range(0, diferencia)):
+        fecha = date.today() - timedelta(days=dia)
+        print(dia)
+        registro_exists = RegistroFotografos.objects.filter(fecha=fecha).first()
+        if not registro_exists:
+            registro = RegistroFotografos()
+            registro.users = 0
+            registro.fecha = fecha
+            registro.save()
+
+
+def registros_vacios_surferos():
+    registro_surf_last = RegistroSurferos.objects.last()
+    diferencia = (date.today() - registro_surf_last.fecha).days
+
+    for dia in reversed(range(0, diferencia)):
+        fecha = date.today() - timedelta(days=dia)
+        registro_exists = RegistroSurferos.objects.filter(fecha=fecha).first()
+        if not registro_exists:
+            registro = RegistroSurferos()
+            registro.users = 0
+            registro.fecha = fecha
+            registro.save()
 
 # Desplegable de antiguedad en users.Empresa y users.Autonomo
 ANTG1 = '1año'

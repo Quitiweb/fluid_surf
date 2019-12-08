@@ -13,7 +13,7 @@ from openpyxl import Workbook
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
-
+from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_vacios_fotografos, registros_vacios_surferos
 
 def dashboard(request):
     template = loader.get_template('dashboard/main.html')
@@ -22,56 +22,38 @@ def dashboard(request):
     if not request.user.is_staff:
         return redirect('/')
 
-    registro_last = RegistroCompras.objects.last()
-    diferencia = (date.today() - registro_last.fecha).days
-
-    for dia in reversed(range(0, diferencia)):
-        fecha = date.today() - timedelta(days=dia)
-        registro_exists = RegistroCompras.objects.filter(fecha=fecha).first()
-        if not registro_exists:
-            registro = RegistroCompras()
-            registro.compras = 0
-            registro.fecha = fecha
-            registro.save()
+    registros_vacios_compras()
 
     compras_query = RegistroCompras.objects.all().query
     results = QuerySet(query=compras_query, model=RegistroCompras).order_by('-fecha')[:7]
     orderResults = reversed(results)
     json = serializers.serialize('json', orderResults)
 
-    registro_photo_last = RegistroFotografos.objects.last()
-    diferencia = (date.today() - registro_photo_last.fecha).days
-    print(str(range(0, diferencia)))
+    # Bucle que estoy usando para calcular el numero total de usuarios nuevos de esta semana
+    purchases_last_week = 0
+    for item in results:
+        purchases_last_week += int(item.compras)
 
-    for dia in reversed(range(0, diferencia)):
-        fecha = date.today() - timedelta(days=dia)
-        print(dia)
-        registro_exists = RegistroFotografos.objects.filter(fecha=fecha).first()
-        if not registro_exists:
-            registro = RegistroFotografos()
-            registro.compras = 0
-            registro.fecha = fecha
-            registro.save()
+    registros_vacios_fotografos()
 
     photo_query = RegistroFotografos.objects.all().query
     results = QuerySet(query=photo_query, model=RegistroFotografos)[:30]
     json_photo = serializers.serialize('json', results)
 
-    registro_surf_last = RegistroSurferos.objects.last()
-    diferencia = (date.today() - registro_surf_last.fecha).days
+    # Bucle que estoy usando para calcular el numero total de usuarios nuevos de esta semana
+    users_last_week = 0
+    for item in results:
+        users_last_week += int(item.users)
 
-    for dia in reversed(range(0, diferencia)):
-        fecha = date.today() - timedelta(days=dia)
-        registro_exists = RegistroSurferos.objects.filter(fecha=fecha).first()
-        if not registro_exists:
-            registro = RegistroSurferos()
-            registro.compras = 0
-            registro.fecha = fecha
-            registro.save()
+    registros_vacios_surferos()
 
     surf_query = RegistroSurferos.objects.all().query
     results = QuerySet(query=surf_query, model=RegistroSurferos)[:30]
     json_surf = serializers.serialize('json', results)
+
+    # Continua el blucle anterior aqui
+    for item in results:
+        users_last_week += int(item.users)
 
     productos = Producto.objects.filter().all()
     europa = Producto.objects.filter(spot='Europa').all()
@@ -100,7 +82,9 @@ def dashboard(request):
         'num_solicitudes': SolicitudStock.objects.all().count(),
         'array_compras': json,
         'array_photo': json_photo,
-        'array_surf': json_surf
+        'array_surf': json_surf,
+        'purchases_last_week': purchases_last_week,
+        'users_last_week': users_last_week
     }
 
     return HttpResponse(template.render(context, request))

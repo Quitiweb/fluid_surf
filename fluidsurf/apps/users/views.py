@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
 from .models import CustomUser
 from ..dashboard.models import RegistroFotografos, RegistroSurferos
+from ..helpers.helper import registros_vacios_fotografos, registros_vacios_surferos
 
 
 def sign_up(request):
@@ -29,6 +30,8 @@ def sign_up(request):
 
             registro_photo_exists = RegistroFotografos.objects.filter(fecha=date.today()).first()
 
+            registros_vacios_fotografos()
+
             if registro_photo_exists:
                 registro_photo_exists.delete()
 
@@ -36,6 +39,8 @@ def sign_up(request):
             registro_photo.users = CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", date_joined=date.today()).all().count()
             registro_photo.fecha = date.today()
             registro_photo.save()
+
+            registros_vacios_surferos()
 
             registro_surf_exists = RegistroSurferos.objects.filter(fecha=date.today()).first()
 
