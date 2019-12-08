@@ -64,7 +64,8 @@ INSTALLED_APPS = [
     'django_google_maps',
     'django_filters',
     'braintree',
-    'certifi'
+    'certifi',
+    'celery'
 ]
 
 MIDDLEWARE = [

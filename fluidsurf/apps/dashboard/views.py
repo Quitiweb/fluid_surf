@@ -1,7 +1,6 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import os
 import openpyxl
-from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
 from django.http import HttpResponse, response
@@ -23,20 +22,56 @@ def dashboard(request):
     if not request.user.is_staff:
         return redirect('/')
 
+    registro_last = RegistroCompras.objects.last()
+    diferencia = (date.today() - registro_last.fecha).days
+
+    for dia in reversed(range(0, diferencia)):
+        fecha = date.today() - timedelta(days=dia)
+        registro_exists = RegistroCompras.objects.filter(fecha=fecha).first()
+        if not registro_exists:
+            registro = RegistroCompras()
+            registro.compras = 0
+            registro.fecha = fecha
+            registro.save()
+
     compras_query = RegistroCompras.objects.all().query
     results = QuerySet(query=compras_query, model=RegistroCompras).order_by('-fecha')[:7]
     orderResults = reversed(results)
     json = serializers.serialize('json', orderResults)
 
+    registro_photo_last = RegistroFotografos.objects.last()
+    diferencia = (date.today() - registro_photo_last.fecha).days
+    print(str(range(0, diferencia)))
+
+    for dia in reversed(range(0, diferencia)):
+        fecha = date.today() - timedelta(days=dia)
+        print(dia)
+        registro_exists = RegistroFotografos.objects.filter(fecha=fecha).first()
+        if not registro_exists:
+            registro = RegistroFotografos()
+            registro.compras = 0
+            registro.fecha = fecha
+            registro.save()
+
     photo_query = RegistroFotografos.objects.all().query
     results = QuerySet(query=photo_query, model=RegistroFotografos)[:30]
     json_photo = serializers.serialize('json', results)
 
+    registro_surf_last = RegistroSurferos.objects.last()
+    diferencia = (date.today() - registro_surf_last.fecha).days
+
+    for dia in reversed(range(0, diferencia)):
+        fecha = date.today() - timedelta(days=dia)
+        registro_exists = RegistroSurferos.objects.filter(fecha=fecha).first()
+        if not registro_exists:
+            registro = RegistroSurferos()
+            registro.compras = 0
+            registro.fecha = fecha
+            registro.save()
+
     surf_query = RegistroSurferos.objects.all().query
     results = QuerySet(query=surf_query, model=RegistroSurferos)[:30]
     json_surf = serializers.serialize('json', results)
-
-    print(json_surf);
 
     productos = Producto.objects.filter().all()
     europa = Producto.objects.filter(spot='Europa').all()
