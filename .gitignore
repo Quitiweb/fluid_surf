@@ -118,7 +118,10 @@ spreadsheets/
 # dbSQLite
 db.sqlite3
 
-
 # Venv
 Pipfile
 Pipfile.lock
+
+# vscode
+.vscode
+.vscode/

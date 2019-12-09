@@ -9,7 +9,10 @@ from django.db.models import Q, QuerySet
 
 from django.template import loader
 from openpyxl import Workbook
+from django.utils.translation import ugettext_lazy as _
+from django.core.mail import send_mail
 
+from django.conf import settings
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
@@ -442,10 +445,27 @@ def solicitud(request):
 
     if request.method == "POST":
         solicitud = SolicitudStock.objects.filter(id=request.POST.get('validar')).first()
-        solicitud.product.stock = 1
-        solicitud.product.save()
-        solicitud.delete()
+        solicitudes = SolicitudStock.objects.filter(product=solicitud.product).all()
+
+        to_mail = []
+        for solicitud in solicitudes:
+            solicitud.product.stock = 1
+            solicitud.product.save()
+
+            if solicitud.user.email: to_mail.append(solicitud.user.email) 
+            print(to_mail)
+
+            solicitud.delete()
+            
+        
+        subject = _("A product you asked for has been restocked!")
+        message = _("The product %s is back in FluidSurf market!" % (solicitud.product))
+        from_email = settings.SERVER_EMAIL
+        send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+
+
         messages.success(request, 'Se ha repuesto el stock correctamente.')
+        return redirect('solicitudes')
 
     context = {
         'solicitudes': solicitudes,
