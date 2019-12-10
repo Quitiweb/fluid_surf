@@ -322,12 +322,25 @@ def producto(request, id='0'):
                     else:
                         messages.warning(request, _('You already requested for stock for this product'))
                 else:
+
+                    precio = producto.precio * 100
+                    comision = precio * 0.05
+
                     charge = stripe.Charge.create(
-                        amount=producto.precio * 100,
+                        amount=precio,
                         currency='eur',
                         description='Pago de producto',
                         source=request.POST['stripeToken']
                     )
+
+                    print('Precio: %s \n Comision: %s ' % (precio, comision))
+
+                    # transfer = stripe.Transfer.create(
+                    #     amount=precio - comision,
+                    #     currency='eur',
+                    #     destination='acct_1Fo546Gc8MxVhWJj',
+                    #     description='Venta FluidSurf'
+                    # )
 
                     if charge:
                         producto.stock = 0
