@@ -330,17 +330,20 @@ def producto(request, id='0'):
                         amount=precio,
                         currency='eur',
                         description='Pago de producto',
-                        source=request.POST['stripeToken']
+                        source=request.POST['stripeToken'],
+                        transfer_group='ORDER_19'
                     )
 
                     print('Precio: %s \n Comision: %s ' % (precio, comision))
 
-                    # transfer = stripe.Transfer.create(
-                    #     amount=precio - comision,
-                    #     currency='eur',
-                    #     destination='acct_1Fo546Gc8MxVhWJj',
-                    #     description='Venta FluidSurf'
-                    # )
+                    transfer = stripe.Transfer.create(
+                        amount=int(precio - comision),
+                        currency='eur',
+                        destination='acct_1FrLyEIRg6RP9qPO',
+                        description='Venta FluidSurf',
+                        transfer_group='ORDER_19',
+                        source_transaction= charge.id
+                    )
 
                     if charge:
                         producto.stock = 0
