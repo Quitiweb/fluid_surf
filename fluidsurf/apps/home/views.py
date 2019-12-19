@@ -324,14 +324,14 @@ def producto(request, id='0'):
                 else:
 
                     precio = producto.precio * 100
-                    comision = precio * 0.05
+                    comision = precio * 0.1
 
                     charge = stripe.Charge.create(
                         amount=precio,
                         currency='eur',
                         description='Pago de producto',
                         source=request.POST['stripeToken'],
-                        transfer_group='ORDER_19'
+                        transfer_group='ORDER_2020'
                     )
 
                     print('Precio: %s \n Comision: %s ' % (precio, comision))
@@ -341,7 +341,7 @@ def producto(request, id='0'):
                         currency='eur',
                         destination='acct_1FrLyEIRg6RP9qPO',
                         description='Venta FluidSurf',
-                        transfer_group='ORDER_19',
+                        transfer_group='ORDER_2020',
                         source_transaction= charge.id
                     )
 
