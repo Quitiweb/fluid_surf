@@ -26,7 +26,7 @@ from django.views.defaults import page_not_found
 from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
     Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock
-from fluidsurf.apps.users.models import CustomUser
+from fluidsurf.apps.users.models import CustomUser, StripeUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm, DevolucionForm
 from ..dashboard.models import RegistroCompras
@@ -122,6 +122,9 @@ def mi_cuenta(request):
 
                 return redirect('mi-cuenta')
         if request.user.tipo_de_usuario == "FOTOGRAFO":
+
+            stripe_exists =
+
             context = {
                 'form': form,
                 'passform': passform,
@@ -786,6 +789,15 @@ def devolucion(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def stripe_log(request):
+    template = loader.get_template('home/stripe.html')
+
+
+    context = {}
+    return HttpResponse(template.render(context, request))
+
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):

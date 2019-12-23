@@ -18,8 +18,9 @@ urlpatterns = [
     path('contacto', views.contacto, name='contacto'),
     path('prueba2', views.prueba, name='prueba2'),
     path('payment', views.payment, name='payment'),
+    path('stripe', views.stripe_log, name='stripe'),
 
-    # PAGINAS DE INFORMACION DEL FOOTERq
+    # PAGINAS DE INFORMACION DEL FOOTER
     path('terms', views.terms, name='terms'),
     path('privacy-policy', views.privacy, name='privacy'),
     path('taxes', views.taxes, name='taxes'),

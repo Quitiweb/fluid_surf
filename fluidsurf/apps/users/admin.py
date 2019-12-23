@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm
-from .models import CustomUser
+from .models import CustomUser, StripeUser
 
 
 class CustomUserAdmin(UserAdmin):
@@ -19,3 +19,4 @@ class CustomGaleria(admin.ModelAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(StripeUser)
