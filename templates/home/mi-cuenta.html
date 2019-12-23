@@ -55,12 +55,29 @@
     <div id="photo-show">
         <div class="row mt-5">
             <div class="col-12">
+
+                <h1 style="font-size: 20px">{% trans 'PAYMENT METHODS' %}</h1>
+
                 <i class="fab fa-stripe fa-7x"></i>
 
-                <a href="https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_GKjzDL3453Y1g7dCXgNgIvhNZt3qpYRj&scope=read_write" 
-                   class="btn btn-primary ml-5" style="margin-bottom: 80px;">
-                    Vincular cuenta con Stripe
-                </a>
+                {% if stripe %}
+                <i class="far fa-check-circle fa-3x ml-2 pb-5" style="color: darkseagreen"
+                    data-toggle="tooltip" data-placement="top" title="{% trans 'Stripe verified' %}">
+                </i>
+
+                <br>
+                <i class="fab fa-paypal fa-7x"></i>
+                <i class="far fa-times-circle fa-3x ml-2 pb-5" style="color: orangered"
+                    data-toggle="tooltip" data-placement="top" title="Login con paypal pendiente">
+                </i>
+
+                {% else %}
+                    <a href="https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_GKjzDL3453Y1g7dCXgNgIvhNZt3qpYRj&scope=read_write"
+                       class="btn btn-primary ml-5" style="margin-bottom: 80px;">
+                        Vincular cuenta con Stripe
+                    </a>
+                {% endif %}
+
             </div>
             <div class="col-12">
                 

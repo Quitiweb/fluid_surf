@@ -123,12 +123,13 @@ def mi_cuenta(request):
                 return redirect('mi-cuenta')
         if request.user.tipo_de_usuario == "FOTOGRAFO":
 
-            stripe_exists =
+            stripe_exists = StripeUser.objects.filter(user=request.user).first()
 
             context = {
                 'form': form,
                 'passform': passform,
                 'photo_form': photo_form,
+                'stripe': stripe_exists
             }
         else:
             context = {
@@ -339,14 +340,17 @@ def producto(request, id='0'):
 
                     print('Precio: %s \n Comision: %s ' % (precio, comision))
 
-                    transfer = stripe.Transfer.create(
-                        amount=int(precio - comision),
-                        currency='eur',
-                        destination='acct_1FrLyEIRg6RP9qPO',
-                        description='Venta FluidSurf',
-                        transfer_group='ORDER_2020',
-                        source_transaction= charge.id
-                    )
+                    vendedor_stripe = StripeUser.objects.filter(user=producto.user).first()
+
+                    if vendedor_stripe:
+                        transfer = stripe.Transfer.create(
+                            amount=int(precio - comision),
+                            currency='eur',
+                            destination=vendedor_stripe.stripe_id,
+                            description='Venta FluidSurf',
+                            transfer_group='ORDER_2020',
+                            source_transaction=charge.id
+                        )
 
                     if charge:
                         producto.stock = 0
