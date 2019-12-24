@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.stripe',
+    'allauth.socialaccount.providers.google',
     'localflavor',
     'qr_code',
     'django_social_share',
