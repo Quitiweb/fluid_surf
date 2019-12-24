@@ -145,6 +145,9 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
+    stripe_exists = StripeUser.objects.filter(user=request.user).first()
+    form = ''
+
     current = 0
 
     if request.user.is_authenticated:
@@ -156,78 +159,83 @@ def subir_producto(request):
             form = AddProductForm()
         else:
 
-            if Producto.objects.all().count() > 0:
-                current = Producto.objects.latest('id').id + 1
-            form = AddProductForm(request.POST, request.FILES)
+            if stripe_exists:
+                if Producto.objects.all().count() > 0:
+                    current = Producto.objects.latest('id').id + 1
+                form = AddProductForm(request.POST, request.FILES)
 
-            if form.is_valid():
-                producto = form.save(commit=False)
-                producto.user = request.user
+                if form.is_valid():
+                    producto = form.save(commit=False)
+                    producto.user = request.user
 
-                files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
-                    'imagen2') + \
-                        request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist(
-                    'imagen5') + \
-                        request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist(
-                    'imagen8') + \
-                        request.FILES.getlist('imagen9')
+                    files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
+                        'imagen2') + \
+                            request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist(
+                        'imagen5') + \
+                            request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist(
+                        'imagen8') + \
+                            request.FILES.getlist('imagen9')
 
-                if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
-                    counter = 0
-                    total_size = 0
-                    upload = True
-                    for afile in files:
-                        if afile.size > 5242880:
-                            messages.warning(request, 'Al menos una de tus fotos tiene un peso superior a 5MB. '
-                                                      'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
-                            upload = False
+                    if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
+                        counter = 0
+                        total_size = 0
+                        upload = True
+                        for afile in files:
+                            if afile.size > 5242880:
+                                messages.warning(request, 'Al menos una de tus fotos tiene un peso superior a 5MB. '
+                                                          'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
+                                upload = False
+                            else:
+                                total_size += afile.size
+                                producto.__setattr__('imagen' + str(counter), afile)
+                                counter += 1
+
+                        if total_size < 26214400 and upload:
+                            producto.save()
+                            messages.success(request, 'Tu producto se ha subido correctamente')
+
+                            # Busca los usuarios en la zona del producto para despues mandarles un mail
+                            usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO", zona=producto.spot).all()
+
+                            mails = []
+                            for usuario in usuarios:
+                                if usuario.email:
+                                    mails.append(usuario.email)
+                            mails.append(settings.SERVER_EMAIL)
+
+                            subject = _("New product in your area")
+                            message = producto.user.first_name + " " + producto.user.last_name + str(
+                                _(" has uploaded a product nearby you"))
+                            message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
+                                producto.id)  # TODO Añadir link
+                            from_email = settings.SERVER_EMAIL
+                            to_mail = mails
+
+                            try:
+                                send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                            except BadHeaderError:
+                                return HttpResponse('Invalid header found')
                         else:
-                            total_size += afile.size
-                            producto.__setattr__('imagen' + str(counter), afile)
-                            counter += 1
-
-                    if total_size < 26214400 and upload:
-                        producto.save()
-                        messages.success(request, 'Tu producto se ha subido correctamente')
-
-                        # Busca los usuarios en la zona del producto para despues mandarles un mail
-                        usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO", zona=producto.spot).all()
-
-                        mails = []
-                        for usuario in usuarios:
-                            if usuario.email:
-                                mails.append(usuario.email)
-                        mails.append(settings.SERVER_EMAIL)
-
-                        subject = _("New product in your area")
-                        message = producto.user.first_name + " " + producto.user.last_name + str(
-                            _(" has uploaded a product nearby you"))
-                        message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
-                            producto.id)  # TODO Añadir link
-                        from_email = settings.SERVER_EMAIL
-                        to_mail = mails
-
-                        try:
-                            send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
-                        except BadHeaderError:
-                            return HttpResponse('Invalid header found')
+                            if not upload:
+                                pass
+                            else:
+                                messages.warning(request, 'Has subido fotos con un peso superior a 25MB. '
+                                                          'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
                     else:
-                        if not upload:
-                            pass
-                        else:
-                            messages.warning(request, 'Has subido fotos con un peso superior a 25MB. '
-                                                      'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
+                        messages.warning(request,
+                                         'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
+                                         'superar las 10 fotos.')
                 else:
-                    messages.warning(request,
-                                     'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
-                                     'superar las 10 fotos.')
+                    messages.warning(request, form.errors)
             else:
-                messages.warning(request, form.errors)
+                messages.warning(request, _('There was a problem with your Stripe integration'))
     else:
         return redirect('index')
+
     context = {
         'form': form,
         'current': current,
+        'stripe': stripe_exists
     }
 
     return HttpResponse(template.render(context, request))
@@ -321,17 +329,16 @@ def producto(request, id='0'):
                             send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
                         except BadHeaderError:
                             return HttpResponse('Invalid header found')
-
-
                     else:
                         messages.warning(request, _('You already requested for stock for this product'))
                 else:
+                    precio = (producto.precio + (producto.precio * 0.21)) * 100  # iva
+                    comision = precio * 0.05
 
-                    precio = producto.precio * 100
-                    comision = precio * 0.1
+                    if comision < 1: comision = 1
 
                     charge = stripe.Charge.create(
-                        amount=precio,
+                        amount=int(precio),
                         currency='eur',
                         description='Pago de producto',
                         source=request.POST['stripeToken'],
@@ -352,55 +359,55 @@ def producto(request, id='0'):
                             source_transaction=charge.id
                         )
 
-                    if charge:
-                        producto.stock = 0
-                        producto.save()
+                        if charge and transfer:
+                            producto.stock = 0
+                            producto.save()
 
-                        compra = Compra(
-                            comprador=request.user,
-                            vendedor=producto.user,
-                            producto=producto,
-                            fecha=date.today()
-                        )
-                        compra.save()
+                            compra = Compra(
+                                comprador=request.user,
+                                vendedor=producto.user,
+                                producto=producto,
+                                fecha=date.today()
+                            )
+                            compra.save()
 
-                        registros_vacios_compras()
+                            registros_vacios_compras()
 
-                        registro_exists = RegistroCompras.objects.filter(fecha=date.today()).first()
+                            registro_exists = RegistroCompras.objects.filter(fecha=date.today()).first()
 
-                        if registro_exists:
-                            registro_exists.delete()
+                            if registro_exists:
+                                registro_exists.delete()
 
-                        registro = RegistroCompras()
-                        registro.compras = Compra.objects.filter(fecha=date.today()).all().count()
-                        registro.fecha = date.today()
-                        registro.save()
+                            registro = RegistroCompras()
+                            registro.compras = Compra.objects.filter(fecha=date.today()).all().count()
+                            registro.fecha = date.today()
+                            registro.save()
 
-                        if request.user.email:
-                            subject = _("Your FluidSurf purchase")
-                            message = _(
-                                "Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
-                            message += "\nID: OR" + str(compra.id)
-                            from_email = settings.SERVER_EMAIL
-                            to_mail = request.user.email
+                            if request.user.email:
+                                subject = _("Your FluidSurf purchase")
+                                message = _(
+                                    "Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
+                                message += "\nID: OR" + str(compra.id)
+                                from_email = settings.SERVER_EMAIL
+                                to_mail = request.user.email
 
-                            try:
-                                send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
-                            except BadHeaderError:
-                                return HttpResponse('Invalid header found')
-                        if producto.user.email:
-                            subject = _("Your product has been sold!")
-                            message = str(_("Your product ")) + producto.nombre + str(_(
-                                " has been sold to ")) + compra.comprador.first_name + " " + compra.comprador.last_name + "!"
-                            message += "\nYou can check it in your Sales History."
-                            message += "\nID: OR" + str(compra.id)
-                            from_email = settings.SERVER_EMAIL
-                            to_mail = producto.user.email
+                                try:
+                                    send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                                except BadHeaderError:
+                                    return HttpResponse('Invalid header found')
+                            if producto.user.email:
+                                subject = _("Your product has been sold!")
+                                message = str(_("Your product ")) + producto.nombre + str(_(
+                                    " has been sold to ")) + compra.comprador.first_name + " " + compra.comprador.last_name + "!"
+                                message += "\nYou can check it in your Sales History."
+                                message += "\nID: OR" + str(compra.id)
+                                from_email = settings.SERVER_EMAIL
+                                to_mail = producto.user.email
 
-                            try:
-                                send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
-                            except BadHeaderError:
-                                return HttpResponse('Invalid header found')
+                                try:
+                                    send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                                except BadHeaderError:
+                                    return HttpResponse('Invalid header found')
 
                         return render(request, 'payments/charge.html')
 
@@ -425,7 +432,8 @@ def producto(request, id='0'):
         'in_wishlist': not status,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe': True,
-        'API_KEY': API_KEY
+        'API_KEY': API_KEY,
+        'precio': (producto.precio + (producto.precio * 0.21)) * 100
     }
 
     return HttpResponse(template.render(context, request))
@@ -798,7 +806,6 @@ def devolucion(request):
 def stripe_log(request):
     template = loader.get_template('home/stripe.html')
 
-
     context = {}
     return HttpResponse(template.render(context, request))
 
@@ -825,7 +832,6 @@ def add_watermark(image, watermark):
 
 
 class WatermarkProcessor(object):
-
     print(django.db.connection.introspection.table_names())
 
     if 'home_watermarkimage' in django.db.connection.introspection.table_names():
@@ -837,6 +843,7 @@ class WatermarkProcessor(object):
             watermark = Image.open(settings.WATERMARK_IMAGE)
     else:
         watermark = Image.open(settings.WATERMARK_IMAGE)
+
     def process(self, image):
         return add_watermark(image, self.watermark)
 

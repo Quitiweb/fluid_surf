@@ -2,7 +2,6 @@ $(function() {
     $( "#id_fecha" ).datepicker({ dateFormat: 'dd/mm/yy', defaultDate: new Date() });
     $( "#id_fecha" ).val($.datepicker.formatDate('dd/mm/yy', new Date()));
 
-
 var numFiles = 0;
 $(document).on("change", "#id_imagenes", function(){
      numFiles += $("#id_imagenes")[0].files.length;
@@ -11,6 +10,13 @@ $(document).on("change", "#id_imagenes", function(){
 });
 
 $(document).ready(function () {
+
+    $("#stripeModal").modal({
+         backdrop: 'static',
+         keyboard: false,
+        show: true
+    });
+
     $('#id_imagen0').on("change", function(){
         numFiles += $("#id_imagen0")[0].files.length;
         $('#form0').toggleClass('hide');

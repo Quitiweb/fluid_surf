@@ -42,7 +42,6 @@
                                 <div class="h-25"></div>
                             {% endif %}
                         </p>
-
 				</div>
 
                 <div class="item intro intro2 span-2 text-left">
@@ -52,9 +51,8 @@
                             <h1 class="white">
                                 {% trans 'Price' %}:
                                 <span style="font-size: 35px;">
-                                    {{ producto.precio }}
+                                    {{ producto.precio }} €<span class="ml-3" style="font-size: 25px">+ IVA 21%</span>
                                 </span>
-                                €
                             </h1>
                         </div>
                             <div class="row text-center mt-3">
@@ -77,7 +75,7 @@
                                             data-name="FluidSurf"
                                             data-description="{% trans 'Buy product to' %} {{ producto.user }} "
                                             data-currency="eur"
-                                            data-amount="{{ producto.precio }}00"
+                                            data-amount="{{ precio }}"
                                             data-locale="{{ LANGUAGE_CODE }}">
                                     </script>
                                     <script>
@@ -109,7 +107,7 @@
                             <h1 class="white" style="font-size: 35px; line-height: 70px;">
                                 <span class="mb-5">{% trans 'Price' %}:</span>
                                 <span style="font-size: 75px;">
-                                    {{ producto.precio }}
+                                    {{ precio }}
                                 </span>
                                 €
                             </h1>
