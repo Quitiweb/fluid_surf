@@ -9,11 +9,13 @@ from ..helpers.helper import ANTG1, ANTIGUEDAD, FACT1, FACTURACION
 
 
 class CustomUser(AbstractUser):
+    UNASIGNED = 'UNASIGNED'
     SURFERO = 'SURFERO'
     FOTOGRAFO = 'FOTOGRAFO'
     ADMIN = 'ADMIN'
 
     USER = (
+        (UNASIGNED, 'UNASIGNED'),
         (SURFERO, 'Surfero'),
         (FOTOGRAFO, 'Fotografo'),
         (ADMIN, 'Admin'),
