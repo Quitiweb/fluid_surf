@@ -90,6 +90,8 @@
                 <div class="img-logo">
                      {% if user.profile_pic %}
                         <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">
+                     {% elif user.socialaccount_set.all.0.get_avatar_url %}
+                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
                      {% else %}
                         <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">
                      {% endif %}
