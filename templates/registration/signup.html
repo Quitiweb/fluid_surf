@@ -30,6 +30,10 @@
             <p>Welcome {{ user.username }} !!!</p>
             {% else %}
             <a href="{% provider_login_url 'google' %}">Sign Up</a>
+
+            {% providers_media_js %}
+            <a href="{% provider_login_url 'facebook' method='js_sdk' %}">Facebook Connect</a>
+
             {% endif %}
 
         <div id="contact" class="row text-center">
