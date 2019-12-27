@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
@@ -53,9 +53,19 @@ def sign_up(request):
             registro_surf.fecha = date.today()
             registro_surf.save()
 
-            return redirect('mi-cuenta')
+            return redirect('setup')
     context = {
         'form': form,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def setup(request):
+    template = loader.get_template('registration/setup.html')
+
+    context = {
+
     }
 
     return HttpResponse(template.render(context, request))

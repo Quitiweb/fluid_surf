@@ -13,6 +13,16 @@
     display: none;
 }
 
+.yeti {
+	width: 380px;
+}
+
+@media (max-width: 600px) {
+	.yeti {
+		width: 250px;
+	}
+}
+
 /*CUSTOM SWITCH*/
 .switch {
   position: relative;

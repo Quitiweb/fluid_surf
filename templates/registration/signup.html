@@ -18,29 +18,27 @@
 	<div class="container text-center mt-5">
 		<a id="" href="/" class="row text-center" style="margin-top:50px;">
             <span class="col-md-5 col-3"></span>
-            <a href="/"><img class="image-responsive w-25 col-md-2 col-6 pt-5" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
-            <span class="col-md-5"></span>
+            <a href="/"><img class="image-responsive w-25 col-md-6 col-6 pt-5 ml-5" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
+            <span class="col-md-5 col-3"></span>
         </a>
 	</div>
-        <!-- TODO Estructurar esto bien -->
-            {% load socialaccount %}
-
-            <h1>Login con google para surferos</h1>
-            {% if user.is_authenticated %}
-            <p>Welcome {{ user.username }} !!!</p>
-            {% else %}
-            <a href="{% provider_login_url 'google' %}">Sign Up</a>
-
-            {% providers_media_js %}
-            <a href="{% provider_login_url 'facebook' method='js_sdk' %}">Facebook Connect</a>
-
-            {% endif %}
-
         <div id="contact" class="row text-center">
             <div class="col-lg-4 col-1"></div>
             <div class="col-lg-4 col-10">
                 <h2 class="major display-4">Signup</h2>
-			<p style="margin-top: -1.5em;">¿Ya tienes cuenta?<br/>Inicia sesión: <a href="/login"><b style="color:black !important;">Login</b></a></p>
+
+                <div class="col-12">
+                    {% load socialaccount %}
+                    {% providers_media_js %}
+
+                    <div class="col-12">{% trans 'Login with your Social Media' %}</div>
+                        <a href="{% provider_login_url 'google' %}" class="col-12 col-lg-4 btn mt-3 " style="background: #db4a39; color: white"><i class="fab fa-google"></i> Google</a>
+
+                        <a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="col-12 col-lg-4 btn mt-3" style="background: #3b5998; color: white"><i class="fab fa-facebook-f"></i> Facebook</a>
+
+                        <a href="{% provider_login_url 'twitter' %}" class="col-12 col-lg-4 btn mt-3" style="background: #00acee; color: white"><i class="fab fa-twitter"></i>  Twitter</a>
+                </div>
+			<p class="mt-5">¿Ya tienes cuenta?<br/>Inicia sesión: <a href="/login"><b style="color:black !important;">Login</b></a></p>
                 <div class="contact-form mt-5">
                 <form method="post">
                     {% csrf_token %}

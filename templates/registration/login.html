@@ -6,7 +6,7 @@
 
 <style>
 	body {
-		background: url({% static 'main/images/bgsurf.jpg' %}) no-repeat center center fixed; background-size: cover;
+		/*background: url({% static 'main/images/bgsurf.jpg' %}) no-repeat center center fixed; background-size: cover;*/
 	}
 </style>
 
@@ -22,9 +22,9 @@
 {% endif %}
 <div class="row">
 	<div class="col-sm-2 col-lg-3"></div>
-<form method="post" style="background: white; border-radius:25px; margin-top: 100px !important;" class="col-sm-8 col-lg-6 mt-5 pt-5">
+<form method="post" style="background: white; border-radius:25px; margin-top: 100px !important;" class="col-sm-8 col-lg-6">
     {% csrf_token %}
-    <div class="container" style="width: 380px;">
+    <div class="container yeti">
         	<div class="svgContainer">
 		<div>
 			<svg class="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200">
@@ -139,6 +139,18 @@
 </div>
 	<div class="inputGroup inputGroup3 text-center mt-4">
 		<button type="submit" id="login" class="pr-5 pl-5">Log in</button>
+	</div>
+
+		<div class="col-12 pb-5 text-center mt-4">
+		{% load socialaccount %}
+		{% providers_media_js %}
+
+		<div class="col-12">{% trans 'Login with your Social Media' %}</div>
+			<a href="{% provider_login_url 'google' %}" class="col-12 col-md-4 col-lg-3 btn mt-3 " style="background: #db4a39; color: white"><i class="fab fa-google"></i> Google</a>
+
+			<a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="col-12 col-md-4 col-lg-3 btn mt-3" style="background: #3b5998; color: white"><i class="fab fa-facebook-f"></i> Facebook</a>
+
+			<a href="{% provider_login_url 'twitter' %}" class="col-12 col-md-4 col-lg-3 btn mt-3" style="background: #00acee; color: white"><i class="fab fa-twitter"></i>  Twitter</a>
 	</div>
 	<div class="mt-3 text-center">
 		No tienes cuenta? <a href="{% url 'signup' %}">Registrate</a>
