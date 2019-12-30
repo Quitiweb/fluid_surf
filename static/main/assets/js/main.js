@@ -15,9 +15,7 @@
 	})
 
     window.setTimeout(function() {
-      $(".notificacion").fadeTo(500, 0).slideUp(500, function(){
-          $(this).remove();
-      });
+      $(".notificacion").fadeTo(500, 0);
     }, 5000);
 
     $("#changeImage").on('change', function(){
