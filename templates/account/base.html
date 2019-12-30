@@ -1,57 +1,48 @@
-<!DOCTYPE html>
-<html>
-
-    <head>
-        <title>{% block head_title %}{% endblock %}</title>
-
-        {% load static %}
-
-        {% include "main/head.html" %}
-
-        {% block extra_head %}
-        {% endblock %}
-    </head>
-
-    <body class="is-preload">
-        {% block body %}
-            <div id="page-wrapper">
+{% extends 'home/base.html' %}
+{% load static %}
+{% load i18n %}
+        {% block main %}
+            <div id="page-wrapper" class="pt-5 container mt-5" style="height: 90vh">
 
                 {% if not user.is_authenticated %}
-                    <div class="bg-morado text-center">
-                        <a id="logo-kradleco" href="/" class="image original"><img src="{% static 'main/images/Logo_Kradleco_Blanco.png' %}" alt="kradleco.es" /></a>
+                 	<div class="container text-center mt-5">
+                        <a id="" href="/" class="row text-center" style="margin-top:50px;">
+                            <span class="col-md-5 col-3"></span>
+                            <a href="/"><img class="image-responsive w-25 col-md-6 col-6 pt-5 ml-5" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
+                            <span class="col-md-5 col-3"></span>
+                        </a>
                     </div>
                 {% endif %}
 
-                <section class="member mt-5">
-                    <div class="container text-center">
                         {% if messages %}
                             <div>
                                 <strong>Messages:</strong>
                                 <ul>
                                     {% for message in messages %}
-                                        <li>{{message}}</li>
+                                        <li>
+                                            <h1 class="display-4">{{message}}</h1>
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             </div>
                         {% endif %}
 
-                        <div>
+                        <div class="text-center mb-5">
                             <strong>Menu:</strong>
                             <ul>
                                 {% if user.is_authenticated %}
                                     <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
                                     <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
                                 {% else %}
-                                    <li><a href="{% url 'account_login' %}">Sign In</a></li>
-                                    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                                    <li><a href="{% url 'login' %}">{% trans 'Sign In' %}</a></li>
+                                    <li><a href="{% url 'signup' %}">{% trans 'Sign Up' %}</a></li>
                                 {% endif %}
                             </ul>
                         </div>
 
                         {% block content %}
                         {% endblock %}
-                    </div>
-                </section>
+
             </div>
         {% endblock %}
 
@@ -59,7 +50,3 @@
         {% endblock %}
 
         {% include "main/script.html" %}
-
-    </body>
-
-</html>
