@@ -200,7 +200,7 @@
 
          {% if messages %}
               {% for message in messages %}
-                    <div class="row text-center mx-auto notificacion pt-5 w-100" style="height:75px; position: fixed !important; top: -18px; z-index: 10;">
+                    <div class="row text-center mx-auto notificacion pt-5 w-100 fade" style="height:75px; position: fixed !important; top: -18px; z-index: 10;">
                         <div class="col-1 col-lg-4"></div>
                         <div class="alert alert-{{ message.tags }} alert-dismissible text-center col-10 col-lg-4 pt-3 mt-5 pl-1 pb-2" role="alert">
                             {% if message.tags == 'warning'%}
