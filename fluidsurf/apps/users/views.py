@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django.shortcuts import redirect, render
 from django.template import loader
@@ -64,8 +64,14 @@ def sign_up(request):
 def setup(request):
     template = loader.get_template('registration/setup.html')
 
-    context = {
+    print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10))
+    print(datetime.now())
+    print(request.user.date_joined.replace(tzinfo=None) + timedelta(seconds=10) - datetime.now())
 
-    }
+    # if request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) < datetime.now():
+    #     print('entra')
+    #     return redirect('/')
+    # else:
+    context = {}
 
     return HttpResponse(template.render(context, request))

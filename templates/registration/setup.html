@@ -4,10 +4,44 @@
 {% load i18n %}
 {% block main %}
 
-<div class="container mt-5 pt-5">
-    Pantalla para elegir que tipo de usuario es. Podemos controlar que ha confirmado el tipo de usuario
-    con un check en la base de datos para que si entra manualmente no deje, o controlandolo con la fecha de alta y la fecha
-    a la que entra. Ya veremos.
+<div class="container mt-5" style="height: 120vh;">
+    <div class="row">
+        <div class="col-12 text-center">
+            <img class="image-responsive w-25 col-md-6 col-6 pt-5 ml-5" src="{% static 'main/images/logo_letras.svg' %}" alt=""/>
+            <h1 class="display-2">Bienvenido a FluidSurf</h1>
+        </div>
+        <div class="col-12 text-center mt-3">
+            <p>
+                <span style="font-size: 28px !important;">Por favor, elige un tipo de usuario.</span> <br>
+                (En caso de no elegirlo ahora, se te asignara tipo surfero)
+            </p>
+        </div>
+
+        <div class="col-12 text-center" style="margin-top: 69px;">
+            <button class="" style="width: 250px;">
+                <i class="fas fa-water"></i> Surfero
+            </button>
+
+            <br>
+
+            <p class="mt-3">
+                    Busca productos cerca de ti, añade a lista de deseos, compra, etc.
+            </p>
+        </div>
+
+        <div class="col-12 text-center" style="margin-top: 100px">
+            <button class="" style="width: 250px;">
+                <i class="fas fa-water"></i> Fotografo
+            </button>
+
+            <br>
+
+            <p class="mt-3">
+                Sube tus fotografias para que gente de todo el mundo pueda comprarlas.
+            </p>
+
+        </div>
+    </div>
 </div>
 
 {% endblock %}

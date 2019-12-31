@@ -205,7 +205,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # Login/logout redirects to homepage
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/setup'
 LOGOUT_REDIRECT_URL = '/login'
 
 SERVER_EMAIL = 'contact@fluidsurf.es'
