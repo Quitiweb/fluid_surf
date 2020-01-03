@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.instagram',
     'localflavor',
     'qr_code',
     'django_social_share',
@@ -205,7 +206,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # Login/logout redirects to homepage
-LOGIN_REDIRECT_URL = '/setup'
+LOGIN_REDIRECT_URL = '/mi-cuenta'
 LOGOUT_REDIRECT_URL = '/login'
 
 SERVER_EMAIL = 'contact@fluidsurf.es'
