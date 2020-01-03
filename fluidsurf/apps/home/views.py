@@ -814,7 +814,7 @@ def stripe_log(request):
 
     response = r.json()
 
-    # if r.json()['error']:aa
+    # if r.json()['error']:
     #     messages.warning(request, 'Stripe Error: ' + r.json()['error_description'])
     # else:
 
