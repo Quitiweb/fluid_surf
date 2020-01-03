@@ -417,11 +417,12 @@ input, select, textarea {
 	.scrollZone {
 		position: fixed;
 		width: 6rem;
-		height: 100vh;
+		height: 25vh;
+		top: 35%;
 		cursor: -moz-grab;
 		cursor: -webkit-grab;
 		cursor: -ms-grab;
-		cursor: grab;
+		cursor: pointer;
 		z-index: 10001;
 	}
 

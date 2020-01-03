@@ -38,7 +38,7 @@
 				keyboardShortcuts: {
 
 					// If true, enables scrolling via keyboard shortcuts.
-						enabled: false,
+						enabled: true,
 
 					// Sets the distance to scroll when using the left/right arrow keys.
 						distance: 50
@@ -49,7 +49,7 @@
 				scrollWheel: {
 
 					// If true, enables scrolling via the scroll wheel.
-						enabled: true,
+						enabled: false,
 
 					// Sets the scroll wheel factor. (Ideally) a value between 0 and 1 (lower = slower scroll, higher = faster scroll).
 						factor: 1
@@ -60,7 +60,7 @@
 				scrollZones: {
 
 					// If true, enables scrolling via scroll zones on the left/right edges of the scren.
-						enabled: false,
+						enabled: true,
 
 					// Sets the speed at which the page scrolls when a scroll zone is active (higher = faster scroll, lower = slower scroll).
 						speed: 15
@@ -336,8 +336,8 @@
 		if (settings.scrollZones.enabled)
 			(function() {
 
-				var	$left = $('<div class="scrollZone left"></div>'),
-					$right = $('<div class="scrollZone right"></div>'),
+				var	$left = $('<div class="scrollZone left"><i class="fas fa-chevron-left fa-6x" style="top: 25%; position: relative; color: #ccfffb"></i></div>'),
+					$right = $('<div class="scrollZone right"><i class="fas fa-chevron-right fa-6x" style="top: 25%; position: relative; color: #ccfffb"></i></div>'),
 					$zones = $left.add($right),
 					paused = false,
 					intervalId = null,
@@ -376,22 +376,25 @@
 
 					};
 
-				$zones
-					.appendTo($wrapper)
-					.on('mouseleave mousedown', function(event) {
-						deactivate();
-					});
+				$zones.appendTo($wrapper);
+
 
 				$left
 					.css('left', '0')
-					.on('mouseenter', function(event) {
+					.on('click', function(event) {
 						activate(-1);
+						setTimeout( function() {
+							deactivate()
+						}, 500)
 					});
 
 				$right
 					.css('right', '0')
-					.on('mouseenter', function(event) {
+					.on('click', function(event) {
 						activate(1);
+						setTimeout( function() {
+							deactivate()
+						}, 500)
 					});
 
 				$body
