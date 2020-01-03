@@ -109,16 +109,15 @@ def mi_cuenta(request):
                     else:
                         fotografo.save()
             if form.is_valid():
-                messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
+            if passform.is_valid():
+                pwd = passform.save()
+                update_session_auth_hash(request, pwd)  # Important!
+                messages.success(request, 'Contraseña cambiada con éxito')
+            elif passform.data['new_password1'] or passform.data['new_password2']:
+                messages.warning(request, passform.errors)
             else:
-                print(form.errors)
-                if passform.is_valid():
-                    pwd = passform.save()
-                    update_session_auth_hash(request, pwd)  # Important!
-                    messages.success(request, 'Contraseña cambiada con éxito')
-                elif passform.data['new_password1'] or passform.data['new_password2']:
-                    messages.warning(request, passform.errors)
+                messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
 
                 return redirect('mi-cuenta')
         if request.user.tipo_de_usuario == "FOTOGRAFO":

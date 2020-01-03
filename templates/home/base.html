@@ -198,17 +198,23 @@
         <!-- Page Wrapper -->
         <div id="page-wrapper mt-5">
 
-         {% if messages %}
+        {% if messages %}
               {% for message in messages %}
-                    <div class="row text-center mx-auto notificacion pt-5 w-100 fade" style="height:75px; position: fixed !important; top: -18px; z-index: 10;">
+                    <div class="row text-center mx-auto notificacion pt-5 w-100" style="height:75px; position: fixed !important; top: 10px; z-index: 10;">
                         <div class="col-1 col-lg-4"></div>
-                        <div class="alert alert-{{ message.tags }} alert-dismissible text-center col-10 col-lg-4 pt-3 mt-5 pl-1 pb-2" role="alert">
+                        <div class="alert bg-light text-dark alert-dismissible text-center col-10 col-lg-4 pt-4 mt-5 pl-1 pb-3 z-depth-3
+                        {% if message.tags == 'warning' %} alert-roja {% else %} alert-verde {% endif %}" role="alert"
+                        style="box-shadow: 5px 5px 10px grey">
                             {% if message.tags == 'warning'%}
-                                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                                <span class="align-middle">
+                                    <i class="fas fa-exclamation-triangle fa-2x"></i>
+                                </span>
                             {% else %}
-                                <i class="fas fa-check fa-2x"></i>
+                                <span class="align-middle">
+                                    <i class="fas fa-check fa-2x"></i>
+                                </span>
                             {% endif %}
-                            <span class="mb-5">{{ message }}</span>
+                            <span class="mb-5 pl-1">{{ message }}</span>
                             <button type="button" class="btn close p-0 pl-1" data-dismiss="alert" aria-label="Close" style="height:25px;"><span aria-hidden="true" class="black">&times;</span></button>
                         </div>
                         <div class="col-1 col-lg-4"></div>
