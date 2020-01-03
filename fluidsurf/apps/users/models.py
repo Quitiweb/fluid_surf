@@ -34,6 +34,8 @@ class CustomUser(AbstractUser):
         default=SURFERO,
     )
 
+    stripe_id = models.CharField(max_length=100, blank=True)
+
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Formato: '+999999999'. Max 15 dígitos.")
     telefono = models.CharField(validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
     pais = models.CharField(max_length=50, default="")
@@ -56,10 +58,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
-
-class StripeUser(models.Model):
-
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='usuario', default='')
-
-    stripe_id = models.CharField(max_length=200, blank=True)
