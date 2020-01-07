@@ -158,7 +158,7 @@
 </div>
 
 <div class="row text-center mt-3">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
         <form action="" method="POST">
             {% csrf_token %}
             {% if in_wishlist %}
@@ -169,7 +169,7 @@
         </form>
     </div>
             {% if user != producto.user %}
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
         <form action="" method="post">{% csrf_token %}
             {% if producto.stock == 1  %}
             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"

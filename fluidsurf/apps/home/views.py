@@ -48,7 +48,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def index(request):
     template = loader.get_template('home/index.html')
 
-    prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()
+    prod_list = Producto.objects.filter(user__is_active=True, user__validado=True, spot=request.user.zona).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     if request.user.is_authenticated and request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
