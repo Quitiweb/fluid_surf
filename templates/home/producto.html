@@ -49,65 +49,17 @@
                         {% if user.tipo_de_usuario == "SURFERO"  %}
                         <div class="row">
                             <h1 class="white">
-                                {% trans 'Price' %}:
                                 <span style="font-size: 35px;">
                                     {{ producto.precio }} €<span class="ml-3" style="font-size: 25px">+ IVA 21%</span>
                                 </span>
                             </h1>
                         </div>
-                            <div class="row text-center mt-3">
-                            <div class="col-sm-12 col-6">
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                        {% if in_wishlist %}
-                                            <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'Remove from wishlist' %}">
-                                        {% else %}
-                                            <input type="submit" class="pr-5 pl-5 btn btn-secondary" name="wishlist" value="{% trans 'Add to wishlist' %}">
-                                        {% endif %}
-                                </form>
-                            </div>
-                            {% if user != producto.user %}
-                            <div class="col-sm-12 col-6">
-                                <form action="" method="post">{% csrf_token %}
-                                    {% if producto.stock == 1  %}
-                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                            data-key="{{ key }}"
-                                            data-name="FluidSurf"
-                                            data-description="{% trans 'Buy product to' %} {{ producto.user }} "
-                                            data-currency="eur"
-                                            data-amount="{{ precio }}"
-                                            data-locale="{{ LANGUAGE_CODE }}">
-                                    </script>
-                                    <script>
-                                          document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                                    </script>
 
-                                    <input type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">
-                                {% else %}
-                                    <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1"
-                                            data-toggle="tooltip" data-placement="top"
-                                            title="This product is out of stock.
-                                           Please, ask for additional stock and you
-                                            will receive an email with aconfirmation
-                                            from the photographer. Thank you"
-                                    >
-                                        {% trans 'Ask for stock' %}
-                                    </button>
-                                </form>
-                                {% endif %}
-                            </div>
-                            {% else %}
-                            <div class="col-sm-12 col-6">
-                                <input type="submit" disabled class="btn btn-primary" value="{% trans 'Buy now' %}">
-                            </div>
-                            {% endif %}
-                        </div>
                         {% else %}
                         <div class="row">
                             <h1 class="white" style="font-size: 35px; line-height: 70px;">
-                                <span class="mb-5">{% trans 'Price' %}:</span>
                                 <span style="font-size: 75px;">
-                                    {{ precio }}
+                                    {{ producto.precio }}
                                 </span>
                                 €
                             </h1>
@@ -204,6 +156,54 @@
 			</div>
 	</section>
 </div>
+
+<div class="row text-center mt-3">
+    <div class="col-6">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% if in_wishlist %}
+            <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist">{% trans 'Remove from wishlist' %}</button>
+            {% else %}
+            <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist">{% trans 'Add to wishlist' %}</button>
+            {% endif %}
+        </form>
+    </div>
+            {% if user != producto.user %}
+    <div class="col-6">
+        <form action="" method="post">{% csrf_token %}
+            {% if producto.stock == 1  %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="{{ key }}"
+                    data-name="FluidSurf"
+                    data-description="{% trans 'Buy product to' %} {{ producto.user }} "
+                    data-currency="eur"
+                    data-amount="{{ precio }}"
+                    data-locale="{{ LANGUAGE_CODE }}">
+            </script>
+            <script>
+                document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+            </script>
+
+            <button type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
+            {% else %}
+            <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1 btn btn-primary"
+                    data-toggle="tooltip" data-placement="top"
+                    title="This product is out of stock.
+                           Please, ask for additional stock and you
+                            will receive an email with aconfirmation
+                            from the photographer. Thank you"
+            >
+                {% trans 'Ask for stock' %}
+            </button>
+        </form>
+        {% endif %}
+    </div>
+    {% else %}
+            <div class="col-6">
+                <button type="submit" disabled class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
+            </div>
+            {% endif %}
+        </div>
 </div>
 
 <script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}" defer async></script>
@@ -227,7 +227,6 @@
                       {{ productform.nombre }}
                   </div>
                   <div class="col-6">
-                      <label for="Price">{% trans 'Price' %}</label>
                       {{ productform.precio }}
                   </div>
                   <div class="col-12 mt-3">
