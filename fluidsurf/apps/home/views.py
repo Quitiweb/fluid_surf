@@ -337,7 +337,8 @@ def producto(request, id='0'):
                     precio = (producto.precio + (producto.precio * 0.21)) * 100  # iva
                     comision = precio * 0.05
 
-                    if comision < 1: comision = 1
+                    if comision < 100:
+                        comision = 100
 
                     charge = stripe.Charge.create(
                         amount=int(precio),
@@ -808,7 +809,8 @@ def devolucion(request):
 def stripe_log(request):
     template = loader.get_template('home/stripe.html')
 
-    payload = {'client_secret': settings.STRIPE_SECRET_KEY, 'code': request.GET['code'], 'grant_type': 'authorization_code'}
+    payload = {'client_secret': settings.STRIPE_SECRET_KEY, 'code': request.GET['code'],
+               'grant_type': 'authorization_code'}
 
     r = requests.post('https://connect.stripe.com/oauth/token', params=payload)
 
@@ -822,7 +824,6 @@ def stripe_log(request):
     request.user.save()
 
     messages.success(request, 'Cuenta vinculada con exito')
-
 
     context = {}
     return HttpResponse(template.render(context, request))
