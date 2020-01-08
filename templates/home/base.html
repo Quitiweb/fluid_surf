@@ -86,13 +86,13 @@
 <section id="menu" style="z-index: 9999999999999">
         <section id="member" class="banner">
             {% if user.is_authenticated %}
-                      <div class="inner pb-5">
+            <div class="inner pb-5">
                 <div class="img-logo">
                      {% if user.profile_pic %}
                         <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">
-                     {% elif user.socialaccount_set.all.0.get_avatar_url %}
+                    {% elif user.socialaccount_set.all.0.get_avatar_url %}
                         <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-                     {% else %}
+                    {% else %}
                         <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">
                      {% endif %}
                     <div class="overlay">
@@ -128,47 +128,48 @@
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'mi-cuenta' %}" style="color:#838383">{% trans 'My account' %}</a>
                    </li>
-                   {% if user.tipo_de_usuario == 'SURFERO'%}
+               {% if user.tipo_de_usuario == 'SURFERO' %}
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Purchase History' %}</a>
                     </li>
                     <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'wishlist' %}" style="color:#838383">{% trans 'Wishlist' %}</a>
                    </li>
-                   {% elif user.tipo_de_usuario == 'FOTOGRAFO' %}
-                    <li class="text-left mt-3 ml-2">
+               {% else %}
+                   <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'historial' %}" style="color:#838383">{% trans 'Sales History' %}</a>
                     </li>
-                     <li class="text-left mt-3 ml-2">
-                       · <a href="/perfil/{{ user.id }}" style="color:#838383">{% trans 'Public Profile' %}</a>
-                    </li>
                    {% endif %}
                    {% endif %}
                </ul>
 
-               {% if user.tipo_de_usuario == 'FOTOGRAFO' or user.is_staff %}
+            {% if user.tipo_de_usuario == 'FOTOGRAFO' or user.is_staff %}
                 <ul>
-                   <li class="text-left mt-3">
-                        <h1>{% trans 'PHOTOGRAPHER' %}</h1>
-                   </li>
-                   <li class="text-left mt-3 ml-2">
-                       · <a href="{% url 'subir-producto' %}" style="color:#838383">{% trans 'Add product' %}</a>
-                   </li>
-               </ul>
-               {% endif %}
-
                {% if user.is_staff %}
-                <ul>
-                <li class="text-left mt-3">
-                        <h1>{% trans 'ADMIN AREA' %}</h1>
+
+                    <li class="text-left mt-3">
+                        <h1>{% trans 'MANAGEMENT' %}</h1>
                    </li>
+
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'dashboard' %}" style="color:#838383">{% trans 'Dashboard' %}</a>
                    </li>
-               </ul>
-               {% endif %}
 
-                              {% if not user.is_authenticated %}
+                {% endif %}
+                {% if user.tipo_de_usuario == 'FOTOGRAFO' %}
+                   <li class="text-left mt-3 ml-2">
+                       · <a href="/perfil/{{ user.id }}" style="color:#838383">{% trans 'Public Profile' %}</a>
+                    </li>
+
+
+                   <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'subir-producto' %}" style="color:#838383">{% trans 'Add product' %}</a>
+                   </li>
+                {% endif %}
+               </ul>
+           {% endif %}
+
+            {% if not user.is_authenticated %}
                <ul>
                    <li class="text-left mt-3">
                        <a href="{% url 'login' %}">{% trans 'Login' %}</a>
