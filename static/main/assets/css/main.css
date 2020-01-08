@@ -473,7 +473,7 @@ input, select, textarea {
 		}
 
 			#main .items > :last-child {
-				border-right: solid 10px #ffffff;
+				border-right: solid 10px transparent;
 			}
 
 		#main .item {
@@ -487,7 +487,7 @@ input, select, textarea {
 			flex-shrink: 0;
 			margin: 5px;
 			height: 16em;
-			box-shadow: 0 0 0 10px #ffffff;
+			/*box-shadow: 0 0 0 10px #ffffff;*/
 		}
 
 			#main .item.span-1 {
@@ -551,7 +551,7 @@ input, select, textarea {
 			#main .item.thumb {
 				display: block;
 				position: relative;
-				background: rgba(255, 255, 255, 0.25);
+
 				cursor: default;
 			}
 
@@ -767,6 +767,7 @@ input, select, textarea {
 			text-align: left;
 			max-width: 36em;
 			padding-right: 2em;
+			margin-top: 21px;
 		}
 
 		#footer > section:last-child {

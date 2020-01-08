@@ -1167,8 +1167,9 @@ input, select, textarea {
 
 /* Botones de cambio de idioma */
     .transButton {
-        width:40px; /* or whatever */
-        height:40px; /* or whatever */
+        width:28px; /* or whatever */
+        height:28px; /* or whatever */
+		margin-top: 5px;
     }
 
     @media screen and (max-width: 480px) {
