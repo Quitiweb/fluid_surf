@@ -1329,7 +1329,7 @@ background: none;
 
 
         .btn-transparent:hover {
-        		    background-color: Transparent;
+			background-color: Transparent;
             background-repeat:no-repeat;
             border: none;
             cursor:pointer;
@@ -1449,6 +1449,14 @@ background: none;
 		}
 
 		@media screen and (max-width: 736px) {
+
+			#logo-mobile {
+				display: inline !important;
+			}
+
+			#logo-full {
+				display: none;
+			}
 
 			.features article {
 				padding: 1.5em 1.5em 0.1em 1.5em ;

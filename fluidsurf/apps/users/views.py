@@ -68,10 +68,18 @@ def setup(request):
     print(datetime.now())
     print(request.user.date_joined.replace(tzinfo=None) + timedelta(seconds=10) - datetime.now())
 
-    # if request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) < datetime.now():
-    #     print('entra')
-    #     return redirect('/')
-    # else:
+    if request.method =='POST':
+        if 'foto' in request.POST:
+            request.user.tipo_de_usuario = "FOTOGRAFO"
+        else:
+            request.user.tipo_de_usuario = "SURFERO"
+
+        request.user.save()
+        messages.success(request, 'Se ha configurado tu perfil como ' + request.user.tipo_de_usuario)
+        return redirect('/mi-cuenta')
+    elif request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) < datetime.now():
+        return redirect('/')
+
     context = {}
 
     return HttpResponse(template.render(context, request))

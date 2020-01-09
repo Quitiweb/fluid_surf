@@ -4,42 +4,45 @@
 {% load i18n %}
 {% block main %}
 
-<div class="container mt-5" style="height: 120vh; padding-bottom: 100px">
-    <div class="row">
+<div class="container mt-5" style="height: 120vh; margin-bottom: 250px">
+    <form action="" method="POST"> {% csrf_token %}
+        <div class="row">
         <div class="col-12 text-center">
-            <img class="image-responsive w-25 col-md-6 col-6 pt-5 ml-5" src="{% static 'main/images/logo_letras.svg' %}" alt=""/>
+            <img id="logo-mobile" class="image-responsive w-50 col-12 pt-5" src="/static/main/images/logo_letras.svg" alt="" style="display: none;">
+            <img id="logo-full" class="image-responsive w-25 col-md-6 col-6 pt-5" src="{% static 'main/images/logo_letras.svg' %}" alt=""/>
             <h1 class="display-3">Bienvenido a FluidSurf</h1>
         </div>
         <div class="col-12 text-center mt-3">
             <p>
-                <span style="font-size: 28px !important;">Por favor, elige un tipo de usuario.</span> <br>
-                (En caso de no elegirlo ahora, se te asignara tipo surfero)
+                <span style="font-size: 20px !important;">Por favor, elige qué tipo de usuario se amolda más a tus intereses.</span> <br>
+                <span style="font-size: 12px">(En caso de no elegirlo ahora, se te asignara tipo surfero)</span>
             </p>
         </div>
 
         <div class="col-12 col-lg-6 text-center" style="margin-top: 70px;">
-            <button type="submit" class="btn btn-circle shadow-lg" style="width: 250px; height: 250px; border-radius: 50%;" id="btn-foto">
-                <img src="{% static '/main/images/Ilustracion2.png' %}" alt="" width="75%" style="">
+            <button type="submit" class="btn btn-circle shadow-lg" style="width: 250px; height: 250px; border-radius: 50%;" id="btn-surf" name="surf">
+                <img src="{% static '/main/images/Ilustracion1.png' %}" alt="" width="75%" style="">
             </button>
 
             <br>
 
-            <p class="mt-3" id="info-foto" style="display: none;">
-                    Busca productos cerca de ti, añade a lista de deseos, compra, etc.
+            <p class="mt-3" id="info-surf" style="display: none;">
+                    Busca productos cerca de ti y cómpralos desde donde quieras.
             </p>
         </div>
 
         <div class="col-12 col-lg-6 text-center" style="margin-top: 70px">
-            <button type="submit" class="btn btn-circle shadow-lg" style="width: 250px; height: 250px; border-radius: 50%;" id="btn-surf">
-                <img src="{% static '/main/images/Ilustracion1.png' %}" alt="" width="75%" style="">
+            <button type="submit" class="btn btn-circle shadow-lg" style="width: 250px; height: 250px; border-radius: 50%;" id="btn-foto" name="foto">
+                <img src="{% static '/main/images/Ilustracion2.png' %}" alt="" width="75%" style="">
             </button>
             <br>
 
-            <p class="mt-3" id="info-surf" style="display: none;">
+            <p class="mt-3" id="info-foto" style="display: none;">
                 Sube tus fotografias para que gente de todo el mundo pueda comprarlas.
             </p>
         </div>
     </div>
+    </form>
 </div>
 
 <script src="{% static 'main/assets/js/setup.js' %}" defer></script>

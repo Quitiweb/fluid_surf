@@ -1,6 +1,9 @@
 $(function() {
     $(document).ready(function () {
-         $("#btn-foto").hover(function(){
+
+        $('footer').hide();
+
+         $("#btn-foto>img").hover(function(){
             $('#info-foto').fadeIn();
          });
 
@@ -8,7 +11,7 @@ $(function() {
             $('#info-foto').fadeOut();
          });
 
-         $("#btn-surf").hover(function(){
+         $("#btn-surf>img").hover(function(){
             $('#info-surf').fadeIn();
          });
 
