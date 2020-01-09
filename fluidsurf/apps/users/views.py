@@ -21,7 +21,7 @@ def sign_up(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.date_joined = date.today()
+            user.date_joined = datetime.now()
             user.save()
             messages.info(request, "Gracias por registrarte. Te llegará un email de confirmación a tu cuenta de correo.")
             new_user = authenticate(username=form.cleaned_data['username'],
@@ -66,7 +66,10 @@ def setup(request):
 
     print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10))
     print(datetime.now())
-    print(request.user.date_joined.replace(tzinfo=None) + timedelta(seconds=10) - datetime.now())
+    print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) - datetime.now())
+
+    if request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) < datetime.now():
+        return redirect('/')
 
     if request.method =='POST':
         if 'foto' in request.POST:
@@ -77,8 +80,6 @@ def setup(request):
         request.user.save()
         messages.success(request, 'Se ha configurado tu perfil como ' + request.user.tipo_de_usuario)
         return redirect('/mi-cuenta')
-    elif request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) < datetime.now():
-        return redirect('/')
 
     context = {}
 

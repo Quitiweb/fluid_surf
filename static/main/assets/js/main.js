@@ -41,7 +41,7 @@
 						enabled: true,
 
 					// Sets the distance to scroll when using the left/right arrow keys.
-						distance: 50
+						distance: 100
 
 				},
 
@@ -63,7 +63,7 @@
 						enabled: true,
 
 					// Sets the speed at which the page scrolls when a scroll zone is active (higher = faster scroll, lower = slower scroll).
-						speed: 15
+						speed: 1500
 
 				}
 
@@ -359,11 +359,11 @@
 							direction = d;
 
 						// Initialize interval.
-							clearInterval(intervalId);
+						// 	clearInterval(intervalId);
 
-							intervalId = setInterval(function() {
-								$main.scrollLeft($main.scrollLeft() + (settings.scrollZones.speed * direction));
-							}, 25);
+							// intervalId = setInterval(function() {
+							// 	// $main.scrollLeft($main.scrollLeft() + (settings.scrollZones.speed * direction));
+							// }, 25);
 
 					},
 					deactivate = function() {
@@ -372,7 +372,7 @@
 							paused = false;
 
 						// Clear interval.
-							clearInterval(intervalId);
+						// 	clearInterval(intervalId);
 
 					};
 
@@ -382,7 +382,7 @@
 				$left
 					.css('left', '0')
 					.on('click', function(event) {
-						activate(-1);
+						$main.animate( { scrollLeft: '-=1000' }, settings.scrollZones.speed);
 						setTimeout( function() {
 							deactivate()
 						}, 500)
@@ -391,7 +391,7 @@
 				$right
 					.css('right', '0')
 					.on('click', function(event) {
-						activate(1);
+						$main.animate( { scrollLeft: '+=1000' }, settings.scrollZones.speed);
 						setTimeout( function() {
 							deactivate()
 						}, 500)

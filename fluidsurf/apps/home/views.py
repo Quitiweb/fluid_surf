@@ -53,7 +53,7 @@ def index(request):
     ubicaciones = Ubicacion.objects.filter().all()
 
     if request.user.is_authenticated:
-        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True, spot=request.user.zona).all()
+        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()
 
         if request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
             messages.warning(request, _("Your profile ins't active yet. Please, wait until "
