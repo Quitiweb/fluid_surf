@@ -426,13 +426,26 @@ input, select, textarea {
 		z-index: 10001;
 	}
 
-		.scrollZone.left {
-			left: 0;
-		}
+	@keyframes slide1 {
+  		0%,
+	  	100% {
+			transform: translate(0, 0);
+	  	}
 
-		.scrollZone.right {
-			right: 0;
-		}
+	  	50% {
+			transform: translate(10px, 0);
+	  	}
+	}
+
+	.scrollZone.left {
+		left: 0;
+		animation: slide1 1s ease-in-out infinite;
+	}
+
+	.scrollZone.right {
+		right: 0;
+		animation: slide1 1s ease-in-out infinite;
+	}
 
 		@media screen and (max-width: 736px) {
 

@@ -63,7 +63,7 @@
 						enabled: true,
 
 					// Sets the speed at which the page scrolls when a scroll zone is active (higher = faster scroll, lower = slower scroll).
-						speed: 1500
+						speed: 1800
 
 				}
 
@@ -336,8 +336,8 @@
 		if (settings.scrollZones.enabled)
 			(function() {
 
-				var	$left = $('<div class="scrollZone left"><i class="fas fa-chevron-left fa-6x" style="top: 25%; position: relative; color: #ccfffb"></i></div>'),
-					$right = $('<div class="scrollZone right"><i class="fas fa-chevron-right fa-6x" style="top: 25%; position: relative; color: #ccfffb"></i></div>'),
+				var	$left = $('<div class="scrollZone left"><i class="fas fa-chevron-left fa-4x" style="top: 25%; position: relative; color: #ccfffb"></i></div>'),
+					$right = $('<div class="scrollZone right"><i class="fas fa-chevron-right fa-4x" style="top: 25%; position: relative; color: #ccfffb; float: right; margin-right: 15px;"></i></div>'),
 					$zones = $left.add($right),
 					paused = false,
 					intervalId = null,
@@ -382,7 +382,7 @@
 				$left
 					.css('left', '0')
 					.on('click', function(event) {
-						$main.animate( { scrollLeft: '-=1000' }, settings.scrollZones.speed);
+						$main.animate( { scrollLeft: '-=1500' }, settings.scrollZones.speed);
 						setTimeout( function() {
 							deactivate()
 						}, 500)
@@ -391,7 +391,7 @@
 				$right
 					.css('right', '0')
 					.on('click', function(event) {
-						$main.animate( { scrollLeft: '+=1000' }, settings.scrollZones.speed);
+						$main.animate( { scrollLeft: '+=1500' }, settings.scrollZones.speed);
 						setTimeout( function() {
 							deactivate()
 						}, 500)
