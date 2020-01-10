@@ -26,6 +26,8 @@
             <div class="col-6">
                 <label>Email</label>
                 {{ form.email }}
+                <input type="text" id="username" style="width:0;height:0;visibility:hidden;position:absolute;left:0;top:0" />
+            <input type="password" style="width:0;height:0;visibility:hidden;position:absolute;left:0;top:0" />
             </div>
             <div class="col-6">
                 <label>{% trans 'Phone' %}</label>
@@ -166,9 +168,11 @@
 <!--            </label>-->
 <!--        </div>-->
          <div class="col-12 text-center mt-5 pb-5">
-            <input type="submit" value="{% trans 'Save' %}" class="pr-5 pl-5">
+            <input type="submit" id="guardar" value="{% trans 'Save' %}" class="pr-5 pl-5">
         </div>
     </div>
 </form>
 </div>
+
+<script src="{% static 'main/assets/js/micuenta.js' %}" defer></script>
 {% endblock %}

@@ -35,7 +35,7 @@ class ChangeUserForm(forms.ModelForm):
     last_name.widget = forms.TextInput(attrs={'placeholder': _('Write your surname here...')})
     email.widget = forms.TextInput(attrs={'placeholder': _('Write your email here...')})
     telefono.widget = forms.TextInput(attrs={'placeholder': _('Write your phone here...')})
-    pais.widget = forms.TextInput(attrs={'placeholder': _('Write your country here...'), 'readonly': '', 'onfocus': "this.removeAttribute('readonly');"})
+    pais.widget = forms.TextInput(attrs={'placeholder': _('Write your country here...')})
 
     class Meta:
         model = CustomUser
