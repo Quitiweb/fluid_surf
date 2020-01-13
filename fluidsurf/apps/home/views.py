@@ -25,7 +25,7 @@ from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
-from fluidsurf.apps.home.filters import ProductoFilter
+from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter
 from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
     Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
@@ -53,7 +53,7 @@ def index(request):
     ubicaciones = Ubicacion.objects.filter().all()
 
     if request.user.is_authenticated:
-        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()
+        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True, spot=request.user.zona).all()
 
         if request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
             messages.warning(request, _("Your profile ins't active yet. Please, wait until "
@@ -832,6 +832,28 @@ def stripe_log(request):
     context = {}
     return HttpResponse(template.render(context, request))
 
+
+def fotografos(request):
+    template = loader.get_template('home/fotografos.html')
+
+    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
+
+    ubicaciones = Ubicacion.objects.filter().all()
+
+    if request.user.is_authenticated:
+        photo_list = CustomUser.objects.filter(is_active=True, validado=True,
+                                               tipo_de_usuario="FOTOGRAFO").all()
+    else:
+        photo_list = CustomUser.objects.filter(is_active=True, validado=True, tipo_de_usuario="FOTOGRAFO").all()
+
+    photo_filter = PhotographerFilter(request.GET, queryset=photo_list)
+
+    context = {
+        'filter': photo_filter,
+        'API_KEY': API_KEY,
+        'ubicaciones': ubicaciones,
+    }
+    return HttpResponse(template.render(context, request))
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
