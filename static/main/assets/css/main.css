@@ -487,6 +487,7 @@ input, select, textarea {
 
 			#main .items > :last-child {
 				border-right: solid 10px transparent;
+				background-clip: padding-box !important;
 			}
 
 		#main .item {
