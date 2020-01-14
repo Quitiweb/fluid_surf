@@ -57,7 +57,8 @@
 					{% if user.main_pic %}
 						<div class="item thumb span-2" style="background-image: url(/media/{{ user.main_pic }}) !important; cursor: pointer;" onclick="location.href = 'perfil/{{user.id}}'">
 					{% else %}
-						<div class="item thumb span-2 intro" style="cursor: pointer;" onclick="location.href = '/perfil/{{user.id}}';">
+						<div class="item thumb span-2" style="background: url({% static 'main/images/photographer.jpeg' %}) !important; cursor: pointer; background-position: center !important; background-size: cover !important;  background-clip: padding-box !important;
+" onclick="location.href = '/perfil/{{user.id}}';">
 					{% endif %}
 						<h2 class="white">{{ user.username }}</h2>
 						<a href="{% url 'perfil' id=user.id%}" class="">
@@ -66,6 +67,14 @@
 						 {% else %}
 							<img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right ml-3 mt-3" style="cursor: pointer; height: 100px; width: 100px;" data-toggle="modal" data-target="profileModal">
 						 {% endif %}
+
+							<h1 class="white alt-desc p-3" style="font-size: 40px; position: absolute; bottom: 5%; right: 0%; background-color: rgba(0,0,0,0.3); border-radius: 10px; z-index: 1000;">
+								{% if user.username|length > 9 %}
+									<span style="font-size: 25px;"> {{ user.username }}</span>
+								{% else %}
+									{{ user.username }}
+								{% endif %}
+							</h1>
 						</a>
 					</div>
 					{% endif %}
@@ -95,7 +104,8 @@
 					{% if user.main_pic %}
 						<div class="item thumb span-2" style="background-image: url(/media/{{ user.main_pic }}) !important; cursor: pointer;" onclick="location.href = 'perfil/{{user.id}}'">
 					{% else %}
-						<div class="item thumb span-2 intro" style="cursor: pointer;" onclick="location.href = '/perfil/{{user.id}}';">
+						<div class="item thumb span-2" style="background: url({% static 'main/images/photographer.jpeg' %}) !important; cursor: pointer; background-position: center !important; background-size: cover !important;  background-clip: padding-box !important;
+" onclick="location.href = '/perfil/{{user.id}}';">
 					{% endif %}
 					<h2 class="white">{{ user.username }}</h2>
 					<a href="{% url 'perfil' id=user.id%}" class="">
@@ -104,6 +114,14 @@
                      {% else %}
                         <img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right ml-3 mt-3" style="cursor: pointer; height: 100px; width: 100px;" data-toggle="modal" data-target="profileModal">
                      {% endif %}
+
+						<h1 class="white p-3 alt-desc" style="font-size: 40px; position: absolute; bottom: 5%; right: 0%; background-color: rgba(0,0,0,0.3); border-radius: 10px; z-index: 1000;">
+							    {% if user.username|length > 10 %}
+									<span style="font-size: 25px;"> {{ user.username }}</span>
+								{% else %}
+									{{ user.username }}
+								{% endif %}
+						</h1>
 					</a>
 				</div>
 				{% endfor %}
@@ -112,7 +130,8 @@
 					{% if user.main_pic %}
 						<div class="item thumb span-2" style="background-image: url(/media/{{ user.main_pic }}) !important; cursor: pointer;" onclick="location.href = 'perfil/{{user.id}}'">
 					{% else %}
-						<div class="item thumb span-2 intro" style="cursor: pointer;" onclick="location.href = '/perfil/{{user.id}}';">
+						<div class="item thumb span-2" style="background: url({% static 'main/images/photographer.jpeg' %}) !important; cursor: pointer; background-position: center !important; background-size: cover !important;  background-clip: padding-box !important;
+" onclick="location.href = '/perfil/{{user.id}}';">
 					{% endif %}
 						<h2 class="white">{{ user.username }}</h2>
 						<a href="{% url 'perfil' id=user.id%}" class="">
@@ -121,6 +140,14 @@
 						 {% else %}
 							<img src="{% static 'main/images/no_user.png' %}" alt="" class="rounded-circle float-right ml-3 mt-3" style="cursor: pointer; height: 100px; width: 100px;" data-toggle="modal" data-target="profileModal">
 						 {% endif %}
+
+							<h1 class="white alt-desc p-3" style="font-size: 40px; position: absolute; bottom: 5%; right: 0%; background-color: rgba(0,0,0,0.3); border-radius: 10px; z-index: 1000;">
+								{% if user.username|length > 10 %}
+									<span style="font-size: 25px;"> {{ user.username }}</span>
+								{% else %}
+									{{ user.username }}
+								{% endif %}
+							</h1>
 						</a>
 					</div>
 					{% endif %}

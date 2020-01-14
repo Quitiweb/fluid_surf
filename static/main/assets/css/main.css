@@ -17,9 +17,20 @@
 	width: 380px;
 }
 
+
+@media (max-width: 800px) {
+	.logo-signup {
+		width: 35% !important;
+	}
+}
+
 @media (max-width: 600px) {
 	.yeti {
 		width: 250px;
+	}
+
+	.logo-signup {
+		width: 45% !important;
 	}
 }
 .alert-roja {
@@ -122,6 +133,15 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+
+.alt-desc {
+	display: none;
+}
+
+.alt-text {
+	margin-left: 3rem!important;
+}
+
 
 ol, ul {
 	list-style: none;
@@ -453,6 +473,10 @@ input, select, textarea {
 				display: none;
 			}
 
+			.alt-desc {
+				display: block;
+			}
+
 		}
 
 /* Main */
@@ -658,6 +682,10 @@ input, select, textarea {
 			}
 
 		@media screen and (max-width: 1680px) {
+
+			.alt-text {
+				margin-left: 0 !important;
+			}
 
 			#main .item {
 				height: 14em;
