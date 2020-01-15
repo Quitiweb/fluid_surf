@@ -12,6 +12,7 @@ ALLOWED_HOSTS += [
     '127.0.0.1',
     'localhost',
     'fs.quitiweb.com',
+    '192.168.0.41',
 ]
 
 # To send emails to the console

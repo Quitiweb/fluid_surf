@@ -1265,6 +1265,10 @@ input, select, textarea {
 					width: 100%;
 				}
 
+			button[value="Comprar ahora"] {
+				margin-top: 15px !important;
+			}
+
 		}
 
 		@media screen and (max-width: 736px) {
