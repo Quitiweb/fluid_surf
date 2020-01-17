@@ -389,6 +389,7 @@ input, select, textarea {
 /* Wrapper */
 
 	#wrapper {
+		min-height: 0 !important;
 		margin-top: 150px;
 		display: -moz-flex;
 		display: -webkit-flex;
