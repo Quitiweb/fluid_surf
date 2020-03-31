@@ -94,12 +94,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="item intro3 span-2">
-					<body class="text-center" onload='loadMapScenario();'>
-					  <div id='printoutPanel'></div>
-						<div id='myMap' class="" style=""></div>
-					</body>
-				</div>
+{#				<div class="item intro3 span-2">#}
+{#					<body class="text-center" onload='loadMapScenario();'>#}
+{#					  <div id='printoutPanel'></div>#}
+{#						<div id='myMap' class="" style=""></div>#}
+{#					</body>#}
+{#				</div>#}
 				{% for user in filter.qs|slice:":1" %}
 					{% if user.main_pic %}
 						<div class="item thumb span-2" style="background-image: url(/media/{{ user.main_pic }}) !important; cursor: pointer;" onclick="location.href = 'perfil/{{user.id}}'">

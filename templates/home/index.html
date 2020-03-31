@@ -76,12 +76,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="item intro3 span-2">
-					<body class="text-center" onload='loadMapScenario();'>
-					  <div id='printoutPanel'></div>
-						<div id='myMap' class="" style=""></div>
-					</body>
-				</div>
+{#				<div class="item intro3 span-2">#}
+{#					<body class="text-center" onload='loadMapScenario();'>#}
+{#					  <div id='printoutPanel'></div>#}
+{#						<div id='myMap' class="" style=""></div>#}
+{#					</body>#}
+{#				</div>#}
 				{% for producto in filter.qs|slice:":1" %}
 				<article class="item thumb span-2">
 					<h2 class="white">{{ producto.nombre }}</h2>

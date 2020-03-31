@@ -18,24 +18,29 @@
         {% csrf_token %}
 
         <div class="row mt-5">
-            <div class="col-9">
+            <div class="col-9" style="display: none">
                 <label>{% trans 'Name' %}*</label>
                 {{ form.nombre }}
-            </div>
-
-            <div class="col-3">
-                <label>{% trans 'Price' %}*</label>
-                {{ form.precio }}
             </div>
         </div>
 
         <!-- date & spot -->
         <div class="row mt-5">
-            <div class="col-6">
+
+            <div class="col-4">
+                <label>{% trans 'Price' %}*
+                    <a href="#" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                </label>
+                {{ form.precio }}
+            </div>
+
+            <div class="col-4">
                 <label>{% trans 'Date' %}*</label>
                 {{ form.fecha }}
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <label>{% trans 'Spot' %}*</label>
                 {{ form.spot }}
             </div>
@@ -152,6 +157,23 @@
   </div>
 </div>
 {% endif %}
+
+    <!-- Modal -->
+<div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        Al añadir un producto a FluidSurf, deberás incluir en el precio todos los impuestos
+          que se indiquen en el país donde ejerces tu actividad económica.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <script src="{% static 'main/assets/js/subir-producto.js' %}" defer></script>
 

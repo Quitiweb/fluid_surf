@@ -184,14 +184,23 @@
 
                 {% endif %}
                 {% if user.tipo_de_usuario == 'FOTOGRAFO' %}
+
                    <li class="text-left mt-3 ml-2">
                        · <a href="/perfil/{{ user.id }}" style="color:#838383">{% trans 'Public Profile' %}</a>
                     </li>
 
+                    <li class="text-left mt-3">
+                        <h1>{% trans 'PRODUCTS' %}</h1>
+                    </li>
 
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'subir-producto' %}" style="color:#838383">{% trans 'Add product' %}</a>
                    </li>
+
+                    <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'mis-productos' %}" style="color:#838383">{% trans 'My products' %}</a>
+                   </li>
+
                 {% endif %}
                </ul>
            {% endif %}
