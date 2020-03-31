@@ -616,6 +616,17 @@ def historial(request):
     return HttpResponse(template.render(context, request))
 
 
+def mis_productos(request):
+    template = loader.get_template('home/mis-productos.html')
+
+    productos = Producto.objects.filter(user=request.user)
+
+    context = {
+        'productos': productos
+    }
+
+    return HttpResponse(template.render(context, request))
+
 def change_image(request):
     if request.method == 'POST':
         image = request.FILES['changeImage']
