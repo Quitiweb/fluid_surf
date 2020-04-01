@@ -1,4 +1,4 @@
-{% extends 'home/base-p.html' %}
+{% extends 'home/base.html' %}
 
 {% load static %}
 {% load i18n %}
@@ -15,7 +15,139 @@
     }
 </style>
 
-<div class="container pb-5">
+    <div class="container pb-5 mt-5 pt-0">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner" style="width: 100vw; position: relative; left: -15px;">
+                {% for imagen in imagenes %}
+                <div class="carousel-item {% if forloop.counter0 == 0  %} active {% endif %}">
+
+
+                {% if forloop.counter == 1 %}
+                      <div class="ribbon ribbon-top-left"><span>Principal</span></div>
+                    {% else %}
+                    <form action="" method="POST"> {% csrf_token %}
+                            <button type="submit" name="main" value="{{forloop.counter|add:'1'}}" class="btn btn-success" style="position: absolute; z-index: 999;top: 340px">Establecer como imagen principal</button>
+                    </form>
+
+                    {% endif %}
+
+
+                  {% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
+                </div>
+              {% endfor %}
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h1 class="display-4" style="font-size: 26px">{{ producto.descripcion }}</h1>
+                </div>
+
+               <div class="col-6">
+                    <p class="">{% trans 'Uploaded by' %}
+                            <a href="{% url 'perfil' id=producto.user.id %}" style="color: #181818;">
+                                {% if producto.user.alias %}
+                                    {{ producto.user.alias }}
+                                {% else %}
+                                    {{ producto.user.first_name }} {{ producto.user.last_name }}
+                                {% endif %}
+                            </a>
+                    <br>
+                        <i class="fas fa-map-marker-alt"></i> {{ producto.spot }}
+                        </p>
+               </div>
+
+            <div class="col-6">
+                <h1 class="display-4 ml-2" style="font-size: 40px; color: darkslateblue">
+                    {{ producto.precio }} €
+                </h1>
+            </div>
+
+            {%  if producto.user == user %}
+                                <div class="col-12 row ml-n2 mt-3">
+                                   <div class="col-12 text-center">
+                                        <a class="btn btn-primary mt-1 white col-12" data-toggle="modal" data-target="#exampleModal" href="">
+                                        <i class="fas fa-edit"></i> {% trans 'Edit' %}
+                                    </a>
+                                   </div>
+
+                                    <div class="col-12 text-center">
+                                        <a class="btn btn-warning mt-1 col-12" data-toggle="modal" data-target="#exampleModalDelete" href="">
+                                        <i class="fa fa-trash"></i> {% trans 'Delete' %}
+                                    </a>
+                                    </div>
+                                </div>
+
+                {% else %}
+                    <div class="h-25"></div>
+                {% endif %}
+
+            </div>
+            {% if not producto.user == request.user %}
+                <div class="row text-center mt-3">
+            <div class="col-6 col-lg-6">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% if in_wishlist %}
+                    <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="padding-left: 3px !important; padding-right: 3px !important;">{% trans 'Remove from wishlist' %}</button>
+                    {% else %}
+                    <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="padding-left: 17px !important; padding-right: 17px !important;">{% trans 'Add to wishlist' %}</button>
+                    {% endif %}
+                </form>
+            </div>
+                    {% if user != producto.user %}
+            <div class="col-6 col-lg-6">
+                <form action="" method="post">{% csrf_token %}
+                    {% if producto.stock == 1  %}
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{ key }}"
+                            data-name="FluidSurf"
+                            data-description="{% trans 'Buy product to' %} {{ producto.user }} "
+                            data-currency="eur"
+                            data-amount="{{ precio }}"
+                            data-locale="{{ LANGUAGE_CODE }}">
+                    </script>
+                    <script>
+                        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                    </script>
+
+                    <button type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
+                    {% else %}
+                    <button type="submit" name="stock" value="{{ producto.id }}" class=" btn btn-primary"
+                            data-toggle="tooltip" data-placement="top"
+                            title="This product is out of stock.
+                                   Please, ask for additional stock and you
+                                    will receive an email with aconfirmation
+                                    from the photographer. Thank you"
+                    >
+                        {% trans 'Ask for stock' %}
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+            {% else %}
+                    <div class="col-6">
+                        <button type="submit" disabled class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
+                    </div>
+            {% endif %}
+                </div>
+            {% endif %}
+            </div>
+
+
+    </div>
+
+
+
+<div class="container pb-5 d-none">
 <!-- Wrapper -->
 <div id="wrapper">
 	<section id="main">
@@ -36,12 +168,12 @@
                             <i class="fas fa-map-marker-alt"></i> {{ producto.spot }}
 
                             {%  if producto.user == user %}
-                                <div class="text-right">
-                                    <a class="btn btn-primary mt-1 white" data-toggle="modal" data-target="#exampleModal" href="">
+                                <div class="col-12 row">
+                                    <a class="btn btn-primary mt-1 white col-6" data-toggle="modal" data-target="#exampleModal" href="">
                                         <i class="fas fa-edit"></i> {% trans 'Edit' %}
                                     </a>
 
-                                    <a class="btn btn-warning mt-1 ml-1" data-toggle="modal" data-target="#exampleModalDelete" href="">
+                                    <a class="btn btn-warning mt-1 col-6" data-toggle="modal" data-target="#exampleModalDelete" href="">
                                         <i class="fa fa-trash"></i> {% trans 'Delete' %}
                                     </a>
                                 </div>

@@ -426,15 +426,11 @@ def producto(request, id='0'):
         else:
             break
 
-    A = imagenes[:2]
-    B = imagenes[2:]
-
     context = {
         'producto': producto,
         'productform': productform,
         'filter': prod_filter,
-        'imagenes': A,
-        'imagenes2': B,
+        'imagenes': imagenes,
         'ubicaciones': ubicaciones,
         'in_wishlist': not status,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
