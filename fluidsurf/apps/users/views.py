@@ -64,9 +64,9 @@ def sign_up(request):
 def setup(request):
     template = loader.get_template('registration/setup.html')
 
-    print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10))
+    print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=2, seconds=10))
     print(datetime.now())
-    print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) - datetime.now())
+    print(request.user.date_joined.replace(tzinfo=None) + timedelta(hours=2, seconds=10) - datetime.now())
 
     if request.method =='POST':
         if 'foto' in request.POST:
@@ -77,7 +77,7 @@ def setup(request):
         request.user.save()
         messages.success(request, 'Se ha configurado tu perfil como ' + request.user.tipo_de_usuario)
         return redirect('/mi-cuenta')
-    elif request.user.date_joined.replace(tzinfo=None) + timedelta(hours=1, seconds=10) < datetime.now():
+    elif request.user.date_joined.replace(tzinfo=None) + timedelta(hours=2, seconds=10) < datetime.now():
         return redirect('/')
 
     context = {}
