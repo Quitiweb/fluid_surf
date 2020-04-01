@@ -6,7 +6,7 @@
 {% block main %}
 
     <style>
-        #id_user__alias, #id_spot {
+        #id_user__username, #id_spot {
             height: 50px;
             border-radius: 5px;
             box-shadow: none;
@@ -31,8 +31,8 @@
           <div class="col-1"></div>
               <div class="col-11">
                   <div class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
-                  <form id="filter_form" action="" method="get" class="mt-3 row" style="position: relative; left: 112px;">
-                        <div class="col-2 mt-3">{{ filter.form.user__alias }}</div>
+                  <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
+                        <div class="col-2 mt-3">{{ filter.form.user__username }}</div>
                         <div class="col-10 mt-3">{{ filter.form.spot  }}</div>
                   </form>
               </div>

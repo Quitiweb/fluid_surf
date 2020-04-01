@@ -4,6 +4,18 @@
 {% load i18n %}
 
 {% block main %}
+
+    <style>
+        #id_username {
+            height: 50px;
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid gainsboro;
+            padding-left: 10px;
+            background: white;
+        }
+    </style>
+
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -14,6 +26,15 @@
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
+           <div class="row">
+          <div class="col-1"></div>
+              <div class="col-11">
+                  <div class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
+                  <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
+                        <div class="col-2 mt-3">{{ filter.form.username }}</div>
+                  </form>
+              </div>
+          </div>
       </div><!-- /.container-fluid -->
     </div>
 <div class="container pt-5">
@@ -36,13 +57,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                      {% for usuario in usuarios %}
+                      {% for usuario in filter.qs %}
                           <tr>
                             <td><a href="{% url 'admin:users_customuser_change' usuario.id %}">US{{ usuario.id }}</a></td>
                             <td onclick="location.href='{% url 'perfil_admin' id=usuario.id %}'" style="cursor:pointer;">
                                 <div class="product-img">
                                   {% if usuario.profile_pic %}
-                                  <img src="/media/{{ usuario.profile_pic }}" alt="Product Image" class="img-size-50 mr-2 img-circle">
+                                  <img src="/media/{{ usuario.profile_pic }}" alt="Product Image" class="img-size-50 mr-2 img-circle" style="height: 50px">
                                     {% else %}
                                     <img src="{% static 'main/images/no_user.png' %}" alt="Product Image" class="img-size-50 mr-2 img-circle">
                                     {% endif %}
