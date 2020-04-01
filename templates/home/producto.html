@@ -25,15 +25,15 @@
                 {% for imagen in imagenes %}
                 <div class="carousel-item {% if forloop.counter0 == 0  %} active {% endif %}">
 
-
-                {% if forloop.counter == 1 %}
+                {% if producto.user == user  %}
+                {% if  forloop.counter == 1 %}
                       <div class="ribbon ribbon-top-left"><span>Principal</span></div>
                     {% else %}
                     <form action="" method="POST"> {% csrf_token %}
                             <button type="submit" name="main" value="{{forloop.counter|add:'1'}}" class="btn btn-success" style="position: absolute; z-index: 999;top: 340px">Establecer como imagen principal</button>
                     </form>
-
                     {% endif %}
+                {% endif %}
 
                 <a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">
                   {% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
