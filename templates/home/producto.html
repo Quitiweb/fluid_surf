@@ -13,6 +13,10 @@
          margin-left: 15px;
          margin-right: 15px;
     }
+.fancybox-toolbar, .fancybox-infobar {
+    margin-top: 46px;
+    z-index: 99999999999999999999999;
+}
 </style>
 
     <div class="container pb-5 mt-5 pt-0">
@@ -31,8 +35,9 @@
 
                     {% endif %}
 
-
+                <a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">
                   {% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
+                </a>
                 </div>
               {% endfor %}
               </div>
@@ -147,191 +152,191 @@
 
 
 
-<div class="container pb-5 d-none">
-<!-- Wrapper -->
-<div id="wrapper">
-	<section id="main">
-		<!-- Items -->
-			<div class="items">
-
-				<div class="item intro span-2">
-					<h1 class="white mt-5" id="productoH1">{{ producto.nombre }}</h1>
-						<p class="white">{% trans 'Uploaded by' %}
-                            <a href="{% url 'perfil' id=producto.user.id %}" style="color: #e5e5e5;">
-                                {% if producto.user.alias %}
-                                    {{ producto.user.alias }}
-                                {% else %}
-                                    {{ producto.user.first_name }} {{ producto.user.last_name }}
-                                {% endif %}
-                            </a>
-<br>
-                            <i class="fas fa-map-marker-alt"></i> {{ producto.spot }}
-
-                            {%  if producto.user == user %}
-                                <div class="col-12 row">
-                                    <a class="btn btn-primary mt-1 white col-6" data-toggle="modal" data-target="#exampleModal" href="">
-                                        <i class="fas fa-edit"></i> {% trans 'Edit' %}
-                                    </a>
-
-                                    <a class="btn btn-warning mt-1 col-6" data-toggle="modal" data-target="#exampleModalDelete" href="">
-                                        <i class="fa fa-trash"></i> {% trans 'Delete' %}
-                                    </a>
-                                </div>
-
-                            {% else %}
-                                <div class="h-25"></div>
-                            {% endif %}
-                        </p>
-				</div>
-
-                <div class="item intro intro2 span-2 text-left">
-                        <div class="row">
-                            <h1 class="white" style="font-size: 35px; line-height: 70px;">
-                                <span style="font-size: 75px;">
-                                    {{ producto.precio }}
-                                </span>
-                                €
-                            </h1>
-                        </div>
-				</div>
-
-                <div class="item intro intro span-2">
-					<h1 class="white">{% trans 'Browser'  %}</h1>
-                    <form action="{% url 'index' %}" method="get" class="mt-3">
-                        <div class="row">
-							<div class="col-12">{{ filter.form.nombre }}</div>
-							<div class="col-6 mt-3">{{ filter.form.user__alias }}</div>
-							<div class="col-6 mt-3">{{ filter.form.spot  }}</div>
-						</div>
-                        <input type="submit" class="btn btn-primary mt-3 d-none">
-                    </form>
-				</div>
-				{% for imagen in imagenes2 %}
-                {% if not forloop.counter|divisibleby:2 %}
-                <article id="img{{forloop.counter}}" class="item thumb span-3">
-                    {% if producto.user == user %}
-                    <form action="" method="POST"> {% csrf_token %}
-                            <button type="submit" name="main" value="{{forloop.counter|add:'1'}}" class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>
-                    </form>
-                    {% endif %}
-					<a id="href{{forloop.counter}}" class="fancybox for2impar" data-fancybox="gallery" href="">
-						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
-					</a>
-				</article>
-                {% endif %}
-				{% endfor %}
-
-			</div>
-		<!-- Items -->
-			<div class="items">
-                <div class="item intro span-3" style="background-color: #58949C;">
-					<div>
-                        <p class="white">{{ producto.descripcion }}</p>
-<!--                        <h1 class="white mt-3">{% trans 'Share on Social Media' %}</h1>-->
-                           <div class="row white" style="margin-left: 18%">
-                            {% post_to_twitter "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path  %}
-
-                            {% post_to_facebook object_or_url "" %}
-
-                            {% send_email "Mira este producto en fluidsurf!" "Acabo de encontrar este producto en fluid surf. Puede ser perfecto para ti!" object_or_url "Share via email"%}
-
-                            {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}
-                           </div>
-                        </div>
-				</div>
-
+{#<div class="container pb-5 d-none">#}
+{#<!-- Wrapper -->#}
+{#<div id="wrapper">#}
+{#	<section id="main">#}
+{#		<!-- Items -->#}
+{#			<div class="items">#}
+{##}
+{#				<div class="item intro span-2">#}
+{#					<h1 class="white mt-5" id="productoH1">{{ producto.nombre }}</h1>#}
+{#						<p class="white">{% trans 'Uploaded by' %}#}
+{#                            <a href="{% url 'perfil' id=producto.user.id %}" style="color: #e5e5e5;">#}
+{#                                {% if producto.user.alias %}#}
+{#                                    {{ producto.user.alias }}#}
+{#                                {% else %}#}
+{#                                    {{ producto.user.first_name }} {{ producto.user.last_name }}#}
+{#                                {% endif %}#}
+{#                            </a>#}
+{#<br>#}
+{#                            <i class="fas fa-map-marker-alt"></i> {{ producto.spot }}#}
+{##}
+{#                            {%  if producto.user == user %}#}
+{#                                <div class="col-12 row">#}
+{#                                    <a class="btn btn-primary mt-1 white col-6" data-toggle="modal" data-target="#exampleModal" href="">#}
+{#                                        <i class="fas fa-edit"></i> {% trans 'Edit' %}#}
+{#                                    </a>#}
+{##}
+{#                                    <a class="btn btn-warning mt-1 col-6" data-toggle="modal" data-target="#exampleModalDelete" href="">#}
+{#                                        <i class="fa fa-trash"></i> {% trans 'Delete' %}#}
+{#                                    </a>#}
+{#                                </div>#}
+{##}
+{#                            {% else %}#}
+{#                                <div class="h-25"></div>#}
+{#                            {% endif %}#}
+{#                        </p>#}
+{#				</div>#}
+{##}
+{#                <div class="item intro intro2 span-2 text-left">#}
+{#                        <div class="row">#}
+{#                            <h1 class="white" style="font-size: 35px; line-height: 70px;">#}
+{#                                <span style="font-size: 75px;">#}
+{#                                    {{ producto.precio }}#}
+{#                                </span>#}
+{#                                €#}
+{#                            </h1>#}
+{#                        </div>#}
+{#				</div>#}
+{##}
+{#                <div class="item intro intro span-2">#}
+{#					<h1 class="white">{% trans 'Browser'  %}</h1>#}
+{#                    <form action="{% url 'index' %}" method="get" class="mt-3">#}
+{#                        <div class="row">#}
+{#							<div class="col-12">{{ filter.form.nombre }}</div>#}
+{#							<div class="col-6 mt-3">{{ filter.form.user__alias }}</div>#}
+{#							<div class="col-6 mt-3">{{ filter.form.spot  }}</div>#}
+{#						</div>#}
+{#                        <input type="submit" class="btn btn-primary mt-3 d-none">#}
+{#                    </form>#}
+{#				</div>#}
+{#				{% for imagen in imagenes2 %}#}
+{#                {% if not forloop.counter|divisibleby:2 %}#}
+{#                <article id="img{{forloop.counter}}" class="item thumb span-3">#}
+{#                    {% if producto.user == user %}#}
+{#                    <form action="" method="POST"> {% csrf_token %}#}
+{#                            <button type="submit" name="main" value="{{forloop.counter|add:'1'}}" class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>#}
+{#                    </form>#}
+{#                    {% endif %}#}
+{#					<a id="href{{forloop.counter}}" class="fancybox for2impar" data-fancybox="gallery" href="">#}
+{#						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}#}
+{#					</a>#}
+{#				</article>#}
+{#                {% endif %}#}
+{#				{% endfor %}#}
+{##}
+{#			</div>#}
+{#		<!-- Items -->#}
+{#			<div class="items">#}
+{#                <div class="item intro span-3" style="background-color: #58949C;">#}
+{#					<div>#}
+{#                        <p class="white">{{ producto.descripcion }}</p>#}
+{#<!--                        <h1 class="white mt-3">{% trans 'Share on Social Media' %}</h1>-->#}
+{#                           <div class="row white" style="margin-left: 18%">#}
+{#                            {% post_to_twitter "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path  %}#}
+{##}
+{#                            {% post_to_facebook object_or_url "" %}#}
+{##}
+{#                            {% send_email "Mira este producto en fluidsurf!" "Acabo de encontrar este producto en fluid surf. Puede ser perfecto para ti!" object_or_url "Share via email"%}#}
+{##}
+{#                            {% post_to_telegram "Mira el producto que acabo de encontrar en fluidsurf!" request.get_full_path %}#}
+{#                           </div>#}
+{#                        </div>#}
+{#				</div>#}
+{##}
 {#                <div class="item intro3 span-2">#}
 {#					<body class="text-center" onload='loadMapScenario();'>#}
 {#					  <div id='printoutPanel'></div>#}
 {#						<div id='myMap' class="mt-1" style=""></div>#}
 {#					</body>#}
 {#				</div>#}
-
-				{% for imagen in imagenes %}
-				<article id="img{{forloop.counter}}" class="item thumb span-3">
-                    {% if producto.user == user %}
-                    {% if forloop.counter == 1 %}
-                      <div class="ribbon ribbon-top-left"><span>Principal</span></div>
-                    {% else %}
-                    <form action="" method="POST"> {% csrf_token %}
-                    <button type="submit" name="main" value="{{forloop.counter|add:'-1'  }}" class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>
-                    </form>
-                    {% endif %}
-                    {% endif %}
-					<a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">
-						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
-					</a>
-				</article>
-                <div>
-                </div>
-				{% endfor %}
-
-            {% for imagen in imagenes2 %}
-                {% if forloop.counter|divisibleby:2 %}
-                <article id="img{{forloop.counter}}" class="item thumb span-3">
-                    {% if producto.user == user %}
-                    <form action="" method="POST"> {% csrf_token %}
-                            <button type="submit" name="main" value="{{forloop.counter|add:'1' }}" class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>
-                    </form>
-                    {% endif %}
-					<a id="href{{forloop.counter}}" class="fancybox for2par" data-fancybox="gallery" href="">
-						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}
-					</a>
-				</article>
-{% endif %}
-				{% endfor %}
-			</div>
-	</section>
-</div>
-
-<div class="row text-center mt-3">
-    <div class="col-12 col-lg-6">
-        <form action="" method="POST">
-            {% csrf_token %}
-            {% if in_wishlist %}
-            <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist">{% trans 'Remove from wishlist' %}</button>
-            {% else %}
-            <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist">{% trans 'Add to wishlist' %}</button>
-            {% endif %}
-        </form>
-    </div>
-            {% if user != producto.user %}
-    <div class="col-12 col-lg-6">
-        <form action="" method="post">{% csrf_token %}
-            {% if producto.stock == 1  %}
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="{{ key }}"
-                    data-name="FluidSurf"
-                    data-description="{% trans 'Buy product to' %} {{ producto.user }} "
-                    data-currency="eur"
-                    data-amount="{{ precio }}"
-                    data-locale="{{ LANGUAGE_CODE }}">
-            </script>
-            <script>
-                document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-            </script>
-
-            <button type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
-            {% else %}
-            <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1 btn btn-primary"
-                    data-toggle="tooltip" data-placement="top"
-                    title="This product is out of stock.
-                           Please, ask for additional stock and you
-                            will receive an email with aconfirmation
-                            from the photographer. Thank you"
-            >
-                {% trans 'Ask for stock' %}
-            </button>
-        </form>
-        {% endif %}
-    </div>
-    {% else %}
-            <div class="col-6">
-                <button type="submit" disabled class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
-            </div>
-            {% endif %}
-        </div>
-</div>
+{##}
+{#				{% for imagen in imagenes %}#}
+{#				<article id="img{{forloop.counter}}" class="item thumb span-3">#}
+{#                    {% if producto.user == user %}#}
+{#                    {% if forloop.counter == 1 %}#}
+{#                      <div class="ribbon ribbon-top-left"><span>Principal</span></div>#}
+{#                    {% else %}#}
+{#                    <form action="" method="POST"> {% csrf_token %}#}
+{#                    <button type="submit" name="main" value="{{forloop.counter|add:'-1'  }}" class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>#}
+{#                    </form>#}
+{#                    {% endif %}#}
+{#                    {% endif %}#}
+{#					<a id="href{{forloop.counter}}" class="fancybox for1" data-fancybox="gallery" href="">#}
+{#						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}#}
+{#					</a>#}
+{#				</article>#}
+{#                <div>#}
+{#                </div>#}
+{#				{% endfor %}#}
+{##}
+{#            {% for imagen in imagenes2 %}#}
+{#                {% if forloop.counter|divisibleby:2 %}#}
+{#                <article id="img{{forloop.counter}}" class="item thumb span-3">#}
+{#                    {% if producto.user == user %}#}
+{#                    <form action="" method="POST"> {% csrf_token %}#}
+{#                            <button type="submit" name="main" value="{{forloop.counter|add:'1' }}" class="btn btn-success" style="position: absolute; z-index: 300">Establecer como imagen principal</button>#}
+{#                    </form>#}
+{#                    {% endif %}#}
+{#					<a id="href{{forloop.counter}}" class="fancybox for2par" data-fancybox="gallery" href="">#}
+{#						{% generateimage 'home:watermark' source=imagen -- class='d-block w-100' id=forloop.counter style='object-fit:cover' height='400' %}#}
+{#					</a>#}
+{#				</article>#}
+{#{% endif %}#}
+{#				{% endfor %}#}
+{#			</div>#}
+{#	</section>#}
+{#</div>#}
+{##}
+{#<div class="row text-center mt-3">#}
+{#    <div class="col-12 col-lg-6">#}
+{#        <form action="" method="POST">#}
+{#            {% csrf_token %}#}
+{#            {% if in_wishlist %}#}
+{#            <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist">{% trans 'Remove from wishlist' %}</button>#}
+{#            {% else %}#}
+{#            <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist">{% trans 'Add to wishlist' %}</button>#}
+{#            {% endif %}#}
+{#        </form>#}
+{#    </div>#}
+{#            {% if user != producto.user %}#}
+{#    <div class="col-12 col-lg-6">#}
+{#        <form action="" method="post">{% csrf_token %}#}
+{#            {% if producto.stock == 1  %}#}
+{#            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"#}
+{#                    data-key="{{ key }}"#}
+{#                    data-name="FluidSurf"#}
+{#                    data-description="{% trans 'Buy product to' %} {{ producto.user }} "#}
+{#                    data-currency="eur"#}
+{#                    data-amount="{{ precio }}"#}
+{#                    data-locale="{{ LANGUAGE_CODE }}">#}
+{#            </script>#}
+{#            <script>#}
+{#                document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';#}
+{#            </script>#}
+{##}
+{#            <button type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>#}
+{#            {% else %}#}
+{#            <button type="submit" name="stock" value="{{ producto.id }}" class="mt-1 btn btn-primary"#}
+{#                    data-toggle="tooltip" data-placement="top"#}
+{#                    title="This product is out of stock.#}
+{#                           Please, ask for additional stock and you#}
+{#                            will receive an email with aconfirmation#}
+{#                            from the photographer. Thank you"#}
+{#            >#}
+{#                {% trans 'Ask for stock' %}#}
+{#            </button>#}
+{#        </form>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#    {% else %}#}
+{#            <div class="col-6">#}
+{#                <button type="submit" disabled class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>#}
+{#            </div>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#</div>#}
 
 <script type='text/javascript' src="https://www.bing.com/api/maps/mapcontrol?key={{API_KEY}}" defer async></script>
 
