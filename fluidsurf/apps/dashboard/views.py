@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 
 from django.conf import settings
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
+from fluidsurf.apps.home.filters import ProductoFilter
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_vacios_fotografos, registros_vacios_surferos
@@ -98,6 +99,8 @@ def productos(request):
 
     productos = Producto.objects.filter().all()
 
+    prod_filter = ProductoFilter(request.GET, queryset=productos)
+
     if request.method == "POST":
         if 'import' in request.POST:
             excel_file = request.FILES["fileInput"]
@@ -162,7 +165,7 @@ def productos(request):
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
                     return response
     context = {
-        'productos': productos,
+        'filter': prod_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
     }
