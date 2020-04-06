@@ -7,32 +7,63 @@
 
 {% block main %}
 
+    <style>
+        @media only screen and (max-width: 600px) {
+            #img-card {
+                background: transparent !important; position: relative; right: 8px;
+            }
+
+            #surf-card {
+                 height: 0 !important; padding: 0 !important;
+            }
+
+            #surf-card form {
+                display: none;
+            }
+
+            #foto-card {
+                display: none !important;
+            }
+
+            .img-top {
+                display: block !important;
+            }
+
+            #login-card {
+                background: transparent !important;
+            }
+        }
+    </style>
+
+
 <!-- Wrapper -->
 <div id="wrapper">
 	<section id="main">
 		<!-- Items -->
 			<div class="items">
 				{% if user.is_authenticated %}
-				<div class="item intro2 span-1 row">
+				<div class="item intro2 span-1 row" id="img-card">
 					<div class="col-12">
 						<a href="/"><img class="img-responsive imagen" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
 					</div>
+                    <img class="img-top" src="{% static '/main/images/Ilustracion2.png' %}" alt="" width="100%" style="margin-top: 54px; border-radius: 67%; width: 100px; position: absolute; right: 0; bottom: 34px; display: none">
+                    <img class="img-top" src="{% static '/main/images/Ilustracion1.png' %}" alt="" width="100%" style="margin-top: 54px; border-radius: 67%; width: 100px; position: absolute; left: 0; bottom: 34px; display: none">
 				</div>
 				{% else %}
-				<div class="item intro span-1 row">
+				<div class="item intro span-1 row" id="img-card">
 					<div class="col-12">
 						<a href="/"><img class="img-responsive imagen" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
 					</div>
 				</div>
-				<div class="item intro2 span-2 text-center pt-5">
-					<h1 class="white">{% trans 'Welcome to' %} FluidSurf</h1>
+				<div class="item intro2 span-2 text-center pt-5" id="login-card">
+					<h1 class="black" style="font-size: 24px;">{% trans 'Welcome to' %} FluidSurf</h1>
 					<div class="col-12">
 						<a href="{% url 'login' %}" class="btn btn-primary w-75 mt-3 mb-0">{% trans 'Login' %}</a>
 						<a href="{% url 'signup' %}" class="btn btn-secondary w-75">{% trans 'Signup' %}</a>
 					</div>
 				</div>
 				{% endif %}
-				<div class="item intro span-2 white" style="background: white">
+				<div class="item intro span-2 white" style="background: white;" id="surf-card">
 						<form action="" method="get" class="mt-3">
                         <div class="row">
 <!--							<div class="col-12">{{ filter.form.nombre }}</div>-->
@@ -65,7 +96,7 @@
 
 		<!-- Items -->
 			<div class="items">
-				<div class="item intro span-2 white" style="background: white">
+				<div class="item intro span-2 white" style="background: white;" id="foto-card">
 					<div class="row">
 						<div class="col-6">
 							<h1 class="mt-4 alt-text">{% trans 'Photographers' %}</h1>
