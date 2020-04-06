@@ -15,8 +15,9 @@
 <div class="container mt-5">
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h1 class="display-4 pt-5" style="color:black;">
-            {% trans 'My account' %}
+        <h1 class="display-4 pt-5 text-center" style="color:black; position: relative; left: 30px;">
+            <img src="{% static 'main/images/logo_letras.svg' %}" alt="" style="width: 200px">
+            <i class="far fa-user-circle" style="position: relative; right: 35px;"></i>
         </h1>
         <div class="row mt-5">
             <div class="col-6">

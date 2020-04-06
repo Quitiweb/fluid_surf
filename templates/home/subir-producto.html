@@ -5,10 +5,13 @@
 
 {% block main %}
 
-<div class="container pt-5">
+<div class="container">
     <div class="row text-center mt-5">
         <div class="col-12">
-            <h2 class="display-4">{% trans 'Add product' %}</h2>
+             <h1 class="display-4 pt-5 text-center" style="color:black; position: relative; left: 28px;">
+            <img src="{% static 'main/images/logo_letras.svg' %}" alt="" style="width: 200px">
+            <i class="far fa-arrow-alt-circle-up" style="position: relative; right: 35px;"></i>
+        </h1>
             <span class="hide" id="current">{{ current }}</span>
         </div>
     </div>
