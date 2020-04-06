@@ -57,6 +57,7 @@
                 </div>
 
                <div class="col-6">
+                    {{ producto.fecha }}
                     <p class="">{% trans 'Uploaded by' %}
                             <a href="{% url 'perfil' id=producto.user.id %}" style="color: #181818;">
                                 {% if producto.user.alias %}
@@ -102,9 +103,13 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     {% if in_wishlist %}
-                    <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="padding-left: 3px !important; padding-right: 3px !important;">{% trans 'Remove from wishlist' %}</button>
+                    <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="background: transparent; border: none;">
+                        <i class="fas fa-heart-broken fa-3x" style="position: relative; right: 22px; color: darkred;"></i>
+                    </button>
                     {% else %}
-                    <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="padding-left: 17px !important; padding-right: 17px !important;">{% trans 'Add to wishlist' %}</button>
+                    <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="background: transparent; border: none;">
+                        <i class="fas fa-heart fa-3x" style="position: relative; right: 22px; color: darkred;"></i>
+                    </button>
                     {% endif %}
                 </form>
             </div>
@@ -124,7 +129,9 @@
                         document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                     </script>
 
-                    <button type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}">{% trans 'Buy now' %}</button>
+                    <button type="submit" class="btn btn-primary" value="{% trans 'Buy now' %}" style="background: transparent; border: none;">
+                    <i class="fas fa-shopping-cart fa-3x" style="color: darkblue"></i>
+                    </button>
                     {% else %}
                     <button type="submit" name="stock" value="{{ producto.id }}" class=" btn btn-primary"
                             data-toggle="tooltip" data-placement="top"
