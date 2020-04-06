@@ -4,6 +4,18 @@
 {% load i18n %}
 
 {% block main %}
+
+        <style>
+        #id_comprador__username, #id_vendedor__username {
+            height: 50px;
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid gainsboro;
+            padding-left: 10px;
+            background: white;
+        }
+    </style>
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -15,10 +27,21 @@
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
+       <div class="row">
+          <div class="col-1"></div>
+              <div class="col-11">
+                  <div class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
+                  <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
+                        <div class="col-2 mt-3">{{ filter.form.comprador__username }}</div>
+                        <div class="col-10 mt-3">{{ filter.form.vendedor__username  }}</div>
+                      <input type="submit" value="Aplicar filtros" class="btn btn-primary mt-3 ml-2 d-none">
+                  </form>
+              </div>
+          </div>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-<div class="container pt-5">
+<div class="container">
     <div class="row">
        <div class="card col-12">
               <div class="card-header border-transparent">
@@ -38,7 +61,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                      {% for compra in compras %}
+                      {% for compra in filter.qs %}
                           <tr>
                             <td><a href="{% url 'admin:home_compra_change' compra.id %}">OR{{ compra.id }}</a></td>
                             <td>{{ compra.fecha|date:"d M Y" }}</td>

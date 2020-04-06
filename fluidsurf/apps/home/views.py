@@ -426,15 +426,11 @@ def producto(request, id='0'):
         else:
             break
 
-    A = imagenes[:2]
-    B = imagenes[2:]
-
     context = {
         'producto': producto,
         'productform': productform,
         'filter': prod_filter,
-        'imagenes': A,
-        'imagenes2': B,
+        'imagenes': imagenes,
         'ubicaciones': ubicaciones,
         'in_wishlist': not status,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
@@ -615,6 +611,18 @@ def historial(request):
 
     return HttpResponse(template.render(context, request))
 
+
+def mis_productos(request):
+    template = loader.get_template('home/mis-productos.html')
+
+    productos = Producto.objects.filter(user=request.user)
+    prod_filter = ProductoFilter(request.GET, queryset=productos)
+
+    context = {
+        'filter': prod_filter
+    }
+
+    return HttpResponse(template.render(context, request))
 
 def change_image(request):
     if request.method == 'POST':

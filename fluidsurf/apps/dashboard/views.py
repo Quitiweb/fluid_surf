@@ -14,6 +14,7 @@ from django.core.mail import send_mail
 
 from django.conf import settings
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
+from fluidsurf.apps.home.filters import ProductoFilter, UserFilter, CompraFilter, DenunciaFilter, SolicitudFilter
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
 from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_vacios_fotografos, registros_vacios_surferos
@@ -98,6 +99,8 @@ def productos(request):
 
     productos = Producto.objects.filter().all()
 
+    prod_filter = ProductoFilter(request.GET, queryset=productos)
+
     if request.method == "POST":
         if 'import' in request.POST:
             excel_file = request.FILES["fileInput"]
@@ -162,7 +165,7 @@ def productos(request):
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
                     return response
     context = {
-        'productos': productos,
+        'filter': prod_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
     }
@@ -174,6 +177,8 @@ def compras(request):
     template = loader.get_template('dashboard/compras.html')
 
     compras = Compra.objects.filter().all()
+
+    compras_filter = CompraFilter(request.GET, queryset=compras)
 
     if request.method == "POST":
         if 'import' in request.POST:
@@ -226,7 +231,7 @@ def compras(request):
                     return response
 
     context = {
-        'compras': compras,
+        'filter': compras_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
     }
@@ -238,6 +243,8 @@ def usuarios(request):
     template = loader.get_template('dashboard/usuarios.html')
 
     usuarios = CustomUser.objects.filter().all()
+
+    user_filter = UserFilter(request.GET, queryset=usuarios)
 
     if request.method == "POST":
         if 'import' in request.POST:
@@ -363,7 +370,7 @@ def usuarios(request):
                     return response
 
     context = {
-        'usuarios': usuarios,
+        'filter': user_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
     }
@@ -406,12 +413,16 @@ def denuncias(request):
     template = loader.get_template('dashboard/denuncias.html')
 
     denuncias = Denuncia.objects.filter().all()
+    denuncias_filter = DenunciaFilter(request.GET, queryset=denuncias)
+
+    print(denuncias_filter)
+
     if request.method == "POST":
         denuncia = Denuncia.objects.filter(id=request.POST.get('borrar')).first()
         denuncia.delete()
 
     context = {
-        'denuncias': denuncias,
+        'filter': denuncias_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count()
     }
 
@@ -422,6 +433,7 @@ def validar(request):
     template = loader.get_template('dashboard/validar.html')
 
     usuarios = CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all()
+    user_filter = UserFilter(request.GET, queryset=usuarios)
 
     if request.method == "POST":
         usuario = CustomUser.objects.filter(id=request.POST.get('validar')).first()
@@ -430,7 +442,7 @@ def validar(request):
         messages.success(request, 'El usuario ' + usuario.username + ' ha sido validado.')
 
     context = {
-        'usuarios': usuarios,
+        'filter': user_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
     }
@@ -442,6 +454,9 @@ def solicitud(request):
     template = loader.get_template('dashboard/solicitudes.html')
 
     solicitudes = SolicitudStock.objects.all()
+
+    solicitud_filter = SolicitudFilter(request.GET, queryset=solicitudes)
+
 
     if request.method == "POST":
         solicitud = SolicitudStock.objects.filter(id=request.POST.get('validar')).first()
@@ -468,7 +483,7 @@ def solicitud(request):
         return redirect('solicitudes')
 
     context = {
-        'solicitudes': solicitudes,
+        'filter': solicitud_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
     }

@@ -7,15 +7,16 @@
 {% block main %}
 <style>
 	body {
-		background: url({% static 'main/images/bg.jpg' %}) no-repeat center center fixed; background-size: cover;
+		{#background: url({% static 'main/images/bg.jpg' %}) no-repeat center center fixed; background-size: cover;#}
 	}
 </style>
 
 <div class="container pt-5">
      {% if user.tipo_de_usuario == 'SURFERO' %}
-        <h1 class="display-4 mt-5 black toggle-chk">
-            {% trans 'Purchase History' %}
-        </h1>
+            <h1 class="display-4 pt-5 text-center" style="color:black; position: relative; left: 30px;">
+                <img src="{% static 'main/images/logo_letras.svg' %}" alt="" style="width: 200px">
+                <i class="fas fa-history" style="position: relative; right: 23px;"></i>
+            </h1>
         <div class="row">
             {% if compras %}
             {% for compra in compras %}
@@ -47,8 +48,9 @@
             {% endif %}
         </div>
         {% elif user.tipo_de_usuario == 'FOTOGRAFO' %}
-            <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;">
-                {% trans 'Sales History' %}
+            <h1 class="display-4 pt-5 text-center" style="color:black; position: relative; left: 30px;">
+                <img src="{% static 'main/images/logo_letras.svg' %}" alt="" style="width: 200px">
+                <i class="fas fa-history" style="position: relative; right: 23px;"></i>
             </h1>
             <div class="row">
                 {% if ventas %}

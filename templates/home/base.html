@@ -32,6 +32,7 @@
         <link rel="stylesheet" href="{% static 'main/assets/css/noscript.css' %}">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link type="text/x-scss" href="{% static 'home/css/custom.scss' %}" rel="stylesheet" media="screen">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css">
 
         <style>
         @font-face {
@@ -57,7 +58,7 @@
                     <li class="menu justify-content-center col-md-1 mt-2 col-6 text-left" style="display: inline-block;">
                         <a class="fa fa-bars fa-2x" href="#menu"></a>
                     </li>
-                    <li class="col-md-11 col-6 pr-4 mt-3 pb-5">
+                    <li class="col-md-11 col-6 pr-4 mt-3 mb-5">
                         {% get_current_language as LANGUAGE_CODE %}
                         {% get_available_languages as LANGUAGES %}
                         {% get_language_info_list for LANGUAGES as languages %}
@@ -157,6 +158,11 @@
 
                 {% endif %}
                 {% if user.tipo_de_usuario == 'FOTOGRAFO' %}
+
+                    <li class="text-left mt-3">
+                        <h1>{% trans 'PHOTOGRAPHER PROFILE' %}</h1>
+                    </li>
+
                    <li class="text-left mt-3 ml-2">
                        · <a href="/perfil/{{ user.id }}" style="color:#838383">{% trans 'Public Profile' %}</a>
                     </li>
@@ -164,6 +170,10 @@
 
                    <li class="text-left mt-3 ml-2">
                        · <a href="{% url 'subir-producto' %}" style="color:#838383">{% trans 'Add product' %}</a>
+                   </li>
+
+                    <li class="text-left mt-3 ml-2">
+                       · <a href="{% url 'mis-productos' %}" style="color:#838383">{% trans 'My products' %}</a>
                    </li>
                 {% endif %}
                </ul>
@@ -347,6 +357,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.js"></script>
 
     </body>
 </html>

@@ -5,6 +5,37 @@
 
 {% block main %}
 
+    <style>
+        #id_user__username, #id_spot {
+            height: 50px;
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid gainsboro;
+            padding-left: 10px;
+            background: white;
+        }
+
+        #id_spot {
+            width: 100%;
+        }
+
+        #id_fecha {
+            width: 150px;
+            height: 50px;
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid gainsboro;
+            background: white;
+        }
+
+    @media only screen and (max-width: 600px) {
+        #filter_form, #col-form {
+            left: 0 !important;
+        }
+    }
+
+    </style>
+
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -16,11 +47,25 @@
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
+          <div class="row">
+          <div class="col-1"></div>
+              <div class="col-11">
+                  <div id="col-form" class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
+                  <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
+                        <div class="col-12 mt-3">{{ filter.form.user__username }}</div>
+                        <div class="col-12 col-lg-3 mt-3">{{ filter.form.spot  }}</div>
+                        <div class="col-12 col-lg-4 mt-3">{{ filter.form.fecha  }}</div>
+                      <div class="col-6">
+                          <button type="submit" class="d-none"></button>
+                      </div>
+                  </form>
+              </div>
+          </div>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
-<div class="container pt-5">
+<div class="container">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -31,7 +76,7 @@
               <!-- /.card-header -->
               <div class="card-body p-0">
                 <ul class="products-list product-list-in-card pl-2 pr-2">
-                  {% for producto in productos %}
+                  {% for producto in filter.qs %}
                     <li class="item">
                     <div class="product-img">
                       <img src="/media/{{ producto.imagen0 }}" alt="Product Image" class="img-size-50">
@@ -95,4 +140,12 @@
 </div>
 </div>
 <script src="{% static 'main/assets/js/dashboard-import.js' %}" defer></script>
+<script>
+
+    document.getElementById('id_fecha').type = 'date';
+
+    document.getElementById('id_spot').onchange = function(){
+        document.getElementById('filter_form').submit();
+    };
+</script>
 {% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load imagekit %}
+
+{% block main %}
+
+    <style>
+    #id_fecha {
+        width: 100%;
+        height: 45px;
+        box-shadow: none;
+        border: none;
+        background: #F5F5F5;
+        }
+    </style>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 mt-5">
+             <h1 class="display-4 pt-5 text-center" style="color:black; position: relative; left: 30px;">
+            <img src="{% static 'main/images/logo_letras.svg' %}" alt="" style="width: 200px">
+            <i class="far fa-user-circle" style="position: relative; right: 35px;"></i>
+        </h1>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+
+        <div class="col-12">
+            <form id="filter_form" action="" method="get" class="row" style="">
+            <div class="col-12 mt-3">{{ filter.form.spot  }}</div>
+
+            <div class="col-6 mt-3">{{ filter.form.fecha  }}</div>
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" style="height: 45px; margin-top: 16px; float: right;">
+                    Aplicar filtros
+                </button>
+            </div>
+        </form>
+        </div>
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Disponibilidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in filter.qs %}
+                <tr onclick="location.href='{% url 'producto' id=producto.id %}'" style="cursor: pointer">
+                    <th scope="row"><a href="{% url 'producto' id=producto.id %}">{{ producto.nombre }}</a></th>
+                    <td>{{ producto.fecha }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{% if producto.stock > 0 %} <i class="fa fa-check"></i> {% else %} <i class="fa fa-times"></i> {% endif %}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+
+    <script>
+
+
+         document.getElementById('id_fecha').type = 'date';
+
+
+    document.getElementById('id_spot').onchange = function(){
+        document.getElementById('filter_form').submit();
+    };
+</script>
+{% endblock %}
