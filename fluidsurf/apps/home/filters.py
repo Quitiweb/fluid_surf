@@ -20,10 +20,11 @@ class ProductoFilter(django_filters.FilterSet):
     spot = django_filters.ChoiceFilter(choices=AREA_CHOICES)
     user__alias = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Photographer')}))
     user__username = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Photographer')}))
+    fecha = django_filters.DateFilter()
 
     class Meta:
         model = Producto
-        fields = ['nombre', 'user__alias', 'spot', 'user__username']
+        fields = ['nombre', 'user__alias', 'spot', 'user__username', 'fecha']
 
 
 class PhotographerFilter(django_filters.FilterSet):

@@ -616,9 +616,10 @@ def mis_productos(request):
     template = loader.get_template('home/mis-productos.html')
 
     productos = Producto.objects.filter(user=request.user)
+    prod_filter = ProductoFilter(request.GET, queryset=productos)
 
     context = {
-        'productos': productos
+        'filter': prod_filter
     }
 
     return HttpResponse(template.render(context, request))

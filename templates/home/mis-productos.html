@@ -5,6 +5,17 @@
 {% load imagekit %}
 
 {% block main %}
+
+    <style>
+    #id_fecha {
+        width: 100%;
+        height: 45px;
+        box-shadow: none;
+        border: none;
+        background: #F5F5F5;
+        }
+    </style>
+
 <div class="container">
 
     <div class="row">
@@ -17,7 +28,20 @@
     </div>
 
     <div class="row mt-5">
-        <table class="table">
+
+        <div class="col-12">
+            <form id="filter_form" action="" method="get" class="row" style="">
+            <div class="col-12 mt-3">{{ filter.form.spot  }}</div>
+
+            <div class="col-6 mt-3">{{ filter.form.fecha  }}</div>
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" style="height: 45px; margin-top: 16px; float: right;">
+                    Aplicar filtros
+                </button>
+            </div>
+        </form>
+        </div>
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th scope="col">Producto</th>
@@ -27,7 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for producto in productos %}
+                {% for producto in filter.qs %}
                 <tr onclick="location.href='{% url 'producto' id=producto.id %}'" style="cursor: pointer">
                     <th scope="row"><a href="{% url 'producto' id=producto.id %}">{{ producto.nombre }}</a></th>
                     <td>{{ producto.fecha }}</td>
@@ -39,4 +63,15 @@
         </table>
     </div>
 </div>
+
+    <script>
+
+
+         document.getElementById('id_fecha').type = 'date';
+
+
+    document.getElementById('id_spot').onchange = function(){
+        document.getElementById('filter_form').submit();
+    };
+</script>
 {% endblock %}
