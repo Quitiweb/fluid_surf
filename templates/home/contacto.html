@@ -7,19 +7,34 @@
 
 {% block main %}
 
+    <style>
+
+    @media screen and (max-width: 600px) {
+        .g-recaptcha {
+            position: relative;
+            right: 54px;
+        }
+
+        .btn {
+            width: 200px;
+        }
+    }
+
+    </style>
+
 <div class="container pt-5 text-center">
     <h1 class="display-4 mt-5">{% trans 'Contact FluidSurf' %}</h1>
     <form action="" method="post" class="mt-5"> {% csrf_token %}
         <div class="row text-center">
-            <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-0 col-md-3"></div>
+            <div class="col-12 col-md-6">
                 {{ form.from_email }}
             </div>
         </div>
 
         <div class="row text-center mt-5">
-            <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-0 col-md-3"></div>
+            <div class="col-12 col-md-6">
                 {{ form.message }}
             </div>
         </div>
@@ -32,7 +47,7 @@
             </div>
         </div>
 
-        <input class="mt-5" type="submit" value="{% trans 'Send message' %}">
+        <input class="mt-5 btn btn-primary" type="submit" value="{% trans 'Send message' %}">
     </form>
 </div>
 {% endblock %}

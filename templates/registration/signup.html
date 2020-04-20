@@ -4,10 +4,27 @@
 
 {% block main %}
 
+        <style>
+
+    @media screen and (max-width: 600px) {
+        .g-recaptcha {
+            position: relative;
+            right: 70px;
+            top: 20px;
+        }
+
+        .btn {
+            width: 200px;
+        }
+    }
+
+    </style>
+
+
 {% if form.errors %}
     <div class="row text-center m-auto notificacion" style="height:75px;">
         <div class="col-3"></div>
-      <div class="alert alert-warning alert-dismissible text-center col-6 pt-3 pl-1" role="alert">
+      <div class="alert alert-warning alert-dismissible text-center col-6 pt-3 pl-1" role="alert" style="position: fixed; left: 25%; top: 75px; z-index: 999;">
             {{ form.errors }}
           <button type="button" class="btn close p-0 pl-1" data-dismiss="alert" aria-label="Close" style="height:25px;"><span aria-hidden="true">&times;</span></button>
       </div>
@@ -15,10 +32,9 @@
     </div>
 {% endif %}
 
-	<div class="container text-center mt-5 pt-5">
-		<a id="" href="/" class="row text-center" style="margin-top:50px;">
-            <span class="col-md-5 col-3"></span>
-            <a href="/"><img class="image-responsive w-25 col-md-6 col-6 pt-5 ml-5 logo-signup" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
+	<div class="container text-center">
+		<a id="" href="/" class="row text-center" style="">
+            <span class="col-md-5 col-3"></span>            <a href="/"><img class="image-responsive w-25 col-md-6 col-6 pt-5 ml-5 logo-signup" src="{% static 'main/images/logo_letras.svg' %}" alt=""/></a>
             <span class="col-md-5 col-3"></span>
         </a>
 	</div>

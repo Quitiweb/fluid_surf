@@ -13,10 +13,37 @@
          margin-left: 15px;
          margin-right: 15px;
     }
-.fancybox-toolbar, .fancybox-infobar {
-    margin-top: 100px;
-    z-index: 99999999999999999999999;
+    .fancybox-toolbar, .fancybox-infobar {
+        margin-top: 100px;
+        z-index: 99999999999999999999999;
+    }
+
+    @media screen and (min-width: 768px ) {
+        .carousel {
+            right: 24px;
+        }
+    }
+@media screen and (min-width: 1900px ) {
+    .carousel {
+        right: -4%;
+        top: 50px;
+        width: 900px;
+    }
+
+    .carousel-inner {
+        height: 614px;
+        width: 50vw !important;
+    }
+
+    .carousel-item {
+        width: 100%;
+    }
+
+    .fancybox img {
+        height: 562px;
+    }
 }
+
 </style>
 
     <div class="container pb-5 mt-5 pt-0">
@@ -104,11 +131,11 @@
                     {% csrf_token %}
                     {% if in_wishlist %}
                     <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="background: transparent; border: none;">
-                        <i class="fas fa-heart-broken fa-3x" style="position: relative; right: 22px; color: darkred;"></i>
+                        <i class="fas fa-heart fa-3x" style="position: relative; right: 22px; color: darkred;"></i>
                     </button>
                     {% else %}
                     <button type="submit" class="pr-5 pl-5 btn btn-primary" name="wishlist" style="background: transparent; border: none;">
-                        <i class="fas fa-heart fa-3x" style="position: relative; right: 22px; color: darkred;"></i>
+                        <i class="far fa-heart fa-3x" style="position: relative; right: 22px; color: darkred;"></i>
                     </button>
                     {% endif %}
                 </form>
