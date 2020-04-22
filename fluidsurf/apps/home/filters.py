@@ -2,7 +2,7 @@ import django_filters
 from django.forms import TextInput
 from django.utils.translation import ugettext_lazy as _
 
-from fluidsurf.apps.home.models import Producto, Compra, Denuncia, SolicitudStock
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia, SolicitudStock, Pais, Spot, Area, Continente
 from fluidsurf.apps.users.models import CustomUser
 
 AREA_CHOICES = (
@@ -71,3 +71,18 @@ class SolicitudFilter(django_filters.FilterSet):
     class Meta:
         model = SolicitudStock
         fields = ['user__username', 'product__nombre']
+
+
+class SpotFilter(django_filters.FilterSet):
+    continente = django_filters.ModelChoiceFilter(queryset=Continente.objects.all())
+
+    spot__area__pais = django_filters.ModelChoiceFilter(queryset=Pais.objects.filter().all())
+
+    spot__area = django_filters.ModelChoiceFilter(queryset=Area.objects.all())
+
+    spot = django_filters.ModelChoiceFilter(queryset=Spot.objects.all())
+
+    class Meta:
+        model = Spot
+        fields = ['spot', 'spot__area']
+

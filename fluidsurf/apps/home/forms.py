@@ -86,7 +86,7 @@ class AddProductForm(forms.ModelForm):
     precio = forms.CharField(required=True)
 
     fecha = forms.DateField(required=True, input_formats=DATE_INPUT_FORMATS)
-    spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
+    # spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
     descripcion = forms.CharField(required=False)
 
     imagen0 = forms.ImageField(required=False)
@@ -139,7 +139,7 @@ class AddProductForm(forms.ModelForm):
 
     class Meta:
         model = Producto
-        fields = ('nombre', 'precio', 'fecha', 'spot', 'descripcion', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
+        fields = ('nombre', 'precio', 'fecha', 'descripcion', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
                   , 'imagen6', 'imagen7', 'imagen8', 'imagen9')
 
 

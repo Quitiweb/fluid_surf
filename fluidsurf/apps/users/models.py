@@ -41,8 +41,7 @@ class CustomUser(AbstractUser):
     pais = models.CharField(max_length=50, default="")
     zona = models.CharField(
         max_length=50,
-        choices=AREA_CHOICES,
-        default='EU'
+        choices=AREA_CHOICES
     )
 
     validado = models.BooleanField(default=False)

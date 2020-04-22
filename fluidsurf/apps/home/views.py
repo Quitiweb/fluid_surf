@@ -25,9 +25,9 @@ from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
-from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter
-from fluidsurf.apps.home.models import Producto, Ubicacion, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
-    Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock
+from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, SpotFilter
+from fluidsurf.apps.home.models import Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
+    Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot
 from fluidsurf.apps.users.models import CustomUser
 from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
     DenunciaForm, ContactForm, DevolucionForm
@@ -50,10 +50,10 @@ def index(request):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    ubicaciones = Ubicacion.objects.filter().all()
+    ubicaciones = Continente.objects.filter().all()
 
     if request.user.is_authenticated:
-        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True, spot=request.user.zona).all()
+        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all() #spot=request.user.zona
 
         if request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
             messages.warning(request, _("Your profile ins't active yet. Please, wait until "
@@ -151,6 +151,24 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
+
+    spots = Spot.objects.all()
+
+    spotOG = []
+    for spot in spots:
+        data = {}
+        data['continente'] = spot.area.pais.continente.nombre
+        data['pais'] = spot.area.pais.nombre
+        data['area'] = spot.area.nombre
+        data['spot'] = spot.nombre
+
+        json_data = json.dumps(data)
+        spotOG.append(json_data)
+    print(spotOG)
+
+
+
+
     stripe_exists = request.user.stripe_id
     form = ''
 
@@ -201,7 +219,7 @@ def subir_producto(request):
                             messages.success(request, 'Tu producto se ha subido correctamente')
 
                             # Busca los usuarios en la zona del producto para despues mandarles un mail
-                            usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO", zona=producto.spot).all()
+                            usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO").all()
 
                             mails = []
                             for usuario in usuarios:
@@ -241,7 +259,8 @@ def subir_producto(request):
     context = {
         'form': form,
         'current': current,
-        'stripe': stripe_exists
+        'stripe': stripe_exists,
+        'spotOG': spotOG
     }
 
     return HttpResponse(template.render(context, request))
@@ -257,7 +276,7 @@ def producto(request, id='0'):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
-    ubicaciones = Ubicacion.objects.filter().all()
+    ubicaciones = Continente.objects.filter().all()
 
     if request.user.is_authenticated:
         listaDeseos = request.user.wishlist.split(',')
@@ -445,9 +464,9 @@ def producto(request, id='0'):
 def zona(request, nombre=''):
     template = loader.get_template('home/zona.html')
 
-    ubicaciones = Ubicacion.objects.filter().all()
+    ubicaciones = Continente.objects.filter().all()
 
-    zona = Ubicacion.objects.filter(spot=nombre).first()
+    zona = Continente.objects.filter(spot=nombre).first()
 
     if zona is None:
         return redirect('/')
@@ -475,7 +494,7 @@ def perfil(request, id=''):
     prod_list = Producto.objects.filter(user=user, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
-    ubicaciones = Ubicacion.objects.filter().all()
+    ubicaciones = Continente.objects.filter().all()
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
@@ -846,7 +865,7 @@ def fotografos(request):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    ubicaciones = Ubicacion.objects.filter().all()
+    ubicaciones = Continente.objects.filter().all()
 
     if request.user.is_authenticated:
         photo_list = CustomUser.objects.filter(is_active=True, validado=True,

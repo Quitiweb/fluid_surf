@@ -11,6 +11,8 @@ $(document).on("change", "#id_imagenes", function(){
 
 $(document).ready(function () {
 
+    refreshQS();
+
     $("#stripeModal").modal({
          backdrop: 'static',
          keyboard: false,
@@ -166,3 +168,40 @@ $(document).ready(function () {
     });
 });
 });
+
+function refreshQS() {
+    // console.log(spotOG)
+
+    var continentes = [];
+    var paises = [];
+    var areas = [];
+    var spots = [];
+
+    for (spot of spotQS) {
+        continentes.push(spot['continente']);
+        paises.push(spot['pais']);
+        areas.push(spot['area']);
+        spots.push(spot['spot']);
+    }
+
+    continentes = continentes.filter( onlyUnique )
+    paises = paises.filter( onlyUnique )
+    areas = areas.filter( onlyUnique )
+    spots = spots.filter( onlyUnique )
+
+    console.log(continentes);
+    console.log(paises);
+    console.log(areas);
+    console.log(spots);
+}
+
+/**
+ *  Funcion para filtrar los distintos parents de los spots a un valor unico
+ * @param value
+ * @param index
+ * @param self
+ * @returns {boolean}
+ */
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}

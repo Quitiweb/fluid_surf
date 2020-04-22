@@ -45,7 +45,11 @@
             </div>
             <div class="col-4">
                 <label>{% trans 'Spot' %}*</label>
-                {{ form.spot }}
+{#                {{ form.spot }}#}
+{#                {{ spot.form.spot }}#}
+{#                {{ spot.form.spot__area }}#}
+{#                {{ spot.form.spot__area__pais }}#}
+{#                {{ spot.form.continente }}#}
             </div>
         </div>
 
@@ -177,7 +181,25 @@
 </div>
 
 
+<script defer>
+    const spotOG = {{ spotOG|safe }}
+    console.log(spotOG)
 
+    const spotQS = []
+
+    for (spot of spotOG) {
+        var result = JSON.parse(spot)
+        spotQS.push(result)
+    }
+
+    {#console.log(spotQS)#}
+
+
+
+
+
+
+</script>
 <script src="{% static 'main/assets/js/subir-producto.js' %}" defer></script>
 
 {% endblock %}

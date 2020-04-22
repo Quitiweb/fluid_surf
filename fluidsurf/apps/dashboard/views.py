@@ -60,11 +60,11 @@ def dashboard(request):
         users_last_week += int(item.users)
 
     productos = Producto.objects.filter().all()
-    europa = Producto.objects.filter(spot='Europa').all()
-    oceania = Producto.objects.filter(spot='Oceania').all()
-    africa = Producto.objects.filter(spot='Africa').all()
-    asia = Producto.objects.filter(spot='Asia').all()
-    america = Producto.objects.filter(Q(spot='America del Norte') | Q(spot='America del Sur')).all()
+    europa = Producto.objects.filter(spot__nombre='Europa').all()
+    oceania = Producto.objects.filter(spot__nombre='Oceania').all()
+    africa = Producto.objects.filter(spot__nombre='Africa').all()
+    asia = Producto.objects.filter(spot__nombre='Asia').all()
+    america = Producto.objects.filter(Q(spot__nombre='America del Norte') | Q(spot__nombre='America del Sur')).all()
     compras = Compra.objects.filter().all()
     usuarios = CustomUser.objects.filter().all()
 

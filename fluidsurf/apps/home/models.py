@@ -25,6 +25,46 @@ DEV_REASON_CHOICES = (
 )
 
 
+# Spots
+class Continente(models.Model):
+    nombre = models.CharField(max_length=25, choices=AREA_CHOICES, default='Europa')
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = 'Continente'
+
+
+class Pais(models.Model):
+    nombre = models.CharField(max_length=25)
+    continente = models.ForeignKey(Continente, on_delete=models.CASCADE, related_name='pais', default='')
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = 'Pais'
+        verbose_name_plural = 'Paises'
+
+
+class Area(models.Model):
+    nombre = models.CharField(max_length=25)
+    pais = models.ForeignKey(Pais, on_delete=models.CASCADE, related_name='area', default='')
+
+    def __str__(self):
+        return self.nombre
+
+
+class Spot(models.Model):
+    nombre = models.CharField(max_length=25)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE, related_name='spot', default='')
+
+    def __str__(self):
+        return self.nombre
+
+
+
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)
 
@@ -32,7 +72,7 @@ class Producto(models.Model):
     precio = models.IntegerField()
 
     fecha = models.DateField()
-    spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='EU')
+    spot = models.ForeignKey(Spot, on_delete=models.CASCADE, related_name='producto_spot')
 
     descripcion = models.CharField(max_length=50, blank=True)
 
@@ -64,18 +104,6 @@ class Compra(models.Model):
 
     def __str__(self):
         return str(self.vendedor) + "-" + str(self.comprador) + str(self.fecha)
-
-
-class Ubicacion(models.Model):
-    spot = models.CharField(max_length=25, choices=AREA_CHOICES, default='Europa')
-    geoloc = GeoLocationField(blank=True)
-
-    def __str__(self):
-        return self.spot
-
-    class Meta:
-        verbose_name = 'Ubicacion'
-        verbose_name_plural = 'Ubicaciones'
 
 
 class Denuncia(models.Model):
