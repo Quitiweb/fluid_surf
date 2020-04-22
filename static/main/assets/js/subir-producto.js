@@ -288,12 +288,5 @@ document.getElementById('selectPais').onchange = (e) => {
 }
 // TODO Cambio de continente
 document.getElementById('selectCont').onchange = (e) => {
-    // $.ajax({
-    //     url: "subir-producto",
-    // }).success(function(response) {
-    //     paises = [];
-    //     areas = [];
-    //     spots = [];
-    //     refreshContinente(e.target.value);
-    // });
+
 }
