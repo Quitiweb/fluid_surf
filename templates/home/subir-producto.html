@@ -30,6 +30,7 @@
         <!-- date & spot -->
         <div class="row mt-5">
 
+            <div class="col-2"></div>
             <div class="col-4">
                 <label>{% trans 'Price' %}*
                     <a href="#" data-toggle="modal" data-target="#exampleModal">
@@ -43,14 +44,37 @@
                 <label>{% trans 'Date' %}*</label>
                 {{ form.fecha }}
             </div>
-            <div class="col-4">
-                <label>{% trans 'Spot' %}*</label>
-{#                {{ form.spot }}#}
-{#                {{ spot.form.spot }}#}
-{#                {{ spot.form.spot__area }}#}
-{#                {{ spot.form.spot__area__pais }}#}
-{#                {{ spot.form.continente }}#}
-            </div>
+
+        </div>
+
+        <div class="row mt-3">
+                <div class="col-3">
+                    <label>{% trans 'Continent' %}*</label>
+                    <select name="" id="selectCont">
+                        <option value="---">---</option>
+                    </select>
+                </div>
+
+                <div class="col-3">
+                    <label>{% trans 'Country' %}*</label>
+                    <select name="" id="selectPais">
+                        <option value="---">---</option>
+                    </select>
+                </div>
+
+                <div class="col-3">
+                    <label>{% trans 'Area' %}*</label>
+                    <select name="" id="selectArea">
+                        <option value="---">---</option>
+                    </select>
+                </div>
+
+                <div class="col-3">
+                    <label>{% trans 'Spot' %}*</label>
+                    <select name="" id="selectSpot">
+                        <option value="---">---</option>
+                    </select>
+                </div>
         </div>
 
         <div class="row mt-5">

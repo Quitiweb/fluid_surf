@@ -11,7 +11,7 @@ $(document).on("change", "#id_imagenes", function(){
 
 $(document).ready(function () {
 
-    refreshQS();
+    loadQS();
 
     $("#stripeModal").modal({
          backdrop: 'static',
@@ -169,14 +169,12 @@ $(document).ready(function () {
 });
 });
 
-function refreshQS() {
-    // console.log(spotOG)
+var continentes = [];
+var paises = [];
+var areas = [];
+var spots = [];
 
-    var continentes = [];
-    var paises = [];
-    var areas = [];
-    var spots = [];
-
+function loadQS() {
     for (spot of spotQS) {
         continentes.push(spot['continente']);
         paises.push(spot['pais']);
@@ -189,10 +187,33 @@ function refreshQS() {
     areas = areas.filter( onlyUnique )
     spots = spots.filter( onlyUnique )
 
-    console.log(continentes);
-    console.log(paises);
-    console.log(areas);
-    console.log(spots);
+    for (cont of continentes) {
+        var opt = document.createElement("option");
+        opt.value = cont;
+        opt.innerHTML= cont;
+        document.getElementById('selectCont').appendChild(opt)
+    }
+
+    for (pais of paises) {
+        var opt = document.createElement("option");
+        opt.value = pais;
+        opt.innerHTML= pais;
+        document.getElementById('selectPais').appendChild(opt)
+    }
+
+    for (area of areas) {
+        var opt = document.createElement("option");
+        opt.value = area;
+        opt.innerHTML= area;
+        document.getElementById('selectArea').appendChild(opt)
+    }
+
+    for (spot of spots) {
+        var opt = document.createElement("option");
+        opt.value = spot;
+        opt.innerHTML= spot;
+        document.getElementById('selectSpot').appendChild(opt)
+    }
 }
 
 /**
