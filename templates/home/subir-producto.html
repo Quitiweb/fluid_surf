@@ -207,21 +207,14 @@
 
 <script defer>
     const spotOG = {{ spotOG|safe }}
-    console.log(spotOG)
 
-    const spotQS = []
+    var spotQS = []
 
     for (spot of spotOG) {
         var result = JSON.parse(spot)
         spotQS.push(result)
     }
-
-    {#console.log(spotQS)#}
-
-
-
-
-
+    console.log(spotQS)
 
 </script>
 <script src="{% static 'main/assets/js/subir-producto.js' %}" defer></script>

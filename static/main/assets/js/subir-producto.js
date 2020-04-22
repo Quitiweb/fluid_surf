@@ -87,7 +87,7 @@ $(document).ready(function () {
         numFiles += $("#id_imagen9")[0].files.length;
         $(".textFiles").text("Has subido " + numFiles + " archivos.");
     });
-    
+
     // Eventos para la modificacion del nombre de manera dinamica
 
     var contenido = 'Europe-' + $.datepicker.formatDate('dd/mm/yy', new Date()) + '-' + $('#current').text();
@@ -140,28 +140,28 @@ $(document).ready(function () {
     // Evento para limpiar la lista de imagenes
     $('#clearBtn').on("click", function(){
         console.log('click!');
-        $('#id_imagen0').val(''); 
-        $('#id_imagen1').val(''); 
-        $('#id_imagen2').val(''); 
-        $('#id_imagen3').val(''); 
-        $('#id_imagen4').val(''); 
-        $('#id_imagen5').val(''); 
-        $('#id_imagen6').val(''); 
-        $('#id_imagen7').val(''); 
-        $('#id_imagen8').val(''); 
-        $('#id_imagen9').val(''); 
+        $('#id_imagen0').val('');
+        $('#id_imagen1').val('');
+        $('#id_imagen2').val('');
+        $('#id_imagen3').val('');
+        $('#id_imagen4').val('');
+        $('#id_imagen5').val('');
+        $('#id_imagen6').val('');
+        $('#id_imagen7').val('');
+        $('#id_imagen8').val('');
+        $('#id_imagen9').val('');
 
-        $('#form0').removeClass('hide'); 
-        $('#form1').addClass('hide'); 
-        $('#form2').addClass('hide'); 
-        $('#form3').addClass('hide'); 
-        $('#form4').addClass('hide'); 
-        $('#form5').addClass('hide'); 
-        $('#form6').addClass('hide'); 
-        $('#form7').addClass('hide'); 
-        $('#form8').addClass('hide'); 
-        $('#form9').addClass('hide'); 
-        $('#clearBtn').addClass('hide'); 
+        $('#form0').removeClass('hide');
+        $('#form1').addClass('hide');
+        $('#form2').addClass('hide');
+        $('#form3').addClass('hide');
+        $('#form4').addClass('hide');
+        $('#form5').addClass('hide');
+        $('#form6').addClass('hide');
+        $('#form7').addClass('hide');
+        $('#form8').addClass('hide');
+        $('#form9').addClass('hide');
+        $('#clearBtn').addClass('hide');
 
         $(".textFiles").text("");
         numFiles = 0;
@@ -174,7 +174,7 @@ var paises = [];
 var areas = [];
 var spots = [];
 
-function loadQS() {
+function loadQS(contValue=null) {
     for (spot of spotQS) {
         continentes.push(spot['continente']);
         paises.push(spot['pais']);
@@ -192,6 +192,11 @@ function loadQS() {
         opt.value = cont;
         opt.innerHTML= cont;
         document.getElementById('selectCont').appendChild(opt)
+
+        if (contValue) {
+            document.getElementById('selectCont').value=contValue
+        }
+
     }
 
     for (pais of paises) {
@@ -216,6 +221,40 @@ function loadQS() {
     }
 }
 
+function refreshContinente(value) {
+
+    // for para obtener un spot aleatorio con ese pais
+    for(spot of spotQS) {
+        if(spot['continente'] == value) {
+            contEx = spot;
+        }
+    }
+
+    spotQS = spotQS.filter(function(el) {
+        return el['continente'] === paisEx['continente']
+    });
+
+    $('select').empty()
+    loadQS();
+}
+
+function refreshPais(value) {
+     var paisEx;
+     // for para obtener un spot aleatorio con ese pais
+    for(spot of spotQS) {
+        if(spot['pais'] == value) {
+            paisEx = spot;
+        }
+    }
+
+    spotQS = spotQS.filter(function(el) {
+        return el['pais'] === paisEx['pais'] || el['continente'] === paisEx['continente']
+    });
+
+    $('select').empty()
+    loadQS(paisEx['continente']);
+}
+
 /**
  *  Funcion para filtrar los distintos parents de los spots a un valor unico
  * @param value
@@ -225,4 +264,36 @@ function loadQS() {
  */
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
+}
+
+/**
+ * Funcion para seleccionar un option concreto de un select
+ * @param id
+ * @param valueToSelect
+ */
+function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+}
+
+document.getElementById('selectPais').onchange = (e) => {
+    $.ajax({
+        url: "subir-producto",
+    }).success(function(response) {
+        paises = [];
+        areas = [];
+        spots = [];
+        refreshPais(e.target.value);
+    });
+}
+// TODO Cambio de continente
+document.getElementById('selectCont').onchange = (e) => {
+    // $.ajax({
+    //     url: "subir-producto",
+    // }).success(function(response) {
+    //     paises = [];
+    //     areas = [];
+    //     spots = [];
+    //     refreshContinente(e.target.value);
+    // });
 }
