@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'django_filters',
     'braintree',
     'certifi',
-    'celery'
 ]
 
 MIDDLEWARE = [
