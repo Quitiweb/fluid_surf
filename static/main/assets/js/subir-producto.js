@@ -174,12 +174,21 @@ var paises = [];
 var areas = [];
 var spots = [];
 
-function loadQS(contValue=null) {
+function refreshQS() {
+    spotQS = []
+
+    for (spot of spotOG) {
+        var result = JSON.parse(spot)
+        spotQS.push(result)
+    }
+}
+
+function loadQS(contValue= null, paisValue = null) {
     for (spot of spotQS) {
         continentes.push(spot['continente']);
-        paises.push(spot['pais']);
-        areas.push(spot['area']);
-        spots.push(spot['spot']);
+        if (spot['pais']) { paises.push(spot['pais']); }
+        if (spot['area']) { areas.push(spot['area']); }
+        if (spot['spot']) { spots.push(spot['spot']); }
     }
 
     continentes = continentes.filter( onlyUnique )
@@ -204,6 +213,11 @@ function loadQS(contValue=null) {
         opt.value = pais;
         opt.innerHTML= pais;
         document.getElementById('selectPais').appendChild(opt)
+
+        if (paisValue) {
+            document.getElementById('selectPais').value=paisValue
+        }
+
     }
 
     for (area of areas) {
@@ -234,11 +248,14 @@ function refreshContinente(value) {
         return el['continente'] === paisEx['continente']
     });
 
-    $('select').empty()
+
     loadQS();
 }
 
 function refreshPais(value) {
+
+    refreshQS();
+
      var paisEx;
      // for para obtener un spot aleatorio con ese pais
     for(spot of spotQS) {
@@ -251,8 +268,17 @@ function refreshPais(value) {
         return el['pais'] === paisEx['pais'] || el['continente'] === paisEx['continente']
     });
 
+
     $('select').empty()
-    loadQS(paisEx['continente']);
+
+    for(spot of spotQS) {
+        if(spot['pais'] !== paisEx['pais']) {
+            delete spot['area'];
+            delete spot['spot'];
+        }
+    }
+
+    loadQS(paisEx['continente'], paisEx['pais']);
 }
 
 /**
@@ -286,7 +312,7 @@ document.getElementById('selectPais').onchange = (e) => {
         refreshPais(e.target.value);
     });
 }
-// TODO Cambio de continente
-document.getElementById('selectCont').onchange = (e) => {
-
-}
+// // TODO Cambio de continente
+// document.getElementById('selectCont').onchange = (e) => {
+//
+// }
