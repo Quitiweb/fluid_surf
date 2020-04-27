@@ -11,7 +11,13 @@ $(document).on("change", "#id_imagenes", function(){
 
 $(document).ready(function () {
 
-    loadQS();
+    if(localStorage.getItem('localSpot')) {
+        let spot = JSON.parse(localStorage.getItem('localSpot'));
+        loadQS(spot.cont, spot.pais, spot.area, spot.spot);
+    } else {
+        loadQS();
+    }
+
 
     $("#stripeModal").modal({
          backdrop: 'static',
@@ -169,6 +175,30 @@ $(document).ready(function () {
 });
 });
 
+
+$('#boton-submit').on("click", function(e){
+    e.preventDefault();
+
+    var contDftl = document.getElementById('selectCont').value;
+    var paisDftl = document.getElementById('selectPais').value;
+    var areaDftl = document.getElementById('selectArea').value;
+    var spotDftl = document.getElementById('selectSpot').value;
+
+    var text = '{' +
+                  '"cont":' + '"' + contDftl + '"' +
+                ', "pais": ' + '"' + paisDftl + '"' +
+                ', "area": ' + '"' + areaDftl + '"' +
+                ', "spot": ' + '"' + spotDftl + '"' +
+                '}'
+
+    localStorage.setItem('localSpot', text);
+
+    console.log(localStorage.getItem('localSpot').cont)
+
+    $("#form-add-product").submit();
+
+});
+
 var continentes = [];
 var paises = [];
 var areas = [];
@@ -195,6 +225,23 @@ function loadQS(contValue= null, paisValue = null, areaValue = null, spotValue =
     paises = paises.filter( onlyUnique )
     areas = areas.filter( onlyUnique )
     spots = spots.filter( onlyUnique )
+
+    var opt = document.createElement("option");
+    opt.value = '---';
+    opt.innerHTML= '---';
+
+    var opt2 = document.createElement("option");
+    opt2.value = '---';
+    opt2.innerHTML= '---';
+
+    var opt3 = document.createElement("option");
+    opt3.value = '---';
+    opt3.innerHTML= '---';
+
+
+    document.getElementById('selectPais').appendChild(opt)
+    document.getElementById('selectArea').appendChild(opt2)
+    document.getElementById('selectSpot').appendChild(opt3)
 
     for (cont of continentes) {
         var opt = document.createElement("option");
@@ -307,8 +354,8 @@ function refreshArea(value) {
     }
 
    spotQS = spotQS.filter(function(el) {
-        return el['pais'] === areaEx['pais']
-            || el['continente'] === areaEx['continente']
+        return el['continente'] === areaEx['continente']
+            || el['pais'] === areaEx['pais']
             || el['area'] === areaEx['area']
     });
 

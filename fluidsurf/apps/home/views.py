@@ -166,9 +166,6 @@ def subir_producto(request):
         spotOG.append(json_data)
     print(spotOG)
 
-
-
-
     stripe_exists = request.user.stripe_id
     form = ''
 
@@ -188,9 +185,19 @@ def subir_producto(request):
                     current = Producto.objects.latest('id').id + 1
                 form = AddProductForm(request.POST, request.FILES)
 
-                if form.is_valid():
+                area = request.POST.get('area')
+                spot = request.POST.get('spot')
+
+
+                if form.is_valid() and spot:
                     producto = form.save(commit=False)
                     producto.user = request.user
+
+                    pspot = Spot.objects.filter(nombre=spot, area__nombre=area).first()
+
+                    print(pspot)
+
+                    producto.spot = pspot
 
                     files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
                         'imagen2') + \
