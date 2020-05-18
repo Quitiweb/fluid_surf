@@ -1,0 +1,127 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+    <style>
+        input[type="text"] {
+            height: 50px;
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid gainsboro;
+            padding-left: 10px;
+            background: white;
+        }
+    </style>
+
+<!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Home' %}</a></li>
+              <li class="breadcrumb-item active">Gestión comercial</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+         <div class="row">
+          <div class="col-1"></div>
+              <div class="col-11">
+                  <div class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
+                  <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
+                        <div class="col-2 mt-3">{{ filter.form.area__pais__continente__nombre  }}</div>
+                        <div class="col-2 mt-3">{{ filter.form.area__pais__nombre  }}</div>
+                        <div class="col-2 mt-3">{{ filter.form.area__nombre  }}</div>
+                        <div class="col-2 mt-3">{{ filter.form.nombre }}</div>
+                        <div class="col-12 mt-3">
+
+                            <input class="btn btn-primary" type="submit" value="Aplicar filtros"/>
+
+                            <a class="btn btn-secondary ml-3" href="{% url 'zonas' %}"> Limpiar filtros</a>
+                        </div>
+                  </form>
+              </div>
+          </div>
+
+      </div><!-- /.container-fluid -->
+    </div>
+<!-- /.content-header -->
+
+<div class="container">
+<div class="row">
+    <div class="card col-12">
+        <div class="card-header border-transparent">
+            <h3 class="card-title">Zonas</h3>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table m-0">
+                    <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Continente</th>
+                          <th>Pais</th>
+                          <th>Area</th>
+                          <th>Spot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for zona in filter.qs %}
+                            <tr>
+                                <td>{{ zona.id }}</td>
+                                <td>{{ zona.area.pais.continente }}</td>
+                                <td>{{ zona.area.pais }}</td>
+                                <td>{{ zona.area }}</td>
+                                <td>{{ zona }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
+            </div>
+        </div>
+        <div class="card-footer clearfix">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-success float-left ml-3"> <i class="fas fa-file-export"></i>Exportar a Excel</button>
+            </form>
+
+            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                      <label for="fileInput" style="cursor: pointer;">
+                          <span class="btn btn-sm btn-info float-left ml-3">
+                              <i class="fas fa-file-import"></i>Importar desde Excel
+                          </span>
+                      </label>
+                      <input type="file" class="d-none" id="fileInput" name="fileInput">
+                      <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalTitle">Importar desde excel</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                Al importar nuevas compras desde excel, se sobreescribirán las compras que tengan el mismo campo ID.
+                                  ¿Deseas continuar?
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary" name="import">Importar desde excel</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                  </form>
+
+        </div>
+    </div>
+</div>
+<script src="{% static 'main/assets/js/dashboard-import.js' %}" defer></script>
+</div>
+
+{% endblock %}

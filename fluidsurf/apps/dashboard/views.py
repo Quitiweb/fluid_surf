@@ -14,8 +14,10 @@ from django.core.mail import send_mail
 
 from django.conf import settings
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
-from fluidsurf.apps.home.filters import ProductoFilter, UserFilter, CompraFilter, DenunciaFilter, SolicitudFilter
-from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
+from fluidsurf.apps.home.filters import ProductoFilter, UserFilter, CompraFilter, DenunciaFilter, SolicitudFilter, \
+    ZonaFilter
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock, Spot, Continente, \
+    Pais, Area
 from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_vacios_fotografos, registros_vacios_surferos
 
@@ -234,6 +236,72 @@ def compras(request):
         'filter': compras_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def zonas(request):
+    template = loader.get_template('dashboard/zonas.html')
+
+    zonas = Spot.objects.filter().all()
+    zonas_filter = ZonaFilter(request.GET, queryset=zonas)
+
+    if request.method == "POST":
+        if 'import' in request.POST:
+            excel_file = request.FILES["fileInput"]
+            wb = openpyxl.load_workbook(excel_file)
+
+            if wb['DEFINITIVO']:
+                worksheet = wb['DEFINITIVO']
+            else:
+                worksheet = wb['Sheet']
+
+            # Estas dos lineas son para ignorar la primera fila del excel, ya que contiene los
+            # nombres de las columnas
+            elements = worksheet.iter_rows()
+            next(elements)
+
+            for row in elements:
+
+                if not row[0].value is None:
+                    xls_cont = row[1].value
+                    xls_pais = row[3].value
+                    xls_area = row[4].value
+                    xls_spot = row[5].value
+                    # Comprobante de continentes
+                    qs = Continente.objects.filter(nombre=xls_cont)
+                    if not qs:
+                        continente = Continente()
+                        continente.nombre = xls_cont
+                        continente.save()
+                    # Comprobante de paises
+                    qs = Pais.objects.filter(nombre=xls_pais, continente__nombre=xls_cont)
+                    if not qs:
+                        cont = Continente.objects.filter(nombre=xls_cont).first()
+                        pais = Pais()
+                        pais.nombre = xls_pais
+                        pais.continente = cont
+                        pais.save()
+                    # Comprobante de areas
+                    qs = Area.objects.filter(nombre=xls_area, pais__nombre=xls_pais)
+                    if not qs:
+                        pais = Pais.objects.filter(nombre=xls_pais).first()
+                        area = Area()
+                        if xls_area is None: xls_area = ''
+                        area.nombre = xls_area
+                        area.pais = pais
+                        area.save()
+                    # Comprobante de spots
+                    qs = Spot.objects.filter(nombre=xls_spot, area__nombre=xls_area)
+                    if not qs:
+                        area = Area.objects.filter(nombre=xls_area).first()
+                        spot = Spot()
+                        spot.nombre = xls_spot
+                        spot.area = area
+                        spot.save()
+    context = {
+        'filter': zonas_filter
     }
 
     return HttpResponse(template.render(context, request))

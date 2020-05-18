@@ -25,7 +25,7 @@ from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 from django.views.defaults import page_not_found
 
-from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, SpotFilter
+from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter
 from fluidsurf.apps.home.models import Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
     Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot
 from fluidsurf.apps.users.models import CustomUser
@@ -151,11 +151,11 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
-
-    spots = Spot.objects.all()
+    spots = Spot.objects.filter().all()
+    filter = ZonaFilter(request.GET, queryset=spots)
 
     spotOG = []
-    for spot in spots:
+    for spot in filter.qs:
         data = {}
         data['continente'] = spot.area.pais.continente.nombre
         data['pais'] = spot.area.pais.nombre

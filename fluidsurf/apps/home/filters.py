@@ -55,6 +55,17 @@ class CompraFilter(django_filters.FilterSet):
         fields = ['comprador__username', 'vendedor__username']
 
 
+class ZonaFilter(django_filters.FilterSet):
+    nombre = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Spot')}))
+    area__nombre = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Area')}))
+    area__pais__nombre = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Pais')}))
+    area__pais__continente__nombre = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Continente')}))
+
+    class Meta:
+        model = Spot
+        fields = ['nombre', 'area__nombre', 'area__pais', 'area__pais__continente']
+
+
 class DenunciaFilter(django_filters.FilterSet):
     emisor__username = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': _('Emisor')}))
     receptor__username = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Receptor')}))
@@ -72,17 +83,4 @@ class SolicitudFilter(django_filters.FilterSet):
         model = SolicitudStock
         fields = ['user__username', 'product__nombre']
 
-
-class SpotFilter(django_filters.FilterSet):
-    continente = django_filters.ModelChoiceFilter(queryset=Continente.objects.all())
-
-    spot__area__pais = django_filters.ModelChoiceFilter(queryset=Pais.objects.filter().all())
-
-    spot__area = django_filters.ModelChoiceFilter(queryset=Area.objects.all())
-
-    spot = django_filters.ModelChoiceFilter(queryset=Spot.objects.all())
-
-    class Meta:
-        model = Spot
-        fields = ['spot', 'spot__area']
 
