@@ -1,46 +1,37 @@
-import datetime
-
 import django
 import os
 import re
-
-from io import BytesIO
 import json
 import zipfile
 import urllib
-from datetime import date
 import braintree
 import requests
-
 import stripe
-from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.core import serializers
-from django.core.mail import send_mail
-from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, BadHeaderError
-from django.shortcuts import render, redirect, get_object_or_404
-from django.template import loader
-from django.utils.translation import ugettext_lazy as _
-from django.views.defaults import page_not_found
 
-from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter
-from fluidsurf.apps.home.models import Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, \
-    Copyright, Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot
-from fluidsurf.apps.users.models import CustomUser
-from .forms import ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm, EditProductForm, \
-    DenunciaForm, ContactForm, DevolucionForm
-from ..dashboard.models import RegistroCompras
-from ..helpers.helper import users_to_get, registros_vacios_compras
-
-from django.conf import settings
-
-from decimal import Decimal
-
+from io import BytesIO
+from datetime import date
 from PIL import Image
 from imagekit.registry import register
 from imagekit.specs import ImageSpec
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.core.mail import send_mail
+from django.http import HttpResponse, HttpResponseRedirect, BadHeaderError
+from django.shortcuts import render, redirect
+from django.template import loader
+from django.utils.translation import ugettext_lazy as _
+
+
+from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter
+from fluidsurf.apps.home.models import (Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
+                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot)
+from fluidsurf.apps.home.forms import (ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
+                                       EditProductForm, DenunciaForm, ContactForm, DevolucionForm)
+
+from fluidsurf.apps.users.models import CustomUser
+from fluidsurf.apps.dashboard.models import RegistroCompras
+from fluidsurf.apps.helpers.helper import registros_vacios_compras
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -53,7 +44,7 @@ def index(request):
     ubicaciones = Continente.objects.filter().all()
 
     if request.user.is_authenticated:
-        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all() #spot=request.user.zona
+        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()  # spot=request.user.zona
 
         if request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
             messages.warning(request, _("Your profile ins't active yet. Please, wait until "
@@ -151,6 +142,7 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
+
     spots = Spot.objects.filter().all()
     filter = ZonaFilter(request.GET, queryset=spots)
 
@@ -161,6 +153,9 @@ def subir_producto(request):
         data['pais'] = spot.area.pais.nombre
         data['area'] = spot.area.nombre
         data['spot'] = spot.nombre
+        # data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre, 'area': spot.area.nombre,
+        #         'spot': spot.nombre}
+
 
         json_data = json.dumps(data)
         spotOG.append(json_data)
@@ -188,16 +183,15 @@ def subir_producto(request):
                 area = request.POST.get('area')
                 spot = request.POST.get('spot')
 
-
                 if form.is_valid() and spot:
-                    producto = form.save(commit=False)
-                    producto.user = request.user
+                    producto_instance = form.save(commit=False)
+                    producto_instance.user = request.user
 
                     pspot = Spot.objects.filter(nombre=spot, area__nombre=area).first()
 
                     print(pspot)
 
-                    producto.spot = pspot
+                    producto_instance.spot = pspot
 
                     files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
                         'imagen2') + \
@@ -218,11 +212,11 @@ def subir_producto(request):
                                 upload = False
                             else:
                                 total_size += afile.size
-                                producto.__setattr__('imagen' + str(counter), afile)
+                                producto_instance.__setattr__('imagen' + str(counter), afile)
                                 counter += 1
 
                         if total_size < 26214400 and upload:
-                            producto.save()
+                            producto_instance.save()
                             messages.success(request, 'Tu producto se ha subido correctamente')
 
                             # Busca los usuarios en la zona del producto para despues mandarles un mail
@@ -235,10 +229,10 @@ def subir_producto(request):
                             mails.append(settings.SERVER_EMAIL)
 
                             subject = _("New product in your area")
-                            message = producto.user.first_name + " " + producto.user.last_name + str(
+                            message = producto_instance.user.first_name + " " + producto_instance.user.last_name + str(
                                 _(" has uploaded a product nearby you"))
                             message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
-                                producto.id)  # TODO Añadir link
+                                producto_instance.id)  # TODO Añadir link
                             from_email = settings.SERVER_EMAIL
                             to_mail = mails
 
@@ -473,18 +467,18 @@ def zona(request, nombre=''):
 
     ubicaciones = Continente.objects.filter().all()
 
-    zona = Continente.objects.filter(spot=nombre).first()
+    zona_spot = Continente.objects.filter(spot=nombre).first()
 
-    if zona is None:
+    if zona_spot is None:
         return redirect('/')
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    prod_list = Producto.objects.filter(spot=zona, user__validado=True, user__is_active=True).all()
+    prod_list = Producto.objects.filter(spot=zona_spot, user__validado=True, user__is_active=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     context = {
-        'zona': zona,
+        'zona': zona_spot,
         'filter': prod_filter,
         'API_KEY': API_KEY,
         'ubicaciones': ubicaciones,
@@ -493,10 +487,10 @@ def zona(request, nombre=''):
     return HttpResponse(template.render(context, request))
 
 
-def perfil(request, id=''):
+def perfil(request, perfil_id=''):
     template = loader.get_template('home/perfil.html')
 
-    user = CustomUser.objects.filter(id=id).first()
+    user = CustomUser.objects.filter(id=perfil_id).first()
 
     prod_list = Producto.objects.filter(user=user, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
@@ -650,6 +644,7 @@ def mis_productos(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def change_image(request):
     if request.method == 'POST':
         image = request.FILES['changeImage']
@@ -712,10 +707,8 @@ def contacto(request):
 def terms(request):
     template = loader.get_template('home/terms.html')
 
-    terms = Terms.objects.all().first()
-
     context = {
-        'terms': terms
+        'terms': Terms.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -724,10 +717,8 @@ def terms(request):
 def privacy(request):
     template = loader.get_template('home/privacy.html')
 
-    privacy = Privacy.objects.all().first()
-
     context = {
-        'privacy': privacy
+        'privacy': Privacy.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -736,10 +727,8 @@ def privacy(request):
 def taxes(request):
     template = loader.get_template('home/taxes.html')
 
-    taxes = Taxes.objects.all().first()
-
     context = {
-        'taxes': taxes
+        'taxes': Taxes.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -748,10 +737,8 @@ def taxes(request):
 def free_sub(request):
     template = loader.get_template('home/sub.html')
 
-    sub = FreeSub.objects.all().first()
-
     context = {
-        'sub': sub
+        'sub': FreeSub.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -760,10 +747,8 @@ def free_sub(request):
 def copyright(request):
     template = loader.get_template('home/copyright.html')
 
-    copyright = Copyright.objects.all().first()
-
     context = {
-        'copyright': copyright
+        'copyright': Copyright.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -772,10 +757,8 @@ def copyright(request):
 def secure_payments(request):
     template = loader.get_template('home/secure-payments.html')
 
-    payments = SecurePayments.objects.all().first()
-
     context = {
-        'payments': payments
+        'payments': SecurePayments.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -784,10 +767,8 @@ def secure_payments(request):
 def manual(request):
     template = loader.get_template('home/manual.html')
 
-    manual = Manual.objects.all().first()
-
     context = {
-        'manual': manual
+        'manual': Manual.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -796,10 +777,8 @@ def manual(request):
 def how_does_it_work(request):
     template = loader.get_template('home/how-does-it-work.html')
 
-    how = HowDoesItWork.objects.all().first()
-
     context = {
-        'how': how
+        'how': HowDoesItWork.objects.all().first()
     }
 
     return HttpResponse(template.render(context, request))
@@ -825,10 +804,10 @@ def devolucion(request):
             result = json.load(response)
             ''' End reCAPTCHA validation '''
             if result['success']:
-                devolucion = form.save(commit=False)
-                devolucion.user = request.user
-                devolucion.is_opened = request.POST.get('is_opened') == 'SI'
-                devolucion.save()
+                devolucion_instance = form.save(commit=False)
+                devolucion_instance.user = request.user
+                devolucion_instance.is_opened = request.POST.get('is_opened') == 'SI'
+                devolucion_instance.save()
                 messages.success(request, 'nice')
             else:
                 messages.warning(request, _('Invalid reCAPTCHA. Please try again.'))
@@ -853,11 +832,6 @@ def stripe_log(request):
     r = requests.post('https://connect.stripe.com/oauth/token', params=payload)
 
     response = r.json()
-
-    # if r.json()['error']:
-    #     messages.warning(request, 'Stripe Error: ' + r.json()['error_description'])
-    # else:
-
     request.user.stripe_id = response['stripe_user_id']
     request.user.save()
 
@@ -888,6 +862,7 @@ def fotografos(request):
         'ubicaciones': ubicaciones,
     }
     return HttpResponse(template.render(context, request))
+
 
 # MARCA DE AGUA PARA LAS FOTOGRAFIAS
 def add_watermark(image, watermark):
