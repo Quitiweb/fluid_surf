@@ -1,5 +1,8 @@
+import shutil
 from datetime import date, datetime, timedelta
 import os
+from os.path import dirname
+
 import openpyxl
 from django.contrib import messages
 from django.core import serializers
@@ -165,6 +168,8 @@ def productos(request):
                 with open(file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+
+                    shutil.rmtree(dirname(file_path))
                     return response
     context = {
         'filter': prod_filter,
@@ -230,7 +235,11 @@ def compras(request):
                 with open(file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+
+                    print(dirname(file_path))
+                    shutil.rmtree(dirname(file_path))
                     return response
+
 
     context = {
         'filter': compras_filter,
@@ -300,6 +309,32 @@ def zonas(request):
                         spot.nombre = xls_spot
                         spot.area = area
                         spot.save()
+            messages.success(request, 'Zonas importadas correctamente!')
+        else:
+            workbook = Workbook()
+            sheet = workbook.active
+
+            sheet.append(["ID", "Continente", "Pais", "Area", "Spot"])
+
+            for zona in zonas_filter.qs:
+                data = [zona.id,
+                        zona.area.pais.continente.nombre,
+                        zona.area.pais.nombre,
+                        zona.area.nombre,
+                        zona.nombre]
+                sheet.append(data)
+
+            if not os.path.isdir("spreadsheets"):
+                os.makedirs("spreadsheets")
+
+            workbook.save(filename="spreadsheets/zonas" + str(date.today()) + ".xlsx")
+            file_path = os.path.join("spreadsheets/zonas" + str(date.today()) + ".xlsx")
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as fh:
+                    response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+                    response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+                    shutil.rmtree(dirname(file_path))
+                    return response
     context = {
         'filter': zonas_filter
     }
@@ -435,6 +470,9 @@ def usuarios(request):
                 with open(file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
                     response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+
+                    shutil.rmtree(dirname(file_path))
+
                     return response
 
     context = {

@@ -159,7 +159,7 @@ def subir_producto(request):
 
         json_data = json.dumps(data)
         spotOG.append(json_data)
-    print(spotOG)
+
 
     stripe_exists = request.user.stripe_id
     form = ''
