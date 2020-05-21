@@ -104,6 +104,14 @@ def productos(request):
 
     productos = Producto.objects.filter().all()
 
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        if request.user.tipo_de_usuario == "FOTOGRAFO":
+            productos = Producto.objects.filter(user=request.user).all()
+        else:
+            return redirect('/')
+
+
     prod_filter = ProductoFilter(request.GET, queryset=productos)
 
     if request.method == "POST":
@@ -181,6 +189,10 @@ def productos(request):
 
 
 def compras(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/compras.html')
 
     compras = Compra.objects.filter().all()
@@ -251,6 +263,10 @@ def compras(request):
 
 
 def zonas(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/zonas.html')
 
     zonas = Spot.objects.filter().all()
@@ -343,6 +359,10 @@ def zonas(request):
 
 
 def usuarios(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/usuarios.html')
 
     usuarios = CustomUser.objects.filter().all()
@@ -485,6 +505,10 @@ def usuarios(request):
 
 
 def perfil(request, id=''):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/perfil.html')
 
     usuario = CustomUser.objects.filter(id=id).first()
@@ -516,6 +540,10 @@ def perfil(request, id=''):
 
 
 def denuncias(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/denuncias.html')
 
     denuncias = Denuncia.objects.filter().all()
@@ -536,6 +564,10 @@ def denuncias(request):
 
 
 def validar(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/validar.html')
 
     usuarios = CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all()
@@ -557,6 +589,11 @@ def validar(request):
 
 
 def solicitud(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
+
     template = loader.get_template('dashboard/solicitudes.html')
 
     solicitudes = SolicitudStock.objects.all()
@@ -598,6 +635,10 @@ def solicitud(request):
 
 
 def watermark(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff:
+        return redirect('/')
+
     template = loader.get_template('dashboard/watermark.html')
 
     watermarks = WatermarkImage.objects.filter().all()
@@ -634,6 +675,20 @@ def watermark(request):
         'watermarks': watermarks,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def fotografo(request):
+    # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
+    if not request.user.is_staff or not request.user.tipo_de_usuario == 'FOTOGRAFO':
+        return redirect('/')
+
+    template = loader.get_template('dashboard/fotografo/fotografo.html')
+
+    context = {
+
     }
 
     return HttpResponse(template.render(context, request))

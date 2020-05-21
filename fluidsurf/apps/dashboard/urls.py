@@ -13,4 +13,7 @@ urlpatterns = [
     path('solicitud', views.solicitud, name='solicitudes'),
     path('perfil/<id>', views.perfil, name='perfil_admin'),
     path('watermark', views.watermark, name='watermark'),
+
+    # Dashboard de fotografo
+    path('fotografo', views.fotografo, name='fotografo'),
 ]
