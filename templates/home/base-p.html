@@ -82,7 +82,8 @@
             <nav class="main w-100" style="z-index: 10000;">
                 <ul class="row">
                     <li class="menu justify-content-center col-md-1 mt-2 col-6 text-left" style="display: inline-block;">
-                        <a class="fa fa-bars fa-2x" href="#menu"></a>
+                        <a class="fa fa-bars fa-2x top-barras" href="#menu"></a>
+                        <a href="{% url 'index' %}" class="fas fa-chevron-left fa-2x d-none top-back" style="position:relative; right: 20px"></a>
                     </li>
                     <li class="col-md-11 col-6 pr-4 mt-3">
                         {% get_current_language as LANGUAGE_CODE %}
@@ -264,7 +265,6 @@
             {% endblock %}
 
             <section id="footer" class="pt-5">
-
                 <section class="white">
                     <div class="copyright dropup">
                     <span class="dropdown white dropup">
@@ -300,6 +300,14 @@
                     </ul>
                 </section>
             </section>
+
+            <nav class="navbar fixed-bottom" style="background: #245b6b !important; z-index: 99999;">
+                <a class="navbar-brand" href="{% url 'index' %}"><i class="fas fa-home white bot-home" style="font-size: 1.5em;"></i></a>
+                <a class="navbar-brand" href="#"><i class="fas fa-search bot-search" style="color: darkgrey"></i></a>
+                <a class="navbar-brand" href="/subir-producto?area__pais__nombre=Espa%C3%B1a"><i class="fas fa-camera-retro bot-camera" style="color: darkgrey"></i></a>
+                <a class="navbar-brand" href="#"><i class="fas fa-chart-line bot-stats" style="color: darkgrey"></i></a>
+                <a class="navbar-brand" href="{% url 'mi-cuenta' %}"><i class="far fa-user bot-user" style="color: darkgrey"></i></a>
+            </nav>
         </div>
 
         <!-- Scripts -->

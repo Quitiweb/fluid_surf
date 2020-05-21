@@ -5,6 +5,23 @@
 
 {% block main %}
 
+<style>
+    .bot-camera {
+        color: white !important;
+        font-size: 1.5em;
+        position: relative;
+        left: 5px;
+    }
+
+    .top-barras {
+        display: none !important;
+    }
+
+    .top-back {
+        display: inline-block !important;
+    }
+</style>
+
 <div class="container">
     <div class="row text-center mt-5">
         <div class="col-12">
@@ -47,23 +64,23 @@
 
         </div>
 
-        <div class="row mt-3">
-                <div class="col-3">
+        <div class="row">
+                <div class="col-12 col-lg-3 mt-3">
                     <label>{% trans 'Continent' %}*</label>
                     <select name="" id="selectCont"></select>
                 </div>
 
-                <div class="col-3">
+                <div class="col-12 col-lg-3 mt-3">
                     <label>{% trans 'Country' %}*</label>
                     <select name="" id="selectPais"></select>
                 </div>
 
-                <div class="col-3">
+                <div class="col-12 col-lg-3 mt-3">
                     <label>{% trans 'Area' %}*</label>
                     <select name="area" id="selectArea"></select>
                 </div>
 
-                <div class="col-3">
+                <div class="col-12 col-lg-3 mt-3">
                     <label>{% trans 'Spot' %}*</label>
                     <select name="spot" id="selectSpot"></select>
                 </div>
