@@ -38,7 +38,7 @@ def dashboard(request):
     orderResults = reversed(results)
     json = serializers.serialize('json', orderResults)
 
-    # Bucle que estoy usando para calcular el numero total de usuarios nuevos de esta semana
+    # Bucle que estoy usando para calcular el numero total de compras de esta semana
     purchases_last_week = 0
     for item in results:
         purchases_last_week += int(item.compras)
@@ -682,13 +682,24 @@ def watermark(request):
 
 def fotografo(request):
     # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
-    if not request.user.is_staff or not request.user.tipo_de_usuario == 'FOTOGRAFO':
+    if not request.user.is_staff and not request.user.tipo_de_usuario == 'FOTOGRAFO':
         return redirect('/')
 
     template = loader.get_template('dashboard/fotografo/fotografo.html')
 
-    context = {
+    compras_query = RegistroCompras.objects.filter(user=request.user)
+    results = QuerySet(query=compras_query.query, model=RegistroCompras).order_by('-fecha')[:7]
+    orderResults = reversed(results)
+    json = serializers.serialize('json', orderResults)
 
+    purchases_last_week = 0
+    for item in results:
+        purchases_last_week += int(item.compras)
+
+    context = {
+        'compras': compras_query,
+        'array_compras': json,
+        'purchases_last_week': purchases_last_week
     }
 
     return HttpResponse(template.render(context, request))
