@@ -696,10 +696,32 @@ def fotografo(request):
     for item in results:
         purchases_last_week += int(item.compras)
 
+    photo_query = RegistroFotografos.objects.all().query
+    results = QuerySet(query=photo_query, model=RegistroFotografos)[:30]
+    json_photo = serializers.serialize('json', results)
+
+    # Bucle que estoy usando para calcular el numero total de usuarios nuevos de esta semana
+    users_last_week = 0
+    for item in results:
+        users_last_week += int(item.users)
+
+    registros_vacios_surferos()
+
+    surf_query = RegistroSurferos.objects.all().query
+    results = QuerySet(query=surf_query, model=RegistroSurferos)[:30]
+    json_surf = serializers.serialize('json', results)
+
+    # Continua el blucle anterior aqui
+    for item in results:
+        users_last_week += int(item.users)
+
+
     context = {
         'compras': compras_query,
         'array_compras': json,
-        'purchases_last_week': purchases_last_week
+        'purchases_last_week': purchases_last_week,
+        'array_photo': json_photo,
+        'array_surf': json_surf,
     }
 
     return HttpResponse(template.render(context, request))

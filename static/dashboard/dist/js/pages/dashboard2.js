@@ -12,27 +12,31 @@ $(function () {
   //-----------------------
 
   // Get context with jQuery - using jQuery's .get() method.
-  var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
-  var salesChartCanvas2 = $('#salesChart2').get(0).getContext('2d')
+  var salesChartCanvas = $('#salesChart').get(0).getContext('2d');
 
   var arrayJSON = JSON.parse(array_compras.replace(/&quot;/g,'"'));
-  var arrayPhotoJSON = JSON.parse(array_photo.replace(/&quot;/g,'"'));
-  var arraySurfJSON = JSON.parse(array_surf.replace(/&quot;/g,'"'));
-  
+
   var prettyArray = []
   for (let item of arrayJSON) {
     prettyArray.push(item.fields)
   }
 
-  var prettyPhotoArray = []
-  for (let item of arrayPhotoJSON) {
-    prettyPhotoArray.push(item.fields)
+  if (array_photo != '[]' && array_surf != '[]') {
+      var arrayPhotoJSON = JSON.parse(array_photo.replace(/&quot;/g,'"'));
+      var arraySurfJSON = JSON.parse(array_surf.replace(/&quot;/g,'"'));
+      var salesChartCanvas2 = $('#salesChart2').get(0).getContext('2d');
+
+      var prettyPhotoArray = []
+      for (let item of arrayPhotoJSON) {
+        prettyPhotoArray.push(item.fields)
+      }
+
+      var prettySurfArray = []
+      for (let item of arraySurfJSON) {
+        prettySurfArray.push(item.fields)
+      }
   }
 
-  var prettySurfArray = []
-  for (let item of arraySurfJSON) {
-    prettySurfArray.push(item.fields)
-  }
 
   console.log(arraySurfJSON)
 
@@ -154,12 +158,12 @@ $(function () {
     var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieData        = {
       labels: [
-          'Chrome', 
+          'Chrome',
           'IE',
-          'FireFox', 
-          'Safari', 
-          'Opera', 
-          'Navigator', 
+          'FireFox',
+          'Safari',
+          'Opera',
+          'Navigator',
       ],
       datasets: [
         {
@@ -178,7 +182,7 @@ $(function () {
     var pieChart = new Chart(pieChartCanvas, {
       type: 'doughnut',
       data: pieData,
-      options: pieOptions      
+      options: pieOptions
     })
 
   //-----------------

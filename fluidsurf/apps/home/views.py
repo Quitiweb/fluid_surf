@@ -408,6 +408,7 @@ def producto(request, id='0'):
                             registro = RegistroCompras()
                             registro.compras = Compra.objects.filter(fecha=date.today()).all().count()
                             registro.fecha = date.today()
+                            registro.user = producto.user
                             registro.save()
 
                             if request.user.email:
