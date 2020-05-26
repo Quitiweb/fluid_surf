@@ -9,6 +9,7 @@ from django.core import serializers
 from django.http import HttpResponse, response
 from django.shortcuts import render, redirect
 from django.db.models import Q, QuerySet
+from django.db.models import Count
 
 from django.template import loader
 from openpyxl import Workbook
@@ -687,6 +688,8 @@ def fotografo(request):
 
     template = loader.get_template('dashboard/fotografo/fotografo.html')
 
+    print(Compra.objects.values('comprador__zona').annotate(Count('comprador__zona')))
+
     compras_query = RegistroCompras.objects.filter(user=request.user)
     results = QuerySet(query=compras_query.query, model=RegistroCompras).order_by('-fecha')[:7]
     orderResults = reversed(results)
@@ -722,6 +725,19 @@ def fotografo(request):
         'purchases_last_week': purchases_last_week,
         'array_photo': json_photo,
         'array_surf': json_surf,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def fotografo_productos(request):
+    template = loader.get_template('dashboard/fotografo/productos.html')
+
+    productos = Producto.objects.filter(user=request.user)
+    prod_filter = ProductoFilter(request.GET, queryset=productos)
+
+    context = {
+        'filter': prod_filter
     }
 
     return HttpResponse(template.render(context, request))

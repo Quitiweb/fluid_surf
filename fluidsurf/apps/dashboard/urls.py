@@ -16,4 +16,5 @@ urlpatterns = [
 
     # Dashboard de fotografo
     path('fotografo', views.fotografo, name='fotografo'),
+    path('fotografo-productos', views.fotografo_productos, name='fotografo-productos'),
 ]
