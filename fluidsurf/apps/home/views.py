@@ -889,8 +889,6 @@ def add_watermark(image, watermark):
 
 
 class WatermarkProcessor(object):
-    print(django.db.connection.introspection.table_names())
-
     if 'home_watermarkimage' in django.db.connection.introspection.table_names():
         image = WatermarkImage.objects.filter(activo=True).first()
 
