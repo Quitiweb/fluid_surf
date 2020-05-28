@@ -142,6 +142,8 @@ def mi_cuenta(request):
 def subir_producto(request):
     template = loader.get_template('home/subir-producto.html')
 
+    if request.user.tipo_de_usuario == "SURFERO":
+        return redirect('index')
 
     spots = Spot.objects.filter().all()
     filter = ZonaFilter(request.GET, queryset=spots)
