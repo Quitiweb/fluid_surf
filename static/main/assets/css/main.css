@@ -1523,3 +1523,9 @@ z-index: 50;
 .btn-primary {
 	background-color: #1253c0;
 }
+
+
+.small-search-pic {
+	width: 50px !important;
+	transition-duration: 1s;
+}

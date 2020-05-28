@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load imagekit %}
+
+{% block main %}
+<style>
+    .bot-search {
+        color: white !important;
+        font-size: 1.5em;
+        position: relative;
+        left: 5px;
+    }
+
+    .top-barras {
+        display: none !important;
+    }
+
+    .top-back {
+        display: inline-block !important;
+    }
+</style>
+
+    <div class="container mt-5 pt-5" style="padding-bottom: 75px;">
+        <div class="row">
+            <div class="col-12 pb-5">
+                <h1 class="display-4 ml-2" style="font-size: 2.5rem !important;">¿Qué estás buscando?</h1>
+            </div>
+        </div>
+
+        <div class="row mt-5t text-center">
+            <div class="col-6">
+                <img class="img-top d-none foto" src="{% static '/main/images/Ilustracion2.png' %}" alt="" width="100%" style="border-radius: 67%; width: 125px;"/>
+                <div class="foto-texto">
+                    <h1 class="display-4" style="font-size: 1.3rem">Localizar fotógrafos</h1>
+                </div>
+            </div>
+            <div class="col-6">
+                <img class="img-top d-none surf" src="{% static '/main/images/Ilustracion1.png' %}" alt="" width="100%" style="border-radius: 67%; width: 125px;"/>
+                <div class="foto-texto">
+                    <h1 class="display-4" style="font-size: 1.3rem">Encuentra tus fotos</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 foto-form d-none text-center">
+                <form action="">
+                    <input type="text" placeholder="Fotografo">
+
+                    <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos">
+                </form>
+            </div>
+
+            <div class="col-12 surf-form d-none text-center">
+                <form action="">
+                    <input type="text" placeholder="Surf">
+
+                    <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos">
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="{% static 'main/assets/js/buscador.js' %}" defer></script>
+
+{% endblock %}
