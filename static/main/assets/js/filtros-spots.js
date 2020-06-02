@@ -1,6 +1,6 @@
 function initSpots() {
 
-    console.log('iniciados')
+    console.log('Spots loaded')
 
     if(localStorage.getItem('localSpot')) {
         let spot = JSON.parse(localStorage.getItem('localSpot'));

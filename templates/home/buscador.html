@@ -22,6 +22,8 @@
     }
 </style>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.css">
+
     <div class="container mt-5 pt-5" style="padding-bottom: 75px;">
         <div class="row">
             <div class="col-12 pb-5">
@@ -44,28 +46,77 @@
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-12 foto-form d-none text-center">
-                <form action="">
-                    <input type="text" placeholder="Fotografo">
+        <div class="col-12 text-center">
+            <div class="bar col-6 d-none" style=" width: 27%; margin-left: 9%;; height: 2px;
+                                                  border:3px solid #245b6b; border-radius: 5px;
+                                                  position: relative; top: 5px;">
 
-                    <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos">
-                </form>
             </div>
-
-            <div class="col-12 surf-form d-none text-center">
-                <form action="">
-                    <input type="text" placeholder="Surf">
-
-                    <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos">
-                </form>
-            </div>
-
         </div>
+        <div class="row mt-5">
+
+            <div class="col-12 form text-center">
+                <form action="">
+
+                     <div class="col-12 col-lg-3 mt-3">
+                        {{ filter.form.alias }}
+                     </div>
+
+                    <div class="col-12 col-lg-3 mt-3 d-none">
+                        <label>{% trans 'Continent' %}*</label>
+                        <select name="" id="selectCont"></select>
+                    </div>
+
+                    <div class="col-12 col-lg-3 mt-3 d-none">
+                        <label>{% trans 'Country' %}*</label>
+                        <select name="" id="selectPais"></select>
+                    </div>
+
+                    <div class="col-12 col-lg-3 mt-3">
+                        <label>{% trans 'Area' %}*</label>
+                        <select name="area" id="selectArea"></select>
+                    </div>
+
+                    <div class="col-12 col-lg-3 mt-3">
+                        <label>{% trans 'Spot' %}*</label>
+                        <select name="spot" id="selectSpot"></select>
+                    </div>
+
+                    <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos" name="buscar-foto" id="buscar">
+                </form>
+
+                <div class="row mt-5">
+                    {% for foto in filter.qs %}
+                        <div class="col-1"></div>
+                        <div class="card col-10 col-lg-3" style="position: relative; left: 5px;">
+                            <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                        </div>
+
+
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
 
     </div>
 
+    <script defer>
+        const spotOG = {{ spotOG|safe }}
+
+        var spotQS = []
+
+        for (spot of spotOG) {
+            var result = JSON.parse(spot)
+            spotQS.push(result)
+        }
+    </script>
 
     <script src="{% static 'main/assets/js/buscador.js' %}" defer></script>
+    <script src="{% static 'main/assets/js/filtros-spots.js' %}" defer></script>
 
 {% endblock %}

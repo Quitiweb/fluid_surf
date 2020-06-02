@@ -870,7 +870,35 @@ def fotografos(request):
 def buscador(request):
     template = loader.get_template('home/buscador.html')
 
+    if request.user.tipo_de_usuario == "SURFERO":
+        return redirect('index')
+
+    spots = Spot.objects.filter(area__pais__nombre='España').all()
+    filter = ZonaFilter(request.GET, queryset=spots)
+
+    spotOG = []
+    for spot in filter.qs:
+        data = {}
+        data['continente'] = spot.area.pais.continente.nombre
+        data['pais'] = spot.area.pais.nombre
+        data['area'] = spot.area.nombre
+        data['spot'] = spot.nombre
+        # data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre, 'area': spot.area.nombre,
+        #         'spot': spot.nombre}
+
+
+        json_data = json.dumps(data)
+        spotOG.append(json_data)
+
+    fotografos = CustomUser.objects.filter(alias="jlramos").all()
+    photo_filter = PhotographerFilter(request.GET, queryset=fotografos)
+
+    print(fotografos)
+    print(photo_filter.qs)
+
     context = {
+        'spotOG': spotOG,
+        'filter': photo_filter
     }
     return HttpResponse(template.render(context, request))
 

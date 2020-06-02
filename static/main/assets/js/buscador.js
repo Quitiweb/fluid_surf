@@ -5,14 +5,22 @@ $(document).ready(function () {
        if(!$(this).hasClass('small-search-pic')) {
             $('.img-top').addClass('small-search-pic');
             $('.foto-texto').fadeOut();
+            $('.bar').removeClass('d-none');
        }
-        console.log('prev');
        if($(this).hasClass('foto')) {
-           $('.surf-form').addClass('d-none');
-           $('.foto-form').removeClass('d-none');
+            $('#buscar').attr('name', 'buscar-foto').attr('value', 'Buscar fotografos');
+            $('.foto').addClass('selected-pic');
+            $('.surf').removeClass('selected-pic');
+            $('.bar').removeClass('bar-surf');
+            $('.bar').addClass('bar-foto');
        } else {
-           $('.foto-form').addClass('d-none');
-           $('.surf-form').removeClass('d-none');
+            $('#buscar').attr('name', 'buscar-surf').attr('value', 'Encontrar tus fotos');
+            $('.surf').addClass('selected-pic');
+            $('.foto').removeClass('selected-pic');
+            $('.bar').addClass('bar-surf');
+            $('.bar').removeClass('bar-foto');
        }
     });
+
+    initSpots();
 });
