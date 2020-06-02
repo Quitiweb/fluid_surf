@@ -40,6 +40,31 @@
             <i class="far fa-user-circle" style="position: relative; right: 35px;"></i>
         </h1>
         <div class="row mt-5">
+
+            <div class="col-4">
+                    <div class="img-logo">
+                     {% if user.profile_pic %}
+                        <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">
+                    {% elif user.socialaccount_set.all.0.get_avatar_url %}
+                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+                    {% else %}
+                        <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">
+                     {% endif %}
+                    <div class="overlay">
+                        <form action="{% url 'change-image' %}" id="formImage" method="post" enctype='multipart/form-data'>
+                            {% csrf_token %}
+
+                                <label for="changeImage" class="white info" style="cursor: pointer;">{% trans 'edit' %}</label>
+
+                            <input id="changeImage" type="file" name="changeImage" style="display: none;">
+                            <input type="submit" class="d-none" id="buttonSubmitImage">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8">Foto de perfil</div>
+
             <div class="col-6">
                 <label>{% trans 'Name' %}</label>
                 {{ form.first_name }}
