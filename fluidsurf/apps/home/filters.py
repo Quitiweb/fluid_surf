@@ -66,6 +66,15 @@ class ZonaFilter(django_filters.FilterSet):
         fields = ['nombre', 'area__nombre', 'area__pais', 'area__pais__continente']
 
 
+class PaisFilter(django_filters.FilterSet):
+    nombre = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Pais')}))
+    continente__nombre = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Continente')}))
+
+    class Meta:
+        model = Pais
+        fields = ['nombre', 'continente']
+
+
 class DenunciaFilter(django_filters.FilterSet):
     emisor__username = django_filters.CharFilter(lookup_expr='icontains', widget=TextInput(attrs={'placeholder': _('Emisor')}))
     receptor__username = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Receptor')}))

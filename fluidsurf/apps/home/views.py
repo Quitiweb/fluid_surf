@@ -23,9 +23,9 @@ from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
 
-from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter
+from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter, PaisFilter
 from fluidsurf.apps.home.models import (Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
-                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot)
+                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais)
 from fluidsurf.apps.home.forms import (ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
                                        EditProductForm, DenunciaForm, ContactForm, DevolucionForm)
 
@@ -84,6 +84,21 @@ def mi_cuenta(request):
     template = loader.get_template('home/mi-cuenta.html')
 
     if request.user.is_authenticated:
+
+        spots = Pais.objects.filter().all()
+        filter = PaisFilter(request.GET, queryset=spots)
+
+        spotOG = []
+        for pais in filter.qs:
+            data = {}
+            data['continente'] = pais.continente.nombre
+            data['pais'] = pais.nombre
+
+            json_data = json.dumps(data)
+            spotOG.append(json_data)
+
+        print(spotOG)
+
         if request.method == 'GET':
             passform = PasswordChangeCustomForm(request.user)
             form = ChangeUserForm(instance=request.user)
