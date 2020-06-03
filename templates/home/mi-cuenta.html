@@ -42,25 +42,25 @@
         <div class="row mt-5">
 
             <div class="col-4">
-                    <div class="img-logo">
-                     {% if user.profile_pic %}
-                        <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">
-                    {% elif user.socialaccount_set.all.0.get_avatar_url %}
-                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
-                    {% else %}
-                        <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">
-                     {% endif %}
-                    <div class="overlay">
-                        <form action="{% url 'change-image' %}" id="formImage" method="post" enctype='multipart/form-data'>
-                            {% csrf_token %}
-
-                                <label for="changeImage" class="white info" style="cursor: pointer;">{% trans 'edit' %}</label>
-
-                            <input id="changeImage" type="file" name="changeImage" style="display: none;">
-                            <input type="submit" class="d-none" id="buttonSubmitImage">
-                        </form>
-                    </div>
-                </div>
+{#                    <div class="img-logo">#}
+{#                     {% if user.profile_pic %}#}
+{#                        <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">#}
+{#                    {% elif user.socialaccount_set.all.0.get_avatar_url %}#}
+{#                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />#}
+{#                    {% else %}#}
+{#                        <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">#}
+{#                     {% endif %}#}
+{#                    <div class="overlay">#}
+{#                        <form action="{% url 'change-image' %}" id="formImage" method="post" enctype='multipart/form-data'>#}
+{#                            {% csrf_token %}#}
+{##}
+{#                                <label for="changeImage" class="white info" style="cursor: pointer;">{% trans 'edit' %}</label>#}
+{##}
+{#                            <input id="changeImage" type="file" name="changeImage" style="display: none;">#}
+{#                            <input type="submit" class="d-none" id="buttonSubmitImage">#}
+{#                        </form>#}
+{#                    </div>#}
+{#                </div>#}
             </div>
 
             <div class="col-8">Foto de perfil</div>
@@ -89,13 +89,14 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-6">
-                <label>{% trans 'Country' %}</label>
-                {{ form.pais }}
+            <div class="col-12 col-lg-3 mt-3">
+                <label>{% trans 'Continent' %}*</label>
+                <select name="" id="selectCont"></select>
             </div>
-            <div class="col-6">
-                <label>{% trans 'Area' %}</label>
-                {{ form.zona }}
+
+            <div class="col-12 col-lg-3 mt-3">
+                <label>{% trans 'Country' %}*</label>
+                <select name="" id="selectPais"></select>
             </div>
         </div>
 
@@ -247,19 +248,32 @@
 </form>
 </div>
 
-<script src="{% static 'main/assets/js/micuenta.js' %}" defer></script>
     <script>
-    function copiar() {
+        function copiar() {
 
-        let codigo = document.getElementById('embed-code');
-        codigo.value = '<button onclick="location.href=\'fs.quitiweb.com/perfil/{{ user.id }}\'"> Ver perfil en FluidSurf </button>';
-        console.log(codigo.value);
-        codigo.style.display='block';
-        codigo.select();
-        document.execCommand('copy')
-        codigo.style.display='none';
+            let codigo = document.getElementById('embed-code');
+            codigo.value = '<button onclick="location.href=\'fs.quitiweb.com/perfil/{{ user.id }}\'"> Ver perfil en FluidSurf </button>';
+            console.log(codigo.value);
+            codigo.style.display='block';
+            codigo.select();
+            document.execCommand('copy')
+            codigo.style.display='none';
 
-    }
-
+        }
     </script>
+
+    <script defer>
+        const spotOG = {{ spotOG|safe }}
+
+        var spotQS = []
+
+        for (spot of spotOG) {
+            var result = JSON.parse(spot)
+            spotQS.push(result)
+        }
+
+        console.log(spotQS)
+    </script>
+    <script src="{% static 'main/assets/js/micuenta.js' %}" defer></script>
+    <script src="{% static 'main/assets/js/filtros-country.js' %}" defer></script>
 {% endblock %}

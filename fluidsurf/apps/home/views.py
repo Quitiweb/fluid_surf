@@ -141,12 +141,14 @@ def mi_cuenta(request):
                 'form': form,
                 'passform': passform,
                 'photo_form': photo_form,
-                'stripe': stripe_exists
+                'stripe': stripe_exists,
+                'spotOG': spotOG
             }
         else:
             context = {
                 'form': form,
                 'passform': passform,
+                'spotOG': spotOG
             }
 
         return HttpResponse(template.render(context, request))
