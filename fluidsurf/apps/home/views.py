@@ -96,15 +96,16 @@ def mi_cuenta(request):
 
             json_data = json.dumps(data)
             spotOG.append(json_data)
-
-        print(spotOG)
-
         if request.method == 'GET':
             passform = PasswordChangeCustomForm(request.user)
             form = ChangeUserForm(instance=request.user)
             if request.user.tipo_de_usuario == "FOTOGRAFO":
                 photo_form = PhotographerForm(instance=request.user)
         else:
+            if request.POST['selectPais']:
+                print(request.POST['selectPais'])
+                request.user.pais = request.POST['selectPais']
+
             passform = PasswordChangeCustomForm(request.user, request.POST)
             form = ChangeUserForm(request.POST, instance=request.user)
 
