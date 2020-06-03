@@ -39,10 +39,6 @@ class CustomUser(AbstractUser):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Formato: '+999999999'. Max 15 dígitos.")
     telefono = models.CharField(validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
     pais = models.CharField(max_length=50, default="")
-    zona = models.CharField(
-        max_length=50,
-        choices=AREA_CHOICES
-    )
 
     validado = models.BooleanField(default=False)
 
