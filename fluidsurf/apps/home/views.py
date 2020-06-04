@@ -22,7 +22,6 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
-
 from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter, PaisFilter
 from fluidsurf.apps.home.models import (Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
                                         Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais)
@@ -176,10 +175,8 @@ def subir_producto(request):
         # data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre, 'area': spot.area.nombre,
         #         'spot': spot.nombre}
 
-
         json_data = json.dumps(data)
         spotOG.append(json_data)
-
 
     stripe_exists = request.user.stripe_id
     form = ''
@@ -904,24 +901,32 @@ def buscador(request):
         # data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre, 'area': spot.area.nombre,
         #         'spot': spot.nombre}
 
-
         json_data = json.dumps(data)
         spotOG.append(json_data)
 
 
+    results = False
+
     if request.method == "POST":
         spot = Spot.objects.filter(nombre=request.POST['spot']).first()
-        fotografos = CustomUser.objects.filter(producto__spot=spot).all()
+
+        if request.POST['alias']:
+            alias = request.POST['alias']
+            fotografos = CustomUser.objects.filter(alias=alias, producto__spot=spot).all()
+        else:
+            fotografos = CustomUser.objects.filter(producto__spot=spot).all()
         print(fotografos)
+
+        results = True
     else:
         fotografos = CustomUser.objects.filter().all()
-
 
     photo_filter = PhotographerFilter(request.GET, queryset=fotografos)
 
     context = {
         'spotOG': spotOG,
-        'filter': photo_filter
+        'filter': photo_filter,
+        'results': results
     }
     return HttpResponse(template.render(context, request))
 
