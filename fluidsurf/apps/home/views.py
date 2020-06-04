@@ -891,7 +891,7 @@ def buscador(request):
     if request.user.tipo_de_usuario == "SURFERO":
         return redirect('index')
 
-    spots = Spot.objects.filter(area__pais__nombre='España').all()
+    spots = Spot.objects.filter(area__pais__nombre=request.user.pais).all()
     filter = ZonaFilter(request.GET, queryset=spots)
 
     spotOG = []
@@ -908,11 +908,16 @@ def buscador(request):
         json_data = json.dumps(data)
         spotOG.append(json_data)
 
-    fotografos = CustomUser.objects.filter(alias="jlramos").all()
-    photo_filter = PhotographerFilter(request.GET, queryset=fotografos)
 
-    print(fotografos)
-    print(photo_filter.qs)
+    if request.method == "POST":
+        spot = Spot.objects.filter(nombre=request.POST['spot']).first()
+        fotografos = CustomUser.objects.filter(producto__spot=spot).all()
+        print(fotografos)
+    else:
+        fotografos = CustomUser.objects.filter().all()
+
+
+    photo_filter = PhotographerFilter(request.GET, queryset=fotografos)
 
     context = {
         'spotOG': spotOG,

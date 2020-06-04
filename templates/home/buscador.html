@@ -54,10 +54,10 @@
             </div>
         </div>
         <div class="row mt-5">
-
             <div class="col-12 form text-center">
-                <form action="">
 
+                <form action="" method="POST">
+                    {% csrf_token %}
                      <div class="col-12 col-lg-3 mt-3">
                         {{ filter.form.alias }}
                      </div>
@@ -82,6 +82,18 @@
                         <select name="spot" id="selectSpot"></select>
                     </div>
 
+                    <div class="col-12 mt-5">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="">
+                            Mostrando zonas y spots del país configurado en
+                            <a style="text-decoration: underline" href="{% url 'mi-cuenta' %}">tu cuenta</a>
+                        </span>
+                    </div>
+                    
+                    <div>
+                        <a style="text-decoration: underline" href="">Ver todos los paises y continentes (La carga puede ser más lenta)</a>
+                    </div>
+
                     <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos" name="buscar-foto" id="buscar">
                 </form>
 
@@ -89,7 +101,7 @@
                     {% for foto in filter.qs %}
                         <div class="col-1"></div>
                         <div class="card col-10 col-lg-3" style="position: relative; left: 5px;">
-                            <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">
+{#                            <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">#}
                             <div class="card-body">
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             </div>
