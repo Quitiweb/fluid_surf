@@ -1,4 +1,17 @@
 $(document).ready(function () {
+
+    $(document).ready(function(){
+
+       console.log(scroll);
+
+        if (scroll) {
+            $('html, body').animate({
+                scrollTop: $("#resultados").offset().top
+            }, 1000);
+      }
+   });
+
+
     $('.img-top').hide().removeClass('d-none').fadeIn(2000);
 
     $('.img-top').on('click', function(e) {

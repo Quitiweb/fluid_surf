@@ -5,22 +5,22 @@
 {% load imagekit %}
 
 {% block main %}
-<style>
-    .bot-search {
-        color: white !important;
-        font-size: 1.5em;
-        position: relative;
-        left: 5px;
-    }
+    <style>
+        .bot-search {
+            color: white !important;
+            font-size: 1.5em;
+            position: relative;
+            left: 5px;
+        }
 
-    .top-barras {
-        display: none !important;
-    }
+        .top-barras {
+            display: none !important;
+        }
 
-    .top-back {
-        display: inline-block !important;
-    }
-</style>
+        .top-back {
+            display: inline-block !important;
+        }
+    </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.6/waves.css">
 
@@ -97,27 +97,35 @@
                     <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos" name="buscar-foto" id="buscar">
                 </form>
 
-                <div class="row mt-5">
+                <div class="row mt-3" id="resultados">
                     {% for foto in filter.qs %}
-                        <div class="col-1"></div>
-                        <div class="card col-10 col-lg-3" style="position: relative; left: 5px;">
-                            <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">
-                            <div class="card-body">
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        {% if foto.profile_pic %}
+                            <div class="col-1"></div>
+                            <div class="card col-10 col-lg-3 mt-3" style="position: relative; left: 5px;">
+                                <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">
+
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {{ foto.alias }}
+                                    </p>
+                                    <p class="mr-2">
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        {{ foto.pais }}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-
-
+                              <div class="col-1"></div>
+                        {% endif %}
                     {% endfor %}
                 </div>
 
             </div>
         </div>
-
-
     </div>
 
     <script defer>
+        let scroll = "{{ scroll }}" == "True" ? true : false;
+
         const spotOG = {{ spotOG|safe }}
 
         var spotQS = []
@@ -130,5 +138,6 @@
 
     <script src="{% static 'main/assets/js/buscador.js' %}" defer></script>
     <script src="{% static 'main/assets/js/filtros-spots.js' %}" defer></script>
+
 
 {% endblock %}

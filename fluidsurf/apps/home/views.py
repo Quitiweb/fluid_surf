@@ -891,6 +891,10 @@ def buscador(request):
     spots = Spot.objects.filter(area__pais__nombre=request.user.pais).all()
     filter = ZonaFilter(request.GET, queryset=spots)
 
+    # Variable que uso para que si se ha hecho un post haga scroll hasta el
+    # resultado de las busquedas
+    scroll = False
+
     spotOG = []
     for spot in filter.qs:
         data = {}
@@ -908,6 +912,8 @@ def buscador(request):
     results = False
 
     if request.method == "POST":
+
+        scroll = True
         spot = Spot.objects.filter(nombre=request.POST['spot']).first()
 
         if request.POST['alias']:
@@ -926,7 +932,8 @@ def buscador(request):
     context = {
         'spotOG': spotOG,
         'filter': photo_filter,
-        'results': results
+        'results': results,
+        'scroll': scroll
     }
     return HttpResponse(template.render(context, request))
 
