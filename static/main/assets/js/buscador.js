@@ -12,8 +12,22 @@ $(document).ready(function () {
             $('html, body').animate({
                 scrollTop: $("#resultados").offset().top
             }, 1000);
-      }
-   });
+        }
+
+        $("#linkAll").click(function(e){
+            e.preventDefault();
+            $("#exampleModal").modal();
+            location.href = $(this).attr('href');
+        });
+
+        $("#buscar").click(function(e){
+            e.preventDefault();
+            if (!url.searchParams.get("area__pais__nombre")) {
+                $("#exampleModal").modal();
+            }
+            $('#buscar-form').click();
+        });
+    });
 
 
     $('.img-top').hide().removeClass('d-none').fadeIn(2000);
@@ -25,14 +39,15 @@ $(document).ready(function () {
             $('.bar').removeClass('d-none');
        }
        if($(this).hasClass('foto')) {
-            $('#buscar').attr('name', 'buscar-foto').attr('value', 'Buscar fotografos').prop("disabled", false);
-
+            $('#buscar').attr('value', 'Buscar fotografos').prop("disabled", false);
+            $('#buscar-form').attr('name', 'buscar-foto');
             $('.foto').addClass('selected-pic');
             $('.surf').removeClass('selected-pic');
             $('.bar').removeClass('bar-surf');
             $('.bar').addClass('bar-foto');
        } else {
-            $('#buscar').attr('name', 'buscar-surf').attr('value', 'Encontrar tus fotos').prop("disabled", false);
+            $('#buscar').attr('value', 'Encontrar tus fotos').prop("disabled", false);
+            $('#buscar-form').attr('name', 'buscar-surf');
             $('.surf').addClass('selected-pic');
             $('.foto').removeClass('selected-pic');
             $('.bar').addClass('bar-surf');

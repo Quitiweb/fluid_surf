@@ -56,7 +56,7 @@
         <div class="row mt-5">
             <div class="col-12 form text-center">
 
-                <form action="" method="POST">
+                <form action="" method="POST" id="formulario">
                     {% csrf_token %}
                      <div class="col-12 col-lg-3 mt-3">
                          <input type="text" name="alias" placeholder="Alias">
@@ -91,10 +91,12 @@
                     </div>
                     
                     <div>
-                        <a style="text-decoration: underline" href="{% url 'buscador' %}">Ver todos los paises y continentes (La carga puede ser más lenta)</a>
+                        <a style="text-decoration: underline" href="{% url 'buscador' %}" id="linkAll">
+                            Ver todos los paises y continentes (La carga puede ser más lenta)
+                        </a>
                     </div>
-
-                    <input class="btn btn-primary mt-3" type="submit" value="Elige qué estás buscando" name="buscar-foto" id="buscar" disabled>
+                    <input class="btn btn-primary mt-3" type="button" value="Elige qué estás buscando" id="buscar" disabled>
+                    <input class="btn btn-primary mt-3 d-none" type="submit" value="Elige qué estás buscando" name="buscar-foto" id="buscar-form">
                 </form>
 
                 <div class="row mt-3" id="resultados">
@@ -142,9 +144,38 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                    {% if filter.qs.count == 0 %}
+                        <div class="row mt-5">
+                            <div class="col-12 text-center ml-2 mt-5">
+                                No se han encontrado resultados para tu busqueda :(
+                            </div>
+                        </div>
+                    {% endif %}
+
                 </div>
 
             </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: transparent; border: none;" >
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-12">
+                            <h1 class="display-4 white text-center" style="font-weight: bold !important; font-size: 32px !important;">
+                                Cargando spots de todos los continentes
+                            </h1>
+                        </div>
+                        <div class="loader col-12 mt-3" style="margin-left: 30%;"></div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         </div>
     </div>
 

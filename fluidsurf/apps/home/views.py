@@ -916,7 +916,6 @@ def buscador(request):
         spot = Spot.objects.filter(nombre=request.POST['spot']).first()
 
         if 'buscar-foto' in request.POST:
-
             if request.POST['alias']:
                alias = request.POST['alias']
                fotografos = CustomUser.objects.filter(alias=alias, producto__spot=spot).all()
