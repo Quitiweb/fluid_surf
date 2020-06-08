@@ -59,15 +59,15 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                      <div class="col-12 col-lg-3 mt-3">
-                        {{ filter.form.alias }}
+                         <input type="text" name="alias" placeholder="Alias">
                      </div>
 
-                    <div class="col-12 col-lg-3 mt-3 d-none">
+                    <div class="col-12 col-lg-3 mt-3" id="div-cont">
                         <label>{% trans 'Continent' %}*</label>
                         <select name="" id="selectCont"></select>
                     </div>
 
-                    <div class="col-12 col-lg-3 mt-3 d-none">
+                    <div class="col-12 col-lg-3 mt-3" id="div-pais">
                         <label>{% trans 'Country' %}*</label>
                         <select name="" id="selectPais"></select>
                     </div>
@@ -91,32 +91,57 @@
                     </div>
                     
                     <div>
-                        <a style="text-decoration: underline" href="">Ver todos los paises y continentes (La carga puede ser más lenta)</a>
+                        <a style="text-decoration: underline" href="{% url 'buscador' %}">Ver todos los paises y continentes (La carga puede ser más lenta)</a>
                     </div>
 
-                    <input class="btn btn-primary mt-3" type="submit" value="Buscar Fotografos" name="buscar-foto" id="buscar">
+                    <input class="btn btn-primary mt-3" type="submit" value="Elige qué estás buscando" name="buscar-foto" id="buscar" disabled>
                 </form>
 
                 <div class="row mt-3" id="resultados">
-                    {% for foto in filter.qs %}
-                        {% if foto.profile_pic %}
-                            <div class="col-1"></div>
-                            <div class="card col-10 col-lg-3 mt-3" style="position: relative; left: 5px;">
-                                <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">
+                    {% if results == "foto" %}
+                        {% for foto in filter.qs %}
+                            {% if foto.profile_pic %}
+                                <div class="col-1"></div>
+                                <div class="card col-10 col-lg-3 mt-3" style="position: relative; left: 5px;">
+                                    <img class="card-img-top" src="{{ foto.profile_pic.url }}" alt="Card image cap" style="position: relative; right: 10px;">
 
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        {{ foto.alias }}
-                                    </p>
-                                    <p class="mr-2">
-                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                        {{ foto.pais }}
-                                    </p>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {{ foto.alias }}
+                                        </p>
+                                        <p class="mr-2">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            {{ foto.pais }}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                              <div class="col-1"></div>
-                        {% endif %}
-                    {% endfor %}
+                                  <div class="col-1"></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif results == "surf" %}
+                        {% for prod in filter.qs %}
+                            {% if prod.imagen0 %}
+                                <div class="col-1"></div>
+                                <div class="card col-10 col-lg-3 mt-3" style="position: relative; left: 5px;">
+                                    <img class="card-img-top" src="{{ prod.imagen0.url }}" alt="Card image cap" style="position: relative; right: 10px;">
+                                    <div class="card-body">
+                                        <p class="mr-2">
+                                            {{ prod.nombre }}
+                                        </p>
+                                        <p class="float-left">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            {{ prod.user.alias }}
+                                        </p>
+                                        <p class="">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            {{ prod.spot }}
+                                        </p>
+                                    </div>
+                                </div>
+                                  <div class="col-1"></div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
 
             </div>

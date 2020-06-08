@@ -888,7 +888,7 @@ def buscador(request):
     if request.user.tipo_de_usuario == "SURFERO":
         return redirect('index')
 
-    spots = Spot.objects.filter(area__pais__nombre=request.user.pais).all()
+    spots = Spot.objects.filter().all()
     filter = ZonaFilter(request.GET, queryset=spots)
 
     # Variable que uso para que si se ha hecho un post haga scroll hasta el
@@ -912,29 +912,46 @@ def buscador(request):
     results = False
 
     if request.method == "POST":
-
         scroll = True
         spot = Spot.objects.filter(nombre=request.POST['spot']).first()
 
-        if request.POST['alias']:
-            alias = request.POST['alias']
-            fotografos = CustomUser.objects.filter(alias=alias, producto__spot=spot).all()
-        else:
-            fotografos = CustomUser.objects.filter(producto__spot=spot).all()
-        print(fotografos)
+        if 'buscar-foto' in request.POST:
 
-        results = True
+            if request.POST['alias']:
+               alias = request.POST['alias']
+               fotografos = CustomUser.objects.filter(alias=alias, producto__spot=spot).all()
+            else:
+               fotografos = CustomUser.objects.filter(producto__spot=spot).all()
+
+            filter = PhotographerFilter(request.GET, queryset=fotografos)
+            results = 'foto'
+
+        elif 'buscar-surf' in request.POST:
+            if request.POST['alias']:
+                alias = request.POST['alias']
+                productos = Producto.objects.filter(user__alias=alias, spot=spot).all()
+            else:
+                productos = Producto.objects.filter(spot=spot).all()
+
+            filter = ProductoFilter(request.GET, queryset=productos)
+            print(filter.qs)
+            results = 'surf'
+
+        context = {
+            'spotOG': spotOG,
+            'filter': filter,
+            'results': results,
+            'scroll': scroll
+        }
+
     else:
         fotografos = CustomUser.objects.filter().all()
 
-    photo_filter = PhotographerFilter(request.GET, queryset=fotografos)
-
-    context = {
-        'spotOG': spotOG,
-        'filter': photo_filter,
-        'results': results,
-        'scroll': scroll
-    }
+        context = {
+            'spotOG': spotOG,
+            'results': results,
+            'scroll': scroll
+        }
     return HttpResponse(template.render(context, request))
 
 
