@@ -348,15 +348,15 @@
     <a class="navbar-brand" href="{% url 'index' %}"><i class="fas fa-home bot-home" style="color: darkgrey"></i></a>
     {% if user and user.pais%}
         <a class="navbar-brand" href="buscador?area__pais__nombre={{ user.pais }}"><i class="fas fa-search bot-search" style="color: darkgrey"></i></a>
-    {% else %}
-        <a class="navbar-brand" href="buscador?area__pais__nombre=España"><i class="fas fa-search bot-search" style="color: darkgrey"></i></a>
-    {% endif %}
-    {% if user.tipo_de_usuario == "FOTOGRAFO" %}
-        <a class="navbar-brand" href="/subir-producto?area__pais__nombre=Espa%C3%B1a"><i class="fas fa-camera-retro bot-camera" style="color: darkgrey"></i></a>
+        {% if user.tipo_de_usuario == "FOTOGRAFO" %}
+        <a class="navbar-brand" href="/subir-producto?area__pais__nombre={{ user.pais }}"><i class="fas fa-camera-retro bot-camera" style="color: darkgrey"></i></a>
         <a class="navbar-brand" href="/dashboard/fotografo"><i class="fas fa-chart-line bot-stats" style="color: darkgrey"></i></a>
     {% elif user.tipo_de_usuario == "SURFERO" %}
         <a class="navbar-brand" href="{% url 'historial' %}"><i class="fas fa-history bot-camera" style="color: darkgrey"></i></a>
         <a class="navbar-brand" href="{% url 'wishlist' %}"><i class="far fa-heart bot-stats" style="color: darkgrey"></i></a>
+    {% endif %}
+    {% else %}
+        <a class="navbar-brand" href="buscador?area__pais__nombre=España"><i class="fas fa-search bot-search" style="color: darkgrey"></i></a>
     {% endif %}
     <a class="navbar-brand" href="{% url 'mi-cuenta' %}"><i class="far fa-user bot-user" style="color: darkgrey"></i></a>
 </nav>
