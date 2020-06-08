@@ -11,6 +11,21 @@ $(document).on("change", "#id_imagenes", function(){
 
 $(document).ready(function () {
 
+    var url_string = window.location.href
+    var url = new URL(url_string);
+    if (url.searchParams.get("area__pais__nombre")) {
+        $('#div-cont').addClass('d-none');
+        $('#div-pais').addClass('d-none');
+    } else {
+        $('#linkAll').addClass('d-none');
+    }
+
+    $("#linkAll").click(function(e){
+        e.preventDefault();
+        $("#loadModal").modal();
+        location.href = $(this).attr('href');
+    });
+
     initSpots();
 
     $("#stripeModal").modal({

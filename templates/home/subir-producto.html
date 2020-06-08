@@ -47,8 +47,7 @@
         <!-- date & spot -->
         <div class="row mt-5">
 
-            <div class="col-2"></div>
-            <div class="col-4">
+            <div class="col-6">
                 <label>{% trans 'Price' %}*
                     <a href="#" data-toggle="modal" data-target="#exampleModal">
                         <i class="fas fa-info-circle"></i>
@@ -57,7 +56,7 @@
                 {{ form.precio }}
             </div>
 
-            <div class="col-4">
+            <div class="col-6">
                 <label>{% trans 'Date' %}*</label>
                 {{ form.fecha }}
             </div>
@@ -65,12 +64,12 @@
         </div>
 
         <div class="row">
-                <div class="col-12 col-lg-3 mt-3">
+                <div class="col-12 col-lg-3 mt-3" id="div-cont">
                     <label>{% trans 'Continent' %}*</label>
                     <select name="" id="selectCont"></select>
                 </div>
 
-                <div class="col-12 col-lg-3 mt-3">
+                <div class="col-12 col-lg-3 mt-3" id="div-pais">
                     <label>{% trans 'Country' %}*</label>
                     <select name="" id="selectPais"></select>
                 </div>
@@ -83,6 +82,12 @@
                 <div class="col-12 col-lg-3 mt-3">
                     <label>{% trans 'Spot' %}*</label>
                     <select name="spot" id="selectSpot"></select>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <a style="text-decoration: underline" href="{% url 'subir-producto' %}" id="linkAll">
+                        Ver todos los paises y continentes (La carga puede ser más lenta)
+                    </a>
                 </div>
         </div>
 
@@ -208,6 +213,26 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background-color: transparent; border: none;" >
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-12">
+                    <h1 class="display-4 white text-center" style="font-weight: bold !important; font-size: 32px !important;">
+                        Cargando spots de todos los continentes
+                    </h1>
+                </div>
+                <div class="loader col-12 mt-3" style="margin-left: 30%;"></div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
