@@ -1,0 +1,86 @@
+{% extends 'dashboard/fotografo/base-fotografo.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block main %}
+
+        <style>
+        #id_comprador__username, #id_vendedor__username {
+            height: 50px;
+            border-radius: 5px;
+            box-shadow: none;
+            border: 1px solid gainsboro;
+            padding-left: 10px;
+            background: white;
+        }
+    </style>
+
+<!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <ol class="breadcrumb float-sm-left">
+              <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Home' %}</a></li>
+              <li class="breadcrumb-item active">Gestión comercial</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+       <div class="row">
+              <div class="col-12">
+                  <div class="col-12"><i class="fas fa-filter"></i> Filtrar</div>
+                  <form id="filter_form" action="" method="get" class="row">
+                        <div class="col-12 mt-3">{{ filter.form.comprador__username }}</div>
+                      <input type="submit" value="Aplicar filtros" class="btn btn-primary mt-3 ml-2">
+                  </form>
+              </div>
+          </div>
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<div class="container">
+    <div class="row">
+       <div class="card col-12">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Compras</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>ID del Pedido</th>
+                      <th>Fecha</th>
+                      <th>Producto</th>
+                      <th>Comprador</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for compra in filter.qs %}
+                          <tr>
+                            <td>OR{{ compra.id }}</td>
+                            <td>{{ compra.fecha|date:"d M Y" }}</td>
+                            <td><a href="{% url 'producto' id=compra.id %}">{{ compra.producto.nombre }}</a></td>
+                            <td>{{ compra.comprador }}</td>
+                          </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="pb-5">
+
+              </div>
+
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+    </div>
+    <script src="{% static 'main/assets/js/dashboard-import.js' %}" defer></script>
+</div>
+
+{% endblock %}

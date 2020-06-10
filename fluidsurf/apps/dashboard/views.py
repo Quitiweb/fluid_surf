@@ -1,29 +1,33 @@
-import shutil
-from datetime import date, datetime, timedelta
 import os
+import shutil
+from datetime import date
 from os.path import dirname
+from json import *
 
 import openpyxl
+import stripe
+from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
-from django.http import HttpResponse, response
-from django.shortcuts import render, redirect
-from django.db.models import Q, QuerySet
-from django.db.models import Count
-
-from django.template import loader
-from openpyxl import Workbook
-from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
+from django.db.models import Count
+from django.db.models import Q, QuerySet
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.template import loader
+from django.utils.translation import ugettext_lazy as _
+from openpyxl import Workbook
 
-from django.conf import settings
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
+from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_vacios_fotografos, \
+    registros_vacios_surferos
 from fluidsurf.apps.home.filters import ProductoFilter, UserFilter, CompraFilter, DenunciaFilter, SolicitudFilter, \
     ZonaFilter
 from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock, Spot, Continente, \
     Pais, Area
 from fluidsurf.apps.users.models import CustomUser
-from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_vacios_fotografos, registros_vacios_surferos
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def dashboard(request):
     template = loader.get_template('dashboard/main.html')
@@ -682,13 +686,26 @@ def watermark(request):
 
 
 def fotografo(request):
+    import json
+
     # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
     if not request.user.is_staff and not request.user.tipo_de_usuario == 'FOTOGRAFO':
         return redirect('/')
 
     template = loader.get_template('dashboard/fotografo/fotografo.html')
 
-    print(Compra.objects.values('comprador__zona').annotate(Count('comprador__zona')))
+    qs_spots = Compra.objects.values('producto__spot__nombre').annotate(dcount=Count('producto__spot__nombre')).order_by('-dcount')[:5]
+
+    array = []
+    for item in qs_spots:
+        array.append(item)
+
+    balance_json = str(stripe.Balance.retrieve())
+    dict = json.loads(balance_json)
+
+    # dinero disponible en tu cuenta de stripe
+    disponible = dict['available'][0]['amount']
+    retenido = dict['pending'][0]['amount']
 
     compras_query = RegistroCompras.objects.filter(user=request.user)
     results = QuerySet(query=compras_query.query, model=RegistroCompras).order_by('-fecha')[:7]
@@ -725,6 +742,9 @@ def fotografo(request):
         'purchases_last_week': purchases_last_week,
         'array_photo': json_photo,
         'array_surf': json_surf,
+        'array': array,
+        'disponible': disponible,
+        'retenido': retenido
     }
 
     return HttpResponse(template.render(context, request))
@@ -738,6 +758,20 @@ def fotografo_productos(request):
 
     context = {
         'filter': prod_filter
+    }
+
+    return HttpResponse(template.render(context, request))
+
+
+def fotografo_compras(request):
+    template = loader.get_template('dashboard/fotografo/compras.html')
+
+    compras = Compra.objects.filter(vendedor=request.user)
+    compra_filter = CompraFilter(request.GET, queryset=compras)
+
+
+    context = {
+        'filter': compra_filter,
     }
 
     return HttpResponse(template.render(context, request))
