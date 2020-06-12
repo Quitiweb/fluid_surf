@@ -6,19 +6,30 @@ from django.http import HttpResponse
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
 
 
-def registros_vacios_compras():
-    registro_last = RegistroCompras.objects.last()
+def registros_vacios_compras(user=0):
+    if user != 0:
+        registro_last = RegistroCompras.objects.filter(user=user).last()
+    else:
+        registro_last = RegistroCompras.objects.filter().last()
     if registro_last:
         diferencia = (date.today() - registro_last.fecha).days
 
         for dia in reversed(range(0, diferencia)):
             fecha = date.today() - timedelta(days=dia)
-            registro_exists = RegistroCompras.objects.filter(fecha=fecha).first()
+            if user != 0:
+                registro_exists = RegistroCompras.objects.filter(fecha=fecha, user=user).first()
+            else:
+                registro_exists = RegistroCompras.objects.filter(fecha=fecha).first()
             if not registro_exists:
                 registro = RegistroCompras()
                 registro.compras = 0
                 registro.fecha = fecha
-                registro.save()
+                if user != 0:
+                    registro.user = user
+            else:
+                registro.compras += 1
+
+            registro.save()
 
 
 def registros_vacios_fotografos():

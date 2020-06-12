@@ -29,6 +29,7 @@ from fluidsurf.apps.users.models import CustomUser
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+
 def dashboard(request):
     template = loader.get_template('dashboard/main.html')
 
@@ -703,6 +704,7 @@ def fotografo(request):
     balance_json = str(stripe.Balance.retrieve())
     dict = json.loads(balance_json)
 
+    registros_vacios_compras(request.user)
     # dinero disponible en tu cuenta de stripe
     disponible = dict['available'][0]['amount']
     retenido = dict['pending'][0]['amount']
@@ -716,32 +718,10 @@ def fotografo(request):
     for item in results:
         purchases_last_week += int(item.compras)
 
-    photo_query = RegistroFotografos.objects.all().query
-    results = QuerySet(query=photo_query, model=RegistroFotografos)[:30]
-    json_photo = serializers.serialize('json', results)
-
-    # Bucle que estoy usando para calcular el numero total de usuarios nuevos de esta semana
-    users_last_week = 0
-    for item in results:
-        users_last_week += int(item.users)
-
-    registros_vacios_surferos()
-
-    surf_query = RegistroSurferos.objects.all().query
-    results = QuerySet(query=surf_query, model=RegistroSurferos)[:30]
-    json_surf = serializers.serialize('json', results)
-
-    # Continua el blucle anterior aqui
-    for item in results:
-        users_last_week += int(item.users)
-
-
     context = {
         'compras': compras_query,
         'array_compras': json,
         'purchases_last_week': purchases_last_week,
-        'array_photo': json_photo,
-        'array_surf': json_surf,
         'array': array,
         'disponible': disponible,
         'retenido': retenido
