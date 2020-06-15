@@ -48,7 +48,6 @@ def setup(request):
 
          # Registra un nuevo login de Fotografos, este modelo sirve para mostrarse en el dashboard de admin
         registro_photo_exists = RegistroFotografos.objects.filter(fecha=date.today()).first()
-
         if registro_photo_exists:
             registro_photo_exists.delete()
 
@@ -62,7 +61,6 @@ def setup(request):
 
         # Registra un nuevo login de Surferos, este modelo sirve para mostrarse en el dashboard de admin
         registro_surf_exists = RegistroSurferos.objects.filter(fecha=date.today()).first()
-
         if registro_surf_exists:
             registro_surf_exists.delete()
 

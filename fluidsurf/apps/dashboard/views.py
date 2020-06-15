@@ -33,6 +33,13 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def dashboard(request):
     template = loader.get_template('dashboard/main.html')
 
+    qs_spots = Compra.objects.values('producto__spot__nombre').annotate(
+        dcount=Count('producto__spot__nombre')).order_by('-dcount')[:5]
+
+    array = []
+    for item in qs_spots:
+        array.append(item)
+
     # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
     if not request.user.is_staff:
         return redirect('/')
@@ -99,7 +106,8 @@ def dashboard(request):
         'array_photo': json_photo,
         'array_surf': json_surf,
         'purchases_last_week': purchases_last_week,
-        'users_last_week': users_last_week
+        'users_last_week': users_last_week,
+        'array': array
     }
 
     return HttpResponse(template.render(context, request))
@@ -695,7 +703,7 @@ def fotografo(request):
 
     template = loader.get_template('dashboard/fotografo/fotografo.html')
 
-    qs_spots = Compra.objects.values('producto__spot__nombre').annotate(dcount=Count('producto__spot__nombre')).order_by('-dcount')[:5]
+    qs_spots = Compra.objects.filter(vendedor=request.user).values('producto__spot__nombre').annotate(dcount=Count('producto__spot__nombre')).order_by('-dcount')[:5]
 
     array = []
     for item in qs_spots:
