@@ -40,7 +40,6 @@ def registros_vacios_fotografos():
 
         for dia in reversed(range(0, diferencia)):
             fecha = date.today() - timedelta(days=dia)
-            print(dia)
             registro_exists = RegistroFotografos.objects.filter(fecha=fecha).first()
             if not registro_exists:
                 registro = RegistroFotografos()
