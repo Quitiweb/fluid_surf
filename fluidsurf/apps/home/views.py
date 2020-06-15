@@ -39,18 +39,6 @@ g = GeoIP2()
 
 def index(request):
 
-    # Obtiene la IP del usuario para geolocalizarlo
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-
-    try:
-        print(g.country('47.63.29.250'))
-    except Exception as e:
-        print(e)
-
     template = loader.get_template('home/index.html')
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
@@ -58,6 +46,31 @@ def index(request):
     ubicaciones = Continente.objects.filter().all()
 
     if request.user.is_authenticated:
+        # Obtiene la IP del usuario para geolocalizarlo
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+
+        try:
+
+            # En caso de estar en localhost, probamos con una ip publica random,
+            # que da la casualidad de que es la mia. Da error con la ip 127.0.0.1.
+            if request.build_absolute_uri() == 'http://127.0.0.1:8000/':
+                icountry = g.country('47.63.29.250').get('country_name')
+            else:
+                icountry = g.country(ip).get('country_name')
+
+            geo_country = Pais.objects.filter(nombre__icontains=icountry).first()
+
+            if not request.user.pais:
+                request.user.pais = geo_country.nombre
+                request.user.save()
+
+        except Exception as e:
+            print(e)
+
         prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()  # spot=request.user.zona
 
         if request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
