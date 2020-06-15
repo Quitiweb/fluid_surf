@@ -51,16 +51,53 @@
           <div class="col-1"></div>
               <div class="col-11">
                   <div id="col-form" class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
-                  <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
-                        {% if user.is_superuser %}
-                            <div class="col-12 mt-3">{{ filter.form.user__username }}</div>
-                      {% endif %}
-                        <div class="col-12 col-lg-3 mt-3">{{ filter.form.spot  }}</div>
-                        <div class="col-12 col-lg-4 mt-3">{{ filter.form.fecha  }}</div>
-                      <div class="col-6">
-                          <button type="submit" class="d-none"></button>
-                      </div>
-                  </form>
+
+                <form action="" method="POST" id="formulario">
+                    {% csrf_token %}
+                     <div class="col-12 col-lg-3 mt-3">
+                         <input type="text" name="alias" placeholder="Alias">
+                     </div>
+
+                    <div class="col-12 col-lg-3 mt-3" id="div-cont">
+                        <label>{% trans 'Continent' %}*</label>
+                        <select name="" id="selectCont" class="form-control"></select>
+                    </div>
+
+                    <div class="col-12 col-lg-3 mt-3" id="div-pais">
+                        <label>{% trans 'Country' %}*</label>
+                        <select name="" id="selectPais" class="form-control"></select>
+                    </div>
+
+                    <div class="col-12 col-lg-3 mt-3">
+                        <label>{% trans 'Area' %}*</label>
+                        <select name="area" id="selectArea" class="form-control"></select>
+                    </div>
+
+                    <div class="col-12 col-lg-3 mt-3">
+                        <label>{% trans 'Spot' %}*</label>
+                        <select name="spot" id="selectSpot" class="form-control"></select>
+                    </div>
+
+                    <div class="col-12 mt-5">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="">
+                            Mostrando zonas y spots del país configurado en
+                            <a style="text-decoration: underline" href="{% url 'mi-cuenta' %}">tu cuenta</a>
+                        </span>
+                    </div>
+
+                    <div>
+                        <a style="text-decoration: underline" href="{% url 'buscador' %}" id="linkAll">
+                            Ver todos los paises y continentes (La carga puede ser más lenta)
+                        </a>
+                    </div>
+                    <input class="btn btn-primary mt-3" type="button" value="Elige qué estás buscando" id="buscar" disabled>
+                    <input class="btn btn-primary mt-3 d-none" type="submit" value="Elige qué estás buscando" name="buscar-foto" id="buscar-form">
+                </form>
+
+
+
+
               </div>
           </div>
       </div><!-- /.container-fluid -->
@@ -94,7 +131,7 @@
                   {% endfor %}
                   <!-- /.item -->
                 </ul>
- y te              </div>
+              </div>
                 <!-- /.card-body -->
              {% if user.is_superuser %}
               <div class="card-footer clearfix">
@@ -143,13 +180,25 @@
     </div>
 </div>
 </div>
+
+
 <script src="{% static 'main/assets/js/dashboard-import.js' %}" defer></script>
-<script>
 
-    document.getElementById('id_fecha').type = 'date';
+    <script defer>
+            let scroll = "{{ scroll }}" === "True";
 
-    document.getElementById('id_spot').onchange = function(){
-        document.getElementById('filter_form').submit();
-    };
-</script>
+            const spotOG = {{ spotOG|safe }};
+
+            let spotQS = [];
+
+            for (let spot of spotOG) {
+                var result = JSON.parse(spot)
+                spotQS.push(result)
+            }
+    </script>
+
+    <script src="{% static 'dashboard/filters.js' %}" defer></script>
+    <script src="{% static 'main/assets/js/filtros-spots.js' %}" defer></script>
+
+
 {% endblock %}

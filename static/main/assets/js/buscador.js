@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    $(document).ready(function(){
         var url_string = window.location.href
         var url = new URL(url_string);
         if (url.searchParams.get("area__pais__nombre")) {
@@ -27,7 +26,7 @@ $(document).ready(function () {
             }
             $('#buscar-form').click();
         });
-    });
+
 
 
     $('.img-top').hide().removeClass('d-none').fadeIn(2000);

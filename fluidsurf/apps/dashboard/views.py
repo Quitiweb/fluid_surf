@@ -2,7 +2,7 @@ import os
 import shutil
 from datetime import date
 from os.path import dirname
-from json import *
+import json
 
 import openpyxl
 import stripe
@@ -125,8 +125,24 @@ def productos(request):
         else:
             return redirect('/')
 
-
     prod_filter = ProductoFilter(request.GET, queryset=productos)
+
+    # Filtro de zonas para hacer la busqueda del filtro
+    spots = Spot.objects.filter().all()
+    filter = ZonaFilter(request.GET, queryset=spots)
+    spotOG = []
+    for spot in filter.qs:
+        data = {}
+        data['continente'] = spot.area.pais.continente.nombre
+        data['pais'] = spot.area.pais.nombre
+        data['area'] = spot.area.nombre
+        data['spot'] = spot.nombre
+
+        json_data = json.dumps(data)
+        spotOG.append(json_data)
+
+
+    results = False
 
     if request.method == "POST":
         if 'import' in request.POST:
@@ -194,6 +210,7 @@ def productos(request):
                     shutil.rmtree(dirname(file_path))
                     return response
     context = {
+        'spotOG': spotOG,
         'filter': prod_filter,
         'numero': CustomUser.objects.filter(tipo_de_usuario="FOTOGRAFO", validado=False).all().count(),
         'num_solicitudes': SolicitudStock.objects.all().count()

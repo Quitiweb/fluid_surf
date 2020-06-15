@@ -200,8 +200,6 @@ def subir_producto(request):
         data['pais'] = spot.area.pais.nombre
         data['area'] = spot.area.nombre
         data['spot'] = spot.nombre
-        # data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre, 'area': spot.area.nombre,
-        #         'spot': spot.nombre}
 
         json_data = json.dumps(data)
         spotOG.append(json_data)
@@ -930,8 +928,6 @@ def buscador(request):
         data['pais'] = spot.area.pais.nombre
         data['area'] = spot.area.nombre
         data['spot'] = spot.nombre
-        # data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre, 'area': spot.area.nombre,
-        #         'spot': spot.nombre}
 
         json_data = json.dumps(data)
         spotOG.append(json_data)

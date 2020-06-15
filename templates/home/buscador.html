@@ -180,13 +180,13 @@
     </div>
 
     <script defer>
-        let scroll = "{{ scroll }}" == "True" ? true : false;
+        let scroll = "{{ scroll }}" === "True";
 
-        const spotOG = {{ spotOG|safe }}
+        const spotOG = {{ spotOG|safe }};
 
-        var spotQS = []
+        let spotQS = [];
 
-        for (spot of spotOG) {
+        for (let spot of spotOG) {
             var result = JSON.parse(spot)
             spotQS.push(result)
         }
