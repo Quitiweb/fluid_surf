@@ -31,11 +31,26 @@ from fluidsurf.apps.home.forms import (ChangeUserForm, PhotographerForm, Passwor
 from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.dashboard.models import RegistroCompras
 from fluidsurf.apps.helpers.helper import registros_vacios_compras
+from django.contrib.gis.geoip2 import GeoIP2
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+g = GeoIP2()
 
 def index(request):
+
+    # Obtiene la IP del usuario para geolocalizarlo
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    try:
+        print(g.country('47.63.29.250'))
+    except Exception as e:
+        print(e)
+
     template = loader.get_template('home/index.html')
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)

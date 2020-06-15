@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('direccion', django_google_maps.fields.AddressField(max_length=100)),
-                ('geoloc', django_google_maps.fields.GeoLocationField(blank=True, max_length=100)),
+                ('geoip', django_google_maps.fields.GeoLocationField(blank=True, max_length=100)),
             ],
         ),
     ]

@@ -8,10 +8,10 @@ class Migration(migrations.Migration):
     ]
     operations = [
 
-        migrations.RunSQL( "insert into home_ubicacion(spot, geoloc) values ('Europe', '36.557223,-6.303212')"),
-        migrations.RunSQL( "insert into home_ubicacion(spot, geoloc) values ('Oceania', '-33.865143,151.2099')"),
-        migrations.RunSQL( "insert into home_ubicacion(spot, geoloc) values ('Asia', '34.295833,132.319722')"),
-        migrations.RunSQL( "insert into home_ubicacion(spot, geoloc) values ('Africa', '51.2099,33.865143')"),
-        migrations.RunSQL( "insert into home_ubicacion(spot, geoloc) values ('North America', '34.42083,-119.69819')"),
-        migrations.RunSQL( "insert into home_ubicacion(spot, geoloc) values ('South America', '-33.03553,-71.64182')"),
+        migrations.RunSQL( "insert into home_ubicacion(spot, geoip) values ('Europe', '36.557223,-6.303212')"),
+        migrations.RunSQL( "insert into home_ubicacion(spot, geoip) values ('Oceania', '-33.865143,151.2099')"),
+        migrations.RunSQL( "insert into home_ubicacion(spot, geoip) values ('Asia', '34.295833,132.319722')"),
+        migrations.RunSQL( "insert into home_ubicacion(spot, geoip) values ('Africa', '51.2099,33.865143')"),
+        migrations.RunSQL( "insert into home_ubicacion(spot, geoip) values ('North America', '34.42083,-119.69819')"),
+        migrations.RunSQL( "insert into home_ubicacion(spot, geoip) values ('South America', '-33.03553,-71.64182')"),
     ]
