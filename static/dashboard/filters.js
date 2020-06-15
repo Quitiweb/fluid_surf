@@ -277,6 +277,4 @@ document.getElementById('selectSpot').onchange = (e) => {
     });
 }
 
-
-    initSpots();
 });
