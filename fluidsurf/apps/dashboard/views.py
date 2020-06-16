@@ -709,6 +709,10 @@ def watermark(request):
 
 
 def fotografo(request):
+
+
+    cont = Pais.objects.filter(nombre=request.user.pais).first().continente
+
     import json
 
     # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
@@ -741,6 +745,7 @@ def fotografo(request):
         purchases_last_week += int(item.compras)
 
     context = {
+        'cont': cont,
         'compras': compras_query,
         'array_compras': json,
         'purchases_last_week': purchases_last_week,
@@ -754,6 +759,8 @@ def fotografo(request):
 
 def fotografo_productos(request):
     template = loader.get_template('dashboard/fotografo/productos.html')
+
+    cont = Pais.objects.filter(nombre=request.user.pais).first().continente
 
     # Filtro de zonas para hacer la busqueda del filtro
     spots = Spot.objects.filter().all()
@@ -777,6 +784,7 @@ def fotografo_productos(request):
     prod_filter = ProductoFilter(request.GET, queryset=productos)
 
     context = {
+        'cont': cont,
         'spotOG': spotOG,
         'filter': prod_filter
     }
@@ -787,11 +795,14 @@ def fotografo_productos(request):
 def fotografo_compras(request):
     template = loader.get_template('dashboard/fotografo/compras.html')
 
+    cont = Pais.objects.filter(nombre=request.user.pais).first().continente
+
     compras = Compra.objects.filter(vendedor=request.user)
     compra_filter = CompraFilter(request.GET, queryset=compras)
 
 
     context = {
+        'cont': cont,
         'filter': compra_filter,
     }
 
