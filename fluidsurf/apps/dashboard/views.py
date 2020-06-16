@@ -120,12 +120,7 @@ def productos(request):
 
     # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
     if not request.user.is_staff:
-        if request.user.tipo_de_usuario == "FOTOGRAFO":
-            productos = Producto.objects.filter(user=request.user).all()
-        else:
-            return redirect('/')
-
-    prod_filter = ProductoFilter(request.GET, queryset=productos)
+        return redirect('/')
 
     # Filtro de zonas para hacer la busqueda del filtro
     spots = Spot.objects.filter().all()
@@ -145,7 +140,9 @@ def productos(request):
     results = False
 
     if request.method == "POST":
-        if 'import' in request.POST:
+        if 'filtro-productos' in request.POST:
+            productos = Producto.objects.filter(spot__nombre=request.POST['spot'])
+        elif 'import' in request.POST:
             excel_file = request.FILES["fileInput"]
             wb = openpyxl.load_workbook(excel_file)
 
@@ -209,6 +206,9 @@ def productos(request):
 
                     shutil.rmtree(dirname(file_path))
                     return response
+
+    prod_filter = ProductoFilter(request.GET, queryset=productos)
+
     context = {
         'spotOG': spotOG,
         'filter': prod_filter,
