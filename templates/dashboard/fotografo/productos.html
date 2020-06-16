@@ -18,20 +18,83 @@
 </style>
 
 <div class="container">
+
+   <div class="row">
+            <div class="col-0 col-lg-2"></div>
+            <div class="col-12 col-lg-4">
+                  <div class="row mt-5">
+                      <div class="col-12">
+                        <div id="col-form" class="col-12" style=""><i class="fas fa-filter"></i> Filtrar</div>
+                      </div>
+                      <div class="col-12">
+                          <a href="fotografo-productos?area__pais__continente__nombre=EUROPA" class="nav-link">Productos de Europa</a>
+                      </div>
+                      <div class="col-12">
+                           <a href="fotografo-productos?area__pais__continente__nombre=AMERICA" class="nav-link">Productos de America</a>
+                      </div>
+                      <div class="col-12">
+                            <a href="fotografo-productos?area__pais__continente__nombre=AUSTRALIA AND NEW ZEALAND" class="nav-link">Productos de Australia & New Zealand</a>
+                      </div>
+                      <div class="col-12">
+                          <a href="fotografo-productos?area__pais__continente__nombre=ASIA" class="nav-link">Productos de Asia</a>
+                      </div>
+                      <div class="col-12">
+                          <a href="fotografo-productos?area__pais__continente__nombre=CARIBEAN" class="nav-link">Productos de Caribean</a>
+                      </div>
+                  </div>
+            </div>
+
+                <div class="col-12 col-lg-6">
+                  <div class="row">
+                      <div class="col-12 col-lg-6">
+                        <form action="" method="POST" id="formulario" class="row">
+                            {% csrf_token %}
+                             <div class="col-12 mt-3">
+                                 <label>{% trans 'Alias' %}*</label>
+                                 <input type="text" name="alias" placeholder="Alias" class="form-control">
+                             </div>
+
+                            <div class="col-12 mt-3 d-none" id="div-cont">
+                                <label>{% trans 'Continent' %}*</label>
+                                <select name="" id="selectCont" class="form-control"></select>
+                            </div>
+
+                            <div class="col-12 mt-3" id="div-pais">
+                                <label>{% trans 'Country' %}*</label>
+                                <select name="" id="selectPais" class="form-control"></select>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <label>{% trans 'Area' %}*</label>
+                                <select name="area" id="selectArea" class="form-control"></select>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <label>{% trans 'Spot' %}*</label>
+                                <select name="spot" id="selectSpot" class="form-control"></select>
+                            </div>
+
+                            <input class="btn btn-primary mt-3" type="button" value="Filtrar productos" id="buscar">
+                            <input class="btn btn-primary mt-3 d-none" type="submit" value="Elige qué estás buscando" name="filtro-productos" id="buscar-form">
+                        </form>
+                      </div>
+                  </div>
+                </div>
+        </div>
     <div class="row mt-5">
 
-        <div class="col-12">
-            <form id="filter_form" action="" method="get" class="row" style="">
-            <div class="col-12 mt-3">{{ filter.form.spot  }}</div>
-
-            <div class="col-6 mt-3">{{ filter.form.fecha  }}</div>
-            <div class="col-6">
-                <button type="submit" class="btn btn-primary" style="height: 45px; margin-top: 16px; width: 100px;">
-                    <i class="fas fa-filter"></i>
-                </button>
-            </div>
-        </form>
-        </div>
+{#        <div class="col-12">#}
+{#            <form id="filter_form" action="" method="get" class="row" style="">#}
+{#            <div class="col-12 mt-3">{{ filter.form.spot  }}</div>#}
+{##}
+{#            <div class="col-6 mt-3">{{ filter.form.fecha  }}</div>#}
+{#            <div class="col-6">#}
+{#                <button type="submit" class="btn btn-primary" style="height: 45px; margin-top: 16px; width: 100px;">#}
+{#                    <i class="fas fa-filter"></i>#}
+{#                </button>#}
+{#            </div>#}
+{#        </form>#}
+{#        </div>#}
         <table class="table mt-3">
             <thead>
                 <tr>
@@ -65,4 +128,20 @@
         document.getElementById('filter_form').submit();
     };
 </script>
+
+<script defer>
+        let scroll = "{{ scroll }}" === "True";
+
+        const spotOG = {{ spotOG|safe }};
+
+        let spotQS = [];
+
+        for (let spot of spotOG) {
+            var result = JSON.parse(spot)
+            spotQS.push(result)
+        }
+</script>
+<script src="{% static 'main/assets/js/buscador.js' %}" defer></script>
+<script src="{% static 'dashboard/filters.js' %}" defer></script>
+<script src="{% static 'main/assets/js/filtros-spots.js' %}" defer></script>
 {% endblock %}

@@ -136,9 +136,6 @@ def productos(request):
         json_data = json.dumps(data)
         spotOG.append(json_data)
 
-
-    results = False
-
     if request.method == "POST":
         if 'filtro-productos' in request.POST:
             productos = Producto.objects.filter(spot__nombre=request.POST['spot'])
@@ -758,10 +755,29 @@ def fotografo(request):
 def fotografo_productos(request):
     template = loader.get_template('dashboard/fotografo/productos.html')
 
-    productos = Producto.objects.filter(user=request.user)
+    # Filtro de zonas para hacer la busqueda del filtro
+    spots = Spot.objects.filter().all()
+    filter = ZonaFilter(request.GET, queryset=spots)
+    spotOG = []
+    for spot in filter.qs:
+        data = {}
+        data['continente'] = spot.area.pais.continente.nombre
+        data['pais'] = spot.area.pais.nombre
+        data['area'] = spot.area.nombre
+        data['spot'] = spot.nombre
+
+        json_data = json.dumps(data)
+        spotOG.append(json_data)
+
+    if request.method == "POST":
+        productos = Producto.objects.filter(user=request.user, spot__nombre=request.POST['spot'])
+    else:
+        productos = Producto.objects.filter(user=request.user)
+
     prod_filter = ProductoFilter(request.GET, queryset=productos)
 
     context = {
+        'spotOG': spotOG,
         'filter': prod_filter
     }
 

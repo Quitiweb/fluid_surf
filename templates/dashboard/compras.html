@@ -6,7 +6,7 @@
 {% block main %}
 
         <style>
-        #id_comprador__username, #id_vendedor__username {
+        #id_comprador__username, #id_vendedor__username, #id_fecha {
             height: 50px;
             border-radius: 5px;
             box-shadow: none;
@@ -32,9 +32,10 @@
               <div class="col-11">
                   <div class="col-12" style="position: relative; left: 100px;"><i class="fas fa-filter"></i> Filtrar</div>
                   <form id="filter_form" action="" method="get" class="row" style="position: relative; left: 112px;">
-                        <div class="col-2 mt-3">{{ filter.form.comprador__username }}</div>
-                        <div class="col-10 mt-3">{{ filter.form.vendedor__username  }}</div>
-                      <input type="submit" value="Aplicar filtros" class="btn btn-primary mt-3 ml-2 d-none">
+                        <div class="col-12 col-lg-2 mt-3">{{ filter.form.comprador__username }}</div>
+                        <div class="col-12 col-lg-2 mt-3">{{ filter.form.vendedor__username  }}</div>
+                        <div class="col-12 col-lg-8 mt-3">{{ filter.form.fecha }}</div>
+                      <input type="submit" value="Aplicar filtros" class="btn btn-primary mt-3 ml-2">
                   </form>
               </div>
           </div>
@@ -120,6 +121,9 @@
             </div>
             <!-- /.card -->
     </div>
+    <script>
+        document.getElementById('id_fecha').type = 'date';
+    </script>
     <script src="{% static 'main/assets/js/dashboard-import.js' %}" defer></script>
 </div>
 

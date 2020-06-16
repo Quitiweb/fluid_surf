@@ -49,10 +49,11 @@ class UserFilter(django_filters.FilterSet):
 class CompraFilter(django_filters.FilterSet):
     comprador__username = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Comprador')}))
     vendedor__username = django_filters.CharFilter(widget=TextInput(attrs={'placeholder': _('Vendedor')}))
+    fecha = django_filters.DateFilter()
 
     class Meta:
         model = Compra
-        fields = ['comprador__username', 'vendedor__username']
+        fields = ['comprador__username', 'vendedor__username', 'fecha']
 
 
 class ZonaFilter(django_filters.FilterSet):
