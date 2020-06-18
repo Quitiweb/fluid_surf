@@ -911,8 +911,8 @@ def fotografos(request):
 def buscador(request):
     template = loader.get_template('home/buscador.html')
 
-    if request.user.tipo_de_usuario == "SURFERO":
-        return redirect('index')
+    # if request.user.tipo_de_usuario == "SURFERO":
+    #     return redirect('index')
 
     spots = Spot.objects.filter().all()
     filter = ZonaFilter(request.GET, queryset=spots)
