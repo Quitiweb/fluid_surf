@@ -2,9 +2,9 @@ $(document).ready(function () {
 
         var url_string = window.location.href
         var url = new URL(url_string);
-        if (url.searchParams.get("area__pais__nombre")) {
+        if (url.searchParams.get("area__pais__continente__nombre")) {
             $('#div-cont').addClass('d-none');
-            $('#div-pais').addClass('d-none')
+            // $('#div-pais').addClass('d-none')
         }
 
         if (scroll) {
@@ -21,7 +21,7 @@ $(document).ready(function () {
 
         $("#buscar").click(function(e){
             e.preventDefault();
-            if (!url.searchParams.get("area__pais__nombre")) {
+            if (!url.searchParams.get("area__pais__continente__nombre")) {
                 $("#exampleModal").modal();
             }
             $('#buscar-form').click();

@@ -23,9 +23,8 @@ from fluidsurf.apps.helpers.helper import registros_vacios_compras, registros_va
     registros_vacios_surferos
 from fluidsurf.apps.home.filters import ProductoFilter, UserFilter, CompraFilter, DenunciaFilter, SolicitudFilter, \
     ZonaFilter
-from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock, Spot, Continente, \
-    Pais, Area
-from fluidsurf.apps.users.models import CustomUser
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia, WatermarkImage, SolicitudStock
+from fluidsurf.apps.users.models import CustomUser, Spot, Continente, Pais, Area
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 

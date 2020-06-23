@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Continente, Pais, Spot, Area
 
 
 class CustomUserAdmin(UserAdmin):
@@ -19,3 +19,8 @@ class CustomGaleria(admin.ModelAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+admin.site.register(Continente)
+admin.site.register(Pais)
+admin.site.register(Area)
+admin.site.register(Spot)

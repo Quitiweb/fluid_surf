@@ -24,11 +24,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter, PaisFilter
 from fluidsurf.apps.home.models import (Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
-                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais)
+                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock)
 from fluidsurf.apps.home.forms import (ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
                                        EditProductForm, DenunciaForm, ContactForm, DevolucionForm)
 
-from fluidsurf.apps.users.models import CustomUser
+from fluidsurf.apps.users.models import CustomUser, Continente, Spot, Pais
 from fluidsurf.apps.dashboard.models import RegistroCompras
 from fluidsurf.apps.helpers.helper import registros_vacios_compras
 from django.contrib.gis.geoip2 import GeoIP2
@@ -130,8 +130,9 @@ def mi_cuenta(request):
                 photo_form = PhotographerForm(instance=request.user)
         else:
             if request.POST['selectPais']:
-                print(request.POST['selectPais'])
-                request.user.pais = request.POST['selectPais']
+
+                pais = Pais.objects.filter(nombre=request.POST['selectPais']).first()
+                request.user.pais = pais
 
             passform = PasswordChangeCustomForm(request.user, request.POST)
             form = ChangeUserForm(request.POST, instance=request.user)
