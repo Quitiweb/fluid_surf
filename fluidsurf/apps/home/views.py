@@ -7,6 +7,7 @@ import urllib
 import braintree
 import requests
 import stripe
+import urllib
 
 from io import BytesIO
 from datetime import date
@@ -153,7 +154,6 @@ def mi_cuenta(request):
                 messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
                 form.save()
             else:
-                print(form.errors)
                 if passform.is_valid():
                     pwd = passform.save()
                     update_session_auth_hash(request, pwd)  # Important!
@@ -912,10 +912,17 @@ def fotografos(request):
 def buscador(request):
     template = loader.get_template('home/buscador.html')
 
-    # if request.user.tipo_de_usuario == "SURFERO":
-    #     return redirect('index')
+    if len(urllib.parse.parse_qsl(request.get_full_path())) > 0:
+        url_param = urllib.parse.parse_qsl(request.get_full_path())[0][0]
+        if "area__pais__continente__nombre" in url_param:
+            continente = urllib.parse.parse_qsl(request.get_full_path())[0][1]
+            spots = Spot.objects.filter(area__pais__continente__nombre=continente).all()
+        else:
+            spots = Spot.objects.filter().all() # No se por que es necesario poner este else, pero
+                                                # si lo quito peta
+    else:
+            spots = Spot.objects.filter().all()
 
-    spots = Spot.objects.filter().all()
     filter = ZonaFilter(request.GET, queryset=spots)
 
     # Variable que uso para que si se ha hecho un post haga scroll hasta el
@@ -938,7 +945,11 @@ def buscador(request):
 
     if request.method == "POST":
         scroll = True
-        spot = Spot.objects.filter(nombre=request.POST['spot']).first()
+        spot = Spot.objects.filter(nombre=request.POST['spot'],
+                                   area__nombre=request.POST['area'],
+                                   area__pais__nombre=request.POST['pais'],
+                                   area__pais__continente__nombre=request.POST['continente'],
+                                   ).first()
 
         if 'buscar-foto' in request.POST:
             if request.POST['alias']:
