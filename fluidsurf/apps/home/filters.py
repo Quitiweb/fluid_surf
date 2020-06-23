@@ -2,8 +2,8 @@ import django_filters
 from django.forms import TextInput
 from django.utils.translation import ugettext_lazy as _
 
-from fluidsurf.apps.home.models import Producto, Compra, Denuncia, SolicitudStock
-from fluidsurf.apps.users.models import CustomUser, Pais, Spot, Area, Continente
+from fluidsurf.apps.home.models import Producto, Compra, Denuncia, SolicitudStock, Pais, Spot, Area, Continente
+from fluidsurf.apps.users.models import CustomUser
 
 AREA_CHOICES = (
         ('Europe', _("Europe")),

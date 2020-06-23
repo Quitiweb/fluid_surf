@@ -25,11 +25,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter, PaisFilter
 from fluidsurf.apps.home.models import (Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
-                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock)
+                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais)
 from fluidsurf.apps.home.forms import (ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
                                        EditProductForm, DenunciaForm, ContactForm, DevolucionForm)
 
-from fluidsurf.apps.users.models import CustomUser, Continente, Spot, Pais
+from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.dashboard.models import RegistroCompras
 from fluidsurf.apps.helpers.helper import registros_vacios_compras
 from django.contrib.gis.geoip2 import GeoIP2
