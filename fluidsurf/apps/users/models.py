@@ -3,7 +3,6 @@ from django.db import models
 from django.core.validators import RegexValidator, validate_comma_separated_integer_list
 
 from ..payments.managers import UserManager
-from django.utils.translation import ugettext_lazy as _
 
 
 class CustomUser(AbstractUser):
@@ -15,15 +14,6 @@ class CustomUser(AbstractUser):
         (SURFERO, 'Surfero'),
         (FOTOGRAFO, 'Fotografo'),
         (ADMIN, 'Admin'),
-    )
-
-    AREA_CHOICES = (
-        ('Europe', _("Europe")),
-        ('Africa', _("Africa")),
-        ('Asia', _("Asia")),
-        ('Oceania', _("Oceania")),
-        ('North America', _("North America")),
-        ('South America', _("South America"))
     )
 
     tipo_de_usuario = models.CharField(

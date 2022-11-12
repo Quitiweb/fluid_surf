@@ -28,10 +28,11 @@ from fluidsurf.apps.home.models import (
     Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais
 )
 from fluidsurf.apps.home.forms import (
-    ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
+    PasswordChangeCustomForm, AddProductForm,
     EditProductForm, DenunciaForm, ContactForm, DevolucionForm
 )
 
+from fluidsurf.apps.users.forms import ChangeUserForm, ChangeUserPostForm, PhotographerForm
 from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.dashboard.models import RegistroCompras
 from fluidsurf.apps.helpers.helper import registros_vacios_compras
@@ -143,7 +144,7 @@ def mi_cuenta(request):
             request.user.pais = pais
 
         passform = PasswordChangeCustomForm(request.user, request.POST)
-        form = ChangeUserForm(request.POST, instance=request.user)
+        form = ChangeUserPostForm(request.POST)
 
         if request.user.tipo_de_usuario == "FOTOGRAFO":
             photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
@@ -244,9 +245,6 @@ def subir_producto(request):
             producto_instance.user = request.user
 
             pspot = Spot.objects.filter(nombre=spot, area__nombre=area).first()
-
-            print(pspot)
-
             producto_instance.spot = pspot
 
             files = (
@@ -290,7 +288,9 @@ def subir_producto(request):
                     mails.append(settings.SERVER_EMAIL)
 
                     subject = _("New product in your area")
-                    message = producto_instance.user.first_name + " " + producto_instance.user.last_name + str(
+                    name = producto_instance.user.first_name
+                    last_name = producto_instance.user.last_name
+                    message = name + " " + last_name + str(
                         _(" has uploaded a product nearby you"))
                     message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
                         producto_instance.id)  # TODO Añadir link

@@ -4,78 +4,40 @@ from django.forms import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
 
-from fluidsurf.apps.home.models import Producto, Denuncia, Compra, Devolucion
-from fluidsurf.apps.users.models import CustomUser
-
-AREA_CHOICES = (
-        ('Europe', _("Europe")),
-        ('Africa', _("Africa")),
-        ('Asia', _("Asia")),
-        ('Oceania', _("Oceania")),
-        ('North America', _("North America")),
-        ('South America', _("South America"))
-    )
+from fluidsurf.apps.home.models import Producto, Denuncia, Devolucion
 
 
 class ContactForm(forms.Form):
-    from_email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder': 'email@domain.com'}))
-    message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('Write here your doubt or comment')}),
-                              required=True)
-
-
-class ChangeUserForm(forms.ModelForm):
-    email = forms.EmailField()
-    first_name = forms.CharField(max_length=25)
-    last_name = forms.CharField(max_length=50)
-    telefono = forms.CharField(max_length=15)
-    pais = forms.CharField(max_length=50)
-    zona = forms.ChoiceField(choices=AREA_CHOICES)
-
-    first_name.widget = forms.TextInput(attrs={'placeholder': _('Write your name here...')})
-    last_name.widget = forms.TextInput(attrs={'placeholder': _('Write your surname here...')})
-    email.widget = forms.TextInput(attrs={'placeholder': _('Write your email here...')})
-    telefono.widget = forms.TextInput(attrs={'placeholder': _('Write your phone here...')})
-    pais.widget = forms.TextInput(attrs={'placeholder': _('Write your country here...')})
-
-    class Meta:
-        model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'telefono', 'pais', 'zona')
+    from_email = forms.EmailField(
+        required=True, widget=forms.TextInput(attrs={'placeholder': 'email@domain.com'}))
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': _('Write here your doubt or comment')}),
+        required=True
+    )
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):
     error_css_class = 'has-error'
-    error_messages = {'password_incorrect':
-                          _("Wrong password. Please, try again."),
-                      'password_mismatch':
-                          _("Your passwords don't match"),
-                      }
-    old_password = forms.CharField(required=False, label=_('Old Password'),
-                                   widget=PasswordInput(attrs={
-                                       'class': 'form-control mb-5'}),
-                                   error_messages={
-                                       'required': _('Your password cannot be empty')})
+    error_messages = {
+        'password_incorrect': _("Wrong password. Please, try again."),
+        'password_mismatch': _("Your passwords don't match"),
+    }
+    old_password = forms.CharField(
+        required=False, label=_('Old Password'),
+        widget=PasswordInput(attrs={'class': 'form-control mb-5'}),
+        error_messages={'required': _('Your password cannot be empty')}
+    )
 
-    new_password1 = forms.CharField(required=False, label=_('New password'),
-                                    widget=PasswordInput(attrs={
-                                        'class': 'form-control mb-5'}),
-                                    error_messages={
-                                        'required': _('Your password cannot be empty')})
-    new_password2 = forms.CharField(required=False, label=_('Repeat your new password'),
-                                    widget=PasswordInput(attrs={
-                                        'class': 'form-control'}),
-                                    error_messages={
-                                        'required': _('Your password cannot be empty')})
-
-
-class PhotographerForm(forms.ModelForm):
-    alias = forms.CharField(max_length=25)
-    CV = forms.Textarea()
-    profile_pic = forms.ImageField()
-    main_pic = forms.ImageField()
-
-    class Meta:
-        model = CustomUser
-        fields = ('alias', 'CV', 'profile_pic', 'main_pic')
+    new_password1 = forms.CharField(
+        required=False, label=_('New password'),
+        widget=PasswordInput(attrs={'class': 'form-control mb-5'}),
+        error_messages={'required': _('Your password cannot be empty')}
+    )
+    new_password2 = forms.CharField(
+        required=False, label=_('Repeat your new password'),
+        widget=PasswordInput(attrs={'class': 'form-control'}),
+        error_messages={'required': _('Your password cannot be empty')}
+    )
 
 
 class AddProductForm(forms.ModelForm):
@@ -86,7 +48,6 @@ class AddProductForm(forms.ModelForm):
     precio = forms.CharField(required=True)
 
     fecha = forms.DateField(required=True, input_formats=DATE_INPUT_FORMATS)
-    # spot = forms.ChoiceField(choices=AREA_CHOICES, required=True)
     descripcion = forms.CharField(required=False)
 
     imagen0 = forms.ImageField(required=False)
@@ -132,15 +93,19 @@ class AddProductForm(forms.ModelForm):
     imagen8.widget = forms.ClearableFileInput(attrs={'multiple': True})
     imagen9.widget = forms.ClearableFileInput(attrs={'multiple': True})
 
-    fecha.widget = forms.TextInput(attrs={'placeholder': _('Write when are you selling your product...')})
+    fecha.widget = forms.TextInput(
+        attrs={'placeholder': _('Write when are you selling your product...')})
     nombre.widget = forms.TextInput(attrs={'placeholder': _("Write your product's name...")})
     precio.widget = forms.TextInput(attrs={'placeholder': '€'})
-    descripcion.widget = forms.TextInput(attrs={'placeholder': _('Add a brief description about your product...')})
+    descripcion.widget = forms.TextInput(
+        attrs={'placeholder': _('Add a brief description about your product...')})
 
     class Meta:
         model = Producto
-        fields = ('nombre', 'precio', 'fecha', 'descripcion', 'imagen0', 'imagen1', 'imagen2', 'imagen3', 'imagen4', 'imagen5'
-                  , 'imagen6', 'imagen7', 'imagen8', 'imagen9')
+        fields = (
+            'nombre', 'precio', 'fecha', 'descripcion', 'imagen0', 'imagen1', 'imagen2',
+            'imagen3', 'imagen4', 'imagen5', 'imagen6', 'imagen7', 'imagen8', 'imagen9'
+        )
 
 
 class EditProductForm(forms.ModelForm):
@@ -162,8 +127,11 @@ class DenunciaForm(forms.ModelForm):
     )
 
     motivo = forms.ChoiceField(required=True, choices=CHOICES)
-    detalles = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('Tell us more about the reason you are '
-                                                                             'reporting this user.')}), required=True)
+    detalles = forms.CharField(
+        required=True,
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Tell us more about the reason you are reporting this user.')}),
+    )
 
     class Meta:
         model = Denuncia
@@ -199,9 +167,3 @@ class DevolucionForm(forms.ModelForm):
     class Meta:
         model = Devolucion
         fields = ('product', 'reason', 'is_opened', 'details')
-
-
-
-
-
-

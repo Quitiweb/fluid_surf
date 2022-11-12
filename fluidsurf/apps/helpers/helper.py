@@ -2,8 +2,18 @@ from datetime import date, timedelta
 
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
+from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.dashboard.models import RegistroCompras, RegistroFotografos, RegistroSurferos
+
+AREA_CHOICES = (
+    ('Europe', _("Europe")),
+    ('Africa', _("Africa")),
+    ('Asia', _("Asia")),
+    ('Oceania', _("Oceania")),
+    ('North America', _("North America")),
+    ('South America', _("South America"))
+)
 
 
 def registros_vacios_compras(user=0):
@@ -17,10 +27,10 @@ def registros_vacios_compras(user=0):
         for dia in reversed(range(0, diferencia)):
             fecha = date.today() - timedelta(days=dia)
             if user != 0:
-                registro_exists = RegistroCompras.objects.filter(fecha=fecha, user=user).first()
+                registro = RegistroCompras.objects.filter(fecha=fecha, user=user).first()
             else:
-                registro_exists = RegistroCompras.objects.filter(fecha=fecha).first()
-            if not registro_exists:
+                registro = RegistroCompras.objects.filter(fecha=fecha).first()
+            if not registro:
                 registro = RegistroCompras()
                 registro.compras = 0
                 registro.fecha = fecha
@@ -63,7 +73,8 @@ def registros_vacios_surferos():
                 registro.fecha = fecha
                 registro.save()
 
-# Desplegable de antiguedad en users.Empresa y users.Autonomo
+
+# Desplegable de antigüedad en users.Empresa y users.Autonomo
 ANTG1 = '1año'
 ANTG2 = '1a2años'
 ANTG3 = '2a5años'
@@ -130,8 +141,8 @@ def grouped(l, n):
 
 def enviar_email(subject, message):
     try:
-        send_mail(subject, message, 'contact@fluidsurf.es', ['info@fluidsurf.es', 'rafa@quitiweb.com'])
-        # send_mail(subject, message, 'contact@fluidsurf.es', ['rafa@quitiweb.com'])
+        send_mail(subject, message, 'contact@fluidsurf.es', [
+            'info@fluidsurf.es', 'rafa@quitiweb.com'])
     except BadHeaderError:
         return HttpResponse('Invalid header found')
 
