@@ -332,59 +332,62 @@ def subir_producto(request):
     return HttpResponse(template.render(context, request))
 
 
-def producto(request, id='0'):
+def producto(request, prod_id='0'):
     template = loader.get_template('home/producto.html')
 
-    producto = Producto.objects.filter(id=id, user__validado=True, user__is_active=True).first()
+    try:
+        local_prod = Producto.objects.get(
+            id=prod_id, user__validado=True, user__is_active=True)
+    except Producto.DoesNotExist:
+        return redirect('/')
 
     prod_list = Producto.objects.all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
-    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+    api_key = getattr(settings, 'BING_MAPS_API_KEY', None)
 
     ubicaciones = Continente.objects.all()
 
     if request.user.is_authenticated:
-        listaDeseos = request.user.wishlist.split(',')
+        lista_deseos = request.user.wishlist.split(',')
         status = True
-        for item in listaDeseos:
-            if item == str(id):
+        for item in lista_deseos:
+            if item == str(prod_id):
                 status = False
     else:
         status = ''
 
-    if producto is None:
-        return redirect('/')
-
-    productform = EditProductForm(instance=producto)
+    productform = EditProductForm(instance=local_prod)
 
     if request.method == "POST":
         if request.user.is_authenticated:
-            if producto.user == request.user:
+            if local_prod.user == request.user:
                 if 'editProduct' in request.POST:
-                    productform = EditProductForm(request.POST, instance=producto)
+                    productform = EditProductForm(request.POST, instance=local_prod)
                     if productform.is_valid():
                         productform.save()
                         messages.success(request, _('Your product was saved successfully'))
                     else:
-                        messages.warning(request, _('There was an error while trying to save your product'))
+                        messages.warning(request, _(
+                            'There was an error while trying to save your product'))
                 elif 'deleteProduct' in request.POST:
-                    producto.delete()
+                    local_prod.delete()
                     messages.success(request, _('Your product was deleted successfully'))
                     return redirect('perfil', request.user.id)
                 elif 'main' in request.POST:
                     value = request.POST['main']
-                    img = getattr(producto, 'imagen' + value)
+                    img = getattr(local_prod, 'imagen' + value)
 
                     w = img
-                    setattr(producto, 'imagen' + value, producto.imagen0)
-                    producto.imagen0 = w
+                    setattr(local_prod, 'imagen' + value, local_prod.imagen0)
+                    local_prod.imagen0 = w
                     del w
 
-                    producto.save()
+                    local_prod.save()
                     messages.success(request, _('Main picture changed successfully'))
                 else:
-                    messages.warning(request, _('You are the owner of this product, you cannot do actions over it.'))
+                    messages.warning(request, _(
+                        'You are the owner of this product, you cannot do actions over it.'))
             else:
                 if 'wishlist' in request.POST:
                     if status:
@@ -392,38 +395,40 @@ def producto(request, id='0'):
                         request.user.save()
                         messages.success(request, _('Product added to your wishlist'))
                     else:
-                        for item in listaDeseos:
+                        for item in lista_deseos:
                             if item == str(id):
-                                listaDeseos.remove(item)
-                                request.user.wishlist = ",".join(listaDeseos)
+                                lista_deseos.remove(item)
+                                request.user.wishlist = ",".join(lista_deseos)
                                 request.user.save()
                                 messages.success(request, _('Product removed from your wishlist'))
                     return HttpResponseRedirect(request.path_info)
                 if 'stock' in request.POST:
-                    solicitud_exists = SolicitudStock.objects.filter(user=request.user, product=producto).first()
+                    solicitud_exists = SolicitudStock.objects.filter(
+                        user=request.user, product=local_prod).first()
 
                     if not solicitud_exists:
                         solicitud = SolicitudStock()
                         solicitud.user = request.user
-                        solicitud.product = producto
+                        solicitud.product = local_prod
                         solicitud.save()
                         messages.success(request, _('Request done successfully'))
 
                         subject = _("Someone asked for stock in your product!")
                         message = _(
                             "Your product has been requested for more stock.")
-                        message += "\nProduct: " + str(producto)
+                        message += "\nProduct: " + str(local_prod)
                         from_email = settings.SERVER_EMAIL
-                        to_mail = producto.user.email
+                        to_mail = local_prod.user.email
 
                         try:
                             send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
                         except BadHeaderError:
                             return HttpResponse('Invalid header found')
                     else:
-                        messages.warning(request, _('You already requested for stock for this product'))
+                        messages.warning(request, _(
+                            'You already requested for stock for this product'))
                 else:
-                    precio = (producto.precio + (producto.precio * 0.21)) * 100  # iva
+                    precio = (local_prod.precio + (local_prod.precio * 0.21)) * 100  # iva
                     comision = precio * 0.05
 
                     if comision < 100:
@@ -439,7 +444,7 @@ def producto(request, id='0'):
 
                     print('Precio: %s \n Comision: %s ' % (precio, comision))
 
-                    vendedor_stripe = producto.user.stripe_id
+                    vendedor_stripe = local_prod.user.stripe_id
 
                     if vendedor_stripe:
                         transfer = stripe.Transfer.create(
@@ -452,28 +457,30 @@ def producto(request, id='0'):
                         )
 
                         if charge and transfer:
-                            producto.stock = 0
-                            producto.save()
+                            local_prod.stock = 0
+                            local_prod.save()
 
                             compra = Compra(
                                 comprador=request.user,
-                                vendedor=producto.user,
-                                producto=producto,
+                                vendedor=local_prod.user,
+                                producto=local_prod,
                                 fecha=date.today()
                             )
                             compra.save()
 
                             registros_vacios_compras()
 
-                            registro_exists = RegistroCompras.objects.filter(fecha=date.today()).first()
+                            registro_exists = RegistroCompras.objects.filter(
+                                fecha=date.today()).first()
 
                             if registro_exists:
                                 registro_exists.delete()
 
                             registro = RegistroCompras()
-                            registro.compras = Compra.objects.filter(fecha=date.today()).all().count()
+                            registro.compras = Compra.objects.filter(
+                                fecha=date.today()).all().count()
                             registro.fecha = date.today()
-                            registro.user = producto.user
+                            registro.user = local_prod.user
                             registro.save()
 
                             if request.user.email:
@@ -491,17 +498,17 @@ def producto(request, id='0'):
                                         to_mail, settings.SERVER_EMAIL])
                                 except BadHeaderError:
                                     return HttpResponse('Invalid header found')
-                            if producto.user.email:
+                            if local_prod.user.email:
                                 subject = _("Your product has been sold!")
                                 name = compra.comprador.first_name
                                 last_name = compra.comprador.last_name
-                                message = str(_("Your product ")) + producto.nombre + str(_(
+                                message = str(_("Your product ")) + local_prod.nombre + str(_(
                                     " has been sold to ")) + name + " " + last_name + "!"
                                 message += "\nYou can check it in your Sales History."
                                 message += "\nID: OR" + str(compra.id)
 
                                 from_email = settings.SERVER_EMAIL
-                                to_mail = producto.user.email
+                                to_mail = local_prod.user.email
 
                                 try:
                                     send_mail(subject, message, from_email, [
@@ -514,13 +521,13 @@ def producto(request, id='0'):
     imagenes = []
 
     for i in range(10):
-        if getattr(producto, 'imagen' + str(i)):
-            imagenes.append(getattr(producto, 'imagen' + str(i)))
+        if getattr(local_prod, 'imagen' + str(i)):
+            imagenes.append(getattr(local_prod, 'imagen' + str(i)))
         else:
             break
 
     context = {
-        'producto': producto,
+        'producto': local_prod,
         'productform': productform,
         'filter': prod_filter,
         'imagenes': imagenes,
@@ -528,8 +535,8 @@ def producto(request, id='0'):
         'in_wishlist': not status,
         'key': settings.STRIPE_PUBLISHABLE_KEY,
         'stripe': True,
-        'API_KEY': API_KEY,
-        'precio': (producto.precio + (producto.precio * 0.21)) * 100
+        'API_KEY': api_key,
+        'precio': (local_prod.precio + (local_prod.precio * 0.21)) * 100
     }
 
     return HttpResponse(template.render(context, request))
@@ -545,7 +552,7 @@ def zona(request, nombre=''):
     if zona_spot is None:
         return redirect('/')
 
-    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
+    api_key = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
     prod_list = Producto.objects.filter(
         spot=zona_spot, user__validado=True, user__is_active=True).all()
@@ -554,7 +561,7 @@ def zona(request, nombre=''):
     context = {
         'zona': zona_spot,
         'filter': prod_filter,
-        'API_KEY': API_KEY,
+        'API_KEY': api_key,
         'ubicaciones': ubicaciones,
     }
 
@@ -571,7 +578,7 @@ def perfil(request, perfil_id=''):
 
     ubicaciones = Continente.objects.all()
 
-    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
+    api_key = getattr(settings, 'BING_MAPS_API_KEY', None)
 
     if not user:
         return redirect("/")
@@ -591,7 +598,7 @@ def perfil(request, perfil_id=''):
     context = {
         'usuario': user,
         'form': form,
-        'API_KEY': API_KEY,
+        'API_KEY': api_key,
         'filter': prod_filter,
         'ubicaciones': ubicaciones,
     }
