@@ -1,7 +1,4 @@
 from django import forms
-
-# from localflavor.es.forms import ESIdentityCardNumberField
-
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 

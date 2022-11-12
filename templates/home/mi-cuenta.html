@@ -34,37 +34,13 @@
 
 <div class="container mt-5">
     <form action="" method="POST" enctype="multipart/form-data" id="form">
+
         {% csrf_token %}
         <h1 class="display-4 pt-5 text-center" style="color:black; position: relative; left: 30px;">
             <img src="{% static 'main/images/logo_letras.svg' %}" alt="" style="width: 200px">
             <i class="far fa-user-circle" style="position: relative; right: 35px;"></i>
         </h1>
         <div class="row mt-5">
-
-            <div class="col-4">
-{#                    <div class="img-logo">#}
-{#                     {% if user.profile_pic %}#}
-{#                        <img src="/media/{{ user.profile_pic }}" style="cursor:pointer">#}
-{#                    {% elif user.socialaccount_set.all.0.get_avatar_url %}#}
-{#                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />#}
-{#                    {% else %}#}
-{#                        <img src="{% static 'main/images/no_user.png' %}" alt=""style="cursor:pointer">#}
-{#                     {% endif %}#}
-{#                    <div class="overlay">#}
-{#                        <form action="{% url 'change-image' %}" id="formImage" method="post" enctype='multipart/form-data'>#}
-{#                            {% csrf_token %}#}
-{##}
-{#                                <label for="changeImage" class="white info" style="cursor: pointer;">{% trans 'edit' %}</label>#}
-{##}
-{#                            <input id="changeImage" type="file" name="changeImage" style="display: none;">#}
-{#                            <input type="submit" class="d-none" id="buttonSubmitImage">#}
-{#                        </form>#}
-{#                    </div>#}
-{#                </div>#}
-            </div>
-
-            <div class="col-8"></div>
-
             <div class="col-6">
                 <label>{% trans 'Name' %}</label>
                 {{ form.first_name }}
@@ -100,97 +76,95 @@
             </div>
         </div>
 
-        <!-- TODO Si el usuario es fotografo, hay que anadir un form con cv, alias, foto, foto destacada... -->
+        <!-- TODO Si el usuario es fotógrafo, hay que añadir un form con CV, alias, foto, foto destacada... -->
 
         {% if user.tipo_de_usuario ==  'FOTOGRAFO'%}
 
-        <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;" id="photo">
-            {% trans 'My Photographer Profile' %}
-        </h1>
+            <h1 class="display-4 mt-5 black toggle-chk" style="cursor:pointer;" id="photo">
+                {% trans 'My Photographer Profile' %}
+            </h1>
 
-    <div id="photo-show">
-        <div class="row mt-5">
-            <div class="col-12">
+            <div id="photo-show">
+                <div class="row mt-5">
+                    <div class="col-12">
 
-                <h1 style="font-size: 20px">{% trans 'PAYMENT METHODS' %}</h1>
+                        <h1 style="font-size: 20px">{% trans 'PAYMENT METHODS' %}</h1>
 
-                <i class="fab fa-stripe fa-7x"></i>
+                        <i class="fab fa-stripe fa-7x"></i>
 
-                {% if stripe %}
-                <i class="far fa-check-circle fa-3x ml-2 pb-5" style="color: darkseagreen"
-                    data-toggle="tooltip" data-placement="top" title="{% trans 'Stripe verified' %}">
-                </i>
+                        {% if stripe %}
+                        <i class="far fa-check-circle fa-3x ml-2 pb-5" style="color: darkseagreen"
+                            data-toggle="tooltip" data-placement="top" title="{% trans 'Stripe verified' %}">
+                        </i>
 
-                <br>
-                {% else %}
-                    <a href="https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_GxnZAsopwVt4CWS0PZl4oUT2nlArkDOi&scope=read_write"
-                       class="btn btn-primary ml-5" style="margin-bottom: 80px;">
-                        Vincular cuenta con Stripe
-                    </a>
-                {% endif %}
+                        <br/>
+                        {% else %}
+                            <a href="https://dashboard.stripe.com/oauth/authorize?response_type=code&client_id=ca_GxnZAsopwVt4CWS0PZl4oUT2nlArkDOi&scope=read_write"
+                               class="btn btn-primary ml-5" style="margin-bottom: 80px;">
+                                Vincular cuenta con Stripe
+                            </a>
+                        {% endif %}
 
+                    </div>
+                </div>
+
+
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <label>Alias</label>
+                        {{ photo_form.alias }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-12 mt-5">
+                        <label>{% trans 'Profile picture' %}</label>
+                        {% if user.profile_pic %}
+                        <img src="/media/{{ user.profile_pic }}" alt="" height="120px" class="mt-2 pb-2"> <br>
+                        {% endif %}
+                        {{ photo_form.profile_pic }}
+                    </div>
+                    <div class="col-lg-6 col-12 mt-5">
+                        <label>{% trans 'Main picture' %}</label>
+                        {% if user.main_pic %}
+                            <img src="/media/{{ user.main_pic }}" alt="" height="120px" class="mt-2 pb-2"> <br>
+                        {% endif %}
+                        {{ photo_form.main_pic }}
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <label>Curriculum Vitae</label>
+                    {{ photo_form.CV }}
+                </div>
+
+                <div class="row mt-5">
+                    <label>Embed code</label>
+                    <div class="col-12">
+                        <p class="mt-3">
+                            <i class="fas fa-info-circle" style="color: cornflowerblue;"></i>
+                            Inserta este código en tu blog personal o en otras páginas para que
+                            los clientes puedan acceder a tu perfil de Fluid Surf.
+                        </p>
+                    </div>
+                    <xmp style="overflow: scroll; margin-top: -15px;">
+                        <button onclick="location.href='fs.quitiweb.com{% url 'perfil' id=user.id %}'">
+                            Ver perfil en FluidSurf
+                        </button>
+                    </xmp>
+
+                    <input type="text" value="" style="display: none" id="embed-code">
+
+
+                    <div class="col-12 text-center">
+                        <button type="button" onclick="copiar()" class="btn btn-primary" style="padding-left: 50px; padding-right: 50px;">
+                            Copiar
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-12">
-                
-            </div>
-        </div>
-        
 
-        <div class="row mt-5">
-            <div class="col-6">
-                <label>Alias</label>
-                {{ photo_form.alias }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6 col-12 mt-5">
-                <label>{% trans 'Profile picture' %}</label>
-                {% if user.profile_pic %}
-                <img src="/media/{{ user.profile_pic }}" alt="" height="120px" class="mt-2 pb-2"> <br>
-                {% endif %}
-                {{ photo_form.profile_pic }}
-            </div>
-            <div class="col-lg-6 col-12 mt-5">
-                <label>{% trans 'Main picture' %}</label>
-                {% if user.main_pic %}
-                    <img src="/media/{{ user.main_pic }}" alt="" height="120px" class="mt-2 pb-2"> <br>
-                {% endif %}
-                {{ photo_form.main_pic }}
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <label>Curriculum Vitae</label>
-            {{ photo_form.CV }}
-        </div>
-
-        <div class="row mt-5">
-            <label>Embed code</label>
-            <div class="col-12">
-                <p class="mt-3">
-                    <i class="fas fa-info-circle" style="color: cornflowerblue;"></i>
-                    Inserta este código en tu blog personal o en otras páginas para que
-                    los clientes puedan acceder a tu perfil de Fluid Surf.
-                </p>
-            </div>
-<xmp style="overflow: scroll; margin-top: -15px;">
-<button onclick="location.href='fs.quitiweb.com{% url 'perfil' id=user.id %}'">
-    Ver perfil en FluidSurf
-</button>
-</xmp>
-
-            <input type="text" value="" style="display: none" id="embed-code">
-
-
-            <div class="col-12 text-center">
-                <button type="button" onclick="copiar()" class="btn btn-primary" style="padding-left: 50px; padding-right: 50px;">
-                    Copiar
-                </button>
-            </div>
-        </div>
-</div>
-{% endif %}
+        {% endif %}
 
         <span class="row toggle-chk mt-5" id="advanced" style="cursor: pointer;">
             <i class="fas fa-cog mr-1 mt-1"></i>
@@ -222,30 +196,10 @@
                 </div>
             </div>
 
-        <!-- Comentado por ahora -->
-<!--            <h2 class="display-4 mt-5" style="font-size: 28px;">-->
-<!--                {% trans 'Change Wishlist' %}-->
-<!--            </h2>-->
-
-<!--            <h2 class="display-4 mt-5" style="font-size: 28px;">-->
-<!--                {% trans 'View purchase history' %}-->
-<!--            </h2>-->
-
         </div>
 
-    <div class="row">
-    <!--  TODO No borro este switch porque nos puede servir en el futuro ya que visualmente esta genial  -->
-<!--        <div class="col-6 mt-5">-->
-<!--            <label class="switch" id="checkSurf">-->
-<!--                <input type="checkbox" id="inputSurfero"class="toggle-chk">-->
-<!--                <span class="slider round"></span>-->
-<!--            </label>-->
-<!--        </div>-->
-         <div class="col-12 text-center mt-5 pb-5">
-            <input type="submit" id="guardar" value="{% trans 'Save' %}" class="pr-5 pl-5">
-        </div>
-    </div>
-</form>
+    </form>
+
 </div>
 
     <script>
@@ -276,4 +230,5 @@
     </script>
     <script src="{% static 'main/assets/js/micuenta.js' %}" defer></script>
     <script src="{% static 'main/assets/js/filtros-country.js' %}" defer></script>
+
 {% endblock %}

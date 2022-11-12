@@ -76,14 +76,14 @@ def dashboard(request):
     for item in results:
         users_last_week += int(item.users)
 
-    productos = Producto.objects.filter().all()
+    productos = Producto.objects.all()
     europa = Producto.objects.filter(spot__nombre='Europa').all()
     oceania = Producto.objects.filter(spot__nombre='Oceania').all()
     africa = Producto.objects.filter(spot__nombre='Africa').all()
     asia = Producto.objects.filter(spot__nombre='Asia').all()
     america = Producto.objects.filter(Q(spot__nombre='America del Norte') | Q(spot__nombre='America del Sur')).all()
-    compras = Compra.objects.filter().all()
-    usuarios = CustomUser.objects.filter().all()
+    compras = Compra.objects.all()
+    usuarios = CustomUser.objects.all()
 
     fotografos = CustomUser.objects.filter(tipo_de_usuario='FOTOGRAFO').all()
     surferos = CustomUser.objects.filter(tipo_de_usuario='SURFERO').all()
@@ -115,14 +115,14 @@ def dashboard(request):
 def productos(request):
     template = loader.get_template('dashboard/productos.html')
 
-    productos = Producto.objects.filter().all()
+    productos = Producto.objects.all()
 
     # Si el usuario no tiene permisos de administracion, se le impedira acceder al dashboard.
     if not request.user.is_staff:
         return redirect('/')
 
     # Filtro de zonas para hacer la busqueda del filtro
-    spots = Spot.objects.filter().all()
+    spots = Spot.objects.all()
     filter = ZonaFilter(request.GET, queryset=spots)
     spotOG = []
     for spot in filter.qs:
@@ -222,7 +222,7 @@ def compras(request):
 
     template = loader.get_template('dashboard/compras.html')
 
-    compras = Compra.objects.filter().all()
+    compras = Compra.objects.all()
 
     compras_filter = CompraFilter(request.GET, queryset=compras)
 
@@ -296,7 +296,7 @@ def zonas(request):
 
     template = loader.get_template('dashboard/zonas.html')
 
-    zonas = Spot.objects.filter().all()
+    zonas = Spot.objects.all()
     zonas_filter = ZonaFilter(request.GET, queryset=zonas)
 
     if request.method == "POST":
@@ -392,7 +392,7 @@ def usuarios(request):
 
     template = loader.get_template('dashboard/usuarios.html')
 
-    usuarios = CustomUser.objects.filter().all()
+    usuarios = CustomUser.objects.all()
 
     user_filter = UserFilter(request.GET, queryset=usuarios)
 
@@ -573,7 +573,7 @@ def denuncias(request):
 
     template = loader.get_template('dashboard/denuncias.html')
 
-    denuncias = Denuncia.objects.filter().all()
+    denuncias = Denuncia.objects.all()
     denuncias_filter = DenunciaFilter(request.GET, queryset=denuncias)
 
     print(denuncias_filter)
@@ -668,7 +668,7 @@ def watermark(request):
 
     template = loader.get_template('dashboard/watermark.html')
 
-    watermarks = WatermarkImage.objects.filter().all()
+    watermarks = WatermarkImage.objects.all()
 
     if request.method == "POST":
         if 'desactivar' in request.POST:
@@ -762,7 +762,7 @@ def fotografo_productos(request):
     cont = Pais.objects.filter(nombre=request.user.pais).first().continente
 
     # Filtro de zonas para hacer la busqueda del filtro
-    spots = Spot.objects.filter().all()
+    spots = Spot.objects.all()
     filter = ZonaFilter(request.GET, queryset=spots)
     spotOG = []
     for spot in filter.qs:

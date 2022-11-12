@@ -3,7 +3,6 @@ import os
 import re
 import json
 import zipfile
-import urllib
 import braintree
 import requests
 import stripe
@@ -24,10 +23,14 @@ from django.template import loader
 from django.utils.translation import ugettext_lazy as _
 
 from fluidsurf.apps.home.filters import ProductoFilter, PhotographerFilter, ZonaFilter, PaisFilter
-from fluidsurf.apps.home.models import (Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
-                                        Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais)
-from fluidsurf.apps.home.forms import (ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
-                                       EditProductForm, DenunciaForm, ContactForm, DevolucionForm)
+from fluidsurf.apps.home.models import (
+    Producto, Compra, Terms, Privacy, Taxes, FreeSub, SecurePayments, Copyright,
+    Manual, HowDoesItWork, WatermarkImage, SolicitudStock, Continente, Spot, Pais
+)
+from fluidsurf.apps.home.forms import (
+    ChangeUserForm, PhotographerForm, PasswordChangeCustomForm, AddProductForm,
+    EditProductForm, DenunciaForm, ContactForm, DevolucionForm
+)
 
 from fluidsurf.apps.users.models import CustomUser
 from fluidsurf.apps.dashboard.models import RegistroCompras
@@ -38,16 +41,17 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 g = GeoIP2()
 
+
 def index(request):
 
     template = loader.get_template('home/index.html')
 
-    API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
+    api_key = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    ubicaciones = Continente.objects.filter().all()
+    ubicaciones = Continente.objects.all()
 
     if request.user.is_authenticated:
-        # Obtiene la IP del usuario para geolocalizarlo
+        # Obtiene la IP del usuario para geo-localizarlo
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
@@ -56,7 +60,7 @@ def index(request):
 
         try:
 
-            # En caso de estar en localhost, probamos con una ip publica random,
+            # En caso de estar en localhost, probamos con una ip pública random,
             # que da la casualidad de que es la mia. Da error con la ip 127.0.0.1.
             if request.build_absolute_uri() == 'http://127.0.0.1:8000/':
                 icountry = g.country('47.63.29.250').get('country_name')
@@ -72,11 +76,14 @@ def index(request):
         except Exception as e:
             print(e)
 
-        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()  # spot=request.user.zona
+        # spot=request.user.zona
+        prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()
 
         if request.user.tipo_de_usuario == "FOTOGRAFO" and not request.user.validado:
-            messages.warning(request, _("Your profile ins't active yet. Please, wait until "
-                                        "your first product gets validated by an admin to start selling."))
+            messages.warning(request, _(
+                "Your profile ins't active yet. Please, wait until "
+                "your first product gets validated by an admin to start selling."
+            ))
     else:
         prod_list = Producto.objects.filter(user__is_active=True, user__validado=True).all()
 
@@ -84,7 +91,7 @@ def index(request):
 
     context = {
         'filter': prod_filter,
-        'API_KEY': API_KEY,
+        'API_KEY': api_key,
         'ubicaciones': ubicaciones,
     }
 
@@ -97,9 +104,7 @@ def mensaje_enviado(request):
 
 def formulario(request):
     template = loader.get_template('home/formulario.html')
-    context = {
-
-    }
+    context = {}
 
     return HttpResponse(template.render(context, request))
 
@@ -110,79 +115,87 @@ def solicitud_recibida(request):
 
 def mi_cuenta(request):
     template = loader.get_template('home/mi-cuenta.html')
+    form = ''
+    passform = ''
+    photo_form = ''
 
-    if request.user.is_authenticated:
-
-        spots = Pais.objects.filter().all()
-        filter = PaisFilter(request.GET, queryset=spots)
-
-        spotOG = []
-        for pais in filter.qs:
-            data = {}
-            data['continente'] = pais.continente.nombre
-            data['pais'] = pais.nombre
-
-            json_data = json.dumps(data)
-            spotOG.append(json_data)
-        if request.method == 'GET':
-            passform = PasswordChangeCustomForm(request.user)
-            form = ChangeUserForm(instance=request.user)
-            if request.user.tipo_de_usuario == "FOTOGRAFO":
-                photo_form = PhotographerForm(instance=request.user)
-        else:
-            if request.POST['selectPais']:
-
-                pais = Pais.objects.filter(nombre=request.POST['selectPais']).first()
-                request.user.pais = pais
-
-            passform = PasswordChangeCustomForm(request.user, request.POST)
-            form = ChangeUserForm(request.POST, instance=request.user)
-
-            if request.user.tipo_de_usuario == "FOTOGRAFO":
-                photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
-                if photo_form.is_valid():
-                    fotografo = photo_form.save(commit=False)
-                    fotografo.CV = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', fotografo.CV)
-                    fotografo.CV = re.sub(r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", '', fotografo.CV)
-
-                    if CustomUser.objects.filter(alias=fotografo.alias).exclude(id=fotografo.id).exists():
-                        messages.warning(request, _('A photographer with that alias already exists, please try again.'))
-                        return HttpResponseRedirect(request.path_info)
-                    else:
-                        fotografo.save()
-            if form.is_valid():
-                messages.add_message(request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
-                form.save()
-            else:
-                if passform.is_valid():
-                    pwd = passform.save()
-                    update_session_auth_hash(request, pwd)  # Important!
-                    messages.success(request, 'Contraseña cambiada con éxito')
-                elif passform.data['new_password1'] or passform.data['new_password2']:
-                    messages.warning(request, passform.errors)
-
-                return redirect('mi-cuenta')
-        if request.user.tipo_de_usuario == "FOTOGRAFO":
-
-            stripe_exists = request.user.stripe_id
-
-            context = {
-                'form': form,
-                'passform': passform,
-                'photo_form': photo_form,
-                'stripe': stripe_exists,
-                'spotOG': spotOG
-            }
-        else:
-            context = {
-                'form': form,
-                'passform': passform,
-                'spotOG': spotOG
-            }
-
-        return HttpResponse(template.render(context, request))
-    else:
+    if not request.user.is_authenticated:
         return redirect("/login")
+
+    spots = Pais.objects.all()
+    local_filter = PaisFilter(request.GET, queryset=spots)
+
+    spot_og = []
+    for pais in local_filter.qs:
+        data = {'continente': pais.continente.nombre, 'pais': pais.nombre}
+        json_data = json.dumps(data)
+        spot_og.append(json_data)
+
+    if request.method == 'GET':
+        passform = PasswordChangeCustomForm(request.user)
+        form = ChangeUserForm(instance=request.user)
+        if request.user.tipo_de_usuario == "FOTOGRAFO":
+            photo_form = PhotographerForm(instance=request.user)
+
+    if request.method == 'POST':
+        if request.POST['selectPais']:
+            pais = Pais.objects.get(nombre=request.POST['selectPais'])
+            request.user.pais = pais
+
+        passform = PasswordChangeCustomForm(request.user, request.POST)
+        form = ChangeUserForm(request.POST, instance=request.user)
+
+        if request.user.tipo_de_usuario == "FOTOGRAFO":
+            photo_form = PhotographerForm(request.POST, request.FILES, instance=request.user)
+            if photo_form.is_valid():
+                fotografo = photo_form.save(commit=False)
+                fotografo.CV = re.sub(
+                    r"(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b", '', fotografo.CV)
+                fotografo.CV = re.sub(
+                    r"\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?", '', fotografo.CV)
+
+                if CustomUser.objects.filter(
+                        alias=fotografo.alias).exclude(id=fotografo.id).exists():
+                    messages.warning(
+                        request, _('A photographer with that alias already exists, '
+                                   'please try again.')
+                    )
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    fotografo.save()
+
+        if form.is_valid():
+            messages.add_message(
+                request, messages.SUCCESS, 'Tu perfil se ha guardado correctamente')
+            form.save()
+        else:
+            if passform.is_valid():
+                pwd = passform.save()
+                update_session_auth_hash(request, pwd)  # Important!
+                messages.success(request, 'Contraseña cambiada con éxito')
+            elif passform.data['new_password1'] or passform.data['new_password2']:
+                messages.warning(request, passform.errors)
+
+            return redirect('mi-cuenta')
+
+    if request.user.tipo_de_usuario == "FOTOGRAFO":
+        stripe_exists = request.user.stripe_id
+
+        context = {
+            'form': form,
+            'passform': passform,
+            'photo_form': photo_form,
+            'stripe': stripe_exists,
+            'spotOG': spot_og
+        }
+    else:
+        context = {
+            'form': form,
+            'passform': passform,
+            'spotOG': spot_og
+        }
+
+    return HttpResponse(template.render(context, request))
 
 
 def subir_producto(request):
@@ -191,121 +204,129 @@ def subir_producto(request):
     if request.user.tipo_de_usuario == "SURFERO":
         return redirect('index')
 
-    spots = Spot.objects.filter().all()
-    filter = ZonaFilter(request.GET, queryset=spots)
+    spots = Spot.objects.all()
+    local_filter = ZonaFilter(request.GET, queryset=spots)
 
-    spotOG = []
-    for spot in filter.qs:
-        data = {}
-        data['continente'] = spot.area.pais.continente.nombre
-        data['pais'] = spot.area.pais.nombre
-        data['area'] = spot.area.nombre
-        data['spot'] = spot.nombre
+    spot_og = []
+    for spot in local_filter.qs:
+        data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre,
+                'area': spot.area.nombre, 'spot': spot.nombre}
 
         json_data = json.dumps(data)
-        spotOG.append(json_data)
+        spot_og.append(json_data)
 
     stripe_exists = request.user.stripe_id
     form = ''
 
     current = 0
 
-    if request.user.is_authenticated:
-        if request.method == "GET":
-
-            if Producto.objects.all().count() > 0:
-                current = Producto.objects.latest('id').id + 1
-
-            form = AddProductForm()
-        else:
-
-            if stripe_exists:
-                if Producto.objects.all().count() > 0:
-                    current = Producto.objects.latest('id').id + 1
-                form = AddProductForm(request.POST, request.FILES)
-
-                area = request.POST.get('area')
-                spot = request.POST.get('spot')
-
-                if form.is_valid() and spot:
-                    producto_instance = form.save(commit=False)
-                    producto_instance.user = request.user
-
-                    pspot = Spot.objects.filter(nombre=spot, area__nombre=area).first()
-
-                    print(pspot)
-
-                    producto_instance.spot = pspot
-
-                    files = request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') + request.FILES.getlist(
-                        'imagen2') + \
-                            request.FILES.getlist('imagen3') + request.FILES.getlist('imagen4') + request.FILES.getlist(
-                        'imagen5') + \
-                            request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') + request.FILES.getlist(
-                        'imagen8') + \
-                            request.FILES.getlist('imagen9')
-
-                    if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
-                        counter = 0
-                        total_size = 0
-                        upload = True
-                        for afile in files:
-                            if afile.size > 5242880:
-                                messages.warning(request, 'Al menos una de tus fotos tiene un peso superior a 5MB. '
-                                                          'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
-                                upload = False
-                            else:
-                                total_size += afile.size
-                                producto_instance.__setattr__('imagen' + str(counter), afile)
-                                counter += 1
-
-                        if total_size < 26214400 and upload:
-                            producto_instance.save()
-                            messages.success(request, 'Tu producto se ha subido correctamente')
-
-                            # Busca los usuarios en la zona del producto para despues mandarles un mail
-                            usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO").all()
-
-                            mails = []
-                            for usuario in usuarios:
-                                if usuario.email:
-                                    mails.append(usuario.email)
-                            mails.append(settings.SERVER_EMAIL)
-
-                            subject = _("New product in your area")
-                            message = producto_instance.user.first_name + " " + producto_instance.user.last_name + str(
-                                _(" has uploaded a product nearby you"))
-                            message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
-                                producto_instance.id)  # TODO Añadir link
-                            from_email = settings.SERVER_EMAIL
-                            to_mail = mails
-
-                            try:
-                                send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
-                            except BadHeaderError:
-                                return HttpResponse('Invalid header found')
-                        else:
-                            if not upload:
-                                pass
-                            else:
-                                messages.warning(request, 'Has subido fotos con un peso superior a 25MB. '
-                                                          'Recuerda que cada foto puede pesar como mucho 5MB y el total de todas 25MB.')
-                    else:
-                        messages.warning(request,
-                                         'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
-                                         'superar las 10 fotos.')
-                else:
-                    messages.warning(request, form.errors)
-            else:
-                messages.warning(request, _('There was a problem with your Stripe integration'))
-    else:
+    if not request.user.is_authenticated:
         return redirect('index')
+
+    if request.method == "GET":
+
+        if Producto.objects.all().count() > 0:
+            current = Producto.objects.latest('id').id + 1
+
+        form = AddProductForm()
+
+    if request.method == "POST" and stripe_exists:
+
+        if Producto.objects.all().count() > 0:
+            current = Producto.objects.latest('id').id + 1
+
+        form = AddProductForm(request.POST, request.FILES)
+        area = request.POST.get('area')
+        spot = request.POST.get('spot')
+
+        if form.is_valid() and spot:
+            producto_instance = form.save(commit=False)
+            producto_instance.user = request.user
+
+            pspot = Spot.objects.filter(nombre=spot, area__nombre=area).first()
+
+            print(pspot)
+
+            producto_instance.spot = pspot
+
+            files = (
+                request.FILES.getlist('imagen0') + request.FILES.getlist('imagen1') +
+                request.FILES.getlist('imagen2') + request.FILES.getlist('imagen3') +
+                request.FILES.getlist('imagen4') + request.FILES.getlist('imagen5') +
+                request.FILES.getlist('imagen6') + request.FILES.getlist('imagen7') +
+                request.FILES.getlist('imagen8') + request.FILES.getlist('imagen9')
+            )
+
+            if 0 < len(files) <= 10:  # Si nos llegan fotos nuevas las guardamos
+                counter = 0
+                total_size = 0
+                upload = True
+                for afile in files:
+                    if afile.size > 5242880:
+                        messages.warning(
+                            request,
+                            'Al menos una de tus fotos tiene un peso superior a 5MB. '
+                            'Recuerda que cada foto puede pesar como mucho 5MB y el '
+                            'total de todas 25MB.'
+                        )
+                        upload = False
+                    else:
+                        total_size += afile.size
+                        producto_instance.__setattr__('imagen' + str(counter), afile)
+                        counter += 1
+
+                if total_size < 26214400 and upload:
+                    producto_instance.save()
+                    messages.success(request, 'Tu producto se ha subido correctamente')
+
+                    # Busca los usuarios en la zona del producto para después
+                    # mandarles un mail
+                    usuarios = CustomUser.objects.filter(tipo_de_usuario="SURFERO").all()
+
+                    mails = []
+                    for usuario in usuarios:
+                        if usuario.email:
+                            mails.append(usuario.email)
+                    mails.append(settings.SERVER_EMAIL)
+
+                    subject = _("New product in your area")
+                    message = producto_instance.user.first_name + " " + producto_instance.user.last_name + str(
+                        _(" has uploaded a product nearby you"))
+                    message += "\n You can check it here: http://127.0.0.1:8000/producto/" + str(
+                        producto_instance.id)  # TODO Añadir link
+                    from_email = settings.SERVER_EMAIL
+                    to_mail = mails
+
+                    try:
+                        send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found')
+                else:
+                    if not upload:
+                        pass
+                    else:
+                        messages.warning(
+                            request,
+                            'Has subido fotos con un peso superior a 25MB. Recuerda que cada '
+                            'foto puede pesar como mucho 5MB y el total de todas 25MB.'
+                        )
+            else:
+                messages.warning(
+                    request,
+                    'Tienes que subir al menos una foto para tu producto. Recuerda que no puedes '
+                    'superar las 10 fotos.'
+                )
+        else:
+            messages.warning(request, form.errors)
+
+    if request.method == "POST" and not stripe_exists:
+        messages.warning(request, _('There was a problem with your Stripe integration'))
 
     context = {
         'form': form,
         'current': current,
         'stripe': stripe_exists,
-        'spotOG': spotOG
+        'spotOG': spot_og
     }
 
     return HttpResponse(template.render(context, request))
@@ -316,12 +337,12 @@ def producto(request, id='0'):
 
     producto = Producto.objects.filter(id=id, user__validado=True, user__is_active=True).first()
 
-    prod_list = Producto.objects.filter().all()
+    prod_list = Producto.objects.all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
-    ubicaciones = Continente.objects.filter().all()
+    ubicaciones = Continente.objects.all()
 
     if request.user.is_authenticated:
         listaDeseos = request.user.wishlist.split(',')
@@ -458,26 +479,33 @@ def producto(request, id='0'):
                             if request.user.email:
                                 subject = _("Your FluidSurf purchase")
                                 message = _(
-                                    "Thank you for buying a product in FluidSurf!. You can check it in your Purchase History.")
+                                    "Thank you for buying a product in FluidSurf!. "
+                                    "You can check it in your Purchase History."
+                                )
                                 message += "\nID: OR" + str(compra.id)
                                 from_email = settings.SERVER_EMAIL
                                 to_mail = request.user.email
 
                                 try:
-                                    send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                                    send_mail(subject, message, from_email, [
+                                        to_mail, settings.SERVER_EMAIL])
                                 except BadHeaderError:
                                     return HttpResponse('Invalid header found')
                             if producto.user.email:
                                 subject = _("Your product has been sold!")
+                                name = compra.comprador.first_name
+                                last_name = compra.comprador.last_name
                                 message = str(_("Your product ")) + producto.nombre + str(_(
-                                    " has been sold to ")) + compra.comprador.first_name + " " + compra.comprador.last_name + "!"
+                                    " has been sold to ")) + name + " " + last_name + "!"
                                 message += "\nYou can check it in your Sales History."
                                 message += "\nID: OR" + str(compra.id)
+
                                 from_email = settings.SERVER_EMAIL
                                 to_mail = producto.user.email
 
                                 try:
-                                    send_mail(subject, message, from_email, [to_mail, settings.SERVER_EMAIL])
+                                    send_mail(subject, message, from_email, [
+                                        to_mail, settings.SERVER_EMAIL])
                                 except BadHeaderError:
                                     return HttpResponse('Invalid header found')
 
@@ -510,7 +538,7 @@ def producto(request, id='0'):
 def zona(request, nombre=''):
     template = loader.get_template('home/zona.html')
 
-    ubicaciones = Continente.objects.filter().all()
+    ubicaciones = Continente.objects.all()
 
     zona_spot = Continente.objects.filter(spot=nombre).first()
 
@@ -519,7 +547,8 @@ def zona(request, nombre=''):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    prod_list = Producto.objects.filter(spot=zona_spot, user__validado=True, user__is_active=True).all()
+    prod_list = Producto.objects.filter(
+        spot=zona_spot, user__validado=True, user__is_active=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
     context = {
@@ -540,7 +569,7 @@ def perfil(request, perfil_id=''):
     prod_list = Producto.objects.filter(user=user, user__validado=True).all()
     prod_filter = ProductoFilter(request.GET, queryset=prod_list)
 
-    ubicaciones = Continente.objects.filter().all()
+    ubicaciones = Continente.objects.all()
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', None)
 
@@ -665,7 +694,8 @@ def historial(request):
 
                     return resp
                 else:
-                    messages.warning(request, _('Sorry, you exceeded the download limit of this product.'))
+                    messages.warning(request, _(
+                        'Sorry, you exceeded the download limit of this product.'))
             return redirect('historial')
     else:
         return redirect('index')
@@ -730,7 +760,8 @@ def contacto(request):
 
                 subject = 'FluidSurf formulario de contacto'
                 from_email = form.cleaned_data['from_email']
-                message = 'Email recibido de: ' + from_email + '\n\n' + form.cleaned_data['message']
+                message = 'Email recibido de: ' + from_email + '\n\n' + form.cleaned_data[
+                    'message']
 
                 enviar_email(subject, message, from_email)
 
@@ -891,13 +922,14 @@ def fotografos(request):
 
     API_KEY = getattr(settings, 'BING_MAPS_API_KEY', 0)
 
-    ubicaciones = Continente.objects.filter().all()
+    ubicaciones = Continente.objects.all()
 
     if request.user.is_authenticated:
         photo_list = CustomUser.objects.filter(is_active=True, validado=True,
                                                tipo_de_usuario="FOTOGRAFO").all()
     else:
-        photo_list = CustomUser.objects.filter(is_active=True, validado=True, tipo_de_usuario="FOTOGRAFO").all()
+        photo_list = CustomUser.objects.filter(
+            is_active=True, validado=True, tipo_de_usuario="FOTOGRAFO").all()
 
     photo_filter = PhotographerFilter(request.GET, queryset=photo_list)
 
@@ -912,34 +944,26 @@ def fotografos(request):
 def buscador(request):
     template = loader.get_template('home/buscador.html')
 
+    spots = Spot.objects.all()
     if len(urllib.parse.parse_qsl(request.get_full_path())) > 0:
         url_param = urllib.parse.parse_qsl(request.get_full_path())[0][0]
         if "area__pais__continente__nombre" in url_param:
             continente = urllib.parse.parse_qsl(request.get_full_path())[0][1]
-            spots = Spot.objects.filter(area__pais__continente__nombre=continente).all()
-        else:
-            spots = Spot.objects.filter().all() # No se por que es necesario poner este else, pero
-                                                # si lo quito peta
-    else:
-            spots = Spot.objects.filter().all()
+            spots = Spot.objects.filter(area__pais__continente__nombre=continente)
 
-    filter = ZonaFilter(request.GET, queryset=spots)
+    local_filter = ZonaFilter(request.GET, queryset=spots)
 
     # Variable que uso para que si se ha hecho un post haga scroll hasta el
     # resultado de las busquedas
     scroll = False
 
-    spotOG = []
-    for spot in filter.qs:
-        data = {}
-        data['continente'] = spot.area.pais.continente.nombre
-        data['pais'] = spot.area.pais.nombre
-        data['area'] = spot.area.nombre
-        data['spot'] = spot.nombre
+    spot_og = []
+    for spot in local_filter.qs:
+        data = {'continente': spot.area.pais.continente.nombre, 'pais': spot.area.pais.nombre,
+                'area': spot.area.nombre, 'spot': spot.nombre}
 
         json_data = json.dumps(data)
-        spotOG.append(json_data)
-
+        spot_og.append(json_data)
 
     results = False
 
@@ -953,12 +977,12 @@ def buscador(request):
 
         if 'buscar-foto' in request.POST:
             if request.POST['alias']:
-               alias = request.POST['alias']
-               fotografos = CustomUser.objects.filter(alias=alias, producto__spot=spot).all()
+                alias = request.POST['alias']
+                foto_man = CustomUser.objects.filter(alias=alias, producto__spot=spot).all()
             else:
-               fotografos = CustomUser.objects.filter(producto__spot=spot).all()
+                foto_man = CustomUser.objects.filter(producto__spot=spot).all()
 
-            filter = PhotographerFilter(request.GET, queryset=fotografos)
+            local_filter = PhotographerFilter(request.GET, queryset=foto_man)
             results = 'foto'
 
         elif 'buscar-surf' in request.POST:
@@ -968,25 +992,24 @@ def buscador(request):
             else:
                 productos = Producto.objects.filter(spot=spot).all()
 
-            filter = ProductoFilter(request.GET, queryset=productos)
-            print(filter.qs)
+            local_filter = ProductoFilter(request.GET, queryset=productos)
+            print(local_filter.qs)
             results = 'surf'
 
         context = {
-            'spotOG': spotOG,
-            'filter': filter,
+            'spotOG': spot_og,
+            'filter': local_filter,
             'results': results,
             'scroll': scroll
         }
 
-    else:
-        fotografos = CustomUser.objects.filter().all()
-
+    if request.method == "GET":
         context = {
-            'spotOG': spotOG,
+            'spotOG': spot_og,
             'results': results,
             'scroll': scroll
         }
+
     return HttpResponse(template.render(context, request))
 
 
@@ -1006,7 +1029,8 @@ def add_watermark(image, watermark):
     rgba_watermark.putalpha(rgba_watermark_mask)
 
     watermark_x, watermark_y = rgba_watermark.size
-    rgba_image.paste(rgba_watermark, ((image_x - watermark_x) // 2, (image_y - watermark_y) // 2), rgba_watermark_mask)
+    rgba_image.paste(rgba_watermark, ((image_x - watermark_x) // 2, (
+            image_y - watermark_y) // 2), rgba_watermark_mask)
 
     return rgba_image
 
@@ -1049,7 +1073,8 @@ def error_404(request):
 def prueba(request):
     template = loader.get_template('home/prueba.html')
 
-    # generate all other required data that you may need on the #checkout page and add them to context.
+    # Generate all others required data that you may need on the
+    # Checkout page and add them to context
 
     if settings.BRAINTREE_PRODUCTION:
         braintree_env = braintree.Environment.Production
@@ -1066,7 +1091,8 @@ def prueba(request):
 
     try:
         braintree_client_token = braintree.ClientToken.generate({"customer_id": request.user.id})
-    except:
+    except Exception as e:
+        print(str(e))
         braintree_client_token = braintree.ClientToken.generate({})
 
     context = {'braintree_client_token': braintree_client_token}
