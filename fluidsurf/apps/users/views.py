@@ -23,7 +23,11 @@ def sign_up(request):
             user = form.save(commit=False)
             user.date_joined = datetime.now()
             user.save()
-            messages.info(request, "Gracias por registrarte. Te llegará un email de confirmación a tu cuenta de correo.")
+            messages.info(
+                request,
+                "Gracias por registrarte. "
+                "Te llegará un email de confirmación a tu cuenta de correo."
+            )
             new_user = authenticate(username=form.cleaned_data['username'],
                                     password=form.cleaned_data['password1'],)
             login(request, new_user)

@@ -4,17 +4,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from tinymce.models import HTMLField
 
+from fluidsurf.apps.helpers.helper import AREA_CHOICES
 from fluidsurf.apps.users.models import CustomUser
-from django_google_maps.fields import AddressField, GeoLocationField
 
-AREA_CHOICES = (
-    ('Europe', _("Europe")),
-    ('Africa', _("Africa")),
-    ('Asia', _("Asia")),
-    ('Oceania', _("Oceania")),
-    ('North America', _("North America")),
-    ('South America', _("South America"))
-)
 
 DEV_REASON_CHOICES = (
     ('Dead on Arrival', _("Dead on Arrival")),
@@ -23,6 +15,7 @@ DEV_REASON_CHOICES = (
     ('Other', _("Other, please supply details")),
     ('Wrong Item', _("Received Wrong Item"))
 )
+
 
 # Spots
 class Continente(models.Model):
@@ -37,7 +30,8 @@ class Continente(models.Model):
 
 class Pais(models.Model):
     nombre = models.CharField(max_length=25)
-    continente = models.ForeignKey(Continente, on_delete=models.CASCADE, related_name='pais', default='')
+    continente = models.ForeignKey(
+        Continente, on_delete=models.CASCADE, related_name='pais', default='')
 
     def __str__(self):
         return self.nombre
